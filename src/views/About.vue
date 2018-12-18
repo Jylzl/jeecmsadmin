@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="201px">
+    <el-aside width="221px">
       <Aside />
     </el-aside>
     <el-container>
@@ -60,6 +60,7 @@ export default {
   color: #333;
   text-align: center;
   line-height: 160px;
+  padding-top: 0;
 }
 
 body #app > .el-container {

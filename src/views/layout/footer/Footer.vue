@@ -2,11 +2,9 @@
   <div class="footer-inf">
     <p class="system-inf">
       <span>上次登录时间: 2018-12-18 11:28:11</span>
-      <span>已用内存: 517.1MB</span>
-      <span>剩余内存: 3013.9MB</span>
-      <span>最大内存: 3531MB</span>
+      <span>内存: <span class="ram-use">517.1MB</span> / <span>3531MB</span></span>
     </p>
-    <p class="copyright-inf">Copyright © 2004 Adobe Systems Incorporated. All rights reserved. </p>
+    <p class="copyright-inf">Copyright © 2018 Adobe Systems Incorporated. All rights reserved. </p>
   </div>
 </template>
 <style scoped>
@@ -19,7 +17,10 @@
   margin: 0;
   text-align: left;
 }
-.system-inf span {
+.ram-use {
+  color: inherit;
+}
+.system-inf > span {
   margin-right: 20px;
 }
 .copyright-inf {
