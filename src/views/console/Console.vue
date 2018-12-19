@@ -26,9 +26,6 @@
 </template>
 
 <style scoped>
-.el-col {
-  border-radius: 4px;
-}
 .bg-purple-dark {
   background: #99a9bf;
 }

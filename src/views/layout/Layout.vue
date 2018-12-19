@@ -1,18 +1,18 @@
 <template>
   <el-container>
-    <el-header>Header</el-header>
-    <el-container style="height:100%;">
-      <el-aside width="201px">
-        <Aside />
-      </el-aside>
-      <el-container>
-        <el-main>
-          <Main />
-        </el-main>
-        <el-footer height="40px">
-          <Footer />
-        </el-footer>
-      </el-container>
+    <el-aside width="221px">
+      <Aside />
+    </el-aside>
+    <el-container>
+      <el-header>
+        <Header />
+      </el-header>
+      <el-main>
+        <Main />
+      </el-main>
+      <el-footer height="40px">
+        <Footer />
+      </el-footer>
     </el-container>
   </el-container>
 </template>
@@ -60,6 +60,7 @@ export default {
   color: #333;
   text-align: center;
   line-height: 160px;
+  padding-top: 0;
 }
 
 body #app > .el-container {
