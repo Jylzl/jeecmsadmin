@@ -5,9 +5,10 @@ import {
     store
 } from './store/index.js'
 import './plugins/elementui/element.js'
-
+import VCharts from 'v-charts'
 import Icon from 'vue-svg-icon/Icon.vue';
 Vue.component('icon', Icon);
+Vue.use(VCharts)
 Vue.config.productionTip = false
 
 new Vue({
