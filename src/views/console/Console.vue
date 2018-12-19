@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="6">
-        <div class="grid-content bg-purple">1</div>
+        <div class="grid-content bg-purple">111</div>
       </el-col>
       <el-col :span="6">
         <div class="grid-content bg-purple-light">2</div>
