@@ -44,22 +44,18 @@ export default {
 .el-header,
 .el-footer {
   color: #333;
-  text-align: center;
   line-height: 60px;
 }
 
 .el-aside {
   background-color: #d3dce6;
   color: #333;
-  text-align: center;
   line-height: 200px;
 }
 
-.el-main {
+main.el-main {
   background-color: #e9eef3;
   color: #333;
-  text-align: center;
-  line-height: 160px;
   padding-top: 0;
 }
 

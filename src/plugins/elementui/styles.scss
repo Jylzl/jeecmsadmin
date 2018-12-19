@@ -1,7 +1,8 @@
 /* theme color */
-// $--color-primary: #337ab7;
+
+$--color-primary: #1F6FB5;
 
 /* icon font path, required */
-$--font-path: '~element-ui/lib/theme-chalk/fonts';
 
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
 @import "~element-ui/packages/theme-chalk/src/index";

@@ -101,6 +101,9 @@ export default {
 }
 .aside-top {
   padding: 0;
+  background-color: rgb(58, 67, 76);
+  border-bottom: none;
+  border-right: solid 1px #e6e6e6;
 }
 .aside-menu {
   height: calc(100% - 60px);
