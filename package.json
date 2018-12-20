@@ -14,6 +14,8 @@
     "element-ui": "^2.3.6",
     "v-charts": "^1.19.0",
     "vue": "^2.5.17",
+    "vue-fullcalendar": "^1.0.9",
+    "vue-neditor-wrap": "^1.0.4",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
