@@ -3,7 +3,7 @@
 		<div class="aside-top el-header">
 			1
 		</div>
-		<el-menu default-active="0" class="el-menu-vertical-demo aside-menu" @open="handleOpen" @close="handleClose" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router="true">
+		<el-menu default-active="0" class="el-menu-vertical-demo aside-menu" @open="handleOpen" @close="handleClose" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :router="true">
 			<el-scrollbar wrap-class="scrollbar-wrapper">
 				<el-menu-item index="/console">
 					<i class="el-icon-menu"></i>
