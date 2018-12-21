@@ -1,6 +1,10 @@
 <template>
-    <vue-neditor-wrap v-model="content" :config="myConfig" :destroy="false" @ready="ready">
-    </vue-neditor-wrap>
+    <div>
+        <vue-neditor-wrap v-model="content" :config="myConfig" :destroy="false" @ready="ready">
+        </vue-neditor-wrap>
+        <el-button @click="click">添加</el-button>
+        <div v-html="content"></div>
+    </div>
 </template>
 <script>
     import VueNeditorWrap from "vue-neditor-wrap";
@@ -25,14 +29,18 @@
                     // 初始容器宽度
                     initialFrameWidth: "100%",
                     // 关闭自动保存
-                    enableAutoSave: true
+                    enableAutoSave: true,
+                    fontsize: [10, 11, 12, 14, 16, 18, 20, 24, 36, 48]
                 },
                 content: ""
             };
         },
         methods: {
             ready(editorInstance) {
-                console.log('editorInstance',editorInstance)
+                console.log('editorInstance', editorInstance)
+            },
+            click(){
+                console.log(this.content)
             }
         }
     };

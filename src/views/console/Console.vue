@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-row class="m-l-20">
-			<el-col :span="6" class="p-lr-20">
+			<el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="p-lr-20">
 				<div class="bg-box">
 					<div class="bg-green bg-icon">
 						<icon name="content" scale="4"></icon>
@@ -13,7 +13,7 @@
 					</div>
 				</div>
 			</el-col>
-			<el-col :span="6" class="p-lr-20">
+			<el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="p-lr-20">
 				<div class="bg-box">
 					<div class="bg-yellow bg-icon">
 						<icon name="comment" scale="4"></icon>
@@ -25,7 +25,7 @@
 					</div>
 				</div>
 			</el-col>
-			<el-col :span="6" class="p-lr-20">
+			<el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="p-lr-20">
 				<div class="bg-box">
 					<div class="bg-blue bg-icon">
 						<icon name="list" scale="4"></icon>
@@ -37,7 +37,7 @@
 					</div>
 				</div>
 			</el-col>
-			<el-col :span="6" class="p-lr-20">
+			<el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="p-lr-20">
 				<div class="bg-box">
 					<div class="bg-purple bg-icon">
 						<icon name="news" scale="4"></icon>
@@ -50,15 +50,15 @@
 				</div>
 			</el-col>
 		</el-row>
-		<el-row class="m-l-20 m-t-20">
-			<el-col :span="12" class="p-lr-20">
+		<el-row class="m-l-20">
+			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12" class="p-lr-20">
 				<el-card class="box-card" shadow="never">
 					<div slot="header" class="clearfix card-header">
 						<span>卡片名称</span>
 						<el-dropdown style="float: right;" trigger="click">
 							<span class="el-dropdown-link">
-								<i class="el-icon-more"></i>
-							</span>
+										<i class="el-icon-more"></i>
+									</span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item>刷新</el-dropdown-item>
 								<el-dropdown-item>关闭</el-dropdown-item>
@@ -70,14 +70,14 @@
 					</div>
 				</el-card>
 			</el-col>
-			<el-col :span="12" class="p-lr-20">
+			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12" class="p-lr-20">
 				<el-card class="box-card">
 					<div slot="header" class="clearfix card-header">
 						<span>卡片名称</span>
 						<el-dropdown style="float: right;" trigger="click">
 							<span class="el-dropdown-link">
-								<i class="el-icon-more"></i>
-							</span>
+										<i class="el-icon-more"></i>
+									</span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item>刷新</el-dropdown-item>
 								<el-dropdown-item>关闭</el-dropdown-item>
@@ -90,15 +90,15 @@
 				</el-card>
 			</el-col>
 		</el-row>
-		<el-row class="m-l-20 m-t-20">
-			<el-col :span="12" class="p-lr-20">
+		<el-row class="m-l-20">
+			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12" class="p-lr-20">
 				<el-card class="box-card" shadow="never">
 					<div slot="header" class="clearfix card-header">
 						<span>卡片名称</span>
 						<el-dropdown style="float: right;" trigger="click">
 							<span class="el-dropdown-link">
-								<i class="el-icon-more"></i>
-							</span>
+										<i class="el-icon-more"></i>
+									</span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item>刷新</el-dropdown-item>
 								<el-dropdown-item>关闭</el-dropdown-item>
@@ -110,14 +110,14 @@
 					</div>
 				</el-card>
 			</el-col>
-			<el-col :span="12" class="p-lr-20">
+			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12" class="p-lr-20">
 				<el-card class="box-card">
 					<div slot="header" class="clearfix card-header">
 						<span>卡片名称</span>
 						<el-dropdown style="float: right;" trigger="click">
 							<span class="el-dropdown-link">
-								<i class="el-icon-more"></i>
-							</span>
+										<i class="el-icon-more"></i>
+									</span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item>刷新</el-dropdown-item>
 								<el-dropdown-item>关闭</el-dropdown-item>
@@ -125,6 +125,14 @@
 						</el-dropdown>
 					</div>
 					<div style="height:400px;">
+						<el-table :data="tableData" stripe style="width: 100%">
+							<el-table-column prop="date" label="日期" width="180">
+							</el-table-column>
+							<el-table-column prop="name" label="姓名" width="180">
+							</el-table-column>
+							<el-table-column prop="address" label="地址">
+							</el-table-column>
+						</el-table>
 					</div>
 				</el-card>
 			</el-col>
@@ -206,7 +214,32 @@
 							'下单率': 0.78
 						}
 					]
-				}
+				},
+				tableData: [{
+					date: '2016-05-02',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1518 弄'
+				}, {
+					date: '2016-05-04',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1517 弄'
+				}, {
+					date: '2016-05-01',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1519 弄'
+				}, {
+					date: '2016-05-01',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1519 弄'
+				}, {
+					date: '2016-05-01',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1519 弄'
+				}, {
+					date: '2016-05-03',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1516 弄'
+				}]
 			}
 		}
 	}
@@ -219,26 +252,25 @@
 		border: none;
 	}
 	.el-dropdown-link {
-    	cursor: pointer;
-    	color: #409eff;
-		font-size:22px;
-		font-weight:bold;
+		cursor: pointer;
+		color: #409eff;
+		font-size: 22px;
+		font-weight: bold;
 	}
-	.card-header{
+	.card-header {
 		line-height: 22px;
 	}
 	/* 样式重写 End*/
-
 	.m-l-20 {
 		margin-left: -12px;
 		margin-right: -12px;
 	}
 	.p-lr-20 {
 		box-sizing: border-box;
-		padding: 0 12px;
+		padding: 0 12px 20px 12px;
 	}
-	.m-t-20 {
-		margin-top: 20px;
+	.m-b-20 {
+		margin-bottom: 20px;
 	}
 	.bg-box {
 		background: #fff;
