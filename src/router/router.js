@@ -4,6 +4,8 @@ import Layout from '@/views/layout/Layout.vue'
 import Console from '@/views/console/Console.vue'
 import Content from '@/views/content/content/Content.vue'
 
+import Accessibility from '@/views/daily/index/Accessibility.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +23,10 @@ export default new Router({
                 path: '/content',
                 name: 'Content',
                 component: Content,
+            }, {
+                path: '/accessibility',
+                name: 'Accessibility',
+                component: Accessibility,
             }]
             // route level code-splitting
             // this generates a separate chunk (about.[hash].js) for this route

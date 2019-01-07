@@ -56,9 +56,7 @@
 					<div slot="header" class="clearfix card-header">
 						<span>卡片名称</span>
 						<el-dropdown style="float: right;" trigger="click">
-							<span class="el-dropdown-link">
-										<i class="el-icon-more"></i>
-									</span>
+							<span class="el-dropdown-link"><i class="el-icon-more"></i></span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item>刷新</el-dropdown-item>
 								<el-dropdown-item>关闭</el-dropdown-item>
@@ -75,9 +73,7 @@
 					<div slot="header" class="clearfix card-header">
 						<span>卡片名称</span>
 						<el-dropdown style="float: right;" trigger="click">
-							<span class="el-dropdown-link">
-										<i class="el-icon-more"></i>
-									</span>
+							<span class="el-dropdown-link"><i class="el-icon-more"></i></span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item>刷新</el-dropdown-item>
 								<el-dropdown-item>关闭</el-dropdown-item>
@@ -96,9 +92,7 @@
 					<div slot="header" class="clearfix card-header">
 						<span>卡片名称</span>
 						<el-dropdown style="float: right;" trigger="click">
-							<span class="el-dropdown-link">
-										<i class="el-icon-more"></i>
-									</span>
+							<span class="el-dropdown-link"><i class="el-icon-more"></i></span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item>刷新</el-dropdown-item>
 								<el-dropdown-item>关闭</el-dropdown-item>
@@ -115,9 +109,7 @@
 					<div slot="header" class="clearfix card-header">
 						<span>卡片名称</span>
 						<el-dropdown style="float: right;" trigger="click">
-							<span class="el-dropdown-link">
-										<i class="el-icon-more"></i>
-									</span>
+							<span class="el-dropdown-link"><i class="el-icon-more"></i></span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item>刷新</el-dropdown-item>
 								<el-dropdown-item>关闭</el-dropdown-item>
@@ -125,13 +117,11 @@
 						</el-dropdown>
 					</div>
 					<div style="height:400px;">
-						<el-table :data="tableData" stripe style="width: 100%">
-							<el-table-column prop="date" label="日期" width="180">
-							</el-table-column>
-							<el-table-column prop="name" label="姓名" width="180">
-							</el-table-column>
-							<el-table-column prop="address" label="地址">
-							</el-table-column>
+						<el-table :data="tableData" stripe style="width: 100%" ref="multipleTable" tooltip-effect="dark">
+							<el-table-column type="selection" width="55"></el-table-column>
+							<el-table-column prop="date" label="日期" width="180" sortable></el-table-column>
+							<el-table-column prop="name" label="姓名" width="180"></el-table-column>
+							<el-table-column prop="address" label="地址"></el-table-column>
 						</el-table>
 					</div>
 				</el-card>
@@ -215,32 +205,41 @@
 						}
 					]
 				},
-				tableData: [{
-					date: '2016-05-02',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1518 弄'
-				}, {
-					date: '2016-05-04',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1517 弄'
-				}, {
-					date: '2016-05-01',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1519 弄'
-				}, {
-					date: '2016-05-01',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1519 弄'
-				}, {
-					date: '2016-05-01',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1519 弄'
-				}, {
-					date: '2016-05-03',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1516 弄'
-				}]
+				tableData: [],
+				multipleSelection: []
 			}
+		},
+		methods: {
+		},
+		mounted() {
+			var _this = this;
+			var arrs = [{
+				date: '2016-05-02',
+				name: '王小虎a',
+				address: '上海市普陀区金沙江路 1518 弄'
+			}, {
+				date: '2016-05-04',
+				name: '王小虎b',
+				address: '上海市普陀区金沙江路 1517 弄'
+			}, {
+				date: '2016-05-01',
+				name: '王小虎c',
+				address: '上海市普陀区金沙江路 1516 弄'
+			}, {
+				date: '2016-05-01',
+				name: '王小虎d',
+				address: '上海市普陀区金沙江路 1515 弄'
+			}, {
+				date: '2016-05-01',
+				name: '王小虎e',
+				address: '上海市普陀区金沙江路 1514 弄'
+			}]
+			setTimeout(() => {
+				_this.tableData = [];
+				arrs.forEach(arr => {
+					_this.tableData.push(arr)
+				});
+			}, 2000)
 		}
 	}
 </script>

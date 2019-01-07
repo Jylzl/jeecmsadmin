@@ -12,6 +12,7 @@
   "dependencies": {
     "echarts": "^4.2.0-rc.2",
     "element-ui": "^2.3.6",
+    "nprogress": "^0.2.0",
     "v-charts": "^1.19.0",
     "vue": "^2.5.17",
     "vue-fullcalendar": "^1.0.9",
