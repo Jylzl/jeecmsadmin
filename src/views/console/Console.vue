@@ -13,12 +13,17 @@
           <div class="bg-green bg-icon">
             <icon
               name="content"
-              scale="4"
+              :w="48"
+              :h="48"
             ></icon>
             <p class="icon-title">内容发布数</p>
           </div>
           <div class="bg-info">
-            <p class="today-count">今日&nbsp;&nbsp;<span class="count-num">0&nbsp;</span> <span class="up-num">(0)</span></p>
+            <p class="today-count">
+              今日&nbsp;&nbsp;
+              <span class="count-num">0&nbsp;</span>
+              <span class="up-num">(0)</span>
+            </p>
             <p class="all-count">累计:&nbsp;&nbsp;0</p>
           </div>
         </div>
@@ -35,12 +40,17 @@
           <div class="bg-yellow bg-icon">
             <icon
               name="comment"
-              scale="4"
+              :w="48"
+              :h="48"
             ></icon>
             <p class="icon-title">评论数</p>
           </div>
           <div class="bg-info">
-            <p class="today-count">今日&nbsp;&nbsp;<span class="count-num">0&nbsp;</span> <span class="up-num">(0)</span></p>
+            <p class="today-count">
+              今日&nbsp;&nbsp;
+              <span class="count-num">0&nbsp;</span>
+              <span class="up-num">(0)</span>
+            </p>
             <p class="all-count">累计:&nbsp;&nbsp;0</p>
           </div>
         </div>
@@ -57,12 +67,17 @@
           <div class="bg-blue bg-icon">
             <icon
               name="list"
-              scale="4"
+              :w="48"
+              :h="48"
             ></icon>
             <p class="icon-title">留言数</p>
           </div>
           <div class="bg-info">
-            <p class="today-count">今日&nbsp;&nbsp;<span class="count-num">0&nbsp;</span> <span class="up-num">(0)</span></p>
+            <p class="today-count">
+              今日&nbsp;&nbsp;
+              <span class="count-num">0&nbsp;</span>
+              <span class="up-num">(0)</span>
+            </p>
             <p class="all-count">累计:&nbsp;&nbsp;0</p>
           </div>
         </div>
@@ -79,12 +94,17 @@
           <div class="bg-purple bg-icon">
             <icon
               name="news"
-              scale="4"
+              :w="48"
+              :h="48"
             ></icon>
             <p class="icon-title">待办</p>
           </div>
           <div class="bg-info">
-            <p class="today-count">今日&nbsp;&nbsp;<span class="count-num">0&nbsp;</span> <span class="up-num">(0)</span></p>
+            <p class="today-count">
+              今日&nbsp;&nbsp;
+              <span class="count-num">0&nbsp;</span>
+              <span class="up-num">(0)</span>
+            </p>
             <p class="all-count">累计:&nbsp;&nbsp;0</p>
           </div>
         </div>
@@ -112,7 +132,9 @@
               style="float: right;"
               trigger="click"
             >
-              <span class="el-dropdown-link"><i class="el-icon-more"></i></span>
+              <span class="el-dropdown-link">
+                <i class="el-icon-more"></i>
+              </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>刷新</el-dropdown-item>
                 <el-dropdown-item>关闭</el-dropdown-item>
@@ -142,7 +164,9 @@
               style="float: right;"
               trigger="click"
             >
-              <span class="el-dropdown-link"><i class="el-icon-more"></i></span>
+              <span class="el-dropdown-link">
+                <i class="el-icon-more"></i>
+              </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>刷新</el-dropdown-item>
                 <el-dropdown-item>关闭</el-dropdown-item>
@@ -177,7 +201,9 @@
               style="float: right;"
               trigger="click"
             >
-              <span class="el-dropdown-link"><i class="el-icon-more"></i></span>
+              <span class="el-dropdown-link">
+                <i class="el-icon-more"></i>
+              </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>刷新</el-dropdown-item>
                 <el-dropdown-item>关闭</el-dropdown-item>
@@ -207,7 +233,9 @@
               style="float: right;"
               trigger="click"
             >
-              <span class="el-dropdown-link"><i class="el-icon-more"></i></span>
+              <span class="el-dropdown-link">
+                <i class="el-icon-more"></i>
+              </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>刷新</el-dropdown-item>
                 <el-dropdown-item>关闭</el-dropdown-item>
