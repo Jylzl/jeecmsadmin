@@ -5,7 +5,7 @@ import { store } from "./store/index.js";
 
 import "./plugins/elementui/element.js";
 import VCharts from "v-charts";
-import Icon from "vue-svg-icon/Icon.vue";
+import Icon from 'vue2-svg-icon/Icon.vue';
 
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
