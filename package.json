@@ -10,31 +10,31 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "echarts": "^4.2.0-rc.2",
-    "element-ui": "^2.3.6",
+    "echarts": "^4.1.0",
+    "element-ui": "^2.4.11",
     "nprogress": "^0.2.0",
     "v-charts": "^1.19.0",
-    "vue": "^2.5.17",
+    "vue": "^2.5.22",
     "vue-fullcalendar": "^1.0.9",
     "vue-neditor-wrap": "^1.0.4",
-    "vue-router": "^3.0.1",
+    "vue-router": "^3.0.2",
+    "vue-svg-icon": "^1.2.9",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.2.0",
-    "@vue/cli-plugin-e2e-cypress": "^3.2.0",
-    "@vue/cli-plugin-eslint": "^3.2.0",
-    "@vue/cli-plugin-unit-mocha": "^3.2.0",
-    "@vue/cli-service": "^3.2.0",
+    "@vue/cli-plugin-babel": "^3.3.0",
+    "@vue/cli-plugin-e2e-cypress": "^3.3.0",
+    "@vue/cli-plugin-eslint": "^3.3.0",
+    "@vue/cli-plugin-unit-mocha": "^3.3.0",
+    "@vue/cli-service": "^3.3.0",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-eslint": "^10.0.1",
     "chai": "^4.1.2",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0-0",
+    "eslint": "^5.12.0",
+    "eslint-plugin-vue": "^5.1.0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "vue-cli-plugin-element-ui": "^1.1.4",
-    "vue-svg-icon": "^1.2.9",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.5.22"
   }
 }

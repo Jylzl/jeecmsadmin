@@ -1,5 +1,5 @@
 <template>
-  <div class="footer-inf">
+  <div class="footer-inf clearfix">
     <p class="system-inf">
       <span>上次登录时间: 2018-12-18 11:28:11</span>
       <span>内存: <span class="ram-use">517.1MB</span> / <span>3531MB</span></span>
