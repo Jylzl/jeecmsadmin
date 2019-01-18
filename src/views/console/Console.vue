@@ -1,26 +1,15 @@
 <template>
   <div>
     <el-row :gutter="24">
-      <el-col
-        :span="6"
-        :xs="24"
-        :sm="12"
-        :md="12"
-        :lg="6"
-        :xl="6"
-      >
+      <el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
         <div class="bg-box">
           <div class="bg-green bg-icon">
-            <icon
-              name="content"
-              :w="48"
-              :h="48"
-            ></icon>
+            <icon name="content" :w="48" :h="48"></icon>
             <p class="icon-title">内容发布数</p>
           </div>
           <div class="bg-info">
             <p class="today-count">
-              今日&nbsp;&nbsp;
+              <span class="todat-title">今日</span>
               <span class="count-num">0&nbsp;</span>
               <span class="up-num">(0)</span>
             </p>
@@ -28,26 +17,15 @@
           </div>
         </div>
       </el-col>
-      <el-col
-        :span="6"
-        :xs="24"
-        :sm="12"
-        :md="12"
-        :lg="6"
-        :xl="6"
-      >
+      <el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
         <div class="bg-box">
           <div class="bg-yellow bg-icon">
-            <icon
-              name="comment"
-              :w="48"
-              :h="48"
-            ></icon>
+            <icon name="comment" :w="48" :h="48"></icon>
             <p class="icon-title">评论数</p>
           </div>
           <div class="bg-info">
             <p class="today-count">
-              今日&nbsp;&nbsp;
+              <span class="todat-title">今日</span>
               <span class="count-num">0&nbsp;</span>
               <span class="up-num">(0)</span>
             </p>
@@ -55,26 +33,15 @@
           </div>
         </div>
       </el-col>
-      <el-col
-        :span="6"
-        :xs="24"
-        :sm="12"
-        :md="12"
-        :lg="6"
-        :xl="6"
-      >
+      <el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
         <div class="bg-box">
           <div class="bg-blue bg-icon">
-            <icon
-              name="list"
-              :w="48"
-              :h="48"
-            ></icon>
+            <icon name="list" :w="48" :h="48"></icon>
             <p class="icon-title">留言数</p>
           </div>
           <div class="bg-info">
             <p class="today-count">
-              今日&nbsp;&nbsp;
+              <span class="todat-title">今日</span>
               <span class="count-num">0&nbsp;</span>
               <span class="up-num">(0)</span>
             </p>
@@ -82,26 +49,15 @@
           </div>
         </div>
       </el-col>
-      <el-col
-        :span="6"
-        :xs="24"
-        :sm="12"
-        :md="12"
-        :lg="6"
-        :xl="6"
-      >
+      <el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
         <div class="bg-box">
           <div class="bg-purple bg-icon">
-            <icon
-              name="news"
-              :w="48"
-              :h="48"
-            ></icon>
+            <icon name="news" :w="48" :h="48"></icon>
             <p class="icon-title">待办</p>
           </div>
           <div class="bg-info">
             <p class="today-count">
-              今日&nbsp;&nbsp;
+              <span class="todat-title">今日</span>
               <span class="count-num">0&nbsp;</span>
               <span class="up-num">(0)</span>
             </p>
@@ -111,27 +67,11 @@
       </el-col>
     </el-row>
     <el-row :gutter="24">
-      <el-col
-        :span="12"
-        :xs="24"
-        :sm="24"
-        :md="24"
-        :lg="12"
-        :xl="12"
-      >
-        <el-card
-          class="box-card"
-          shadow="never"
-        >
-          <div
-            slot="header"
-            class="clearfix card-header"
-          >
+      <el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+        <el-card class="box-card" shadow="never">
+          <div slot="header" class="clearfix card-header">
             <span>卡片名称</span>
-            <el-dropdown
-              style="float: right;"
-              trigger="click"
-            >
+            <el-dropdown style="float: right;" trigger="click">
               <span class="el-dropdown-link">
                 <i class="el-icon-more"></i>
               </span>
@@ -146,24 +86,11 @@
           </div>
         </el-card>
       </el-col>
-      <el-col
-        :span="12"
-        :xs="24"
-        :sm="24"
-        :md="24"
-        :lg="12"
-        :xl="12"
-      >
+      <el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <el-card class="box-card">
-          <div
-            slot="header"
-            class="clearfix card-header"
-          >
+          <div slot="header" class="clearfix card-header">
             <span>卡片名称</span>
-            <el-dropdown
-              style="float: right;"
-              trigger="click"
-            >
+            <el-dropdown style="float: right;" trigger="click">
               <span class="el-dropdown-link">
                 <i class="el-icon-more"></i>
               </span>
@@ -180,27 +107,11 @@
       </el-col>
     </el-row>
     <el-row :gutter="24">
-      <el-col
-        :span="12"
-        :xs="24"
-        :sm="24"
-        :md="24"
-        :lg="12"
-        :xl="12"
-      >
-        <el-card
-          class="box-card"
-          shadow="never"
-        >
-          <div
-            slot="header"
-            class="clearfix card-header"
-          >
+      <el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+        <el-card class="box-card" shadow="never">
+          <div slot="header" class="clearfix card-header">
             <span>卡片名称</span>
-            <el-dropdown
-              style="float: right;"
-              trigger="click"
-            >
+            <el-dropdown style="float: right;" trigger="click">
               <span class="el-dropdown-link">
                 <i class="el-icon-more"></i>
               </span>
@@ -215,24 +126,11 @@
           </div>
         </el-card>
       </el-col>
-      <el-col
-        :span="12"
-        :xs="24"
-        :sm="24"
-        :md="24"
-        :lg="12"
-        :xl="12"
-      >
+      <el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <el-card class="box-card">
-          <div
-            slot="header"
-            class="clearfix card-header"
-          >
+          <div slot="header" class="clearfix card-header">
             <span>卡片名称</span>
-            <el-dropdown
-              style="float: right;"
-              trigger="click"
-            >
+            <el-dropdown style="float: right;" trigger="click">
               <span class="el-dropdown-link">
                 <i class="el-icon-more"></i>
               </span>
@@ -250,25 +148,10 @@
               ref="multipleTable"
               tooltip-effect="dark"
             >
-              <el-table-column
-                type="selection"
-                width="55"
-              ></el-table-column>
-              <el-table-column
-                prop="date"
-                label="日期"
-                width="180"
-                sortable
-              ></el-table-column>
-              <el-table-column
-                prop="name"
-                label="姓名"
-                width="180"
-              ></el-table-column>
-              <el-table-column
-                prop="address"
-                label="地址"
-              ></el-table-column>
+              <el-table-column type="selection" width="55"></el-table-column>
+              <el-table-column prop="date" label="日期" width="180" sortable></el-table-column>
+              <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+              <el-table-column prop="address" label="地址"></el-table-column>
             </el-table>
           </div>
         </el-card>
@@ -378,6 +261,10 @@ export default {
       address: '上海市普陀区金沙江路 1515 弄'
     }, {
       date: '2016-05-01',
+      name: '王小虎d',
+      address: '上海市普陀区金沙江路 1515 弄'
+    }, {
+      date: '2016-05-01',
       name: '王小虎e',
       address: '上海市普陀区金沙江路 1514 弄'
     }]
@@ -460,10 +347,12 @@ export default {
   color: #999;
   margin-top: 20px;
 }
+.today-count .todat-title {
+  margin-right: 10px;
+}
 .today-count .count-num {
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
-  position: relative;
-  top: 2px;
   margin-right: 4px;
   color: #353535;
 }

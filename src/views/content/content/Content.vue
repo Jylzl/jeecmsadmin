@@ -1,11 +1,6 @@
 <template>
   <div>
-    <vue-neditor-wrap
-      v-model="content"
-      :config="myConfig"
-      :destroy="false"
-      @ready="ready"
-    ></vue-neditor-wrap>
+    <vue-neditor-wrap v-model="content" :config="myConfig" :destroy="false" @ready="ready"></vue-neditor-wrap>
   </div>
 </template>
 <script>
@@ -34,7 +29,7 @@ export default {
         enableAutoSave: true,
         fontsize: [10, 11, 12, 14, 16, 18, 20, 24, 36, 48]
       },
-      content: ""
+      content: "<h1 style='text-align:center;'>欢迎使用NEditor富文本编辑器</h1>"
     };
   },
   methods: {
@@ -44,3 +39,5 @@ export default {
   }
 };
 </script>
+<style scoped>
+</style>

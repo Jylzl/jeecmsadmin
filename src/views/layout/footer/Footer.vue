@@ -2,9 +2,16 @@
   <div class="footer-inf clearfix">
     <p class="system-inf">
       <span>上次登录时间: 2018-12-18 11:28:11</span>
-      <span>内存: <span class="ram-use">517.1MB</span> / <span>3531MB</span></span>
+      <span>
+        内存:
+        <span class="ram-use">517.1MB</span> /
+        <span>3531MB</span>
+      </span>
     </p>
-    <p class="copyright-inf">Copyright © 2018 Adobe Systems Incorporated. All rights reserved. </p>
+    <p class="copyright-inf">
+      Copyright © 2018
+      <a href="http://www.whcxbd.com/" target="_blank">武汉创信博达信息技术</a>. All rights reserved.
+    </p>
   </div>
 </template>
 <style scoped>
@@ -28,5 +35,8 @@
   margin: 0;
   text-align: right;
 }
+.copyright-inf a {
+  color: inherit;
+  text-decoration: none;
+}
 </style>
-

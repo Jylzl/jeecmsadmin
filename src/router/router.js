@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Layout from "@/views/layout/Layout.vue";
 import Console from "@/views/console/Console.vue";
-import Content from "@/views/content/content/Content.vue";
+// import Content from "@/views/content/content/Content.vue";
 
 import Accessibility from "@/views/daily/index/Accessibility.vue";
 
@@ -26,7 +26,12 @@ export default new Router({
           path: "/content",
           name: "Content",
           component: () => import("@/views/content/content/Content.vue")
-        },
+		},
+		{
+			path: "/topic",
+			name: "Topic",
+			component: () => import("@/views/content/topic/Topic.vue")
+		  },
         {
           path: "/accessibility",
           name: "Accessibility",
