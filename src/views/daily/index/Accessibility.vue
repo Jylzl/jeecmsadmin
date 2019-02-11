@@ -1,6 +1,7 @@
 <template>
     <div>
-        <el-table :data="tableData2" style="width: 100%" :default-sort="{prop: 'date', order: 'descending'}" :row-class-name="tableRowClassName" border>
+        <el-table :data="tableData2" style="width: 100%" :default-sort="{prop: 'date', order: 'descending'}"
+            :row-class-name="tableRowClassName" border>
             <el-table-column type="index" width="60" align="center"></el-table-column>
             <el-table-column prop="date" label="监测时刻" sortable width="180" align="center"></el-table-column>
             <el-table-column prop="name" label="可访问性" width="120" align="center"></el-table-column>
@@ -10,8 +11,13 @@
             <el-table-column prop="date" label="最近断开时间" width="180" align="center"></el-table-column>
             <el-table-column prop="total" label="断开次数" width="180"></el-table-column>
         </el-table>
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageTotal">
-        </el-pagination>
+        <div style="text-align:right;margin-top:15px;">
+            <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                :current-page="page" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper"
+                :total="pageTotal">
+            </el-pagination>
+        </div>
+
     </div>
 </template>
 
@@ -75,6 +81,7 @@
     .el-table .warning-row {
         background: oldlace;
     }
+
     .el-table .success-row {
         background: #f0f9eb;
     }

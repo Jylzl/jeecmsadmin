@@ -10,9 +10,11 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^1.1.2",
     "echarts": "^4.1.0",
     "element-ui": "^2.4.11",
     "nprogress": "^0.2.0",
+    "tinymce": "^5.0.0",
     "v-charts": "^1.19.0",
     "vue": "^2.5.22",
     "vue-fullcalendar": "^1.0.9",
