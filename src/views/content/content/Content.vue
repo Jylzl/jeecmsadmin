@@ -1,14 +1,15 @@
 <template>
 	<div>
-		<vue-neditor-wrap
+		<!-- <vue-neditor-wrap
 		 v-model="content"
 		 :config="myConfig"
 		 :destroy="false"
 		 @ready="ready"
-		></vue-neditor-wrap>
+		></vue-neditor-wrap> -->
 		<editor
 		 api-key="udm8u7u1w88b8yqqt0czgf3glqzet1mnbt95at9wv8u6bib3"
 		 :init="init"
+		 id="full-featured"
 		 v-model="content1"
 		></editor>
 	</div>
@@ -16,6 +17,7 @@
 <script>
 import VueNeditorWrap from "vue-neditor-wrap";
 import Editor from '@tinymce/tinymce-vue';
+import tinymce_init from '../../../plugins/tinymce/tinymce.js'
 import {
 	method
 } from "bluebird";
@@ -27,22 +29,7 @@ export default {
 	data() {
 		return {
 			content1: "<h1>你好</h1>",
-			init: {
-				selector: 'textarea',  // change this value according to your HTML
-				plugins: 'wordcount',
-				branding: false,
-				contextmenu: "link image imagetools table spellchecker",
-				menubar: 'file edit insert view format table tools help',
-				menu: {
-					file: { title: 'File', items: 'newdocument' },
-					edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall' },
-					insert: { title: 'Insert', items: 'link media | template hr' },
-					view: { title: 'View', items: 'visualaid' },
-					format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat' },
-					table: { title: 'Table', items: 'inserttable tableprops deletetable | cell row column' },
-					tools: { title: 'Tools', items: 'spellchecker code' }
-				}
-			},
+			init: tinymce_init,
 			myConfig: {
 				// 如果需要上传功能,找后端小伙伴要服务器接口地址
 				serverUrl: "/api/web/upload/ueditor",
@@ -63,7 +50,7 @@ export default {
 	},
 	methods: {
 		ready(editorInstance) {
-			console.log('editorInstance', editorInstance)
+			// console.log('editorInstance', editorInstance)
 		}
 	}
 };

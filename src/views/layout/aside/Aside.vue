@@ -1,10 +1,22 @@
 <template>
 	<div class="aside">
 		<div class="aside-top el-header">CMS-system</div>
-		<el-menu default-active="0" class="el-menu-vertical-demo aside-menu" @open="handleOpen" @close="handleClose"
-		 background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :router="true" :collapse="isCollapse">
+		<el-menu
+		 default-active="0"
+		 class="el-menu-vertical-demo aside-menu"
+		 @open="handleOpen"
+		 @close="handleClose"
+		 background-color="#545c64"
+		 text-color="#fff"
+		 active-text-color="#ffd04b"
+		 :router="true"
+		 :collapse="isCollapse"
+		>
 			<el-scrollbar wrap-class="scrollbar-wrapper">
-				<el-menu-item index="0" route="/console">
+				<el-menu-item
+				 index="0"
+				 route="/console"
+				>
 					<i class="el-icon-menu"></i>
 					<span slot="title">工作台</span>
 				</el-menu-item>
@@ -13,8 +25,14 @@
 						<i class="el-icon-document"></i>
 						<span>内容</span>
 					</template>
-					<el-menu-item index="1-0" route="/content">内容管理</el-menu-item>
-					<el-menu-item index="1-1" route="/topic">专题管理</el-menu-item>
+					<el-menu-item
+					 index="1-0"
+					 route="/content"
+					>内容管理</el-menu-item>
+					<el-menu-item
+					 index="1-1"
+					 route="/topic"
+					>专题管理</el-menu-item>
 				</el-submenu>
 				<el-submenu index="2">
 					<template slot="title">
@@ -22,7 +40,10 @@
 						<span slot="title">日常监测</span>
 					</template>
 					<el-menu-item-group title="首页">
-						<el-menu-item index="2-1" route="/accessibility">可访问性</el-menu-item>
+						<el-menu-item
+						 index="2-1"
+						 route="/accessibility"
+						>可访问性</el-menu-item>
 						<el-menu-item index="2-2">连通率</el-menu-item>
 					</el-menu-item-group>
 					<el-menu-item-group title="告警">
@@ -81,41 +102,41 @@
 	</div>
 </template>
 <script>
-	export default {
-		name: 'Aside',
-		data() {
-			return {
-				isCollapse: false,
-				input10: ''
-			}
+export default {
+	name: 'Aside',
+	data() {
+		return {
+			isCollapse: false,
+			input10: ''
+		}
+	},
+	methods: {
+		handleOpen(key, keyPath) {
+			// console.log(key, keyPath);
 		},
-		methods: {
-			handleOpen(key, keyPath) {
-				console.log(key, keyPath);
-			},
-			handleClose(key, keyPath) {
-				console.log(key, keyPath);
-			}
+		handleClose(key, keyPath) {
+			// console.log(key, keyPath);
 		}
 	}
+}
 </script>
 <style scoped>
-	.aside {
-		height: 100%;
-	}
+.aside {
+	height: 100%;
+}
 
-	.aside-top {
-		padding: 0;
-		background-color: rgb(58, 67, 76);
-		border-bottom: none;
-		border-right: solid 1px #e6e6e6;
-		text-align: center;
-		color: #fff;
-		font-size: 22px;
-		font-weight: bolder;
-	}
+.aside-top {
+	padding: 0;
+	background-color: rgb(58, 67, 76);
+	border-bottom: none;
+	border-right: solid 1px #e6e6e6;
+	text-align: center;
+	color: #fff;
+	font-size: 22px;
+	font-weight: bolder;
+}
 
-	.aside-menu {
-		height: calc(100% - 60px);
-	}
+.aside-menu {
+	height: calc(100% - 60px);
+}
 </style>
