@@ -121,6 +121,11 @@ export default {
 }
 </script>
 <style scoped>
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+	width: 220px;
+	min-height: 400px;
+}
+
 .aside {
 	height: 100%;
 }

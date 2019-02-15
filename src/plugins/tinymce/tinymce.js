@@ -1,41 +1,43 @@
-module.exports = {
+export default {
     selector: 'textarea#full-featured', // change this value according to your HTML
-    language: 'zh_CN',
-    directionality:"http://www.baidu.com",
+    language_url: "http://127.0.0.1:8081/langs/zh_CN.js",
+    language: "zh_CN",
+    directionality: "http://www.baidu.com",
     branding: false,
     contextmenu: "link image imagetools table spellchecker",
     menubar: 'file edit insert view format table tools help',
-    menu: {
-        file: {
-            title: 'File',
-            items: 'newdocument'
-        },
-        edit: {
-            title: 'Edit',
-            items: 'undo redo | cut copy paste pastetext | selectall'
-        },
-        insert: {
-            title: 'Insert',
-            items: 'link media | template hr'
-        },
-        view: {
-            title: 'View',
-            items: 'visualaid'
-        },
-        format: {
-            title: 'Format',
-            items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'
-        },
-        table: {
-            title: 'Table',
-            items: 'inserttable tableprops deletetable | cell row column'
-        },
-        tools: {
-            title: 'Tools',
-            items: 'spellchecker code'
-        }
-    },
-    plugins: 'print preview save fullpage powerpaste searchreplace autolink directionality advcode visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount tinymcespellchecker a11ychecker imagetools textpattern help',
+    height: 600,
+    // menu: {
+    //     file: {
+    //         title: 'File',
+    //         items: 'newdocument | preview | print'
+    //     },
+    //     edit: {
+    //         title: 'Edit',
+    //         items: 'undo redo | cut copy paste pastetext | selectall | searchreplace'
+    //     },
+    //     insert: {
+    //         title: 'Insert',
+    //         items: 'image link media | template hr codesample'
+    //     },
+    //     view: {
+    //         title: 'View',
+    //         items: 'visualaid visualblocks visualchars'
+    //     },
+    //     format: {
+    //         title: 'Format',
+    //         items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'
+    //     },
+    //     table: {
+    //         title: 'Table',
+    //         items: 'inserttable tableprops deletetable | cell row column'
+    //     },
+    //     tools: {
+    //         title: 'Tools',
+    //         items: 'spellchecker code'
+    //     }
+    // },
+    plugins: 'print preview save fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern help',
     toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat fullscreen',
     image_advtab: true,
     content_css: [
@@ -70,7 +72,6 @@ module.exports = {
         }
     ],
     importcss_append: true,
-    height: 400,
     file_picker_callback: function (callback, value, meta) {
         /* Provide file and text for the link dialog */
         if (meta.filetype === 'file') {

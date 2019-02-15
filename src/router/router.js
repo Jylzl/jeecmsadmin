@@ -12,29 +12,41 @@ export default new Router({
 	mode: "history",
 	base: process.env.BASE_URL,
 	routes: [{
-		path: "/",
-		name: "main",
-		component: Layout,
-		children: [{
-				path: "/console",
-				name: "Console",
-				component: Console
-			},
-			{
-				path: "/content",
-				name: "Content",
-				component: () => import("@/views/content/content/Content.vue")
-			},
-			{
-				path: "/topic",
-				name: "Topic",
-				component: () => import("@/views/content/topic/Topic.vue")
-			},
-			{
-				path: "/accessibility",
-				name: "Accessibility",
-				component: Accessibility
-			}
-		]
-	}]
+			path: "/",
+			name: "main",
+			component: Layout,
+			redirect: "/console",
+			children: [{
+					path: "/console",
+					name: "Console",
+					component: Console
+				},
+				{
+					path: "/content",
+					name: "Content",
+					component: () => import("@/views/content/content/Content.vue")
+				},
+				{
+					path: "/topic",
+					name: "Topic",
+					component: () => import("@/views/content/topic/Topic.vue")
+				},
+				{
+					path: "/accessibility",
+					name: "Accessibility",
+					component: Accessibility
+				}
+			]
+		},
+		{
+			path: "/login",
+			name: "Login",
+			component: () => import("@/views/account/Login.vue")
+		},
+		{
+			path: "/register",
+			name: "Register",
+			component: () => import("@/views/account/Register.vue")
+		}
+	]
 });
