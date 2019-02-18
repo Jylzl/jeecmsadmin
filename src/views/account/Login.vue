@@ -13,7 +13,7 @@
 								</el-form-item>
 								<el-form-item prop="pswd" :rules="pswd">
 									<div class="show-pswd">
-										<el-input :type="pswdType" v-model.number="landForm_password.pswd" autocomplete="off" placeholder="密码" maxlength="16" class="show-pswd-input"></el-input>
+										<el-input :type="pswdType" v-model.number="landForm_password.pswd" autocomplete="off" placeholder="密码" maxlength="16" class="show-pswd-input" @keyup.enter.native="submitForm('landForm_password')"></el-input>
 										<el-button type="text" class="show-pswd-btn" title="显示密码" @mousedown="showPswd()" @mouseup="hidePswd()" @click="aa()"><i class="el-icon-view"></i></el-button>
 									</div>
 								</el-form-item>
@@ -49,7 +49,7 @@
 								</el-row>
 								<el-form-item prop="verificationCode" :rules="verificationCode">
 									<div class="get-code">
-										<el-input type="text" v-model.number="landForm_phone.verificationCode" autocomplete="off" placeholder="6位数字验证码" maxlength="6" class="get-code-input"></el-input>
+										<el-input type="text" v-model.number="landForm_phone.verificationCode" autocomplete="off" placeholder="6位数字验证码" maxlength="6" class="get-code-input" @keyup.enter.native="submitForm('landForm_phone')"></el-input>
 										<el-button type="text" class="get-code-btn">获取验证码</el-button>
 									</div>
 								</el-form-item>
