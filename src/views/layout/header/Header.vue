@@ -22,8 +22,8 @@
 						<el-dropdown-item>
 							<el-badge :value="193" class="item">未读消息</el-badge>
 						</el-dropdown-item>
-						<el-dropdown-item>锁屏</el-dropdown-item>
-						<el-dropdown-item divided>退出登陆</el-dropdown-item>
+						<el-dropdown-item><span @click="clockScreen()">锁屏</span></el-dropdown-item>
+						<el-dropdown-item divided><span @click="loginOut()">切换用户</span></el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
 				<div class="user-header-img">
@@ -58,6 +58,41 @@
 			},
 			resetForm(formName) {
 				this.$refs[formName].resetFields();
+			},
+			clockScreen(){
+				this.$confirm('您在进行锁屏操作, 是否继续?', '提示', {
+          			confirmButtonText: '确定',
+          			cancelButtonText: '取消',
+          			type: 'warning'
+        		}).then(() => {
+          			this.$router.push({  //核心语句
+						path:'/lock',   //跳转的路径
+						query:{           //路由传参时push和query搭配使用 ，作用时传递参数                            
+							user:'admin1' ,  
+						}
+					})
+				}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '已取消'
+					});          
+				});	
+			},
+			loginOut(){
+				this.$confirm('您在进行退出操作, 是否继续?', '提示', {
+          			confirmButtonText: '确定',
+          			cancelButtonText: '取消',
+          			type: 'warning'
+        		}).then(() => {
+          			this.$router.push({  //核心语句
+						path:'/login',   //跳转的路径
+					})
+				}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '已取消'
+					});          
+				});	
 			}
 		}
 	}

@@ -47,6 +47,11 @@ export default new Router({
 			path: "/register",
 			name: "Register",
 			component: () => import("@/views/account/Register.vue")
+		},
+		{
+			path: "/lock",
+			name: "Lock",
+			component: () => import("@/views/account/Lock.vue")
 		}
 	]
 });

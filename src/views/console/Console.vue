@@ -70,7 +70,7 @@
 			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
 				<el-card class="box-card" shadow="never">
 					<div slot="header" class="clearfix card-header">
-						<span>卡片名称</span>
+						<span>访问分析</span>
 						<el-dropdown style="float: right;" trigger="click">
 							<span class="el-dropdown-link">
 								<i class="el-icon-more"></i>
@@ -82,14 +82,14 @@
 						</el-dropdown>
 					</div>
 					<div>
-						<ve-line :data="chartData2"></ve-line>
+						<ve-line :data="chartData1"></ve-line>
 					</div>
 				</el-card>
 			</el-col>
 			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
 				<el-card class="box-card">
 					<div slot="header" class="clearfix card-header">
-						<span>卡片名称</span>
+						<span>来源分析</span>
 						<el-dropdown style="float: right;" trigger="click">
 							<span class="el-dropdown-link">
 								<i class="el-icon-more"></i>
@@ -101,7 +101,7 @@
 						</el-dropdown>
 					</div>
 					<div>
-						<ve-ring :data="chartData1"></ve-ring>
+						<ve-ring :data="chartData2"></ve-ring>
 					</div>
 				</el-card>
 			</el-col>
@@ -110,7 +110,7 @@
 			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
 				<el-card class="box-card" shadow="never">
 					<div slot="header" class="clearfix card-header">
-						<span>卡片名称</span>
+						<span>热词分析</span>
 						<el-dropdown style="float: right;" trigger="click">
 							<span class="el-dropdown-link">
 								<i class="el-icon-more"></i>
@@ -122,14 +122,14 @@
 						</el-dropdown>
 					</div>
 					<div>
-						<ve-line :data="chartData2"></ve-line>
+						<ve-line :data="chartData3"></ve-line>
 					</div>
 				</el-card>
 			</el-col>
 			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
 				<el-card class="box-card">
 					<div slot="header" class="clearfix card-header">
-						<span>卡片名称</span>
+						<span>待办事项</span>
 						<el-dropdown style="float: right;" trigger="click">
 							<span class="el-dropdown-link">
 								<i class="el-icon-more"></i>
@@ -143,9 +143,17 @@
 					<div style="height:400px;">
 						<el-table :data="tableData" stripe style="width: 100%" ref="multipleTable" tooltip-effect="dark">
 							<el-table-column type="selection" width="55"></el-table-column>
-							<el-table-column prop="date" label="日期" width="180" sortable></el-table-column>
-							<el-table-column prop="name" label="姓名" width="180"></el-table-column>
-							<el-table-column prop="address" label="地址"></el-table-column>
+							<el-table-column prop="date" label="日期" width="160" sortable></el-table-column>
+							<el-table-column prop="name" label="状态" width="100">
+								<template slot-scope="scope">
+									<el-tag type="success" v-if="scope.row.type == '0'">已办</el-tag>
+									<el-tag type="warning" v-else-if="scope.row.type == '1'">待办</el-tag>
+									<el-tag type="danger" v-else-if="scope.row.type == '2'">加急</el-tag>
+									<el-tag type="info" v-else>正常</el-tag>
+      							</template>
+							</el-table-column>
+							<!-- <el-table-column prop="name" label="姓名" width="180"></el-table-column> -->
+							<el-table-column prop="matter" label="事项"></el-table-column>
 						</el-table>
 					</div>
 				</el-card>
@@ -162,70 +170,50 @@
 		data() {
 			return {
 				chartData1: {
-					columns: ['日期', '访问用户'],
-					rows: [{
-							'日期': '1/1',
-							'访问用户': 1393
-						},
-						{
-							'日期': '1/2',
-							'访问用户': 3530
-						},
-						{
-							'日期': '1/3',
-							'访问用户': 2923
-						},
-						{
-							'日期': '1/4',
-							'访问用户': 1723
-						},
-						{
-							'日期': '1/5',
-							'访问用户': 3792
-						},
-						{
-							'日期': '1/6',
-							'访问用户': 4593
-						}
+					columns: ['日期', 'pv统计', 'ip统计', '独立访客统计'],
+					rows: [
+						{ '日期': '00:00-00:59', 'pv统计': 1393, 'ip统计': 1093, '独立访客统计': 0.32 },
+						{ '日期': '03:00-03:59', 'pv统计': 3530, 'ip统计': 3230, '独立访客统计': 0.26 },
+						{ '日期': '06:00-06:59', 'pv统计': 2923, 'ip统计': 2623, '独立访客统计': 0.76 },
+						{ '日期': '09:00-09:59', 'pv统计': 1723, 'ip统计': 1423, '独立访客统计': 0.49 },
+						{ '日期': '12:00-12:59', 'pv统计': 3792, 'ip统计': 3492, '独立访客统计': 0.323 },
+						{ '日期': '15:00-15:59', 'pv统计': 4593, 'ip统计': 4293, '独立访客统计': 0.78 },
+						{ '日期': '18:00-18:59', 'pv统计': 4593, 'ip统计': 4293, '独立访客统计': 0.78 },
+						{ '日期': '21:00-21:59', 'pv统计': 4593, 'ip统计': 4293, '独立访客统计': 0.78 }
 					]
 				},
 				chartData2: {
-					columns: ['日期', '访问用户', '下单用户', '下单率'],
-					rows: [{
-							'日期': '1/1',
-							'访问用户': 1393,
-							'下单用户': 1093,
-							'下单率': 0.32
-						},
+					columns: ['访问类型', '访问量'],
+					rows: [
+						{ '访问类型': '外部链接', '访问量': 1393 },
+						{ '访问类型': '直接访问', '访问量': 3530 },
+						{ '访问类型': '搜索引擎', '访问量': 2923 }
+					]
+				},
+				chartData3: {
+					  columns: ['word', 'count'],
+					  rows:[
 						{
-							'日期': '1/2',
-							'访问用户': 3530,
-							'下单用户': 3230,
-							'下单率': 0.26
-						},
-						{
-							'日期': '1/3',
-							'访问用户': 2923,
-							'下单用户': 2623,
-							'下单率': 0.76
-						},
-						{
-							'日期': '1/4',
-							'访问用户': 1723,
-							'下单用户': 1423,
-							'下单率': 0.49
-						},
-						{
-							'日期': '1/5',
-							'访问用户': 3792,
-							'下单用户': 3492,
-							'下单率': 0.323
-						},
-						{
-							'日期': '1/6',
-							'访问用户': 4593,
-							'下单用户': 4293,
-							'下单率': 0.78
+						'word': 'visualMap',
+						'count': 22199
+						}, {
+						'word': 'continuous',
+						'count': 10288
+						}, {
+						'word': 'contoller',
+						'count': 620
+						}, {
+						'word': 'series',
+						'count': 274470
+						}, {
+						'word': 'gauge',
+						'count': 12311
+						}, {
+						'word': 'detail',
+						'count': 1206
+						}, {
+						'word': 'piecewise',
+						'count': 4885
 						}
 					]
 				},
@@ -237,29 +225,35 @@
 		mounted() {
 			var _this = this;
 			var arrs = [{
-				date: '2016-05-02',
+				date: '2016-05-02 12:12:12',
+				type:'0',
 				name: '王小虎a',
-				address: '上海市普陀区金沙江路 1518 弄'
+				matter: '上海市普陀区金沙江路 1518 弄'
 			}, {
-				date: '2016-05-04',
+				date: '2016-05-04 12:12:12',
+				type:'0',
 				name: '王小虎b',
-				address: '上海市普陀区金沙江路 1517 弄'
+				matter: '上海市普陀区金沙江路 1517 弄'
 			}, {
-				date: '2016-05-01',
+				date: '2016-05-01 12:12:12',
+				type:'1',
 				name: '王小虎c',
-				address: '上海市普陀区金沙江路 1516 弄'
+				matter: '上海市普陀区金沙江路 1516 弄'
 			}, {
-				date: '2016-05-01',
+				date: '2016-05-01 12:12:12',
+				type:'2',
 				name: '王小虎d',
-				address: '上海市普陀区金沙江路 1515 弄'
+				matter: '上海市普陀区金沙江路 1515 弄'
 			}, {
-				date: '2016-05-01',
+				date: '2016-05-01 12:12:12',
+				type:'1',
 				name: '王小虎d',
-				address: '上海市普陀区金沙江路 1515 弄'
+				matter: '上海市普陀区金沙江路 1515 弄'
 			}, {
-				date: '2016-05-01',
+				date: '2016-05-01 12:12:12',
+				type:'0',
 				name: '王小虎e',
-				address: '上海市普陀区金沙江路 1514 弄'
+				matter: '上海市普陀区金沙江路 1514 弄'
 			}]
 			setTimeout(() => {
 				_this.tableData = [];
