@@ -1,6 +1,6 @@
 <template>
 	<el-container>
-		<el-aside width="221px">
+		<el-aside :width="width" v-on:changeWidth="setWidth($event)">
 			<Aside />
 		</el-aside>
 		<el-container>
@@ -29,6 +29,18 @@
 			Aside,
 			Main,
 			Footer
+		},
+		data() {
+			return {
+				width:'221px'
+			}
+		},
+		computed:{
+		},
+		methods: {
+			setWidth(event){
+				console.log('a-'+event)
+			}
 		}
 	}
 </script>
