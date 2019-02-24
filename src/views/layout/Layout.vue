@@ -1,7 +1,7 @@
 <template>
 	<el-container>
-		<el-aside :width="width" v-on:changeWidth="setWidth($event)">
-			<Aside />
+		<el-aside :width="width">
+			<Aside v-on:change-width="setWidth($event)"/>
 		</el-aside>
 		<el-container>
 			<el-header>
@@ -23,7 +23,7 @@
 	import Aside from '@/views/layout/aside/Aside.vue'
 	import Footer from '@/views/layout/footer/Footer.vue'
 	export default {
-		name: 'About',
+		name: 'Layout',
 		components: {
 			Header,
 			Aside,
@@ -32,14 +32,14 @@
 		},
 		data() {
 			return {
-				width:'221px'
+				width:'220px'
 			}
 		},
 		computed:{
 		},
 		methods: {
-			setWidth(event){
-				console.log('a-'+event)
+			setWidth(width){
+				this.width = width;
 			}
 		}
 	}

@@ -68,4 +68,8 @@
 	.fr {
 		float: right;
 	}
+
+	.el-scrollbar__view{
+		height: 100%;
+	}
 </style>
