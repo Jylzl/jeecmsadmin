@@ -14,7 +14,7 @@
 								<el-form-item prop="pswd" :rules="pswd">
 									<div class="show-pswd">
 										<el-input :type="pswdType" v-model.number="landForm_password.pswd" autocomplete="off" placeholder="密码" maxlength="16" class="show-pswd-input" @keyup.enter.native="submitForm('landForm_password')"></el-input>
-										<el-button type="text" class="show-pswd-btn" title="显示密码" @mousedown="showPswd()" @mouseup="hidePswd()" @click="aa()"><i class="el-icon-view"></i></el-button>
+										<el-button type="text" class="show-pswd-btn" title="显示密码"><i class="el-icon-view" @mousedown="showPswd('text')" @mouseup="showPswd('password')"></i></el-button>
 									</div>
 								</el-form-item>
 								<div class="forget-password">
@@ -145,17 +145,8 @@
 			};
 		},
 		methods: {
-			aa(){
-				console.log('ooo')
-				this.pswdType = "text"
-			},
-			showPswd(){
-				console.log('a')
-				this.pswdType = "text"
-			},
-			hidePswd(){
-				console.log('b')
-				this.pswdType = "password"
+			showPswd(type){
+				this.pswdType = type;
 			},
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
@@ -286,6 +277,7 @@
 	.get-code-btn{
 		position: absolute;
 		right: 12px;
+		z-index: 10;
 	}
 	.show-pswd-btn{
 		font-size: 20px;
