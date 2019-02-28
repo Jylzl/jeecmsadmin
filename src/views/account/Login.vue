@@ -8,7 +8,7 @@
 						<div class="card-box">
 							<el-form :model="landForm_password" ref="landForm_password" class="demo-ruleForm">
 								<el-form-item prop="user" :rules="user">
-									<el-autocomplete v-model="landForm_password.user" :fetch-suggestions="querySearch" placeholder="请输入手机号/邮箱/用户名" :trigger-on-focus="false" @select="handleSelect" style="width:100%;"></el-autocomplete>
+									<el-autocomplete v-model="landForm_password.user" :fetch-suggestions="querySearch" placeholder="请输入手机号/邮箱/用户名" :trigger-on-focus="false" @select="handleSelect" style="width:100%;"  :maxlength="20"></el-autocomplete>
 									<!-- <el-input type="text" v-model.number="landForm_password.user" autocomplete="off" placeholder="手机号/邮箱/用户名" :autofocus=true></el-input> -->
 								</el-form-item>
 								<el-form-item prop="pswd" :rules="pswd">
@@ -43,13 +43,13 @@
 									</el-col>
 									<el-col :span="16">
 										<el-form-item prop="phone" :rules="phone">
-											<el-input type="tel" v-model.number="landForm_phone.phone" autocomplete="off" placeholder="手机号" clearable></el-input>
+											<el-input type="tel" v-model.number="landForm_phone.phone" autocomplete="off" placeholder="手机号" maxlength="20" clearable></el-input>
 										</el-form-item>
 									</el-col>
 								</el-row>
 								<el-form-item prop="verificationCode" :rules="verificationCode">
 									<div class="get-code">
-										<el-input type="text" v-model.number="landForm_phone.verificationCode" autocomplete="off" placeholder="6位数字验证码" maxlength="6" class="get-code-input" @keyup.enter.native="submitForm('landForm_phone')"></el-input>
+										<el-input type="text" v-model.number="landForm_phone.verificationCode" autocomplete="off" placeholder="6位数字验证码" maxlength="8" class="get-code-input" @keyup.enter.native="submitForm('landForm_phone')"></el-input>
 										<el-button type="text" class="get-code-btn">获取验证码</el-button>
 									</div>
 								</el-form-item>
