@@ -15,7 +15,7 @@
 						<i class="el-icon-document"></i>
 						<span>内容</span>
 					</template>
-					<el-menu-item index="1-0" route="/content">内容管理</el-menu-item>
+					<el-menu-item index="1-0" route="/contentlist">内容管理</el-menu-item>
 					<el-menu-item index="1-1" route="/topic">专题管理</el-menu-item>
 				</el-submenu>
 				<el-submenu index="2">

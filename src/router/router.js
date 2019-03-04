@@ -22,9 +22,14 @@ export default new Router({
 					component: Console
 				},
 				{
-					path: "/content",
-					name: "Content",
-					component: () => import("@/views/content/content/Content.vue")
+					path: "/contentlist",
+					name: "ContentList",
+					component: () => import("@/views/content/content/ContentList.vue")
+				},
+				{
+					path: "/contentadd",
+					name: "ContentAdd",
+					component: () => import("@/views/content/content/ContentAdd.vue")
 				},
 				{
 					path: "/topic",

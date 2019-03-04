@@ -66,6 +66,7 @@
 		background-color: #f8f8f8;
 		color: #333;
 		padding-top: 0;
+		height: 100%;
 	}
 	body #app>.el-container {
 		height: 100%;
