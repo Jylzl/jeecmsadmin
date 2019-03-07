@@ -20,24 +20,28 @@
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item>用户设置</el-dropdown-item>
 						<el-dropdown-item>
-							<el-badge :value="193" class="item">未读消息</el-badge>
+							<el-badge is-dot class="item">未读消息</el-badge>
 						</el-dropdown-item>
 						<el-dropdown-item><span @click="clockScreen()">锁屏</span></el-dropdown-item>
-						<el-dropdown-item divided><span @click="loginOut()">切换用户</span></el-dropdown-item>
+						<el-dropdown-item @click="loginOut()" divided><span>切换用户</span></el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
 				<div class="user-header-img">
 					<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2030012986,1102835514&fm=200&gp=0.jpg" alt="">
 				</div>
 			</div>
+			<chat></chat>
 		</el-col>
 	</el-row>
 </template>
 
 <script>
+	import chat from '@/components/chat/Chat'
 	export default {
 		name: 'Header',
-		components: {},
+		components: {
+			chat
+		},
 		data() {
 			return {
 				numberValidateForm: {
@@ -59,40 +63,40 @@
 			resetForm(formName) {
 				this.$refs[formName].resetFields();
 			},
-			clockScreen(){
+			clockScreen() {
 				this.$confirm('您在进行锁屏操作, 是否继续?', '提示', {
-          			confirmButtonText: '确定',
-          			cancelButtonText: '取消',
-          			type: 'warning'
-        		}).then(() => {
-          			this.$router.push({  //核心语句
-						path:'/lock',   //跳转的路径
-						query:{           //路由传参时push和query搭配使用 ，作用时传递参数                            
-							user:'admin1' ,  
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					this.$router.push({ //核心语句
+						path: '/lock', //跳转的路径
+						query: { //路由传参时push和query搭配使用 ，作用时传递参数                            
+							user: 'admin1',
 						}
 					})
 				}).catch(() => {
 					this.$message({
 						type: 'info',
 						message: '已取消'
-					});          
-				});	
+					});
+				});
 			},
-			loginOut(){
+			loginOut() {
 				this.$confirm('您在进行退出操作, 是否继续?', '提示', {
-          			confirmButtonText: '确定',
-          			cancelButtonText: '取消',
-          			type: 'warning'
-        		}).then(() => {
-          			this.$router.push({  //核心语句
-						path:'/login',   //跳转的路径
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					this.$router.push({ //核心语句
+						path: '/login', //跳转的路径
 					})
 				}).catch(() => {
 					this.$message({
 						type: 'info',
 						message: '已取消'
-					});          
-				});	
+					});
+				});
 			}
 		}
 	}
@@ -130,23 +134,27 @@
 		padding: 10px 15px;
 		line-height: 39px;
 	}
-	.item{
+
+	.item {
 		box-sizing: border-box;
 		padding-right: 12px;
 		line-height: 1;
 	}
-	.user-console{
+
+	.user-console {
 		display: -webkit-flex;
 		display: flex;
 		flex-direction: row-reverse;
 	}
-	.user-header-img{
+
+	.user-header-img {
 		display: -webkit-flex;
 		display: flex;
-		align-items:center;
+		align-items: center;
 		margin-right: 8px;
 	}
-	.user-header-img img{
+
+	.user-header-img img {
 		box-sizing: border-box;
 		display: block;
 		width: 32px;

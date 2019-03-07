@@ -151,7 +151,7 @@
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						this.landLoading.content = '';
+						this.landLoading.content = '正在登陆...';
 						this.landLoading.icon = 'el-icon-loading';
 						this.landLoading.disabled = true;
 						this.$message({
