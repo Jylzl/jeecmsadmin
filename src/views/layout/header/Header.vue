@@ -14,9 +14,9 @@
 			<div class="user-console">
 				<el-dropdown trigger="click">
 					<span class="el-dropdown-link">
-						<el-badge is-dot class="item">超级管理员</el-badge>
-						<i class="el-icon-arrow-down el-icon--right"></i>
-					</span>
+							<el-badge is-dot class="item">超级管理员</el-badge>
+							<i class="el-icon-arrow-down el-icon--right"></i>
+						</span>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item>用户设置</el-dropdown-item>
 						<el-dropdown-item>
@@ -30,17 +30,14 @@
 					<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2030012986,1102835514&fm=200&gp=0.jpg" alt="">
 				</div>
 			</div>
-			<chat></chat>
 		</el-col>
 	</el-row>
 </template>
 
 <script>
-	import chat from '@/components/chat/Chat'
 	export default {
 		name: 'Header',
 		components: {
-			chat
 		},
 		data() {
 			return {
@@ -105,28 +102,23 @@
 	.el-dropdown-link:hover {
 		cursor: pointer;
 	}
-
 	.nav-bar,
 	.navbar-nav,
 	.navbar-collapse {
 		height: 100%;
 	}
-
 	.navbar-nav>ul {
 		height: 100%;
 	}
-
 	.navbar-nav>ul:after {
 		content: "";
 		display: block;
 		clear: both;
 		height: 0;
 	}
-
 	.navbar-nav>ul {
 		zoom: 1;
 	}
-
 	.navbar-nav>ul>li {
 		box-sizing: border-box;
 		float: left;
@@ -134,26 +126,22 @@
 		padding: 10px 15px;
 		line-height: 39px;
 	}
-
 	.item {
 		box-sizing: border-box;
 		padding-right: 12px;
 		line-height: 1;
 	}
-
 	.user-console {
 		display: -webkit-flex;
 		display: flex;
 		flex-direction: row-reverse;
 	}
-
 	.user-header-img {
 		display: -webkit-flex;
 		display: flex;
 		align-items: center;
 		margin-right: 8px;
 	}
-
 	.user-header-img img {
 		box-sizing: border-box;
 		display: block;
