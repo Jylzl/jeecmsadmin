@@ -9,7 +9,7 @@
       <span>Copyright © 2018</span>
       <a href="http://www.whcxbd.com/" target="_blank">武汉创信博达信息技术</a>
       <span>. All rights reserved.</span>
-      <el-button icon="el-icon-bell"  @click="hideChat()" circle></el-button>
+      <el-button icon="el-icon-bell" style="margin-left:10px;"  @click="hideChat()" circle></el-button>
     </p>
     <chat ref="mychild"></chat>
   </div>
