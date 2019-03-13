@@ -14,16 +14,19 @@
 			<div class="user-console">
 				<el-dropdown trigger="click">
 					<span class="el-dropdown-link">
-							<el-badge is-dot class="item">超级管理员</el-badge>
-							<i class="el-icon-arrow-down el-icon--right"></i>
-						</span>
+	            <el-badge
+	              is-dot
+	              class="item"
+	            >超级管理员</el-badge>
+	            <i class="el-icon-arrow-down el-icon--right"></i>
+	          </span>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item>用户设置</el-dropdown-item>
 						<el-dropdown-item>
 							<el-badge is-dot class="item">未读消息</el-badge>
 						</el-dropdown-item>
 						<el-dropdown-item><span @click="clockScreen()">锁屏</span></el-dropdown-item>
-						<el-dropdown-item @click="loginOut()" divided><span>切换用户</span></el-dropdown-item>
+						<el-dropdown-item divided><el-button type="text"  @click="loginOut()">切换用户</el-button></el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
 				<div class="user-header-img">
@@ -36,23 +39,22 @@
 
 <script>
 	export default {
-		name: 'Header',
-		components: {
-		},
+		name: "Header",
+		components: {},
 		data() {
 			return {
 				numberValidateForm: {
-					age: ''
+					age: ""
 				}
 			};
 		},
 		methods: {
 			submitForm(formName) {
-				this.$refs[formName].validate((valid) => {
+				this.$refs[formName].validate(valid => {
 					if (valid) {
-						alert('submit!');
+						alert("submit!");
 					} else {
-						console.log('error submit!!');
+						console.log("error submit!!");
 						return false;
 					}
 				});
@@ -61,42 +63,49 @@
 				this.$refs[formName].resetFields();
 			},
 			clockScreen() {
-				this.$confirm('您在进行锁屏操作, 是否继续?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					this.$router.push({ //核心语句
-						path: '/lock', //跳转的路径
-						query: { //路由传参时push和query搭配使用 ，作用时传递参数                            
-							user: 'admin1',
-						}
+				this.$confirm("您在进行锁屏操作, 是否继续?", "提示", {
+						confirmButtonText: "确定",
+						cancelButtonText: "取消",
+						type: "warning"
 					})
-				}).catch(() => {
-					this.$message({
-						type: 'info',
-						message: '已取消'
+					.then(() => {
+						this.$router.push({
+							//核心语句
+							path: "/lock", //跳转的路径
+							query: {
+								//路由传参时push和query搭配使用 ，作用时传递参数
+								user: "admin1"
+							}
+						});
+					})
+					.catch(() => {
+						this.$message({
+							type: "info",
+							message: "已取消"
+						});
 					});
-				});
 			},
 			loginOut() {
-				this.$confirm('您在进行退出操作, 是否继续?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					this.$router.push({ //核心语句
-						path: '/login', //跳转的路径
+				this.$confirm("您在进行退出操作, 是否继续?", "提示", {
+						confirmButtonText: "确定",
+						cancelButtonText: "取消",
+						type: "warning"
 					})
-				}).catch(() => {
-					this.$message({
-						type: 'info',
-						message: '已取消'
+					.then(() => {
+						this.$router.push({
+							//核心语句
+							path: "/login" //跳转的路径
+						});
+					})
+					.catch(() => {
+						this.$message({
+							type: "info",
+							message: "已取消"
+						});
 					});
-				});
 			}
 		}
-	}
+	};
 </script>
 <style lang="scss" scoped>
 	.el-dropdown-link:hover {
