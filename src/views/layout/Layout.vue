@@ -7,7 +7,7 @@
 			<el-header>
 				<Header />
 			</el-header>
-			<el-main>
+			<el-main id="js_mainBox">
 				<Main />
 			</el-main>
 			<el-footer height="40px">

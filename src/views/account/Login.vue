@@ -3,37 +3,36 @@
 		<div class="land-box-center">
 			<div class="logo">Jeecms-logo</div>
 			<div class="land-form">
-				<el-tabs v-model="activeName">
-					<el-tab-pane label="账号登陆" name="first">
+				<el-tabs v-model="activeName" @tab-click="handleClick">
+					<el-tab-pane label="账号登陆" name="password">
 						<div class="card-box">
 							<el-form :model="landForm_password" ref="landForm_password" class="demo-ruleForm">
 								<el-form-item prop="user" :rules="user">
-									<el-autocomplete v-model="landForm_password.user" :fetch-suggestions="querySearch" placeholder="请输入手机号/邮箱/用户名" :trigger-on-focus="false" @select="handleSelect" style="width:100%;" :maxlength="20" @keyup.enter.native="submitForm('landForm_password')">
+									<el-autocomplete v-model="landForm_password.user" :fetch-suggestions="querySearch" placeholder="请输入手机号/邮箱/用户名"
+									 :trigger-on-focus="false" @select="handleSelect" style="width:100%;" :maxlength="20" @keyup.enter.native="submitForm('landForm_password')">
 										<template slot-scope="{ item }">
 											<span class="fl">{{ item.value }}</span>
 											<el-button type="text" icon="el-icon-close" class="fr" title="删除账号信息" @click="delLocalAccount(item.value)"></el-button>
 										</template>
 									</el-autocomplete>
-									<!-- <el-input type="text" v-model.number="landForm_password.user" autocomplete="off" placeholder="手机号/邮箱/用户名" :autofocus=true></el-input> -->
 								</el-form-item>
 								<el-form-item prop="pswd" :rules="pswd">
 									<div class="show-pswd">
-										<el-input :type="pswdType" v-model.number="landForm_password.pswd" autocomplete="off" placeholder="密码" maxlength="16" class="show-pswd-input" @keyup.enter.native="submitForm('landForm_password')">
+										<el-input :type="pswdType" v-model.number="landForm_password.pswd" autocomplete="off" placeholder="密码"
+										 maxlength="16" class="show-pswd-input" @keyup.enter.native="submitForm('landForm_password')">
 										</el-input>
-										<el-button type="text" class="show-pswd-btn" title="显示密码"><i class="el-icon-view" @mousedown="showPswd('text')" @mouseup="showPswd('password')"></i></el-button>
+										<el-button type="text" class="show-pswd-btn" title="显示密码" :icon="icon" @mousedown.native="showPswd(true)"
+										 @mouseup.native="showPswd(false)"></el-button>
 									</div>
 								</el-form-item>
 								<div class="forget-password">
 									<el-checkbox v-model="landForm_password.rememberPswd" @change="checkCookies">记住密码</el-checkbox>
 									<router-link to="/register">忘记密码？</router-link>
 								</div>
-								<el-form-item style="margin-bottom:0;">
-									<el-button type="primary" @click="submitForm('landForm_password')" style="width:100%;" :disabled="landLoading.disabled" :icon="landLoading.icon">{{landLoading.content}}</el-button>
-								</el-form-item>
 							</el-form>
 						</div>
 					</el-tab-pane>
-					<el-tab-pane label="免密登陆" name="second">
+					<el-tab-pane label="免密登陆" name="phone">
 						<div class="card-box-two">
 							<el-form :model="landForm_phone" ref="landForm_phone" class="demo-ruleForm">
 								<el-row :gutter="20">
@@ -49,23 +48,27 @@
 									</el-col>
 									<el-col :span="16">
 										<el-form-item prop="phone" :rules="phone">
-											<el-input type="tel" v-model.number="landForm_phone.phone" autocomplete="off" placeholder="手机号" maxlength="20" clearable></el-input>
+											<el-input type="tel" v-model.number="landForm_phone.phone" autocomplete="off" placeholder="手机号" maxlength="20"
+											 clearable></el-input>
 										</el-form-item>
 									</el-col>
 								</el-row>
 								<el-form-item prop="verificationCode" :rules="verificationCode">
 									<div class="get-code">
-										<el-input type="text" v-model.number="landForm_phone.verificationCode" autocomplete="off" placeholder="6位数字验证码" maxlength="8" class="get-code-input" @keyup.enter.native="submitForm('landForm_phone')"></el-input>
+										<el-input type="text" v-model.number="landForm_phone.verificationCode" autocomplete="off" placeholder="6位数字验证码"
+										 maxlength="8" class="get-code-input" @keyup.enter.native="submitForm('landForm_phone')"></el-input>
 										<el-button type="text" class="get-code-btn">获取验证码</el-button>
 									</div>
-								</el-form-item>
-								<el-form-item style="margin-bottom:0;">
-									<el-button type="primary" @click="submitForm('landForm_phone')" style="width:100%;" :disabled="landLoading.disabled" :icon="landLoading.icon">{{landLoading.content}}</el-button>
 								</el-form-item>
 							</el-form>
 						</div>
 					</el-tab-pane>
 				</el-tabs>
+			</div>
+			<div class="land-form-btn">
+				<div id="your-dom-id" class="nc-container" v-show="aliyunShow"></div>
+				<el-button type="primary" @click="submitForm(submitFormName)" style="width:100%;" :disabled="landLoading.disabled"
+				 :icon="landLoading.icon" v-show="!aliyunShow">{{landLoading.content}}</el-button>
 			</div>
 			<div class="three-land">
 				<el-button type="text">
@@ -82,34 +85,21 @@
 	import Cookies from 'js-cookie'
 	import CryptoJS from "crypto-js";
 	import tripledes from "crypto-js/tripledes";
+	import {
+		result_phone,
+		result_verificationCode
+	} from "../../utils/rules.js";
 	export default {
 		data() {
-			// 自定义验证规则
-			var phone = (rule, value, callback) => {
-				if (!value) {
-					return callback(new Error("手机号不能为空"));
-				} else if (
-					!/^1[34578]\d{9}$/.test(value) ||
-					!(
-						/^(5[1-6,9]|6[0-9]|9[0-8])\d{6}$/.test(value) ||
-						!/^([0][9])\\d{8}$/.test(value)
-					)
-				) {
-					return callback(new Error("请输入正确的手机号码"));
-				} else {
-					callback();
-				}
-			};
-			var verificationCode = (rule, value, callback) => {
-				if (!value) {
-					return callback(new Error("验证码不能为空"));
-				} else if (!/\d{6}$/.test(value)) {
-					return callback(new Error("请输入6位数字验证码"));
-				} else {
-					callback();
-				}
-			};
+			//引入自定义验证规则
+			var phone = result_phone;
+			var verificationCode = result_verificationCode;
 			return {
+				aliyunShow: false,
+				icon: "icon iconfont icon-icon_yulan",
+				submitFormName: "landForm_password",
+				pswdType: "password",
+				activeName: "password",
 				// 表单验证规则
 				user: [
 					//用户名验证
@@ -149,8 +139,6 @@
 					phone: "",
 					verificationCode: ""
 				},
-				pswdType: "password",
-				activeName: "first",
 				landLoading: {
 					disabled: false,
 					icon: "",
@@ -171,6 +159,16 @@
 				],
 				rememberUsers: []
 			};
+		},
+		created() {
+			// let head = document.getElementsByTagName("head");
+			// let script = document.createElement('script');
+			// script.type = "text/javascript";
+			// script.charset = "utf-8";
+			// script.src = "//g.alicdn.com/sd/ncpc/nc.js?t=2015052012";
+			// console.log(head)
+			// head[].appendChild(script);
+
 		},
 		mounted() {
 			// 从cookies里面取加密用户然后解密
@@ -197,7 +195,13 @@
 			},
 			// 密码长按显示
 			showPswd(type) {
-				this.pswdType = type;
+				if (type) {
+					this.pswdType = "text";
+					this.icon = "icon iconfont icon-miwen";
+				} else {
+					this.pswdType = "password";
+					this.icon = "icon iconfont icon-icon_yulan";
+				}
 			},
 			// 删除本地记录用户
 			delLocalAccount(userName) {
@@ -238,6 +242,13 @@
 							(this.landForm_password.user == "aa" &&
 								this.landForm_password.pswd == "a1")
 						) {
+							console.log(process.env.VUE_APP_aesKey)
+							console.log(process.env.VUE_APP_ivKey)
+							console.log(CryptoJS.AES.encrypt(this.landForm_password.pswd, process.env.VUE_APP_aesKey, {
+								iv: process.env.VUE_APP_ivKey,
+								mode: CryptoJS.mode.CBC,
+								padding: CryptoJS.pad.Pkcs7
+							}))
 							//登陆成功后，先清除旧用户信息，然后判断用户是否勾选记住密码，是则将用户信息插入数组，否则仅记住用户名，然后将数组加密后存入cookies
 							this.rememberUsers = this.rememberUsers.filter(
 								user => user.value != this.landForm_password.user
@@ -261,6 +272,8 @@
 							Cookies.set("account", tripledes.encrypt(JSON.stringify(this.rememberUsers), process.env.VUE_APP_userSaveKey).toString(), {
 								expires: 7
 							})
+							//手动清除cookies记录的登录次数
+							Cookies.remove("landingTimes")
 							this.$message({
 								message: "登陆成功",
 								type: "success",
@@ -275,6 +288,19 @@
 								});
 							}, 1000);
 						} else {
+							// 登陆失败五次启用阿里云人机验证
+							Cookies.set("landingTimes", Cookies.get("landingTimes") ? Number(Cookies.get("landingTimes")) + 1 : 1, {
+								expires: 1
+							})
+							if (Cookies.get("landingTimes") >= 5) {
+								setTimeout(() => {
+									this.aliyunShow = true;
+									// 阿里云人机验证
+									this.aliyun();
+								}, 1200);
+							} else {
+								this.aliyunShow = false;
+							}
 							setTimeout(() => {
 								this.landLoading.content = "登陆";
 								this.landLoading.icon = "";
@@ -307,17 +333,72 @@
 					);
 				};
 			},
+			// tab切换更换按钮提交表单
+			handleClick(tab, event) {
+				if (tab.name == "password") {
+					this.submitFormName = "landForm_password";
+				} else if (tab.name == "phone") {
+					this.submitFormName = "landForm_phone";
+				}
+				this.landLoading.content = "登陆";
+				this.landLoading.icon = "";
+				this.landLoading.disabled = false;
+			},
 			handleSelect(item) {
 				this.landForm_password.pswd = item.pswd;
 			},
 			landFormPassword() {},
-			landFormPhone() {}
+			landFormPhone() {},
+			aliyun() {
+				var _this = this;
+				var nc_token = ["CF_APP_1", (new Date()).getTime(), Math.random()].join(':');
+				var NC_Opt = {
+					renderTo: "#your-dom-id",
+					appkey: "CF_APP_1",
+					scene: "register",
+					token: nc_token,
+					customWidth: 321,
+					trans: {
+						"key1": "code0"
+					},
+					elementID: ["usernameID"],
+					is_Opt: 0,
+					language: "cn",
+					isEnabled: true,
+					timeout: 3000,
+					times: 5,
+					apimap: {
+						// 'analyze': '//a.com/nocaptcha/analyze.jsonp',
+						// 'get_captcha': '//b.com/get_captcha/ver3',
+						// 'get_captcha': '//pin3.aliyun.com/get_captcha/ver3'
+						// 'get_img': '//c.com/get_img',
+						// 'checkcode': '//d.com/captcha/checkcode.jsonp',
+						// 'umid_Url': '//e.com/security/umscript/3.2.1/um.js',
+						// 'uab_Url': '//aeu.alicdn.com/js/uac/909.js',
+						// 'umid_serUrl': 'https://g.com/service/um.json'
+					},
+					callback: function (data) {
+						window.console && console.log(nc_token)
+						window.console && console.log(data.csessionid)
+						window.console && console.log(data.sig)
+						setTimeout(() => {
+							_this.aliyunShow = false;
+						}, 1200);
+					}
+				}
+				var nc = new noCaptcha(NC_Opt)
+				nc.upLang('cn', {
+					_startTEXT: "请按住滑块，拖动到最右边",
+					_yesTEXT: "验证通过",
+					_error300: "哎呀，出错了，点击<a href=\"javascript:__nc.reset()\">刷新</a>再来一次",
+					_errorNetwork: "网络不给力，请<a href=\"javascript:__nc.reset()\">点击刷新</a>",
+				})
+			}
 		}
 	};
 </script>
 <style scoped>
 	.land-box {
-		display: -webkit-flex;
 		display: flex;
 		width: 100%;
 		height: 100%;
@@ -361,15 +442,25 @@
 		font-size: 14px;
 	}
 
-	.card-box,
+	.card-box {
+		box-sizing: border-box;
+		height: 182px;
+		padding-top: 20px;
+	}
+
 	.card-box-two {
 		box-sizing: border-box;
-		height: 230px;
+		height: 160px;
 		padding-top: 20px;
 	}
 
 	.card-box-two {
 		padding-top: 30px;
+	}
+
+	.land-form-btn {
+		box-sizing: border-box;
+		padding: 0 80px;
 	}
 
 	.three-land {
