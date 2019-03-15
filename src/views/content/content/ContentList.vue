@@ -22,13 +22,14 @@
 				</div>
 				<div class="right-top-right">
 					<el-dropdown>
-						<el-button type="primary" icon="el-icon-edit-outline" size="small">添加内容</el-button>
+						<el-button type="primary" icon="el-icon-edit" size="small">发布内容</el-button>
 						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item>黄金糕</el-dropdown-item>
-							<el-dropdown-item>狮子头</el-dropdown-item>
-							<el-dropdown-item>螺蛳粉</el-dropdown-item>
-							<el-dropdown-item>双皮奶</el-dropdown-item>
-							<el-dropdown-item>蚵仔煎</el-dropdown-item>
+							<el-dropdown-item>新闻</el-dropdown-item>
+							<el-dropdown-item>图库</el-dropdown-item>
+							<el-dropdown-item>视频</el-dropdown-item>
+							<el-dropdown-item>新闻发布会</el-dropdown-item>
+							<el-dropdown-item>在线访谈</el-dropdown-item>
+							<el-dropdown-item>领导之窗</el-dropdown-item>
 						</el-dropdown-menu>
 					</el-dropdown>
 				</div>
