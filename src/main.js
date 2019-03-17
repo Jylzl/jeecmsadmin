@@ -1,11 +1,12 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router/router.js";
-import { store } from "./store/index.js";
+import {
+  store
+} from "./store/index.js";
 
 // 引入饿了么UI
 import "./plugins/elementui/element.js";
-
 // 图表插件
 import VCharts from "v-charts";
 // svg
@@ -13,11 +14,10 @@ import Icon from "vue2-svg-icon/Icon.vue";
 // 页面加载进度条
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-
 //右键
 import rightMenu from "rightmenu";
-Vue.use(rightMenu);
 
+Vue.use(rightMenu);
 Vue.use(VCharts);
 Vue.component("icon", Icon);
 Vue.config.productionTip = false;

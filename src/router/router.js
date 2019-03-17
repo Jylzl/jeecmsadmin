@@ -37,6 +37,11 @@ export default new Router({
 					component: () => import("@/views/content/topic/Topic.vue")
 				},
 				{
+					path: "/column",
+					name: "Column",
+					component: () => import("@/views/column/Index.vue")
+				},
+				{
 					path: "/accessibility",
 					name: "Accessibility",
 					component: Accessibility

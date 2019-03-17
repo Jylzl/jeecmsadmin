@@ -23,6 +23,7 @@
     "vue-fullcalendar": "^1.0.9",
     "vue-neditor-wrap": "^1.0.4",
     "vue-router": "^3.0.2",
+    "vue-ztree-2.0": "^1.0.4",
     "vuex": "^3.1.0"
   },
   "devDependencies": {

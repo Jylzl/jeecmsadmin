@@ -18,7 +18,7 @@
 						<el-menu-item index="1-0" route="/contentlist">内容管理</el-menu-item>
 						<el-menu-item index="1-1" route="/topic">专题管理</el-menu-item>
 					</el-submenu>
-					<el-menu-item index="2" route="/contentadd">
+					<el-menu-item index="2" route="/column">
 						<i class="icon iconfont icon-liebiao el-submenu-iconfont"></i>
 						<span slot="title">栏目管理</span>
 					</el-menu-item>

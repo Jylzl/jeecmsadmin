@@ -272,7 +272,7 @@
 							Cookies.set("account", tripledes.encrypt(JSON.stringify(this.rememberUsers), process.env.VUE_APP_userSaveKey).toString(), {
 								expires: 7
 							})
-							//手动清除cookies记录的登录次数
+							//登陆成功手动清除cookies记录的登录次数
 							Cookies.remove("landingTimes")
 							this.$message({
 								message: "登陆成功",
@@ -292,7 +292,7 @@
 							Cookies.set("landingTimes", Cookies.get("landingTimes") ? Number(Cookies.get("landingTimes")) + 1 : 1, {
 								expires: 1
 							})
-							if (Cookies.get("landingTimes") >= 5) {
+							if (Cookies.get("landingTimes") >= 3) {
 								setTimeout(() => {
 									this.aliyunShow = true;
 									// 阿里云人机验证
