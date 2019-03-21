@@ -79,7 +79,7 @@
         components: {},
         data() {
             return {
-                 menudata:{
+                menudata:{
                     // 菜单box的样式   Menu box style
                     boxStyle:"width:150px;background:#f55;",
                     // 菜单选项的样式 Style of menu options

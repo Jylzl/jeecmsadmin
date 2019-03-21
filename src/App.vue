@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app"  oncontextmenu="self.event.returnValue=false">
     <router-view />
     <BackToTop />
   </div>

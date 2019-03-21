@@ -1,20 +1,24 @@
 <template>
 	<el-tabs type="border-card">
 		<el-tab-pane label="树结构">
-			<el-tree :data="data5" node-key="id" >
+			<div style="width:280px;">
+				<el-tree :data="data5" node-key="id"  @node-contextmenu="contextmenu()">
 				<div class="custom-tree-node" slot-scope="{ node, data }" @check-change="handleCheckChange(node, data)">
-					<div class="aligin-center" :data-id="data.icon">
+					<div class="aligin-center" :data-id="filterType(node.label,1)">
 						<svg class="icon svg-icon" aria-hidden="true">
-							<use :xlink:href="data.icon"></use>
+							<use :xlink:href="filterType(node.label,1)"></use>
 						</svg>
-						<span>{{ node.label }}</span>
+						<el-input v-model="node.label" placeholder="请输入内容" size="mini" class="change-filename" v-if="false"></el-input>
+						<span v-else>{{ node.label }}</span>
 					</div>
 					<div>
 						<el-button type="text" size="mini" @click="() => append(data)">添加</el-button>
 						<el-button type="text" size="mini" @click="() => remove(node, data)">删除</el-button>
+						<el-button type="text" size="mini" @click="() => append(data)">修改</el-button>
 					</div>
 				</div>
 			</el-tree>
+			</div>
 		</el-tab-pane>
 		<el-tab-pane label="走马灯">
 			<el-carousel indicator-position="outside">
@@ -29,8 +33,8 @@
 </template>
 
 <script>
-import {iconfont} from '@/assets/iconfont/iconfont_folder.js'
-import {iconfontType} from '@/assets/iconfont/iconfont_file_type.js'
+import {folder} from '@/assets/iconfont/iconfont_folder.js'
+import {fileType} from '@/assets/iconfont/iconfont_file_type.js'
 	let id = 1000;
 	export default {
 		data() {
@@ -53,11 +57,11 @@ import {iconfontType} from '@/assets/iconfont/iconfont_file_type.js'
 				icon:'#icon-folder-images',
 				children: [{
 					id: 21,
-					label: 'img_bg.png',
+					label: 'img_bg.images',
 					icon:'#icon-file_type_image'
 				}, {
 					id: 22,
-					label: 'img_bg.png',
+					label: 'img_bg.jpg',
 					icon:'#icon-file_type_image'
 				}]
 			}, {
@@ -83,7 +87,7 @@ import {iconfontType} from '@/assets/iconfont/iconfont_file_type.js'
 					icon:'#icon-file_type_js'
 				}, {
 					id: 42 ,
-					label: 'index.css',
+					label: 'index.js',
 					icon:'#icon-file_type_js'
 				}]
 			}, {
@@ -101,16 +105,122 @@ import {iconfontType} from '@/assets/iconfont/iconfont_file_type.js'
 				}]
 			}];
 			return {
+				obj : {},
 				data4: JSON.parse(JSON.stringify(data)),
 				data5: JSON.parse(JSON.stringify(data)),
 				props: {
 					label: 'name',
 					children: 'zones'
 				},
-				count: 1
+				count: 1,
+				menudata:{
+                    // 菜单box的样式   Menu box style
+                    boxStyle:"width:150px;background:rgb(84, 92, 100);box-sizing: border-box;",
+                    // 菜单选项的样式 Style of menu options
+                    optionStyle:"color:#fff;line-height:30px;font-size:15px;",
+                    menus:[
+                        {
+                        /**
+                         * content 菜单显示的文字 <支持html> 
+                         * callback：菜单点击要触发函数  需要在methods定义 
+                         * style ： 本项菜单的单独样式 可以覆盖掉optionStyle  
+                         * icon : icon图片地址
+                         * iconStyle: icon 图片的样式（例如大小等 直接作用于图片）
+                         * iconPosition : 支持left / right (其余全部按照left处理);
+                         * content The text displayed on the menu(can use html)
+                         * callback: Menu clicks to trigger functions need to be defined in methods
+                         * style :  The single style of this menu can override option Style
+                         * icon : your icon's url
+                         * iconStyle : you icon's style ,is image's style
+                         * iconPosition :you can use left or right ;The rest are all processed according to left
+                         */
+                        /**
+                         * 字段(field)           类型(type)                 是否可以为空(is can null)    默认值
+                         * content            [ html | text ]                       Y                   ""
+                         * callback           [  methods function ]                 Y                   return false
+                         * style                   [ css ]                          Y                   ""
+                         * icon                   [ url ]                           Y                   ""
+                         * iconStyle              [ css ]                           Y                   ""
+                         * iconPosition           [string]                          Y                   "left"
+                        */
+                        content:"新建文件",
+						callback:"callbackMethods",
+						style:"text-indent: 2em;text-align: left;"
+                        },
+                        {
+                        content:"新建文件夹",
+                        callback:"otherMethods",
+						style:"text-indent: 2em;text-align: left;"
+                        },
+                        {
+                        content:"重命名",
+                        callback:"otherMethods",
+						style:"text-indent: 2em;text-align: left;"
+                        },
+                        {
+                        content:"删除",
+                        callback:"otherMethods",
+						style:"text-indent: 2em;text-align: left;"
+                        }
+                    ],
+                },
 			};
 		},
+		computed : {  //设置计算属性
+			fSearch(){
+				if(this.keyword){
+					return this.list.filter((value)=>{  //过滤数组元素
+						return value.includes(this.keyword); //如果包含字符返回true
+					});
+				}
+			}
+		},
+		mounted(){
+			// folder.map(item=>{
+			// 	this.obj[item.replace("icon-folder-","")] = item;
+			// })
+			// console.log(this.obj)
+			// console.log(this.obj['node'])
+			// console.log("folder")
+			// console.log(folder)
+			// console.log("fileType")
+			// console.log(fileType)
+			// console.log(this.filterType("node",1,folder)[0])
+			// console.log(this.filterType("node",1,folder))
+			
+		},
 		methods: {
+			filterType(str){
+				var icon;
+				if(str.indexOf(".") == -1){ //不存在点则为文件夹名
+					icon = folder.filter((value)=>{  //过滤数组元素
+						return value.includes(str); //如果包含字符返回true
+					})[0];
+					icon = icon?icon:'icon-folder-close';
+					
+				}else{
+					icon = fileType.filter((value)=>{  //过滤数组元素
+						return value.includes(str.split('.')[str.split('.').length - 1]); //如果包含字符返回true
+					})[0];
+					icon = icon?icon:'icon-file_type_new';
+				}
+				return '#'+icon;
+			},
+			contextmenu(event,object,value,element){
+				alert('右键')
+				console.log(event)
+				console.log(object)
+				console.log(value)
+				console.log(element)
+			},
+			callbackMethods(){
+                // do something
+                alert('aa')
+            },
+            otherMethods(str){
+                // do something
+                 console.log(str)
+            },
 			cc(data){
 				console.log(data);
 			},
@@ -193,8 +303,8 @@ import {iconfontType} from '@/assets/iconfont/iconfont_file_type.js'
 		padding-right: 8px;
 	}
 	.icon {
-		width: 1.4em;
-		height: 1.4em;
+		width: 1.42em;
+		height: 1.42em;
 		vertical-align: -0.15em;
 		fill: currentColor;
 		overflow: hidden;
@@ -203,5 +313,15 @@ import {iconfontType} from '@/assets/iconfont/iconfont_file_type.js'
 	.aligin-center{
 		display: flex;
 		align-items: center;
+	}
+	.change-filename input{
+		box-sizing: border-box;
+		padding: 0;
+		height: auto;
+		height: 24px !important;
+		font-size: 14px;
+		border: none;
+		border-bottom: 1px solid #1F6FB5;
+		border-radius: 0;
 	}
 </style>
