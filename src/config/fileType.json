@@ -1,0 +1,33 @@
+{
+    "fileType": [{
+            "images": ["images", "png", "jpeg", "jpg", "bmp", "gif"]
+        },
+        {
+            "mp3": ["mp3", "wav", "wma", "vqf"]
+        },
+        {
+            "video": ["mp4", "avi", "3gp", "rmvb", "mov"]
+        },
+        {
+            "word": ["doc", "docx", "docm", "dotx", "dotm"]
+        },
+        {
+            "excel": ["xlsx", "xlsm", "xltx", "xltm", "xlsb", "xlam"]
+        },
+        {
+            "PowerPoint": ["pptx", "pptm", "ppsx", "ppsx", "potx", "potm", "ppam"]
+        },
+        {
+            "html": ["html", "htm"]
+        }
+    ],
+    "folderType": [{
+        "images": ["img", "images"]
+    }, {
+        "js": ["js", "javascript"]
+    }, {
+        "css": ["css", "scss", "less"]
+    }, {
+        "html": ["htm", "html"]
+    }]
+}

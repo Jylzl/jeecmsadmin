@@ -2,7 +2,7 @@
 	<el-tabs type="border-card">
 		<el-tab-pane label="树结构">
 			<div style="width:280px;">
-				<el-tree :data="data5" node-key="id"  @node-contextmenu="contextmenu()">
+				<el-tree :data="data5" node-key="id"  @node-contextmenu="contextmenu()" @node-click="handleNodeClick">
 				<div class="custom-tree-node" slot-scope="{ node, data }" @check-change="handleCheckChange(node, data)">
 					<div class="aligin-center" :data-id="filterType(node.label,1)">
 						<svg class="icon svg-icon" aria-hidden="true">
@@ -35,6 +35,7 @@
 <script>
 import {folder} from '@/assets/iconfont/iconfont_folder.js'
 import {fileType} from '@/assets/iconfont/iconfont_file_type.js'
+const fileTypeJson = require('@/config/fileType.json')
 	let id = 1000;
 	export default {
 		data() {
@@ -180,6 +181,11 @@ import {fileType} from '@/assets/iconfont/iconfont_file_type.js'
 			// 	this.obj[item.replace("icon-folder-","")] = item;
 			// })
 			// console.log(this.obj)
+			console.log("fileTypeJson")
+			console.log(fileTypeJson)
+			console.log(fileTypeJson.fileType[0])
+			console.log(fileTypeJson.fileType[1])
+			// console.log(fileTypeJson.parseJSON())
 			// console.log(this.obj['node'])
 			// console.log("folder")
 			// console.log(folder)
@@ -191,11 +197,34 @@ import {fileType} from '@/assets/iconfont/iconfont_file_type.js'
 		},
 		methods: {
 			filterType(str){
-				var icon;
-				if(str.indexOf(".") == -1){ //不存在点则为文件夹名
+				var icon,str1;
+				if(str.indexOf(".") == -1){ //不存在点则为文件夹名folderType
+					// var key,valueArr;
+					// fileTypeJson.folderType.map(item=>{
+					// 	for(let i in item){
+					// 		key = i;
+					// 		valueArr = item[i];
+					// 	}
+					// 	console.log("----------------------------------------------------")
+					// 	console.log(key)
+					// 	console.log(valueArr)
+					// 	str1 = valueArr.filter((value)=>{  //过滤数组元素
+					// 			return value.includes(str); //如果包含字符返回true
+					// 		})[0];
+					// 		if(!str1){
+					// 			key = "";
+					// 		}
+					// 		console.log("1############################################")
+					// 		console.log(str1)
+					// 		console.log(key)
+					// })
+					// console.log(item[i])
+
+					
 					icon = folder.filter((value)=>{  //过滤数组元素
 						return value.includes(str); //如果包含字符返回true
 					})[0];
+					console.log("icona--"+icon)
 					icon = icon?icon:'icon-folder-close';
 					
 				}else{
@@ -229,6 +258,7 @@ import {fileType} from '@/assets/iconfont/iconfont_file_type.js'
 			},
 			handleNodeClick(data) {
 				console.log(data);
+				this.icon =  data.icon+"-open"
 			},
 			loadNode(node, resolve) {
 				if (node.level === 0) {
