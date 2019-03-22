@@ -1,12 +1,12 @@
 <template>
 	<el-tabs type="border-card">
 		<el-tab-pane label="树结构">
-			<div style="width:280px;">
+			<div style="width:380px;">
 				<el-tree :data="data5" node-key="id"  @node-contextmenu="contextmenu()" @node-click="handleNodeClick">
 				<div class="custom-tree-node" slot-scope="{ node, data }" @check-change="handleCheckChange(node, data)">
-					<div class="aligin-center" :data-id="filterType(node.label,1)">
+					<div class="aligin-center">
 						<svg class="icon svg-icon" aria-hidden="true">
-							<use :xlink:href="filterType(node.label,1)"></use>
+							<use :xlink:href="filterType(data.icon)"></use>
 						</svg>
 						<el-input v-model="node.label" placeholder="请输入内容" size="mini" class="change-filename" v-if="false"></el-input>
 						<span v-else>{{ node.label }}</span>
@@ -42,67 +42,114 @@ const fileTypeJson = require('@/config/fileType.json')
 			const data = [{
 				id: 1,
 				label: 'images',
-				icon:'#icon-folder-images',
+				icon: 'images',
 				children: [{
 					id: 11,
 					label: 'img_bg.png',
-					icon:'#icon-file_type_image'
+					icon: 'img_bg.png'
 				}, {
 					id: 12,
 					label: 'img_header.png',
-					icon:'#icon-file_type_image',
+					icon: 'img_header.png'
 				}]
 			}, {
 				id: 2,
 				label: 'img',
-				icon:'#icon-folder-images',
+				icon: 'img',
 				children: [{
 					id: 21,
-					label: 'img_bg.images',
-					icon:'#icon-file_type_image'
+					label: 'img_bg.png',
+					icon: 'img_bg.png'
 				}, {
 					id: 22,
 					label: 'img_bg.jpg',
-					icon:'#icon-file_type_image'
+					icon: 'img_bg.jpg'
+				}, {
+					id: 23,
+					label: 'img_bg.gif',
+					icon: 'img_bg.gif'
 				}]
 			}, {
 				id: 3,
 				label: 'css',
-				icon:'#icon-folder-css',
+				icon: 'css',
 				children: [{
 					id: 31,
 					label: 'main.css',
-					icon:'#icon-file_type_css'
+					icon: 'main.css'
 				}, {
 					id: 32,
 					label: 'index.css',
-					icon:'#icon-file_type_css'
+					icon: 'index.css'
 				}]
 			}, {
 				id: 4,
 				label: 'js',
-				icon:'#icon-folder-js',
+				icon: 'js',
 				children: [{
 					id: 41,
 					label: 'index.js',
-					icon:'#icon-file_type_js'
+					icon: 'index.js'
 				}, {
 					id: 42 ,
 					label: 'index.js',
-					icon:'#icon-file_type_js'
+					icon: 'index.js'
 				}]
 			}, {
 				id: 5,
 				label: 'html',
-				icon:'#icon-folder-views',
+				icon: 'html',
 				children: [{
 					id: 51,
 					label: 'index.html',
-					icon:'#icon-file_type_html'
+					icon: 'index.html'
 				}, {
 					id: 52 ,
-					label: 'index.html',
-					icon:'#icon-file_type_html'
+					label: 'index.htm',
+					icon: 'index.htm'
+				}]
+			}, {
+				id: 6,
+				label: 'word',
+				icon: 'word',
+				children: [{
+					id: 61,
+					label: 'index',
+					icon: 'index',
+					children: [{
+					id: 611,
+					label: 'index.doc',
+					icon: 'index.doc'
+				}, {
+					id: 612 ,
+					label: 'index.docx',
+					icon: 'index.docx'
+				}]
+				}, {
+					id: 62 ,
+					label: 'index.docx',
+					icon: 'index.docx'
+				}]
+			}, {
+				id: 7,
+				label: 'docs',
+				icon: 'docs',
+				children: [{
+					id: 71,
+					label: 'index.doc',
+					icon: 'index.doc'
+				}, {
+					id: 72 ,
+					label: 'index.docx',
+					icon: 'index.docx'
+				},{
+					id: 73,
+					label: 'index.pptx',
+					icon: 'index.pptx'
+				}, {
+					id: 74 ,
+					label: 'index.xls',
+					icon: 'index.xls'
 				}]
 			}];
 			return {
@@ -181,10 +228,10 @@ const fileTypeJson = require('@/config/fileType.json')
 			// 	this.obj[item.replace("icon-folder-","")] = item;
 			// })
 			// console.log(this.obj)
-			console.log("fileTypeJson")
-			console.log(fileTypeJson)
-			console.log(fileTypeJson.fileType[0])
-			console.log(fileTypeJson.fileType[1])
+			// console.log("fileTypeJson")
+			// console.log(fileTypeJson)
+			// console.log(fileTypeJson.fileType[0])
+			// console.log(fileTypeJson.fileType[1])
 			// console.log(fileTypeJson.parseJSON())
 			// console.log(this.obj['node'])
 			// console.log("folder")
@@ -196,44 +243,69 @@ const fileTypeJson = require('@/config/fileType.json')
 			
 		},
 		methods: {
+			//根据文件名，文件夹名生成svg图标名称
 			filterType(str){
-				var icon,str1;
+				var idOpen = str.includes("open")?true:false;
+				var icon,str1,key,keys,valueArr;
 				if(str.indexOf(".") == -1){ //不存在点则为文件夹名folderType
-					// var key,valueArr;
-					// fileTypeJson.folderType.map(item=>{
-					// 	for(let i in item){
-					// 		key = i;
-					// 		valueArr = item[i];
-					// 	}
-					// 	console.log("----------------------------------------------------")
-					// 	console.log(key)
-					// 	console.log(valueArr)
-					// 	str1 = valueArr.filter((value)=>{  //过滤数组元素
-					// 			return value.includes(str); //如果包含字符返回true
-					// 		})[0];
-					// 		if(!str1){
-					// 			key = "";
-					// 		}
-					// 		console.log("1############################################")
-					// 		console.log(str1)
-					// 		console.log(key)
-					// })
-					// console.log(item[i])
-
-					
+					if(/.*[\u4e00-\u9fa5]+.*$/.test(str)){  //如果存在中文直接返回默认文件夹图标
+						return "#icon-folder-close"
+					}
+					for(let i=0;i<fileTypeJson.folderType.length;i++){
+						for(let j in fileTypeJson.folderType[i]){
+							key = j;
+							valueArr = fileTypeJson.folderType[i][j];
+							str1 = valueArr.filter((value)=>{  //过滤数组元素
+								return value.includes(str.replace("-open","")); //如果包含字符返回true
+							})[0];
+							if(!str1){
+								key = str.replace("-open","");
+							}else{
+								keys = true;
+								break;
+							}
+						}
+						if(keys){
+							break;
+						}
+					}
 					icon = folder.filter((value)=>{  //过滤数组元素
-						return value.includes(str); //如果包含字符返回true
+						return value.includes(key); //如果包含字符返回true
 					})[0];
-					console.log("icona--"+icon)
 					icon = icon?icon:'icon-folder-close';
-					
 				}else{
+					if(/.*[\u4e00-\u9fa5]+.*$/.test(str)){  //如果存在中文直接返回默认文件图标
+						return "#icon-file_type_new"
+					}
+					for(let i=0;i<fileTypeJson.fileType.length;i++){
+						for(let j in fileTypeJson.fileType[i]){
+							key = j;
+							valueArr = fileTypeJson.fileType[i][j];
+							str1 = valueArr.filter((value)=>{  //过滤数组元素
+								return value.includes(str.split('.')[str.split('.').length - 1]); //如果包含字符返回true
+							})[0];
+							if(!str1){
+								key = str.split('.')[str.split('.').length - 1];
+							}else{
+								keys = true;
+								break;
+							}
+						}
+						if(keys){
+							break;
+						}
+					}
 					icon = fileType.filter((value)=>{  //过滤数组元素
-						return value.includes(str.split('.')[str.split('.').length - 1]); //如果包含字符返回true
+						return value.includes(key); //如果包含字符返回true
+						// return value == key; //如果包含字符返回true
 					})[0];
 					icon = icon?icon:'icon-file_type_new';
 				}
-				return '#'+icon;
+				if(idOpen){
+					return '#'+icon+"-open";
+				}else{
+					return '#'+icon;
+				}
 			},
 			contextmenu(event,object,value,element){
 				alert('右键')
@@ -257,8 +329,15 @@ const fileTypeJson = require('@/config/fileType.json')
 				console.log(data, checked, indeterminate);
 			},
 			handleNodeClick(data) {
-				console.log(data);
-				this.icon =  data.icon+"-open"
+				if(data.icon.indexOf(".") == -1){
+					if(data.icon.includes("open")){
+						data.icon = data.icon.replace("-open","")
+					}else{
+						data.icon = data.icon+"-open"
+					}
+				}else{
+					return;
+				}
 			},
 			loadNode(node, resolve) {
 				if (node.level === 0) {
@@ -335,10 +414,15 @@ const fileTypeJson = require('@/config/fileType.json')
 	.icon {
 		width: 1.42em;
 		height: 1.42em;
-		vertical-align: -0.15em;
+		/* vertical-align: -0.15em; */
+		vertical-align: middle;
 		fill: currentColor;
 		overflow: hidden;
 		margin-right: 8px;
+	}
+	.el-tree-node__children .icon{
+		width: 1.36em;
+		height: 1.36em;
 	}
 	.aligin-center{
 		display: flex;

@@ -45,6 +45,11 @@ export default new Router({
 					path: "/accessibility",
 					name: "Accessibility",
 					component: Accessibility
+				},
+				{
+					path: "/resourcelist",
+					name: "ResourceList",
+					component: () => import("@/views/template/template/Index.vue")
 				}
 			]
 		},

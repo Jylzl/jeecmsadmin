@@ -15,6 +15,7 @@
     "echarts": "^4.1.0",
     "element-ui": "^2.6.1",
     "js-cookie": "^2.2.0",
+    "monaco-editor": "^0.16.2",
     "nprogress": "^0.2.0",
     "sortablejs": "^1.8.4",
     "tinymce": "^5.0.2",

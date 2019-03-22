@@ -122,7 +122,19 @@
 							<el-menu-item index="8-4">连通性监测</el-menu-item>
 						</el-menu-item-group>
 					</el-submenu>
-					<el-menu-item index="9" route="/console">
+					<el-submenu index="9">
+						<template slot="title">
+							<i class="icon iconfont icon-shebeikaifa el-submenu-iconfont"></i>
+							<span slot="title">模板资源</span>
+						</template>
+						<el-menu-item-group title="模板">
+							<el-menu-item index="/resourcelist">页面模板</el-menu-item>
+						</el-menu-item-group>
+						<el-menu-item-group title="资源">
+							<el-menu-item index="9-2">静态资源</el-menu-item>
+						</el-menu-item-group>
+					</el-submenu>
+					<el-menu-item index="10" route="/console">
 						<i class="icon iconfont icon-kefu el-submenu-iconfont"></i>
 						<span slot="title">关于</span>
 					</el-menu-item>

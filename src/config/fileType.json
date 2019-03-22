@@ -1,33 +1,45 @@
 {
     "fileType": [{
-            "images": ["images", "png", "jpeg", "jpg", "bmp", "gif"]
+            "file_type_image": ["images", "png", "jpeg", "jpg", "bmp", "gif"]
         },
         {
             "mp3": ["mp3", "wav", "wma", "vqf"]
         },
         {
-            "video": ["mp4", "avi", "3gp", "rmvb", "mov"]
+            "file_type_video": ["mp4", "avi", "3gp", "rmvb", "mov"]
         },
         {
-            "word": ["doc", "docx", "docm", "dotx", "dotm"]
+            "file_type_word": ["doc", "docx", "docm", "dotx", "dotm"]
         },
         {
-            "excel": ["xlsx", "xlsm", "xltx", "xltm", "xlsb", "xlam"]
+            "file_type_excel": ["xlsx", "xlsm", "xltx", "xltm", "xlsb", "xlam"]
         },
         {
-            "PowerPoint": ["pptx", "pptm", "ppsx", "ppsx", "potx", "potm", "ppam"]
+            "file_type_ppt": ["pptx", "pptm", "ppsx", "ppsx", "potx", "potm", "ppam"]
         },
         {
-            "html": ["html", "htm"]
+            "file_type_html": ["html", "htm"]
+        },
+        {
+            "file_type_css": ["css"]
+        },
+        {
+            "file_type_js": ["js"]
         }
     ],
     "folderType": [{
-        "images": ["img", "images"]
+        "folder-images": ["img", "images"]
     }, {
-        "js": ["js", "javascript"]
+        "folder-javascript": ["js", "javascript"]
     }, {
-        "css": ["css", "scss", "less"]
+        "folder-css": ["css"]
     }, {
-        "html": ["htm", "html"]
+        "folder-less": ["less"]
+    }, {
+        "folder-sass": ["sass"]
+    }, {
+        "folder-html": ["htm", "html"]
+    }, {
+        "folder-docs": ["doc", "docs"]
     }]
 }
