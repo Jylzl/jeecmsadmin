@@ -28,41 +28,21 @@
 		<el-main>
 			<div class="right-top">
 				<div class="right-top-left">
-					<el-breadcrumb separator="/">
-						<el-breadcrumb-item>首页</el-breadcrumb-item>
-						<el-breadcrumb-item>活动管理</el-breadcrumb-item>
-						<el-breadcrumb-item>活动列表</el-breadcrumb-item>
-						<el-breadcrumb-item>活动详情</el-breadcrumb-item>
-					</el-breadcrumb>
+					 <el-radio-group v-model="radio" size="mini">
+						<el-radio-button label="只读"></el-radio-button>
+						<el-radio-button label="可写"></el-radio-button>
+					</el-radio-group>
+					<el-select v-model="value" size="mini" placeholder="主题" style="width:100px;">
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+					<el-select v-model="value" size="mini" placeholder="字号" style="width:100px;">
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
 				</div>
 				<div class="right-top-right">
-					<el-button type="primary" size="small" icon="el-icon-news">保存</el-button>
-				</div>
-			</div>
-			<div class="right-center">
-				<div class="right-center-left">
-					<el-button-group>
-						<el-button size="small">只读</el-button>
-						<el-button size="small">可写</el-button>
-					</el-button-group>
-					<el-select v-model="value" size="small" placeholder="请选择" style="width:130px;">
-						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-						</el-option>
-					</el-select>
-					<el-select v-model="value" size="small" placeholder="请选择" style="width:130px;">
-						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-						</el-option>
-					</el-select>
-					<el-select v-model="value" size="small" placeholder="固顶降,发布降" style="width:130px;">
-						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-						</el-option>
-					</el-select>
-				</div>
-				<div class="right-center-right">
-					<label for="">标题：</label>
-					<el-input v-model="input" placeholder="请输入内容" size="small"></el-input>
-					<label for="">发布者：</label>
-					<el-input v-model="input" placeholder="请输入内容" size="small"></el-input>
+					<el-button type="primary" size="mini" icon="el-icon-news">保存</el-button>
 				</div>
 			</div>
 			<div class="right-table">
@@ -212,7 +192,8 @@
 				value: "",
 				input: "",
 				input5: "",
-				select: ""
+				select: "",
+				radio:""
 			};
 		},
 		 mounted() {
@@ -346,7 +327,7 @@
 	}
 
 	.right-table {
-		height: calc(100% - 100px);
+		height: calc(100% - 50px);
 	}
 
 	.right-bottom {
@@ -362,11 +343,11 @@
 		margin-left: 3px;
 	}
 
-	.right-center .right-center-left>div {
+	.right-top .right-top-left>div {
 		margin-right: 15px;
 	}
 
-	.right-center .right-center-left>div:last-child {
+	.right-top .right-top-left>div:last-child {
 		margin-right: 0;
 	}
 
