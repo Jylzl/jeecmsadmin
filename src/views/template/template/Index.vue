@@ -43,16 +43,19 @@
 						<el-option v-for="item in fontSizes" :key="item.value" :label="item.label" :value="item.value">
 						</el-option>
 					</el-select>
+					<el-select v-model="language" size="mini" placeholder="语言" style="width:120px;">
+						<el-option v-for="item in languages" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
 				</div>
 				<div class="right-top-right">
 					<el-button type="primary" size="mini" icon="el-icon-news" @click="saveMonacoEditor" :disabled="saveBtn">保存</el-button>
 				</div>
 			</div>
-			<div class="right-table">
-				<!-- <MonacoEditor :language="'javascript'"  :codes="javascriptCodes"  @onMounted="javascriptOnMounted" @onCodeChange="javascriptOnCodeChange" /> -->
+			<div class="right-table" v-loading="monacoeditoLoading" element-loading-text="保存中...">
 				<MonacoEditor :ref="monacoeditorId" :id="monacoeditorId" :init="monacoeditorInit" :language="language"
 					:readOnly="readOnly" :fontSize="fontSize" :theme="theme" v-model="monacoeditorContent"
-					@onMounted="javascriptOnMounted" @onCodeChange="onCodeChange"></MonacoEditor>
+					@onMounted="onMounted" @onCodeChange="onCodeChange"></MonacoEditor>
 			</div>
 		</el-main>
 	</el-container>
@@ -186,17 +189,11 @@
 				}]
 			}];
 			return {
-				// htmlCodes:'<div>This is html</div>',
-				// javascriptCodes:'console.log("This is javascript")',
-				// cssCodes:'body{}',
-				// htmlEditor:null,
-				// jsEditor:null,
-				// cssEditor:null,
-
-				monacoeditorId: "container",
+				monacoeditoLoading: false,
+				monacoeditorId: "monacoeditorcontainer",
 				monacoeditorContent: "function hello() {\n\talert('Hello world!');\n}",
 				language: "javascript",
-				readOnly: false,
+				readOnly: true,
 				fontSize: 14,
 				theme: "vs",
 				monacoeditorInit: {
@@ -223,6 +220,9 @@
 					}
 				],
 				fontSizes: [{
+						value: 12,
+						label: "12号"
+					},{
 						value: 14,
 						label: "14号"
 					}, {
@@ -238,6 +238,47 @@
 						label: "20号"
 					}
 				],
+				languages: [{
+						value: "html",
+						label: "html"
+					},{
+						value: "javascript",
+						label: "javascript"
+					},{
+						value: "typescript",
+						label: "typescript"
+					}, {
+						value: "css",
+						label: "css"
+					}, {
+						value: "scss",
+						label: "scss"
+					}, {
+						value: "less",
+						label: "less"
+					}, {
+						value: "json",
+						label: "json"
+					}, {
+						value: "xml",
+						label: "xml"
+					}, {
+						value: "java",
+						label: "java"
+					}, {
+						value: "sql",
+						label: "sql"
+					}, {
+						value: "python",
+						label: "python"
+					}, {
+						value: "shell",
+						label: "shell"
+					}, {
+						value: "markdown",
+						label: "markdown"
+					}
+				],
 				value: "",
 				input: "",
 				input5: "",
@@ -246,27 +287,25 @@
 				saveBtn:true
 			};
 		},
-		mounted() {},
+		mounted() {
+			let _this = this;
+			document.getElementById(_this.monacoeditorId).addEventListener('keydown', function(e) {
+			if(e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)){
+					e.preventDefault();
+					if (_this.radio != "只读") {
+						_this.saveMonacoEditor();						
+					} else {
+						
+					}
+				}
+			});
+		},
 		methods: {
-			htmlOnMounted(edit) {
-				this.htmlEditor = edit;
-			},
-			javascriptOnMounted(edit) {
+			onMounted(edit) {
 				this.jsEditor = edit;
-			},
-			cssOnMounted(edit) {
-				this.cssEditor = edit;
-			},
-			htmlOnCodeChange(value, event) {
-				console.log(value)
 			},
 			onCodeChange(value, event) {
 				this.monacoeditorContent = value;
-				console.log(value)
-				console.log(this.monacoeditorContent)
-			},
-			cssOnCodeChange(value, event) {
-				console.log(value)
 			},
 			//根据文件名，文件夹名生成svg图标名称
 			filterType(str) {
@@ -355,7 +394,11 @@
 			},
 			//保存代碼
 			saveMonacoEditor() {
-				alert(this.monacoeditorContent)
+				let _this = this;
+				_this.monacoeditoLoading = true;
+				setTimeout(() => {
+					_this.monacoeditoLoading = false;
+				}, 2000);
 			},
 			changeRadio(){
 				if (this.radio == "可写") {
