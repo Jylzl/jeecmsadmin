@@ -7,59 +7,72 @@
 			</div>
 			<div class="left-center">
 				<el-scrollbar wrap-class="scrollbar-wrapper">
-                    <el-tree :data="data5" node-key="id"  @node-contextmenu="contextmenu()" @node-click="handleNodeClick">
-                        <div class="custom-tree-node" slot-scope="{ node, data }" @check-change="handleCheckChange(node, data)">
-                            <div class="aligin-center">
-                                <svg class="icon svg-icon" aria-hidden="true">
-                                    <use :xlink:href="filterType(data.icon)"></use>
-                                </svg>
-                                <el-input v-model="node.label" placeholder="请输入内容" size="mini" class="change-filename" v-if="false"></el-input>
-                                <span v-else>{{ node.label }}</span>
-                            </div>
-                            <div>
-                                <!-- <el-button type="text" size="mini" @click="() => append(data)">添加</el-button>
+					<el-tree :data="data5" node-key="id" @node-contextmenu="contextmenu()"
+						@node-click="handleNodeClick">
+						<div class="custom-tree-node" slot-scope="{ node, data }"
+							@check-change="handleCheckChange(node, data)">
+							<div class="aligin-center">
+								<svg class="icon svg-icon" aria-hidden="true">
+									<use :xlink:href="filterType(data.icon)"></use>
+								</svg>
+								<el-input v-model="node.label" placeholder="请输入内容" size="mini" class="change-filename"
+									v-if="false"></el-input>
+								<span v-else>{{ node.label }}</span>
+							</div>
+							<div>
+								<!-- <el-button type="text" size="mini" @click="() => append(data)">添加</el-button>
                                 <el-button type="text" size="mini" @click="() => remove(node, data)">删除</el-button> -->
-                            </div>
-                        </div>
-                    </el-tree>
+							</div>
+						</div>
+					</el-tree>
 				</el-scrollbar>
 			</div>
 		</el-aside>
 		<el-main>
 			<div class="right-top">
 				<div class="right-top-left">
-					 <el-radio-group v-model="radio" size="mini">
+					<el-radio-group v-model="radio" size="mini" @change="changeRadio">
 						<el-radio-button label="只读"></el-radio-button>
 						<el-radio-button label="可写"></el-radio-button>
 					</el-radio-group>
-					<el-select v-model="value" size="mini" placeholder="主题" style="width:100px;">
-						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+					<el-select v-model="theme" size="mini" placeholder="主题" @change="themeChange" style="width:98px;">
+						<el-option v-for="item in thems" :key="item.value" :label="item.label" :value="item.value">
 						</el-option>
 					</el-select>
-					<el-select v-model="value" size="mini" placeholder="字号" style="width:100px;">
-						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+					<el-select v-model="fontSize" size="mini" placeholder="字号" style="width:72px;">
+						<el-option v-for="item in fontSizes" :key="item.value" :label="item.label" :value="item.value">
 						</el-option>
 					</el-select>
 				</div>
 				<div class="right-top-right">
-					<el-button type="primary" size="mini" icon="el-icon-news">保存</el-button>
+					<el-button type="primary" size="mini" icon="el-icon-news" @click="saveMonacoEditor" :disabled="saveBtn">保存</el-button>
 				</div>
 			</div>
 			<div class="right-table">
-                <div id="container" style="height:100%;"></div>
+				<!-- <MonacoEditor :language="'javascript'"  :codes="javascriptCodes"  @onMounted="javascriptOnMounted" @onCodeChange="javascriptOnCodeChange" /> -->
+				<MonacoEditor :ref="monacoeditorId" :id="monacoeditorId" :init="monacoeditorInit" :language="language"
+					:readOnly="readOnly" :fontSize="fontSize" :theme="theme" v-model="monacoeditorContent"
+					@onMounted="javascriptOnMounted" @onCodeChange="onCodeChange"></MonacoEditor>
 			</div>
 		</el-main>
 	</el-container>
 </template>
 <script>
-    import * as monaco from 'monaco-editor';
-    import {folder} from '@/assets/iconfont/iconfont_folder.js'
-    import {fileType} from '@/assets/iconfont/iconfont_file_type.js'
-    const fileTypeJson = require('@/config/fileType.json')
-    let id = 1000;
+	import MonacoEditor from '@/components/monacoeditor/MonacoEditor.vue'
+	import {
+		folder
+	} from '@/assets/iconfont/iconfont_folder.js'
+	import {
+		fileType
+	} from '@/assets/iconfont/iconfont_file_type.js'
+	const fileTypeJson = require('@/config/fileType.json')
+	let id = 1000;
 	export default {
+		components: {
+			MonacoEditor
+		},
 		data() {
-            const data = [{
+			const data = [{
 				id: 1,
 				label: 'images',
 				icon: 'images',
@@ -111,7 +124,7 @@
 					label: 'index.js',
 					icon: 'index.js'
 				}, {
-					id: 42 ,
+					id: 42,
 					label: 'index.js',
 					icon: 'index.js'
 				}]
@@ -124,7 +137,7 @@
 					label: 'index.html',
 					icon: 'index.html'
 				}, {
-					id: 52 ,
+					id: 52,
 					label: 'index.htm',
 					icon: 'index.htm'
 				}]
@@ -137,16 +150,16 @@
 					label: 'index',
 					icon: 'index',
 					children: [{
-					id: 611,
-					label: 'index.doc',
-					icon: 'index.doc'
+						id: 611,
+						label: 'index.doc',
+						icon: 'index.doc'
+					}, {
+						id: 612,
+						label: 'index.docx',
+						icon: 'index.docx'
+					}]
 				}, {
-					id: 612 ,
-					label: 'index.docx',
-					icon: 'index.docx'
-				}]
-				}, {
-					id: 62 ,
+					id: 62,
 					label: 'index.docx',
 					icon: 'index.docx'
 				}]
@@ -159,134 +172,198 @@
 					label: 'index.doc',
 					icon: 'index.doc'
 				}, {
-					id: 72 ,
+					id: 72,
 					label: 'index.docx',
 					icon: 'index.docx'
-				},{
+				}, {
 					id: 73,
 					label: 'index.pptx',
 					icon: 'index.pptx'
 				}, {
-					id: 74 ,
+					id: 74,
 					label: 'index.xls',
 					icon: 'index.xls'
 				}]
 			}];
 			return {
-                data4: JSON.parse(JSON.stringify(data)),
+				// htmlCodes:'<div>This is html</div>',
+				// javascriptCodes:'console.log("This is javascript")',
+				// cssCodes:'body{}',
+				// htmlEditor:null,
+				// jsEditor:null,
+				// cssEditor:null,
+
+				monacoeditorId: "container",
+				monacoeditorContent: "function hello() {\n\talert('Hello world!');\n}",
+				language: "javascript",
+				readOnly: false,
+				fontSize: 14,
+				theme: "vs",
+				monacoeditorInit: {
+					automaticLayout: true
+				},
+				data4: JSON.parse(JSON.stringify(data)),
 				data5: JSON.parse(JSON.stringify(data)),
 				multipleSelection: [],
 				defaultProps: {
 					children: "children",
 					label: "label"
 				},
-				options: [{
-						value: "白色主题",
-						label: "白色主题"
+				thems: [{
+						value: "vs",
+						label: "默认主题"
 					},
 					{
-						value: "黑色主题",
-						label: "黑色主题"
+						value: "vs-dark",
+						label: "深色主题"
+					},
+					{
+						value: "hc-black",
+						label: "高亮主题"
+					}
+				],
+				fontSizes: [{
+						value: 14,
+						label: "14号"
+					}, {
+						value: 16,
+						label: "16号"
+					},
+					{
+						value: 18,
+						label: "18号"
+					},
+					{
+						value: 20,
+						label: "20号"
 					}
 				],
 				value: "",
 				input: "",
 				input5: "",
 				select: "",
-				radio:""
+				radio: "只读",
+				saveBtn:true
 			};
 		},
-		 mounted() {
-             monaco.editor.create(document.getElementById("container"), {
-                value: "function hello() {\n\talert('Hello world!');\n}",
-                language: "javascript",
-                readOnly: true,
-                fontSize: 16,
-                theme:'vs',//vs默认,hc-black高亮,vs-dark深色
-            });
-
-		},
+		mounted() {},
 		methods: {
+			htmlOnMounted(edit) {
+				this.htmlEditor = edit;
+			},
+			javascriptOnMounted(edit) {
+				this.jsEditor = edit;
+			},
+			cssOnMounted(edit) {
+				this.cssEditor = edit;
+			},
+			htmlOnCodeChange(value, event) {
+				console.log(value)
+			},
+			onCodeChange(value, event) {
+				this.monacoeditorContent = value;
+				console.log(value)
+				console.log(this.monacoeditorContent)
+			},
+			cssOnCodeChange(value, event) {
+				console.log(value)
+			},
 			//根据文件名，文件夹名生成svg图标名称
-			filterType(str){
-				var idOpen = str.includes("open")?true:false;
-				var icon,str1,key,keys,valueArr;
-				if(str.indexOf(".") == -1){ //不存在点则为文件夹名folderType
-					if(/.*[\u4e00-\u9fa5]+.*$/.test(str)){  //如果存在中文直接返回默认文件夹图标
+			filterType(str) {
+				var idOpen = str.includes("open") ? true : false;
+				var icon, str1, key, keys, valueArr;
+				if (str.indexOf(".") == -1) { //不存在点则为文件夹名folderType
+					if (/.*[\u4e00-\u9fa5]+.*$/.test(str)) { //如果存在中文直接返回默认文件夹图标
 						return "#icon-folder-close"
 					}
-					for(let i=0;i<fileTypeJson.folderType.length;i++){
-						for(let j in fileTypeJson.folderType[i]){
+					for (let i = 0; i < fileTypeJson.folderType.length; i++) {
+						for (let j in fileTypeJson.folderType[i]) {
 							key = j;
 							valueArr = fileTypeJson.folderType[i][j];
-							str1 = valueArr.filter((value)=>{  //过滤数组元素
-								return value.includes(str.replace("-open","")); //如果包含字符返回true
+							str1 = valueArr.filter((value) => { //过滤数组元素
+								return value.includes(str.replace("-open", "")); //如果包含字符返回true
 							})[0];
-							if(!str1){
-								key = str.replace("-open","");
-							}else{
+							if (!str1) {
+								key = str.replace("-open", "");
+							} else {
 								keys = true;
 								break;
 							}
 						}
-						if(keys){
+						if (keys) {
 							break;
 						}
 					}
-					icon = folder.filter((value)=>{  //过滤数组元素
+					icon = folder.filter((value) => { //过滤数组元素
 						return value.includes(key); //如果包含字符返回true
 					})[0];
-					icon = icon?icon:'icon-folder-close';
-				}else{
-					if(/.*[\u4e00-\u9fa5]+.*$/.test(str)){  //如果存在中文直接返回默认文件图标
+					icon = icon ? icon : 'icon-folder-close';
+				} else {
+					if (/.*[\u4e00-\u9fa5]+.*$/.test(str)) { //如果存在中文直接返回默认文件图标
 						return "#icon-file_type_new"
 					}
-					for(let i=0;i<fileTypeJson.fileType.length;i++){
-						for(let j in fileTypeJson.fileType[i]){
+					for (let i = 0; i < fileTypeJson.fileType.length; i++) {
+						for (let j in fileTypeJson.fileType[i]) {
 							key = j;
 							valueArr = fileTypeJson.fileType[i][j];
-							str1 = valueArr.filter((value)=>{  //过滤数组元素
+							str1 = valueArr.filter((value) => { //过滤数组元素
 								return value.includes(str.split('.')[str.split('.').length - 1]); //如果包含字符返回true
 							})[0];
-							if(!str1){
+							if (!str1) {
 								key = str.split('.')[str.split('.').length - 1];
-							}else{
+							} else {
 								keys = true;
 								break;
 							}
 						}
-						if(keys){
+						if (keys) {
 							break;
 						}
 					}
-					icon = fileType.filter((value)=>{  //过滤数组元素
+					icon = fileType.filter((value) => { //过滤数组元素
 						return value.includes(key); //如果包含字符返回true
 						// return value == key; //如果包含字符返回true
 					})[0];
-					icon = icon?icon:'icon-file_type_new';
+					icon = icon ? icon : 'icon-file_type_new';
 				}
-				if(idOpen){
-					return '#'+icon+"-open";
-				}else{
-					return '#'+icon;
+				if (idOpen) {
+					return '#' + icon + "-open";
+				} else {
+					return '#' + icon;
 				}
 			},
-			contextmenu(event,object,value,element){
+			contextmenu(event, object, value, element) {
 				alert('右键')
 				console.log(event)
 				console.log(object)
 				console.log(value)
 				console.log(element)
-            },
-            handleNodeClick(data) {
-				if(data.icon.indexOf(".") == -1){
-					if(data.icon.includes("open")){
-						data.icon = data.icon.replace("-open","")
-					}else{
-						data.icon = data.icon+"-open"
+			},
+			handleNodeClick(data) {
+				if (data.icon.indexOf(".") == -1) {
+					if (data.icon.includes("open")) {
+						data.icon = data.icon.replace("-open", "")
+					} else {
+						data.icon = data.icon + "-open"
 					}
-				}else{
+				} else {
 					return;
+				}
+			},
+			themeChange() {
+				this.monacoeditorInit
+			},
+			//保存代碼
+			saveMonacoEditor() {
+				alert(this.monacoeditorContent)
+			},
+			changeRadio(){
+				if (this.radio == "可写") {
+					this.saveBtn = false;
+					this.readOnly = false;
+				}else{
+					this.saveBtn = true;
+					this.readOnly = true;
 				}
 			}
 		}
@@ -306,7 +383,7 @@
 
 	.left-top {
 		display: flex;
-		justify-content:space-between;
+		justify-content: space-between;
 		box-sizing: border-box;
 		height: 50px;
 		padding: 5px;
@@ -384,7 +461,8 @@
 		background-color: #fff;
 		padding: 0;
 	}
-    .custom-tree-node {
+
+	.custom-tree-node {
 		flex: 1;
 		display: flex;
 		align-items: center;
@@ -392,7 +470,8 @@
 		font-size: 14px;
 		padding-right: 8px;
 	}
-    .icon {
+
+	.icon {
 		width: 1.42em;
 		height: 1.42em;
 		/* vertical-align: -0.15em; */
@@ -401,7 +480,8 @@
 		overflow: hidden;
 		margin-right: 8px;
 	}
-	.el-tree-node__children .icon{
+
+	.el-tree-node__children .icon {
 		width: 1.36em;
 		height: 1.36em;
 	}
