@@ -17,16 +17,16 @@ module.exports = {
 	},
 	devServer: {
 		open: true,
-		host: "127.0.0.1",
-		port: 8081,
+		host: "localhost",
+		port: 8089,
 		https: false,
 		hotOnly: false,
 		proxy: {
 			//配置跨域
 			"/api": {
-				target: "process.env.VUE_APP_API_URL",
-				ws: true,
+				target: process.env.VUE_APP_API_URL,
 				changOrigin: true,
+				ws: true,
 				pathRewrite: {
 					"^/api": ""
 				}

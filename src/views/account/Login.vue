@@ -8,25 +8,31 @@
 						<div class="card-box">
 							<el-form :model="landForm_password" ref="landForm_password" class="demo-ruleForm">
 								<el-form-item prop="user" :rules="user">
-									<el-autocomplete v-model="landForm_password.user" :fetch-suggestions="querySearch" placeholder="请输入手机号/邮箱/用户名"
-									 :trigger-on-focus="false" @select="handleSelect" style="width:100%;" :maxlength="20" @keyup.enter.native="submitForm('landForm_password')">
+									<el-autocomplete v-model="landForm_password.user" :fetch-suggestions="querySearch"
+										placeholder="请输入手机号/邮箱/用户名" :trigger-on-focus="false" @select="handleSelect"
+										style="width:100%;" :maxlength="20"
+										@keyup.enter.native="submitForm('landForm_password')">
 										<template slot-scope="{ item }">
 											<span class="fl">{{ item.value }}</span>
-											<el-button type="text" icon="el-icon-close" class="fr" title="删除账号信息" @click="delLocalAccount(item.value)"></el-button>
+											<el-button type="text" icon="el-icon-close" class="fr" title="删除账号信息"
+												@click="delLocalAccount(item.value)"></el-button>
 										</template>
 									</el-autocomplete>
 								</el-form-item>
 								<el-form-item prop="pswd" :rules="pswd">
 									<div class="show-pswd">
-										<el-input :type="pswdType" v-model.number="landForm_password.pswd" autocomplete="off" placeholder="密码"
-										 maxlength="16" class="show-pswd-input" @keyup.enter.native="submitForm('landForm_password')">
+										<el-input :type="pswdType" v-model.number="landForm_password.pswd"
+											autocomplete="off" placeholder="密码" maxlength="16" class="show-pswd-input"
+											@keyup.enter.native="submitForm('landForm_password')">
 										</el-input>
-										<el-button type="text" class="show-pswd-btn" title="显示密码" :icon="icon" @mousedown.native="showPswd(true)"
-										 @mouseup.native="showPswd(false)"></el-button>
+										<el-button type="text" class="show-pswd-btn" title="显示密码" :icon="icon"
+											@mousedown.native="showPswd(true)" @mouseup.native="showPswd(false)">
+										</el-button>
 									</div>
 								</el-form-item>
 								<div class="forget-password">
-									<el-checkbox v-model="landForm_password.rememberPswd" @change="checkCookies">记住密码</el-checkbox>
+									<el-checkbox v-model="landForm_password.rememberPswd" @change="checkCookies">记住密码
+									</el-checkbox>
 									<router-link to="/register">忘记密码？</router-link>
 								</div>
 							</el-form>
@@ -39,24 +45,29 @@
 									<el-col :span="8">
 										<el-form-item prop="age">
 											<el-select v-model="landForm_phone.areaCode" placeholder="请选择">
-												<el-option style="min-width:180px;" v-for="item in areaCodes" :key="item.code" :label="item.code" :value="item.code">
+												<el-option style="min-width:180px;" v-for="item in areaCodes"
+													:key="item.code" :label="item.code" :value="item.code">
 													<span class="fl">{{item.code}}</span>
-													<span style="float: right; color: #8492a6; font-size: 13px">{{item.name}}</span>
+													<span
+														style="float: right; color: #8492a6; font-size: 13px">{{item.name}}</span>
 												</el-option>
 											</el-select>
 										</el-form-item>
 									</el-col>
 									<el-col :span="16">
 										<el-form-item prop="phone" :rules="phone">
-											<el-input type="tel" v-model.number="landForm_phone.phone" autocomplete="off" placeholder="手机号" maxlength="20"
-											 clearable></el-input>
+											<el-input type="tel" v-model.number="landForm_phone.phone"
+												autocomplete="off" placeholder="手机号" maxlength="20" clearable>
+											</el-input>
 										</el-form-item>
 									</el-col>
 								</el-row>
 								<el-form-item prop="verificationCode" :rules="verificationCode">
 									<div class="get-code">
-										<el-input type="text" v-model.number="landForm_phone.verificationCode" autocomplete="off" placeholder="6位数字验证码"
-										 maxlength="8" class="get-code-input" @keyup.enter.native="submitForm('landForm_phone')"></el-input>
+										<el-input type="text" v-model.number="landForm_phone.verificationCode"
+											autocomplete="off" placeholder="6位数字验证码" maxlength="8"
+											class="get-code-input" @keyup.enter.native="submitForm('landForm_phone')">
+										</el-input>
 										<el-button type="text" class="get-code-btn">获取验证码</el-button>
 									</div>
 								</el-form-item>
@@ -67,8 +78,9 @@
 			</div>
 			<div class="land-form-btn">
 				<div id="your-dom-id" class="nc-container" v-show="aliyunShow"></div>
-				<el-button type="primary" @click="submitForm(submitFormName)" style="width:100%;" :disabled="landLoading.disabled"
-				 :icon="landLoading.icon" v-show="!aliyunShow">{{landLoading.content}}</el-button>
+				<el-button type="primary" @click="submitForm(submitFormName)" style="width:100%;"
+					:disabled="landLoading.disabled" :icon="landLoading.icon" v-show="!aliyunShow">
+					{{landLoading.content}}</el-button>
 			</div>
 			<div class="three-land">
 				<el-button type="text">
@@ -161,20 +173,14 @@
 			};
 		},
 		created() {
-			// let head = document.getElementsByTagName("head");
-			// let script = document.createElement('script');
-			// script.type = "text/javascript";
-			// script.charset = "utf-8";
-			// script.src = "//g.alicdn.com/sd/ncpc/nc.js?t=2015052012";
-			// console.log(head)
-			// head[].appendChild(script);
 
 		},
 		mounted() {
 			// 从cookies里面取加密用户然后解密
 			if (Cookies.get("account")) {
-				this.rememberUsers = JSON.parse(tripledes.decrypt(Cookies.get("account"), process.env.VUE_APP_userSaveKey).toString(
-					CryptoJS.enc.Utf8));
+				this.rememberUsers = JSON.parse(tripledes.decrypt(Cookies.get("account"), process.env.VUE_APP_userSaveKey)
+					.toString(
+						CryptoJS.enc.Utf8));
 			}
 			//判断用户浏览器是否开启Cookies，未开启则将记住密码状态置空为false
 			if (!navigator.cookieEnabled) {
@@ -214,7 +220,8 @@
 						user => user.value != userName
 					);
 					//加密用户信息，并存入cookies
-					Cookies.set("account", tripledes.encrypt(JSON.stringify(this.rememberUsers), process.env.VUE_APP_userSaveKey).toString(), {
+					Cookies.set("account", tripledes.encrypt(JSON.stringify(this.rememberUsers), process.env
+						.VUE_APP_userSaveKey).toString(), {
 						expires: 7
 					})
 					this.$message({
@@ -236,84 +243,36 @@
 						this.landLoading.content = "正在登陆...";
 						this.landLoading.icon = "el-icon-loading";
 						this.landLoading.disabled = true;
-						if (
-							(this.landForm_password.user == "admin" &&
-								this.landForm_password.pswd == "password") ||
-							(this.landForm_password.user == "aa" &&
-								this.landForm_password.pswd == "a1")
-						) {
-							console.log(process.env.VUE_APP_aesKey)
-							console.log(process.env.VUE_APP_ivKey)
-							console.log(CryptoJS.AES.encrypt(this.landForm_password.pswd, process.env.VUE_APP_aesKey, {
-								iv: process.env.VUE_APP_ivKey,
-								mode: CryptoJS.mode.CBC,
-								padding: CryptoJS.pad.Pkcs7
-							}))
-							//登陆成功后，先清除旧用户信息，然后判断用户是否勾选记住密码，是则将用户信息插入数组，否则仅记住用户名，然后将数组加密后存入cookies
-							this.rememberUsers = this.rememberUsers.filter(
-								user => user.value != this.landForm_password.user
-							);
-							// 默认记录5条用户信息，
-							if (this.rememberUsers.length > 4) {
-								this.rememberUsers = this.rememberUsers.splice(this.rememberUsers.length - 4, 4);
-							}
-							if (this.landForm_password.rememberPswd) {
-								this.rememberUsers.push({
-									value: this.landForm_password.user,
-									pswd: this.landForm_password.pswd
-								});
-							} else {
-								this.rememberUsers.push({
-									value: this.landForm_password.user,
-									pswd: ""
-								});
-							}
-							//加密用户信息，并存入cookies
-							Cookies.set("account", tripledes.encrypt(JSON.stringify(this.rememberUsers), process.env.VUE_APP_userSaveKey).toString(), {
-								expires: 7
+						this.$store
+							.dispatch("userLogin", {
+								_this: this,
+								loginForm: this.landForm_password
 							})
-							//登陆成功手动清除cookies记录的登录次数
-							Cookies.remove("landingTimes")
-							this.$message({
-								message: "登陆成功",
-								type: "success",
-								center: true
+							.then((res) => {
+								switch (res.code) {
+									case '200':
+										// 登陆成功
+										this.landSuccess();
+										break;
+									case '304':
+										// 登陆失败
+										this.landFail("warning", "用户或密码名错误!");
+										break;
+									case '301':
+										// 登陆失败
+										this.landFail("warning", res.message + "!");
+										break;
+									default:
+										// 登陆失败
+										this.landFail();
+										break;
+								}
+							})
+							.catch(() => {
+								// 登陆失败
+								this.landFail();
 							});
-							setTimeout(() => {
-								this.landLoading.content = "登陆";
-								this.landLoading.icon = "";
-								this.landLoading.disabled = false;
-								this.$router.push({
-									path: "/" //跳转的路径
-								});
-							}, 1000);
-						} else {
-							// 登陆失败五次启用阿里云人机验证
-							Cookies.set("landingTimes", Cookies.get("landingTimes") ? Number(Cookies.get("landingTimes")) + 1 : 1, {
-								expires: 1
-							})
-							if (Cookies.get("landingTimes") >= 3) {
-								setTimeout(() => {
-									this.aliyunShow = true;
-									// 阿里云人机验证
-									this.aliyun();
-								}, 1200);
-							} else {
-								this.aliyunShow = false;
-							}
-							setTimeout(() => {
-								this.landLoading.content = "登陆";
-								this.landLoading.icon = "";
-								this.landLoading.disabled = false;
-								this.$message({
-									message: "登陆失败",
-									type: "warning",
-									center: true
-								});
-							}, 1000);
-						}
 					} else {
-						console.log("error submit!!");
 						return false;
 					}
 				});
@@ -340,9 +299,8 @@
 				} else if (tab.name == "phone") {
 					this.submitFormName = "landForm_phone";
 				}
-				this.landLoading.content = "登陆";
-				this.landLoading.icon = "";
-				this.landLoading.disabled = false;
+				//重置登陆
+				this.restLand();
 			},
 			handleSelect(item) {
 				this.landForm_password.pswd = item.pswd;
@@ -378,10 +336,12 @@
 						// 'umid_serUrl': 'https://g.com/service/um.json'
 					},
 					callback: function (data) {
-						window.console && console.log(nc_token)
-						window.console && console.log(data.csessionid)
-						window.console && console.log(data.sig)
+						// window.console && console.log(nc_token)
+						// window.console && console.log(data.csessionid)
+						// window.console && console.log(data.sig)
 						setTimeout(() => {
+							//登陆成功手动清除cookies记录的登录次数
+							Cookies.remove("landingTimes")
 							_this.aliyunShow = false;
 						}, 1200);
 					}
@@ -393,6 +353,83 @@
 					_error300: "哎呀，出错了，点击<a href=\"javascript:__nc.reset()\">刷新</a>再来一次",
 					_errorNetwork: "网络不给力，请<a href=\"javascript:__nc.reset()\">点击刷新</a>",
 				})
+			},
+			landSuccess() {
+				//登陆成功后，先清除旧用户信息，然后判断用户是否勾选记住密码，是则将用户信息插入数组，否则仅记住用户名，然后将数组加密后存入cookies
+				this.rememberUsers = this.rememberUsers.filter(
+					user => user.value != this.landForm_password.user
+				);
+				// 默认记录5条用户信息，
+				if (this.rememberUsers.length > 4) {
+					this.rememberUsers = this.rememberUsers.splice(this.rememberUsers.length - 4, 4);
+				}
+				if (this.landForm_password.rememberPswd) {
+					this.rememberUsers.push({
+						value: this.landForm_password.user,
+						pswd: this.landForm_password.pswd
+					});
+				} else {
+					this.rememberUsers.push({
+						value: this.landForm_password.user,
+						pswd: ""
+					});
+				}
+				//加密用户信息，并存入cookies
+				Cookies.set("account", tripledes.encrypt(JSON.stringify(this.rememberUsers),
+					process.env.VUE_APP_userSaveKey).toString(), {
+					expires: 7
+				})
+				//登陆成功手动清除cookies记录的登录次数
+				Cookies.remove("landingTimes")
+				this.$message({
+					message: "登陆成功",
+					type: "success",
+					center: true
+				});
+				setTimeout(() => {
+					//重置登陆样式
+					this.restLand();
+					this.$router.push({
+						path: "/" //跳转的路径
+					});
+				}, 1000);
+			},
+			landFail(type, msg) {
+				this.loading = false;
+				// 登陆失败五次启用阿里云人机验证
+				Cookies.set("landingTimes", Cookies.get("landingTimes") ? Number(Cookies.get(
+					"landingTimes")) + 1 : 1, {
+					expires: 1
+				})
+				if (Cookies.get("landingTimes") >= 3) {
+					setTimeout(() => {
+						this.aliyunShow = true;
+						// 阿里云人机验证
+						this.aliyun();
+					}, 1200);
+				} else {
+					this.aliyunShow = false;
+				}
+				//重置登陆样式
+				this.restLand();
+				if (type) {
+					this.$message({
+						message: msg,
+						type: type
+					});
+				} else {
+					this.$message({
+						message: "登陆失败",
+						type: "warning",
+						center: true
+					});
+				}
+
+			},
+			restLand() {
+				this.landLoading.content = "登陆";
+				this.landLoading.icon = "";
+				this.landLoading.disabled = false;
 			}
 		}
 	};
