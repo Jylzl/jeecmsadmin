@@ -6,15 +6,15 @@ import {
 	loginOut
 } from "@/api/land.js";
 import {
-	router
-} from '@/router/router'
+	routes
+} from '@/router/routes'
 //展示的用户信息
 const user = {
 	state: {
 		//设置属性
 		userName: 'none',
 		localLanguage: 'en',
-		routers: router,
+		routers: routes,
 		addRouters: [],
 		perms: false, //判断是否刷新过页面,
 		permsList: null,
@@ -32,7 +32,7 @@ const user = {
 			state.userName = localStorage.getItem('userName');
 		},
 		CLEAR_ROUTERS: (state) => {
-			state.routers = router;
+			state.routers = routes;
 			state.addRouters = [];
 			state.perms = false;
 			state.permsList = null;

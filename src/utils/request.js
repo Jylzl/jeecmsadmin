@@ -1,6 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
-import router from '@/router/router'
+import router from '@/router/index'
 import {
 	Message
 } from 'element-ui'

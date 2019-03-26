@@ -3,43 +3,10 @@
 		<div class="aside-top el-header el-menu"></div>
 		<div class="left-center">
 			<el-scrollbar wrap-class="scrollbar-wrapper ">
-				<el-menu :collapse-transition="false" :default-active="activeIndex"
-					class="el-menu-vertical-demo aside-menu" @open="handleOpen" @close="handleClose"
-					background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :router="true"
-					:collapse="isCollapse">
-					<template v-for="(item,index) in $store.state.perms.routers" >
-						<template v-if="!item.hidden">
-							<el-submenu :index="item.path" v-if="!item.leaf" :key="index">
-								<template slot="title">
-									<i :class="item.iconCls" class="icon iconfont el-submenu-iconfont"></i>
-									<span class="collapse-font" slot="title">{{item.name}}</span>
-								</template>
-
-								<template v-for="(child,index2) in item.children">
-									<el-menu-item v-if="child.isParent" :index="child.path" :key="child.path"	class="parent-padding">
-										{{child.name}}
-									</el-menu-item>
-									<el-submenu v-else :index="child.path" class="child-padding" :key="index2">
-										<template slot="title">
-											<span class="collapse-font">{{child.name}}</span>
-										</template>
-										<template v-for="child2 in child.children">
-											<el-menu-item  v-if="!(child2.hidden)"	:index="child2.path" :key="child2.path">
-												{{child2.name}}
-											</el-menu-item>
-										</template>
-									</el-submenu>
-								</template>
-							</el-submenu>
-							<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.path" class="first-item"
-								:key="index">
-								<i :class="item.iconCls" class="icon iconfont el-submenu-iconfont"></i>
-								<span class="collapse-font " slot="title">{{item.name}}</span>
-							</el-menu-item>
-						</template>
-					</template>
-
-					<!-- <el-menu-item index="0" route="/work">
+				<el-menu :collapse-transition="false" default-active="0" class="el-menu-vertical-demo aside-menu"
+					@open="handleOpen" @close="handleClose" background-color="#545c64" text-color="#fff"
+					active-text-color="#ffd04b" :router="true" :collapse="isCollapse">
+					<el-menu-item index="0" route="/work">
 						<i class="icon iconfont icon-shebeizhuangtai el-submenu-iconfont"></i>
 						<span slot="title">工作台</span>
 					</el-menu-item>
@@ -170,7 +137,7 @@
 					<el-menu-item index="10" route="/console">
 						<i class="icon iconfont icon-kefu el-submenu-iconfont"></i>
 						<span slot="title">关于</span>
-					</el-menu-item> -->
+					</el-menu-item>
 				</el-menu>
 			</el-scrollbar>
 		</div>
@@ -184,7 +151,7 @@
 		name: "Aside",
 		data() {
 			return {
-				activeIndex: "/work",
+				activeIndex:"/work",
 				isCollapse: false,
 				input10: ""
 			};

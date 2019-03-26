@@ -94,7 +94,7 @@
 	</div>
 </template>
 <script>
-	import Cookies from 'js-cookie'
+	import Cookies from "js-cookie";
 	import CryptoJS from "crypto-js";
 	import tripledes from "crypto-js/tripledes";
 	import {
@@ -172,15 +172,15 @@
 				rememberUsers: []
 			};
 		},
-		created() {
-
-		},
+		created() {},
 		mounted() {
 			// 从cookies里面取加密用户然后解密
 			if (Cookies.get("account")) {
-				this.rememberUsers = JSON.parse(tripledes.decrypt(Cookies.get("account"), process.env.VUE_APP_userSaveKey)
-					.toString(
-						CryptoJS.enc.Utf8));
+				this.rememberUsers = JSON.parse(
+					tripledes
+					.decrypt(Cookies.get("account"), process.env.VUE_APP_userSaveKey)
+					.toString(CryptoJS.enc.Utf8)
+				);
 			}
 			//判断用户浏览器是否开启Cookies，未开启则将记住密码状态置空为false
 			if (!navigator.cookieEnabled) {
@@ -191,9 +191,9 @@
 			checkCookies() {
 				if (!navigator.cookieEnabled) {
 					this.$notify({
-						title: '警告',
-						message: '浏览器已禁止网站保存和读取Cookies数据，请打开后再试',
-						type: 'warning'
+						title: "警告",
+						message: "浏览器已禁止网站保存和读取Cookies数据，请打开后再试",
+						type: "warning"
 					});
 					this.landForm_password.rememberPswd = false;
 					return false;
@@ -211,31 +211,40 @@
 			},
 			// 删除本地记录用户
 			delLocalAccount(userName) {
-				this.$confirm('此操作将从本地删除该用户信息, 是否继续?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					this.rememberUsers = this.rememberUsers.filter(
-						user => user.value != userName
-					);
-					//加密用户信息，并存入cookies
-					Cookies.set("account", tripledes.encrypt(JSON.stringify(this.rememberUsers), process.env
-						.VUE_APP_userSaveKey).toString(), {
-						expires: 7
+				this.$confirm("此操作将从本地删除该用户信息, 是否继续?", "提示", {
+						confirmButtonText: "确定",
+						cancelButtonText: "取消",
+						type: "warning"
 					})
-					this.$message({
-						type: 'success',
-						message: '删除成功!'
+					.then(() => {
+						this.rememberUsers = this.rememberUsers.filter(
+							user => user.value != userName
+						);
+						//加密用户信息，并存入cookies
+						Cookies.set(
+							"account",
+							tripledes
+							.encrypt(
+								JSON.stringify(this.rememberUsers),
+								process.env.VUE_APP_userSaveKey
+							)
+							.toString(), {
+								expires: 7
+							}
+						);
+						this.$message({
+							type: "success",
+							message: "删除成功!"
+						});
+						// 重置表单
+						this.$refs["landForm_password"].resetFields();
+					})
+					.catch(() => {
+						this.$message({
+							type: "info",
+							message: "已取消删除"
+						});
 					});
-					// 重置表单
-					this.$refs['landForm_password'].resetFields();
-				}).catch(() => {
-					this.$message({
-						type: 'info',
-						message: '已取消删除'
-					});
-				});
 			},
 			submitForm(formName) {
 				this.$refs[formName].validate(valid => {
@@ -248,17 +257,17 @@
 								_this: this,
 								loginForm: this.landForm_password
 							})
-							.then((res) => {
+							.then(res => {
 								switch (res.code) {
-									case '200':
+									case "200":
 										// 登陆成功
 										this.landSuccess();
 										break;
-									case '304':
+									case "304":
 										// 登陆失败
 										this.landFail("warning", "用户或密码名错误!");
 										break;
-									case '301':
+									case "301":
 										// 登陆失败
 										this.landFail("warning", res.message + "!");
 										break;
@@ -279,7 +288,10 @@
 			},
 			querySearch(queryString, cb) {
 				const rememberUsers = this.rememberUsers;
-				let results = queryString == " " ? rememberUsers : rememberUsers.filter(this.createFilter(queryString));
+				let results =
+					queryString == " " ?
+					rememberUsers :
+					rememberUsers.filter(this.createFilter(queryString));
 				// 调用 callback 返回建议列表的数据
 				cb(results);
 			},
@@ -309,7 +321,9 @@
 			landFormPhone() {},
 			aliyun() {
 				var _this = this;
-				var nc_token = ["CF_APP_1", (new Date()).getTime(), Math.random()].join(':');
+				var nc_token = ["CF_APP_1", new Date().getTime(), Math.random()].join(
+					":"
+				);
 				var NC_Opt = {
 					renderTo: "#your-dom-id",
 					appkey: "CF_APP_1",
@@ -317,7 +331,7 @@
 					token: nc_token,
 					customWidth: 321,
 					trans: {
-						"key1": "code0"
+						key1: "code0"
 					},
 					elementID: ["usernameID"],
 					is_Opt: 0,
@@ -341,66 +355,90 @@
 						// window.console && console.log(data.sig)
 						setTimeout(() => {
 							//登陆成功手动清除cookies记录的登录次数
-							Cookies.remove("landingTimes")
+							Cookies.remove("landingTimes");
 							_this.aliyunShow = false;
 						}, 1200);
 					}
-				}
-				var nc = new noCaptcha(NC_Opt)
-				nc.upLang('cn', {
+				};
+				var nc = new noCaptcha(NC_Opt);
+				nc.upLang("cn", {
 					_startTEXT: "请按住滑块，拖动到最右边",
 					_yesTEXT: "验证通过",
-					_error300: "哎呀，出错了，点击<a href=\"javascript:__nc.reset()\">刷新</a>再来一次",
-					_errorNetwork: "网络不给力，请<a href=\"javascript:__nc.reset()\">点击刷新</a>",
-				})
+					_error300: '哎呀，出错了，点击<a href="javascript:__nc.reset()">刷新</a>再来一次',
+					_errorNetwork: '网络不给力，请<a href="javascript:__nc.reset()">点击刷新</a>'
+				});
 			},
 			landSuccess() {
-				//登陆成功后，先清除旧用户信息，然后判断用户是否勾选记住密码，是则将用户信息插入数组，否则仅记住用户名，然后将数组加密后存入cookies
-				this.rememberUsers = this.rememberUsers.filter(
-					user => user.value != this.landForm_password.user
-				);
-				// 默认记录5条用户信息，
-				if (this.rememberUsers.length > 4) {
-					this.rememberUsers = this.rememberUsers.splice(this.rememberUsers.length - 4, 4);
-				}
-				if (this.landForm_password.rememberPswd) {
-					this.rememberUsers.push({
-						value: this.landForm_password.user,
-						pswd: this.landForm_password.pswd
+				this.$store
+					.dispatch("setRouters")
+					.then(res => {
+						if (res.code == "200") {
+							this.$router.addRoutes(this.$store.state.perms.addRouters);
+							//登陆成功后，先清除旧用户信息，然后判断用户是否勾选记住密码，是则将用户信息插入数组，否则仅记住用户名，然后将数组加密后存入cookies
+							this.rememberUsers = this.rememberUsers.filter(
+								user => user.value != this.landForm_password.user
+							);
+							// 默认记录5条用户信息，
+							if (this.rememberUsers.length > 4) {
+								this.rememberUsers = this.rememberUsers.splice(
+									this.rememberUsers.length - 4,
+									4
+								);
+							}
+							if (this.landForm_password.rememberPswd) {
+								this.rememberUsers.push({
+									value: this.landForm_password.user,
+									pswd: this.landForm_password.pswd
+								});
+							} else {
+								this.rememberUsers.push({
+									value: this.landForm_password.user,
+									pswd: ""
+								});
+							}
+							//加密用户信息，并存入cookies
+							Cookies.set(
+								"account",
+								tripledes
+								.encrypt(
+									JSON.stringify(this.rememberUsers),
+									process.env.VUE_APP_userSaveKey
+								)
+								.toString(), {
+									expires: 7
+								}
+							);
+							//登陆成功手动清除cookies记录的登录次数
+							Cookies.remove("landingTimes");
+							this.$message({
+								message: "登陆成功",
+								type: "success",
+								center: true
+							});
+							//重置登陆样式
+							this.restLand();
+							this.$router.push({
+								path: "/work" //跳转的路径
+							});
+						} else {
+							this.landFail();
+						}
+					})
+					.catch(error => {
+						this.landFail();
 					});
-				} else {
-					this.rememberUsers.push({
-						value: this.landForm_password.user,
-						pswd: ""
-					});
-				}
-				//加密用户信息，并存入cookies
-				Cookies.set("account", tripledes.encrypt(JSON.stringify(this.rememberUsers),
-					process.env.VUE_APP_userSaveKey).toString(), {
-					expires: 7
-				})
-				//登陆成功手动清除cookies记录的登录次数
-				Cookies.remove("landingTimes")
-				this.$message({
-					message: "登陆成功",
-					type: "success",
-					center: true
-				});
-				setTimeout(() => {
-					//重置登陆样式
-					this.restLand();
-					this.$router.push({
-						path: "/" //跳转的路径
-					});
-				}, 1000);
 			},
 			landFail(type, msg) {
 				this.loading = false;
 				// 登陆失败五次启用阿里云人机验证
-				Cookies.set("landingTimes", Cookies.get("landingTimes") ? Number(Cookies.get(
-					"landingTimes")) + 1 : 1, {
-					expires: 1
-				})
+				Cookies.set(
+					"landingTimes",
+					Cookies.get("landingTimes") ?
+					Number(Cookies.get("landingTimes")) + 1 :
+					1, {
+						expires: 1
+					}
+				);
 				if (Cookies.get("landingTimes") >= 3) {
 					setTimeout(() => {
 						this.aliyunShow = true;
@@ -424,7 +462,6 @@
 						center: true
 					});
 				}
-
 			},
 			restLand() {
 				this.landLoading.content = "登陆";
