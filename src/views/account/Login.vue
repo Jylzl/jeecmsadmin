@@ -410,10 +410,19 @@
 							);
 							//登陆成功手动清除cookies记录的登录次数
 							Cookies.remove("landingTimes");
-							this.$message({
-								message: "登陆成功",
-								type: "success",
-								center: true
+							let siteName = "";
+							//遍历网站名称
+							for (let i in this.$store.state.perms.siteItems) {
+								if (this.$store.state.perms.siteItems[i].id == localStorage.getItem('_site_id_param')) {
+									siteName = this.$store.state.perms.siteItems[i].name;
+									break;
+								}
+							}
+							this.$notify({
+								title: '登陆成功',
+								message: '欢迎进入 '+siteName+" 后台管理系统",
+								type: 'success',
+								showClose: true
 							});
 							//重置登陆样式
 							this.restLand();

@@ -130,10 +130,10 @@ const ansycRoutes = [{
 			]
 
 		}]
-	},
+	}, //栏目管理
 	{
 		path: '/channel', //栏目
-		name: '栏目',
+		name: '栏目管理',
 		component: layout,
 		iconCls: 'icon-liebiao',
 		redirect: '/channel/list',
@@ -565,12 +565,12 @@ const ansycRoutes = [{
 				}]
 			}
 		]
-	},
+	}, //运营中心
 	{
 		path: '/operate',
 		component: layout,
 		iconCls: 'icon-yunyingzhongxin',
-		name: '运营中心', //
+		name: '运营中心',
 		meta: {
 			isLink: true
 		},
@@ -1122,7 +1122,988 @@ const ansycRoutes = [{
 				]
 			},
 		]
-	},
+	}, //辅助功能
+	{
+		path: '/help',
+		component: layout,
+		iconCls: 'icon-gongnengdingyi1',
+		name: '辅助功能',
+		meta: {
+			isLink: true
+		},
+		children: [{
+				path: '/fullTextSearch',
+				isParent: true,
+				name: '全文检索', //全文检索
+				component: resolve => {
+					require(['@/views/error/405.vue'], resolve)
+				},
+			},
+			{
+				path: '/dictionary',
+				name: '字典', //字典
+				component: childView,
+				isParent: true,
+				redirect: '/dictionary/list',
+				children: [{
+					path: '/dictionary/list', ////字典列表
+					name: '字典列表',
+					component: resolve => {
+						require(['@/views/error/405.vue'], resolve)
+					},
+				}, ]
+			},
+			{
+				path: '/contentCycle',
+				name: '内容回收站', //内容回收站
+				component: childView,
+				isParent: true,
+				redirect: '/contentCycle/list',
+				children: [{
+					path: '/contentCycle/list', ////字典列表
+					name: '内容回收站列表',
+					component: resolve => {
+						require(['@/views/error/405.vue'], resolve)
+					},
+				}, ]
+			},
+			{
+				path: '/crontab',
+				name: '定时任务', //定时任务
+				component: childView,
+				isParent: true,
+				redirect: '/crontab/list',
+				children: [{
+					path: '/crontab/list', //定时任务列表
+					name: '定时任务列表',
+					component: resolve => {
+						require(['@/views/error/405.vue'], resolve)
+					},
+				}, {
+					path: '/crontab/save', //定时任务添加
+					name: '定时任务添加',
+					component: resolve => {
+						require(['@/views/error/405.vue'], resolve)
+					},
+				}, {
+					path: '/crontab/update', //定时任务修改
+					name: '定时任务修改',
+					component: resolve => {
+						require(['@/views/error/405.vue'], resolve)
+					},
+				}]
+			},
+			{
+				path: '/file',
+				name: '附件管理', //附件管理
+				component: childView,
+				isParent: true,
+				redirect: '/file/list',
+				children: [{
+					path: '/file/list', //附件管理
+					name: '附件管理',
+					component: resolve => {
+						require(['@/views/error/405.vue'], resolve)
+					},
+				}, ]
+			},
+			{
+				path: '/dimensioncode',
+				name: '二维码生成', //二维码管理
+				component: childView,
+				isParent: true,
+				redirect: '/dimensioncode/create',
+				children: [{
+					path: '/dimensioncode/create', ////二维码管理创建
+					name: '二维码管理创建',
+					component: resolve => {
+						require(['@/views/error/405.vue'], resolve)
+					},
+				}, ]
+			},
+			{
+				path: '/customForm',
+				name: '智能表单', //智能表单
+				component: childView,
+				isParent: true,
+				redirect: '/customForm/list',
+				children: [{
+						path: '/customForm/list', ////智能表单列表
+						name: '智能表单列表',
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/customForm/add', ////智能表单添加
+						name: '智能表单添加',
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/customForm/edit', ////智能表单修改
+						name: '智能表单修改',
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/customForm/record', ////智能表单记录
+						name: '智能表单记录',
+						component: childView,
+						redirect: '/customForm/record/list',
+						children: [{
+								path: '/customForm/record/list', ////智能表单记录列表
+								name: '智能表单记录列表',
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							},
+							{
+								path: '/customForm/record/view', ////智能表单记录详情
+								name: '智能表单记录详情',
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							}
+						]
+					},
+				]
+			},
+			{
+				path: '/scoregroup',
+				name: '评分组管理', //评分组管理
+				component: childView,
+				isParent: true,
+				redirect: '/scoregroup/list',
+				children: [{
+						path: '/scoregroup/list', ////评分组管理列表
+						name: '评分组列表',
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/scoregroup/add', ////评分组管理添加
+						name: '评分组添加',
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/scoregroup/edit', ////评分组管理修改
+						name: '评分组修改',
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/scoregroup/scoreitem/list', ////评分项管理
+						name: '评分项管理',
+						component: childView,
+						redirect: '/scoregroup/scoreitem/list',
+						children: [{
+								path: '/scoregroup/scoreitem/list', ////评分项管理列表
+								name: '评分项列表',
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							},
+							{
+								path: '/scoregroup/scoreitem/add', ////评分项管理添加
+								name: '评分项添加',
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							},
+							{
+								path: '/scoregroup/scoreitem/edit', ////评分项管理修改
+								name: '评分项修改',
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							},
+						]
+					}
+				]
+			},
+			{
+				path: '/word',
+				name: '词汇管理', //词汇管理
+				component: childView,
+				children: [{
+						path: '/tag', ////tag管理
+						name: 'tag管理',
+						component: childView,
+						redirect: '/tag/list',
+						children: [{
+							path: '/tag/list', ////tag管理列表
+							name: 'tag列表',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}, ]
+					},
+					{
+						path: '/sensitivity', ////敏感词管理
+						name: '敏感词管理',
+						component: childView,
+						redirect: '/sensitivity/list',
+						children: [{
+							path: '/sensitivity/list', ////敏感词管理列表
+							name: '敏感词列表',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}, ]
+					},
+					{
+						path: '/keyword', ////关键词管理
+						name: '关键词管理',
+						component: childView,
+						redirect: '/keyword/list',
+						children: [{
+							path: '/keyword/list', ////敏感词管理列表
+							name: '关键词列表',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}, ]
+					},
+					{
+						path: '/origin', ////来源管理
+						name: '来源管理',
+						component: childView,
+						redirect: '/origin/list',
+						children: [{
+							path: '/origin/list', ////来源管理列表
+							name: '来源列表',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}, ]
+					},
+					{
+						path: '/searchwords', ////热词管理
+						name: '热词管理',
+						component: childView,
+						redirect: '/searchwords/list',
+						children: [{
+							path: '/searchwords/list', ////热词管理列表
+							name: '热词列表',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}, ]
+					}
+				]
+			},
+		]
+	}, //模板资源
+	{
+		path: '/interface',
+		name: '模板资源',
+		component: layout,
+		iconCls: 'icon-shebeikaifa',
+		children: [{
+				path: '/template',
+				name: '模板',
+				component: childView,
+				isParent: true,
+				redirect: '/template/mange',
+				children: [{
+					path: '/template/mange',
+					name: '模板管理',
+					component: childView,
+					hidden: true,
+					children: [{
+							path: '/templatelist',
+							name: '模板列表',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+							hidden: true
+						},
+						{
+							path: '/templateadd',
+							name: '模板添加',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+							hidden: true
+						},
+						{
+							path: '/templateedit',
+							name: '模板修改',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+							hidden: true
+						},
+						{
+							path: '/templaterename',
+							name: '模板重命名',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+							hidden: true
+						}, {
+							path: '/templatesetting',
+							name: '模板设置',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+							hidden: true
+						}
+					]
+				}]
+			},
+			{
+				path: '/resource',
+				name: '资源',
+				isParent: true,
+				component: childView,
+				redirect: '/resource/mange',
+				children: [{
+					path: '/resource/mange',
+					name: '资源管理',
+					component: childView,
+					hidden: true,
+					children: [{
+							path: '/resourcelist',
+							name: '资源列表',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+							hidden: true
+						},
+						{
+							path: '/resourceadd',
+							meta: {
+								role: 'resourceadd'
+							},
+							name: '资源添加',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+							hidden: true
+						},
+						{
+							path: '/resourceedit',
+							name: '资源修改',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+							hidden: true
+						},
+						{
+							path: '/resourcerename',
+							name: '资源重命名',
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+							hidden: true
+						},
+					]
+				}]
+			},
+		]
+	}, //配置管理
+	{
+		path: '/config',
+		component: layout,
+		iconCls: 'icon-icon_shezhi',
+		name: '配置管理',
+		meta: {
+			isLink: true
+		},
+		children: [{
+				path: '/siteConfig',
+				isParent: true,
+				name: '站点设置', //站点设置
+				component: resolve => {
+					require(['@/views/error/405.vue'], resolve)
+				},
+			},
+			{
+				path: '/stat',
+				name: '统计设置', //统计设置
+				component: childView,
+				isParent: true,
+				redirect: '/stat/list',
+				children: [{
+						path: '/stat/list',
+						name: '统计列表', //统计列表
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/stat/add',
+						name: '统计添加', //统计添加
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/stat/edit',
+						name: '统计修改', //统计修改
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					}
+				]
+			},
+			{
+				path: '/ftp',
+				name: 'FTP管理', //ftp管理
+				component: childView,
+				isParent: true,
+				redirect: '/ftp/list',
+				children: [{
+					path: '/ftp/list',
+					name: 'FTP列表', //ftp管理列表
+					component: resolve => {
+						require(['@/views/error/405.vue'], resolve)
+					},
+				}, {
+					path: '/ftp/add',
+					name: 'FTP添加', //ftp管理添加
+					component: resolve => {
+						require(['@/views/error/405.vue'], resolve)
+					},
+				}, {
+					path: '/ftp/edit',
+					name: 'FTP修改', //ftp管理修改
+					component: resolve => {
+						require(['@/views/error/405.vue'], resolve)
+					},
+				}]
+			},
+			{
+				path: '/oss',
+				name: 'OSS管理', //oss管理
+				component: childView,
+				isParent: true,
+				redirect: '/oss/list',
+				children: [{
+						path: '/oss/list',
+						name: 'OSS列表', //oss管理列表
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/oss/add',
+						name: 'OSS添加', //oss管理添加
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/oss/edit',
+						name: 'OSS修改', //oss管理修改
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					}
+				]
+			},
+			{
+				path: '/type',
+				name: '内容类型', //内容类型
+				component: childView,
+				isParent: true,
+				redirect: '/type/list',
+				children: [{
+						path: '/type/list',
+						name: '内容类型列表', //内容类型列表
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/type/add',
+						name: '内容类型添加', //内容类型添加
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/type/edit',
+						name: '内容类型修改', //内容类型修改
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					}
+				]
+			},
+			{
+				path: '/directive',
+				name: '标签向导', //标签向导
+				component: childView,
+				isParent: true,
+				redirect: '/directive/list',
+				children: [{
+						path: '/directive/list',
+						name: '标签向导列表', //标签向导列表
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/directive/add',
+						name: '标签向导添加', //标签向导添加
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+				]
+			},
+			{
+				path: '/model',
+				name: '模型管理', //模型管理
+				component: childView,
+				isParent: true,
+				redirect: '/model/list',
+				children: [{
+						path: '/model/list',
+						name: '模型列表', //模型管理列表
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					}, {
+						path: '/model/add',
+						name: '模型添加', //模型管理添加
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					}, {
+						path: '/model/edit',
+						name: '模型修改', //模型管理修改
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/channelModel/list',
+						name: '栏目模型字段列表', //栏目模型
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						}
+					},
+					{
+						path: '/channelModel/update',
+						name: '栏目模型字段修改', //栏目模型项修改
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						}
+					},
+					{
+						path: '/channelModel/save',
+						name: '栏目模型字段添加', //栏目模型项添加
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						}
+					},
+					{
+						path: '/contentModel/list',
+						name: '内容模型字段模型', //内容模型
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						}
+					},
+					{
+						path: '/contentModel/update',
+						name: '内容模型字段修改', //内容模型项修改
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						}
+					},
+					{
+						path: '/contentModel/save',
+						name: '内容模型字段添加', //内容模型项添加
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						}
+					}
+				]
+			},
+			{
+				path: '/globel',
+				name: '全局设置', //全局设置
+				component: childView,
+				children: [{
+						path: '/globel/systemUpdate',
+						name: '系统设置', //全局设置-系统设置
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/globel/loginUpdate',
+						name: '登录设置', //全局设置-登录设置
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/globel/memberUpdate',
+						name: '会员设置', //全局设置-会员设置
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/globel/registerModel',
+						name: '会员注册管理', //全局设置-会员注册管理
+						component: childView,
+						redirect: '/globel/registerModel/list',
+						children: [{
+								path: '/globel/registerModel/list',
+								name: '会员注册列表', //全局设置-会员注册管理列表
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							},
+							{
+								path: '/globel/registerModel/add',
+								name: '会员注册添加', //全局设置-会员注册管理添加
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							},
+							{
+								path: '/globel/registerModel/edit',
+								name: '会员注册修改', //全局设置-会员注册管理修改
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							}
+						]
+					},
+					{
+						path: '/globel/markUpdate',
+						name: '水印设置', //全局设置-水印设置
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/globel/firewallUpdate',
+						name: '防火墙设置', //全局设置-防火墙设置
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/globel/attrUpdate',
+						name: '其他设置', //全局设置-其他设置
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/globel/companyUpdate',
+						name: '机构信息设置', //全局设置-机构信息设置
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/globel/contentUpdate',
+						name: '内容佣金设置', //全局设置-内容佣金设置
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+				]
+			},
+			{
+				path: '/site',
+				component: childView,
+				isParent: true,
+				name: '站点管理', //站点管理
+				redirect: '/site/list',
+				children: [{
+						path: '/site/list',
+						name: '站点列表', //站点管理列表
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/site/add',
+						name: '站点添加', //站点管理添加
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/site/edit',
+						name: '站点修改', //站点管理修改
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					}
+				]
+			},
+			{
+				path: '/apiManage',
+				name: '接口管理', //接口管理
+				component: childView,
+				children: [{
+						path: '/apiManage/apiUpdate',
+						name: '接口设置', //接口管理-接口设置
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/apiManage/apiSSOupdate',
+						name: '单点登录设置', //接口管理-sso设置
+						component: resolve => {
+							require(['@/views/error/405.vue'], resolve)
+						},
+					},
+					{
+						path: '/apiManage/apiMan',
+						name: '接口管理', //接口管理-接口管理
+						component: childView,
+						redirect: '/apiManage/apiMan/list',
+						children: [{
+							path: '/apiManage/apiMan/list',
+							name: '接口列表', //接口管理-接口管理列表
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}, {
+							path: '/apiManage/apiMan/add',
+							name: '接口添加', //接口管理-接口管理添加
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}, {
+							path: '/apiManage/apiMan/edit',
+							name: '接口修改', //接口管理-接口管理修改
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}]
+					},
+					{
+						path: '/apiManage/apiUserMan',
+						name: '接口用户管理', //接口管理-接口用户管理
+						component: childView,
+						redirect: '/apiManage/apiUserMan/list',
+						children: [{
+							path: '/apiManage/apiUserMan/list',
+							name: '接口用户列表', //接口管理-接口用户管理列表
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}, {
+							path: '/apiManage/apiUserMan/add',
+							name: '接口用户添加', //接口管理-接口用户管理添加
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}, {
+							path: '/apiManage/apiUserMan/edit',
+							name: '接口用户修改', //接口管理-接口用户管理修改
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}]
+					},
+					{
+						path: '/apiManage/apiUseRecord',
+						name: '接口使用记录', //接口管理-接口使用记录
+						component: childView,
+						redirect: '/apiManage/apiUseRecord/list',
+						children: [{
+							path: '/apiManage/apiUseRecord/list',
+							name: '接口使用列表', //接口管理-接口使用记录列表
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}]
+					},
+					{
+						path: '/apiManage/apiRecord',
+						name: 'api接口记录', //接口管理-api接口记录
+						component: childView,
+						redirect: '/apiManage/apiRecord/list',
+						children: [{
+							path: '/apiManage/apiRecord/list',
+							name: 'api接口记录列表', //接口管理-api接口记录列表
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}]
+					},
+					{
+						path: '/apiManage/apiInfo',
+						name: 'api接口管理', //接口管理-接口使用记录
+						component: childView,
+						redirect: '/apiManage/apiInfo/list',
+						children: [{
+							path: '/apiManage/apiInfo/list',
+							name: 'api接口列表', //接口管理-api接口管理列表
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}, {
+							path: '/apiManage/apiInfo/add',
+							name: 'api接口添加', //接口管理-api接口管理添加
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}, {
+							path: '/apiManage/apiInfo/edit',
+							name: 'api接口修改', //接口管理-api接口管理修改
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}]
+					},
+					{
+						path: '/apiManage/apiAccount',
+						name: 'api接口账户管理', //接口管理-api接口账户管理
+						component: childView,
+						redirect: '/apiManage/apiAccount/list',
+						children: [{
+								path: '/apiManage/apiAccount/list',
+								name: 'api接口账户列表', //接口管理-api接口账户管理列表
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							}, {
+								path: '/apiManage/apiAccount/add',
+								name: 'api接口账户添加', //接口管理-api接口账户管理添加
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							}, {
+								path: '/apiManage/apiAccount/edit',
+								name: 'api接口账户查看', //接口管理-api接口账户管理查看
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							},
+							{
+								path: '/apiManage/apiAccount/update',
+								name: '独立密码修改', //接口管理-api接口账户管理查看
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							}
+						]
+					}
+				]
+			}, {
+				path: '/smsServer',
+				name: '短信服务', //短信服务
+				component: childView,
+				children: [{
+						path: '/smsServer/smsServer',
+						name: '短信服务管理', //短信服务-短信服务管理
+						component: childView,
+						redirect: '/smsServer/smsServer/list',
+						children: [{
+								path: '/smsServer/smsServer/list',
+								name: '短信服务列表', //短信服务-短信服务管理列表
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							},
+							{
+								path: '/smsServer/smsServer/add',
+								name: '短信服务添加', //短信服务-短信服务管理添加
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							},
+							{
+								path: '/smsServer/smsServer/edit',
+								name: '短信服务修改', //短信服务-短信服务管理修改
+								component: resolve => {
+									require(['@/views/error/405.vue'], resolve)
+								},
+							}
+						]
+					},
+					{
+						path: '/smsServer/smsServer/smsRecord',
+						name: '短信使用记录', //短信服务-短信使用记录
+						component: childView,
+						redirect: '/smsServer/smsServer/smsRecord',
+						children: [{
+							path: '/smsServer/smsServer/smsRecord',
+							name: '短信使用记录列表', //短信服务-短信使用记录
+							component: resolve => {
+								require(['@/views/error/405.vue'], resolve)
+							},
+						}]
+					},
+				]
+			},
+		]
+	}, //网站监测
+	{
+		path: '/webmonitoring', //内容
+		name: '网站监测',
+		component: layout,
+		iconCls: 'icon-gongyezujian-yibiaopan',
+		meta: {
+			isLink: true
+		},
+		children: [{
+			path: '/webset',
+			name: '可访问性', //内容管理
+			component: childView,
+			isParent: true,
+			redirect: '/webset/accessibility',
+			children: [{
+				path: '/webset/accessibility',
+				name: '可访问性',
+				component: resolve => {
+					require(['@/views/content/content/list.vue'], resolve)
+				}
+			}]
+		}, {
+			path: '/warning',
+			name: '告警通知', //专题管理
+			component: childView,
+			isParent: true,
+			redirect: '/warning/notice',
+			children: [{
+				path: '/warning/notice',
+				name: '告警通知',
+				component: resolve => {
+					require(['@/views/content/topic/list.vue'], resolve)
+				}
+			}]
+		}]
+	}, //关于
+	{
+		path: '/about', //关于
+		name: '关于',
+		component: layout,
+		iconCls: 'icon-kefu',
+		redirect: '/about/us',
+		isParent: true,
+		leaf: true, //只有一个节点  
+		children: [{
+			path: '/about/us',
+			name: '关于',
+			component: resolve => {
+				require(['@/views/error/405.vue'], resolve)
+			},
+			hidden: false,
+		}]
+	}, //错误页面
 	{
 		path: '*',
 		name: '404',
