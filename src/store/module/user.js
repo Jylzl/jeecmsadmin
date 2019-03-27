@@ -2,8 +2,7 @@ import {
 	Encrypt
 } from "@/utils/aes.js";
 import {
-	login,
-	loginOut
+	login
 } from "@/api/land.js";
 import {
 	routes
@@ -13,12 +12,7 @@ const user = {
 	state: {
 		//设置属性
 		userName: 'none',
-		localLanguage: 'en',
-		routers: routes,
-		addRouters: [],
-		perms: false, //判断是否刷新过页面,
-		permsList: null,
-		_site_id_param: '', //站点id
+		localLanguage: 'en'
 	},
 	getters: {
 		//获取属性的状态
@@ -30,16 +24,6 @@ const user = {
 			localStorage.setItem('sessionKey', params);
 			localStorage.setItem('localLanguage', 'zh');
 			state.userName = localStorage.getItem('userName');
-		},
-		CLEAR_ROUTERS: (state) => {
-			state.routers = routes;
-			state.addRouters = [];
-			state.perms = false;
-			state.permsList = null;
-			state._site_id_param = null;
-			localStorage.setItem('sessionKey', '');
-			localStorage.setItem('userName', '');
-			// window.location.reload(); //此处退出vuex状态不刷新，目前发现重载页面可以处理。。
 		}
 	},
 	actions: {
@@ -68,20 +52,6 @@ const user = {
 						reject(false);
 					});
 			});
-		},
-		loginOut({
-			commit
-		}) {
-			return new Promise((resolve, reject) => {
-				loginOut().then(res => {
-					if (res.code == '200') {
-						commit('CLEAR_ROUTERS');
-					}
-					resolve(res);
-				}).catch(error => {
-					reject(error);
-				})
-			})
 		}
 	}
 }

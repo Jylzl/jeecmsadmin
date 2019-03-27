@@ -4,6 +4,9 @@ import {
     routes,
     ansycRoutes
 } from '@/router/routes'
+import {
+    loginOut
+} from "@/api/land.js";
 /*
  * 
  * @param {异步路由表} ansycRoutes 
@@ -111,10 +114,7 @@ const perm = {
             commit
         }) {
             return new Promise((resolve, reject) => {
-                request({
-                    url: api.loginOut,
-                    method: 'post'
-                }).then(res => {
+                loginOut().then(res => {
                     if (res.code == '200') {
                         commit('CLEAR_ROUTERS');
                     }
