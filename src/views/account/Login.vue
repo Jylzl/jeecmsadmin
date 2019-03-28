@@ -413,14 +413,15 @@
 							let siteName = "";
 							//遍历网站名称
 							for (let i in this.$store.state.perms.siteItems) {
-								if (this.$store.state.perms.siteItems[i].id == localStorage.getItem('_site_id_param')) {
+								if (this.$store.state.perms.siteItems[i].id == localStorage.getItem(
+									'_site_id_param')) {
 									siteName = this.$store.state.perms.siteItems[i].name;
 									break;
 								}
 							}
 							this.$notify({
 								title: '登陆成功',
-								message: '欢迎进入 '+siteName+" 后台管理系统",
+								message: '欢迎进入 ' + siteName + " 后台管理系统",
 								type: 'success',
 								showClose: true
 							});

@@ -14,10 +14,7 @@ import Icon from "vue2-svg-icon/Icon.vue";
 // 页面加载进度条
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-//右键
-import rightMenu from "rightmenu";
 
-Vue.use(rightMenu);
 Vue.use(VCharts);
 Vue.component("icon", Icon);
 Vue.config.productionTip = false;

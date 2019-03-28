@@ -83,7 +83,7 @@
 	};
 </script>
 <style>
-	.aside-menu>li>div,
+	.aside-menu li div,
 	.aside-menu .el-menu-item {
 		box-sizing: border-box;
 		border-left-width: 3px;
@@ -92,7 +92,7 @@
 	}
 
 	.aside-menu>.is-active:not(.el-submenu),
-	.aside-menu>.is-active>div {
+	.aside-menu .is-active>div {
 		border-left-color: #1F6FB5;
 	}
 </style>

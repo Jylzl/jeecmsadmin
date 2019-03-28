@@ -13,4 +13,4 @@ export const store = new Vuex.Store({
     perms
   },
   getters
-})
+}) 

@@ -294,8 +294,6 @@
 					e.preventDefault();
 					if (_this.radio != "只读") {
 						_this.saveMonacoEditor();						
-					} else {
-						
 					}
 				}
 			});

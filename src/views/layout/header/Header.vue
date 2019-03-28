@@ -4,7 +4,6 @@
 			<el-badge is-dot class="item">{{siteName}}</el-badge>
 		</el-col>
 		<el-col :span="5">
-
 		</el-col>
 		<el-col :span="10">
 			<div class="user-console">
@@ -30,16 +29,11 @@
 				</div>
 				<div class="siteSearch-form" :class="{'show':show}">
 					<el-button type="text" icon="el-icon-search" @click.stop="siteSearchShow(true)"></el-button>
-					<!-- <el-autocomplete class="siteSearch-input" v-model="siteSearchForm.input"
-						:fetch-suggestions="querySearch" placeholder="请输入内容" :trigger-on-focus="false"
-						@select="handleSelect" :style="{width:siteSearchInputWidth+'px'}" @blur="siteSearchBtn(0)"
-						ref="siteSearchInput"></el-autocomplete> -->
-
 					<el-select ref="siteSearchInput" v-model="search" :remote-method="querySearch" filterable
 						default-first-option remote placeholder="请输入内容" class="header-search-select" @change="change"
 						@blur="siteSearchShow(false)">
 						<el-option v-for="item in options" :key="item.path" :value="item"
-							:label="item.title.join(' > ')" />
+							:label="item.name.join(' > ')" />
 					</el-select>
 				</div>
 			</div>
@@ -86,21 +80,11 @@
 				}
 			},
 			routes() {
-				return this.$store.getters.permission_routes
+				return this.$store.getters.permission_routes;
 			}
 		},
 		mounted() {
-			this.$store
-				.dispatch("setRouters")
-				.then(res => {
-					if (res.code == "200") {
-						this.$router.addRoutes(this.$store.state.perms.addRouters);
-						console.log("2")
-						console.log(this.$store.getters.permission_routes)
-						this.searchPool = this.generateRoutes(this.routes)
-					}
-				})
-				.catch(error => {});
+			this.searchPool = this.generateRoutes(this.routes)
 		},
 		methods: {
 			siteSearchShow(type) {
@@ -115,10 +99,8 @@
 					})
 					.then(() => {
 						this.$router.push({
-							//核心语句
 							path: "/lock", //跳转的路径
 							query: {
-								//路由传参时push和query搭配使用 ，作用时传递参数
 								user: this.userName
 							}
 						});
@@ -154,7 +136,6 @@
 								}
 							})
 							.catch(() => {
-								// 服务器异常
 								this.$message.error('服务器异常');
 							});
 					})
@@ -165,9 +146,6 @@
 						});
 					});
 			},
-			// handleSelect(item) {
-			// 	console.log(item);
-			// }
 			change(val) {
 				this.$router.push(val.path)
 				this.search = ''
@@ -185,7 +163,7 @@
 					maxPatternLength: 32,
 					minMatchCharLength: 1,
 					keys: [{
-						name: 'title',
+						name: 'name',
 						weight: 0.7
 					}, {
 						name: 'path',
@@ -197,22 +175,17 @@
 				let res = []
 
 				for (const router of routes) {
-					// skip hidden router
+					// 如果路由不显示就跳出循环
 					if (router.hidden) {
 						continue
 					}
-
 					const data = {
 						path: path.resolve(basePath, router.path),
-						title: [...prefixTitle]
+						name: [...prefixTitle]
 					}
-
-					if (router.meta && router.meta.title) {
+					if ( router.name) {
 						// generate internationalized title
-						const i18ntitle = i18n.t(`route.${router.meta.title}`)
-
-						data.title = [...data.title, i18ntitle]
-
+						data.name = [...data.name, router.name]
 						if (router.redirect !== 'noredirect') {
 							// only push the routes with title
 							// special case: need to exclude parent router without redirect
@@ -222,7 +195,7 @@
 
 					// recursive child routes
 					if (router.children) {
-						const tempRoutes = this.generateRoutes(router.children, data.path, data.title)
+						const tempRoutes = this.generateRoutes(router.children, data.path, data.name)
 						if (tempRoutes.length >= 1) {
 							res = [...res, ...tempRoutes]
 						}

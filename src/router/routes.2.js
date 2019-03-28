@@ -2,60 +2,21 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import login from '@/views/account/Login.vue'
-import lock from '@/views/account/Lock.vue'
 import layout from '@/views/layout/Layout.vue'
 import work from '@/views/console/Console.vue'
 
 import error from '@/views/error/404.vue'
 import childView from '@/components/childView/Index.vue'
-// const resourceTree = resolve => {
-// 	require(['@/views/interface/resource/tree.vue'], resolve)
-// }; //
-// const resourceList = resolve => {
-// 	require(['@/views/interface/resource/list.vue'], resolve)
-// }; //
-// const resourceEdit = resolve => {
-// 	require(['@/views/interface/resource/edit.vue'], resolve)
-// }; //
-// const resourceReName = resolve => {
-// 	require(['@/views/interface/resource/rename.vue'], resolve)
-// }; //
-// const templateTree = resolve => {
-// 	require(['@/views/interface/template/tree.vue'], resolve)
-// }; //
-// const templateList = resolve => {
-// 	require(['@/views/interface/template/list.vue'], resolve)
-// }; //
-// const templateEdit = resolve => {
-// 	require(['@/views/interface/template/edit.vue'], resolve)
-// }; //
-// const templateReName = resolve => {
-// 	require(['@/views/interface/template/rename.vue'], resolve)
-// }; //
-// const templateSetting = resolve => {
-// 	require(['@/views/interface/template/setting.vue'], resolve)
-// }; //
-// function $importViews(componentName) { //异步加载组件
-// 	return resolve => {
-// 		require(['@/views/' + componentName + '.vue'], resolve)
-// 	}
-// }
-
 
 Vue.use(Router)
 /**
  * routes==默认路由节点
+ * leaf: true, //只有一个节点
  */
 const routes = [{
 		path: '/login',
 		name: '登录',
 		component: login,
-		hidden: true
-	},
-	{
-		path: "/lock",
-		name: "锁屏",
-		component: lock,
 		hidden: true
 	},
 	{
@@ -66,7 +27,7 @@ const routes = [{
 		},
 		component: layout,
 		iconCls: 'icon-shebeizhuangtai',
-		leaf: true, //只有一个节点
+		leaf: true,
 		redirect: '/work',
 		children: [{
 			path: '/work',
@@ -79,6 +40,7 @@ const ansycRoutes = [{
 		name: '内容发布',
 		component: layout,
 		iconCls: 'icon-ceshishenqing',
+		redirect: '/content/list',
 		meta: {
 			isLink: true
 		},
@@ -181,6 +143,7 @@ const ansycRoutes = [{
 		name: '数据中心', //数据中心
 		component: layout,
 		iconCls: 'icon-shujukanban',
+		redirect: '/traffic/trend',
 		meta: {
 			isLink: true,
 		},
@@ -207,6 +170,7 @@ const ansycRoutes = [{
 				path: '/sourceanalysis', //来源分析
 				name: '来源分析',
 				component: childView,
+				redirect: '/sourceanalysis/class',
 				children: [{
 						path: '/sourceanalysis/class', //来源分类
 						name: '来源分类',
@@ -320,6 +284,7 @@ const ansycRoutes = [{
 		name: '用户管理', //用户管理
 		component: layout,
 		iconCls: 'icon-icon_zhanghao',
+		redirect: '/user/list',
 		meta: {
 			isLink: true
 		},
@@ -500,7 +465,7 @@ const ansycRoutes = [{
 				name: '部门管理', //部门管理
 				component: childView,
 				isParent: true,
-				redirect: '/department/list',
+				redirect: '/department/tpm',
 				children: [{
 					path: '/department/tpm',
 					name: '部门模板', //部门管理
@@ -578,6 +543,7 @@ const ansycRoutes = [{
 		component: layout,
 		iconCls: 'icon-yunyingzhongxin',
 		name: '运营中心',
+		redirect: '/contentReuse',
 		meta: {
 			isLink: true
 		},
@@ -833,6 +799,7 @@ const ansycRoutes = [{
 				path: '/db',
 				name: '数据备份', //数据备份
 				component: childView,
+				redirect: '/backups/list',
 				children: [{
 						path: '/backups',
 						name: '备份',
@@ -940,6 +907,7 @@ const ansycRoutes = [{
 				path: '/collection',
 				name: '采集管理',
 				component: childView,
+				redirect: '/collectionmanage/list',
 				children: [{
 						path: '/collectionmanage',
 						name: '采集',
@@ -1000,6 +968,7 @@ const ansycRoutes = [{
 				path: '/weixin',
 				name: '公众号设置', //公众号设置
 				component: childView,
+				redirect: '/weixinConfig',
 				children: [{
 						path: '/weixinConfig', //公众号设置
 						name: '公众号设置',
@@ -1105,6 +1074,7 @@ const ansycRoutes = [{
 				path: '/statically',
 				name: '页面静态化', //页面静态化
 				component: childView,
+				redirect: '/statically/indexStatic',
 				children: [{
 						path: '/statically/indexStatic', //首页静态化
 						name: '首页静态化',
@@ -1135,6 +1105,7 @@ const ansycRoutes = [{
 		component: layout,
 		iconCls: 'icon-gongnengdingyi1',
 		name: '辅助功能',
+		redirect: '/fullTextSearch',
 		meta: {
 			isLink: true
 		},
@@ -1339,6 +1310,7 @@ const ansycRoutes = [{
 				path: '/word',
 				name: '词汇管理', //词汇管理
 				component: childView,
+				redirect: '/tag',
 				children: [{
 						path: '/tag', ////tag管理
 						name: 'tag管理',
@@ -1413,23 +1385,23 @@ const ansycRoutes = [{
 		name: '模板资源',
 		component: layout,
 		iconCls: 'icon-shebeikaifa',
+		redirect: '/template/mange',
 		children: [{
 				path: '/template',
-				name: '模板管理',
+				name: '模板',
 				component: childView,
 				isParent: true,
-				redirect: '/templatelist',
+				redirect: '/template/mange',
 				children: [{
 					path: '/template/mange',
-					name: '模板',
+					name: '模板管理',
 					component: childView,
 					hidden: true,
-					redirect: '/templatelist',
 					children: [{
 							path: '/templatelist',
 							name: '模板列表',
 							component: resolve => {
-								require(['@/views/template/template/Index.vue'], resolve)
+								require(['@/views/error/405.vue'], resolve)
 							},
 							hidden: true
 						},
@@ -1523,6 +1495,7 @@ const ansycRoutes = [{
 		component: layout,
 		iconCls: 'icon-icon_shezhi',
 		name: '配置管理',
+		redirect: '/siteConfig',
 		meta: {
 			isLink: true
 		},
@@ -2064,6 +2037,7 @@ const ansycRoutes = [{
 		name: '网站监测',
 		component: layout,
 		iconCls: 'icon-gongyezujian-yibiaopan',
+		redirect: '/webset/accessibility',
 		meta: {
 			isLink: true
 		},
@@ -2115,6 +2089,7 @@ const ansycRoutes = [{
 	{
 		path: '*',
 		name: '404',
+		redirect: 'noredirect',
 		component: error,
 		meta: {
 			role: 'index'

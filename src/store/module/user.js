@@ -4,19 +4,12 @@ import {
 import {
 	login
 } from "@/api/land.js";
-import {
-	routes
-} from '@/router/routes'
 //展示的用户信息
 const user = {
 	state: {
 		//设置属性
 		userName: 'none',
 		localLanguage: 'en'
-	},
-	getters: {
-		//获取属性的状态
-		getUser: state => state.user
 	},
 	mutations: {
 		//改变属性的状态
