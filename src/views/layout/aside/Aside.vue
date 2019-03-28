@@ -12,7 +12,7 @@
 							<el-submenu :index="item.path" v-if="!item.leaf" :key="index">
 								<template slot="title">
 									<i :class="item.iconCls" class="icon iconfont el-submenu-iconfont"></i>
-									<span class="collapse-font" slot="title">{{item.name}}</span>
+									<span class="collapse-font" slot="title">{{generateTitle('submenu',item.name)}}</span>
 								</template>
 								<template v-for="(child,index2) in item.children">
 									<el-menu-item v-if="child.isParent" :index="child.path" :key="child.path"
@@ -35,7 +35,7 @@
 							<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.path" class="first-item"
 								:key="index">
 								<i :class="item.iconCls" class="icon iconfont el-submenu-iconfont"></i>
-								<span class="collapse-font " slot="title">{{item.name}}</span>
+								<span class="collapse-font " slot="title">{{generateTitle('submenu',item.name)}}</span>
 							</el-menu-item>
 						</template>
 					</template>
@@ -48,6 +48,7 @@
 	</div>
 </template>
 <script>
+import { generateTitle } from '@/utils/i18n'
 	export default {
 		name: "Aside",
 		data() {
@@ -69,6 +70,7 @@
 			this.activeIndex = this.$route.matched[1].path;
 		},
 		methods: {
+			generateTitle,
 			handleOpen(key, keyPath) {
 				// console.log(key, keyPath);
 			},
@@ -93,7 +95,7 @@
 
 	.aside-menu>.is-active:not(.el-submenu),
 	.aside-menu .is-active>div {
-		border-left-color: #1F6FB5;
+		border-left-color: #1f6fb5;
 	}
 </style>
 

@@ -9,13 +9,14 @@ const user = {
 	state: {
 		//设置属性
 		userName: 'none',
-		localLanguage: 'en'
+		localLanguage: 'zh'
 	},
 	mutations: {
 		//改变属性的状态
 		LOGING_STATE: (state, params) => {
 			localStorage.setItem('sessionKey', params);
 			localStorage.setItem('localLanguage', 'zh');
+			state.localLanguage = 'zh';
 			state.userName = localStorage.getItem('userName');
 		}
 	},
@@ -24,7 +25,6 @@ const user = {
 		userLogin({
 			commit
 		}, data) { //登录异步操作
-			// var _this = data._this;
 			var landInf = data.loginForm;
 			let userName = landInf.user;
 			let password = Encrypt(landInf.pswd, process.env.VUE_APP_aesKey, process.env.VUE_APP_ivKey); //加密
@@ -35,8 +35,8 @@ const user = {
 					})
 					.then(res => {
 						if (res.code == '200') {
-							localStorage.setItem('userName', userName);
-							commit('LOGING_STATE', res.body);
+							localStorage.setItem('userName', userName); //登陆成功将用户名存入localStorage
+							commit('LOGING_STATE', res.body); //将返回的sessionKey存起来
 						}
 						resolve(res)
 					})

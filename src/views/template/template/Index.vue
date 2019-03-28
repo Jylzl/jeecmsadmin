@@ -412,7 +412,7 @@
 </script>
 <style scoped>
 	.el-container {
-		height: calc(100% - 48px);
+		height: 100%;
 	}
 
 	.el-aside {

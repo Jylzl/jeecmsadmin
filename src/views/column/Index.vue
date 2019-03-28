@@ -7,7 +7,8 @@
 			</div>
 			<div class="left-center">
 				<el-scrollbar wrap-class="scrollbar-wrapper">
-					<el-tree :data="data" :props="defaultProps" :default-expand-all="true" @node-click="handleNodeClick"></el-tree>
+					<el-tree :data="data" :props="defaultProps" :default-expand-all="true"
+						@node-click="handleNodeClick"></el-tree>
 				</el-scrollbar>
 			</div>
 		</el-aside>
@@ -73,12 +74,16 @@
 						<el-table-column prop="name" label="姓名" width="120"></el-table-column>
 						<el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
 					</el-table> -->
-					<el-table :data="tableData" row-key="id" ref="multipleTable" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange">
+					<el-table :data="tableData" row-key="id" ref="multipleTable" tooltip-effect="dark"
+						style="width: 100%" @selection-change="handleSelectionChange">
 						<el-table-column type="selection" width="55" align="center"></el-table-column>
-						<el-table-column v-for="(item, index) in col" :key="`col_${index}`" :prop="dropCol[index].prop" :label="item.label"></el-table-column>
+						<el-table-column v-for="(item, index) in col" :key="`col_${index}`" :prop="dropCol[index].prop"
+							:label="item.label"></el-table-column>
 					</el-table>
 					<div class="list-paging">
-						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4" :page-sizes="[10, 20, 30, 50]" :page-size="10" :pager-count="5" layout="total, sizes, prev, pager, next, jumper" :total="400">
+						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+							:current-page="currentPage4" :page-sizes="[10, 20, 30, 50]" :page-size="10" :pager-count="5"
+							layout="total, sizes, prev, pager, next, jumper" :total="400">
 						</el-pagination>
 					</div>
 				</el-scrollbar>
@@ -233,7 +238,7 @@
 				select: ""
 			};
 		},
-		 mounted() {
+		mounted() {
 			this.rowDrop()
 			this.columnDrop()
 		},
@@ -259,27 +264,30 @@
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
 			},
-			  //行拖拽
+			//行拖拽
 			rowDrop() {
-			const tbody = document.querySelector('.el-table__body-wrapper tbody')
-			const _this = this
-			Sortable.create(tbody, {
-				onEnd({ newIndex, oldIndex }) {
-				const currRow = _this.tableData.splice(oldIndex, 1)[0]
-				_this.tableData.splice(newIndex, 0, currRow)
-				}
-			})
+				const tbody = document.querySelector('.el-table__body-wrapper tbody')
+				const _this = this
+				Sortable.create(tbody, {
+					onEnd({
+						newIndex,
+						oldIndex
+					}) {
+						const currRow = _this.tableData.splice(oldIndex, 1)[0]
+						_this.tableData.splice(newIndex, 0, currRow)
+					}
+				})
 			},
 			//列拖拽
 			columnDrop() {
-			const wrapperTr = document.querySelector('.el-table__header-wrapper tr')
-			this.sortable = Sortable.create(wrapperTr, {
-				animation: 180,
-				delay: 0,
-				onEnd: evt => {
-					const oldItem = this.dropCol[evt.oldIndex]
-					this.dropCol.splice(evt.oldIndex, 1)
-					this.dropCol.splice(evt.newIndex, 0, oldItem)
+				const wrapperTr = document.querySelector('.el-table__header-wrapper tr')
+				this.sortable = Sortable.create(wrapperTr, {
+					animation: 180,
+					delay: 0,
+					onEnd: evt => {
+						const oldItem = this.dropCol[evt.oldIndex]
+						this.dropCol.splice(evt.oldIndex, 1)
+						this.dropCol.splice(evt.newIndex, 0, oldItem)
 					}
 				})
 			}
@@ -288,7 +296,7 @@
 </script>
 <style scoped>
 	.el-container {
-		height: calc(100% - 48px);
+		height: 100%;
 	}
 
 	.el-aside {
@@ -300,7 +308,7 @@
 
 	.left-top {
 		display: flex;
-		justify-content:space-between;
+		justify-content: space-between;
 		box-sizing: border-box;
 		height: 50px;
 		padding: 5px;
@@ -378,7 +386,8 @@
 		background-color: #fff;
 		padding: 0;
 	}
-	.list-paging{
+
+	.list-paging {
 		box-sizing: border-box;
 		height: 50px;
 		line-height: 50px;
