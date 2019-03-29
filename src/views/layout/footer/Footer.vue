@@ -1,13 +1,12 @@
 <template>
   <div class="footer-inf clearfix">
     <p class="system-inf">
-      <span>当前在线6人</span>
       <span>上次登录时间: 2018-12-18 11:28:11</span>
       <span>内存:<span class="ram-use">517.1MB</span> / <span>3531MB</span></span>
     </p>
     <p class="copyright-inf">
       <span>Copyright © 2018</span>
-      <a href="http://www.whcxbd.com/" target="_blank">武汉创信博达信息技术</a>
+      <a href="http://www.whcxbd.com/" target="_blank">信息技术有限公司</a>
       <span>. All rights reserved.</span>
       <el-button icon="el-icon-bell" style="margin-left:10px;"  @click="hideChat()" circle></el-button>
     </p>

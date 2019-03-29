@@ -82,7 +82,7 @@
 						</el-dropdown>
 					</div>
 					<div>
-						<ve-line :data="chartData1"></ve-line>
+						<ve-line :data="chartData1" :extend="chartSet1" :loading="chart1loading"></ve-line>
 					</div>
 				</el-card>
 			</el-col>
@@ -141,7 +141,8 @@
 						</el-dropdown>
 					</div>
 					<div style="height:400px;">
-						<el-table :data="tableData" stripe style="width: 100%" ref="multipleTable" tooltip-effect="dark">
+						<el-table :data="tableData" stripe style="width: 100%" ref="multipleTable"
+							tooltip-effect="dark">
 							<el-table-column type="selection" width="55"></el-table-column>
 							<el-table-column prop="date" label="日期" width="160" sortable></el-table-column>
 							<el-table-column prop="name" label="状态" width="100">
@@ -150,7 +151,7 @@
 									<el-tag type="warning" v-else-if="scope.row.type == '1'">待办</el-tag>
 									<el-tag type="danger" v-else-if="scope.row.type == '2'">加急</el-tag>
 									<el-tag type="info" v-else>正常</el-tag>
-      							</template>
+								</template>
 							</el-table-column>
 							<!-- <el-table-column prop="name" label="姓名" width="180"></el-table-column> -->
 							<el-table-column prop="matter" label="事项"></el-table-column>
@@ -168,90 +169,94 @@
 			'full-calendar': require('vue-fullcalendar')
 		},
 		data() {
+			this.chartSet1 = {
+				// 'xAxis.0.axisLabel.rotate': 45
+			}
 			return {
+				chart1loading: true,
+				chart1option: false,
 				chartData1: {
 					columns: ['日期', 'pv统计', 'ip统计', '独立访客统计'],
-					rows: [
-						{ '日期': '00:00-00:59', 'pv统计': 1393, 'ip统计': 1093, '独立访客统计': 1132 },
-						{ '日期': '03:00-03:59', 'pv统计': 3530, 'ip统计': 3230, '独立访客统计': 1126 },
-						{ '日期': '06:00-06:59', 'pv统计': 2923, 'ip统计': 2623, '独立访客统计': 1176 },
-						{ '日期': '09:00-09:59', 'pv统计': 1723, 'ip统计': 1423, '独立访客统计': 1149 },
-						{ '日期': '12:00-12:59', 'pv统计': 3792, 'ip统计': 3492, '独立访客统计': 1323 },
-						{ '日期': '15:00-15:59', 'pv统计': 4593, 'ip统计': 4293, '独立访客统计': 1478 },
-						{ '日期': '18:00-18:59', 'pv统计': 4593, 'ip统计': 4293, '独立访客统计': 1178 },
-						{ '日期': '21:00-21:59', 'pv统计': 4593, 'ip统计': 4293, '独立访客统计': 1378 }
-					]
+					rows: []
 				},
 				chartData2: {
 					columns: ['访问类型', '访问量'],
-					rows: [
-						{ '访问类型': '外部链接', '访问量': 1393 },
-						{ '访问类型': '直接访问', '访问量': 3530 },
-						{ '访问类型': '搜索引擎', '访问量': 2923 }
-					]
-				},
-				chartData3: {
-					  columns: ['word', 'count'],
-					  rows:[
+					rows: [{
+							'访问类型': '外部链接',
+							'访问量': 1393
+						},
 						{
-						'word': 'visualMap',
-						'count': 22199
-						}, {
-						'word': 'continuous',
-						'count': 10288
-						}, {
-						'word': 'contoller',
-						'count': 620
-						}, {
-						'word': 'series',
-						'count': 274470
-						}, {
-						'word': 'gauge',
-						'count': 12311
-						}, {
-						'word': 'detail',
-						'count': 1206
-						}, {
-						'word': 'piecewise',
-						'count': 4885
+							'访问类型': '直接访问',
+							'访问量': 3530
+						},
+						{
+							'访问类型': '搜索引擎',
+							'访问量': 2923
 						}
 					]
 				},
-				tableData: [],
-				multipleSelection: []
+				chartData3: {
+					columns: ['word', 'count'],
+					rows: [{
+						'word': 'visualMap',
+						'count': 22199
+					}, {
+						'word': 'continuous',
+						'count': 10288
+					}, {
+						'word': 'contoller',
+						'count': 620
+					}, {
+						'word': 'series',
+						'count': 274470
+					}, {
+						'word': 'gauge',
+						'count': 12311
+					}, {
+						'word': 'detail',
+						'count': 1206
+					}, {
+						'word': 'piecewise',
+						'count': 4885
+					}]
+				},
+				tableData: []
 			}
 		},
-		methods: {},
+		created() {
+			this.getPv()
+			this.getsource();
+		},
 		mounted() {
 			var _this = this;
 			var arrs = [{
 				date: '2016-05-02 12:12:12',
-				type:'0',
+				type: '0',
 				name: '王小虎a',
 				matter: '上海市普陀区金沙江路 1518 弄'
 			}, {
 				date: '2016-05-04 12:12:12',
-				type:'0',
+				type: '0',
 				name: '王小虎b',
 				matter: '上海市普陀区金沙江路 1517 弄'
 			}, {
 				date: '2016-05-01 12:12:12',
-				type:'1',
+				type: '1',
 				name: '王小虎c',
 				matter: '上海市普陀区金沙江路 1516 弄'
 			}, {
 				date: '2016-05-01 12:12:12',
-				type:'2',
+				type: '2',
 				name: '王小虎d',
 				matter: '上海市普陀区金沙江路 1515 弄'
 			}, {
 				date: '2016-05-01 12:12:12',
-				type:'1',
+				type: '1',
 				name: '王小虎d',
 				matter: '上海市普陀区金沙江路 1515 弄'
 			}, {
 				date: '2016-05-01 12:12:12',
-				type:'0',
+				type: '0',
 				name: '王小虎e',
 				matter: '上海市普陀区金沙江路 1514 弄'
 			}]
@@ -261,6 +266,181 @@
 					_this.tableData.push(arr)
 				});
 			}, 2000)
+			this.getPv();
+			this.getsource();
+		},
+		methods: {
+			getsource() {
+				//获取来源 
+				let pam = {
+					type: 'source', //查询分类
+					flag: '1', //查询范围
+					target: '0', //查询指标
+					year: '', //年度
+					begin: '', //开始日期
+					end: '', //结束日期
+					orderBy: '', //排序
+					count: '10',
+				};
+				this.$axios.post(this.$api.flowSourceList, this.pam).then(res => {
+						console.log(res.body)
+					})
+					.catch(err => {
+					});
+			},
+			getPv() {
+				//获取pv、ip、访客数信息
+				this.$axios.post(this.$api.flowPvList, {
+						flag: '4',
+						begin: '',
+						end: '',
+						statisDay: '',
+						year: ''
+					}).then(res => {
+						res.body.list.forEach(element => {
+							this.chartData1.rows.push({
+								'日期': this.timeFormat('day', element[4]),
+								'pv统计': element[0],
+								'ip统计': element[1],
+								'独立访客统计': element[2]
+							})
+						});
+						this.chart1option = true;
+					})
+					.catch(err => {
+						console.log(err)
+					});
+			},
+			timeFormat(flag, timeName) { //格式化时间显示
+				let formatTime = '0';
+				if (flag == 'day' || flag == 'yesterday') { //小时转换
+					switch (timeName) {
+						case 0:
+							formatTime = "00:00-00:59"
+							break;
+						case 1:
+							formatTime = "01:00-01:59"
+							break;
+						case 2:
+							formatTime = "02:00-02:59"
+							break;
+						case 3:
+							formatTime = "03:00-03:59"
+							break;
+						case 4:
+							formatTime = "04:00-04:59"
+							break;
+						case 5:
+							formatTime = "05:00-05:59"
+							break;
+						case 6:
+							formatTime = "06:00-06:59"
+							break;
+						case 7:
+							formatTime = "07:00-07:59"
+							break;
+						case 8:
+							formatTime = "08:00-08:59"
+							break;
+						case 9:
+							formatTime = "09:00-09:59"
+							break;
+						case 10:
+							formatTime = "10:00-10:59"
+							break;
+						case 11:
+							formatTime = "11:00-11:59"
+							break;
+						case 12:
+							formatTime = "12:00-12:59"
+							break;
+						case 13:
+							formatTime = "13:00-13:59"
+							break;
+						case 14:
+							formatTime = "14:00-14:59"
+							break;
+						case 15:
+							formatTime = "15:00-15:59"
+							break;
+						case 16:
+							formatTime = "16:00-16:59"
+							break;
+						case 17:
+							formatTime = "17:00-17:59"
+							break;
+						case 18:
+							formatTime = "18:00-18:59"
+							break;
+						case 19:
+							formatTime = "19:00-19:59"
+							break;
+						case 20:
+							formatTime = "20:00-20:59"
+							break;
+						case 21:
+							formatTime = "21:00-21:59"
+							break;
+						case 22:
+							formatTime = "22:00-22:59"
+							break;
+						case 23:
+							formatTime = "23:00-23:59"
+							break;
+						default:
+							formatTime = "99:99:99~99:99:99:99"
+							break;
+					}
+				}
+				if (flag == 'year') {
+					let date = new Date();
+					switch (timeName) {
+						case 1:
+							formatTime = date.getFullYear() + "-01"
+							break;
+						case 2:
+							formatTime = date.getFullYear() + "-02"
+							break;
+						case 3:
+							formatTime = date.getFullYear() + "-03"
+							break;
+						case 4:
+							formatTime = date.getFullYear() + "-04"
+							break;
+						case 5:
+							formatTime = date.getFullYear() + "-05"
+							break;
+						case 6:
+							formatTime = date.getFullYear() + "-06"
+							break;
+						case 7:
+							formatTime = date.getFullYear() + "-07"
+							break;
+						case 8:
+							formatTime = date.getFullYear() + "-08"
+							break;
+						case 9:
+							formatTime = date.getFullYear() + "-09"
+							break;
+						case 10:
+							formatTime = date.getFullYear() + "-10"
+							break;
+						case 11:
+							formatTime = date.getFullYear() + "-11"
+							break;
+						case 12:
+							formatTime = date.getFullYear() + "-12"
+							break;
+						default:
+							formatTime = "9999-99-99"
+							break;
+					}
+				}
+				if (flag == 'month' || flag == 'years') {
+					formatTime = timeName;
+				}
+				return formatTime;
+			}
 		}
 	}
 </script>

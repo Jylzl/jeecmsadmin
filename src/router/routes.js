@@ -265,14 +265,6 @@ const ansycRoutes = [{
 				]
 			},
 			{
-				path: '/loyalty', //忠诚度
-				name: '忠诚度',
-				isParent: true,
-				component: resolve => {
-					require(['@/views/error/405.vue'], resolve)
-				},
-			},
-			{
 				path: '/siteProfile', //网站概况
 				name: '网站概况',
 				component: childView,
@@ -312,6 +304,14 @@ const ansycRoutes = [{
 						},
 					}
 				]
+			},
+			{
+				path: '/loyalty', //忠诚度
+				name: '忠诚度',
+				isParent: true,
+				component: resolve => {
+					require(['@/views/error/405.vue'], resolve)
+				},
 			}
 		]
 	}, //用户中心

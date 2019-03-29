@@ -3,12 +3,13 @@ export default {
     content: {
         label: {
             currentChannel: 'Current Channel',
-            contentAdd: 'Content Add', 
+            contentAdd: 'Content Add',
             solidTop: 'Top',
             recommend: 'recommend',
             type: 'Type',
-            clickCount:'ClickCount',
+            clickCount: 'ClickCount',
             releaseTime: 'ReleaseTime',
-            state: 'state',}
+            state: 'state',
+        }
     }
 }
