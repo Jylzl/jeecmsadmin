@@ -1,4 +1,5 @@
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 module.exports = {
 	publicPath: "/", // 根路径
 	outputDir: "dist", //构建输出目录
@@ -12,7 +13,8 @@ module.exports = {
 			process: true,
 		},
 		plugins: [
-			new MonacoWebpackPlugin()
+			new MonacoWebpackPlugin(),
+			new MomentLocalesPlugin()
 		]
 	},
 	devServer: {

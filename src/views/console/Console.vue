@@ -10,10 +10,11 @@
 					<div class="bg-info">
 						<p class="today-count">
 							<span class="todat-title">今日</span>
-							<span class="count-num">0&nbsp;</span>
-							<span class="up-num">(0)</span>
+							<span class="count-num">{{page.pageNum.contentDayTotalCount}}&nbsp;</span>
+							<span class="up-num">({{page.pageNum.contentDayUncheckCount}})</span>
 						</p>
-						<p class="all-count">累计:&nbsp;&nbsp;0</p>
+						<!-- <p class="all-count">累计:&nbsp;&nbsp;{{page.pageNum.contentTotal}}</p> -->
+						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.contentTotal' :duration='3000'></countTo></p>
 					</div>
 				</div>
 			</el-col>
@@ -26,10 +27,10 @@
 					<div class="bg-info">
 						<p class="today-count">
 							<span class="todat-title">今日</span>
-							<span class="count-num">0&nbsp;</span>
-							<span class="up-num">(0)</span>
+							<span class="count-num">{{page.pageNum.commentDayTotalCount}}&nbsp;</span>
+							<span class="up-num">({{page.pageNum.commentDayUncheckCount}})</span>
 						</p>
-						<p class="all-count">累计:&nbsp;&nbsp;0</p>
+						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.commentTotal' :duration='3000'></countTo></p>
 					</div>
 				</div>
 			</el-col>
@@ -42,10 +43,10 @@
 					<div class="bg-info">
 						<p class="today-count">
 							<span class="todat-title">今日</span>
-							<span class="count-num">0&nbsp;</span>
-							<span class="up-num">(0)</span>
+							<span class="count-num">{{page.pageNum.guestbookDayTotalCount}}&nbsp;</span>
+							<span class="up-num">({{page.pageNum.guestbookDayUncheckTotalCount}})</span>
 						</p>
-						<p class="all-count">累计:&nbsp;&nbsp;0</p>
+						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.guestbookTotal' :duration='100'></countTo></p>
 					</div>
 				</div>
 			</el-col>
@@ -58,10 +59,10 @@
 					<div class="bg-info">
 						<p class="today-count">
 							<span class="todat-title">今日</span>
-							<span class="count-num">0&nbsp;</span>
-							<span class="up-num">(0)</span>
+							<span class="count-num">{{page.pageNum.memberToday}}&nbsp;</span>
+							<!-- <span class="up-num">(0)</span> -->
 						</p>
-						<p class="all-count">累计:&nbsp;&nbsp;0</p>
+						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.memberTotal' :duration='100'></countTo></p>
 					</div>
 				</div>
 			</el-col>
@@ -76,13 +77,13 @@
 								<i class="el-icon-more"></i>
 							</span>
 							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item>刷新</el-dropdown-item>
-								<el-dropdown-item>关闭</el-dropdown-item>
+								<el-dropdown-item><span @click="getPv()">刷新</span></el-dropdown-item>
+								<el-dropdown-item>详情</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
 					</div>
-					<div>
-						<ve-line :data="chartData1" :extend="chartSet1" :loading="chart1loading"></ve-line>
+					<div v-loading="chart1loading" element-loading-text="拼命加载中">
+						<ve-line :data="chart1Data" :extend="chart1Set" :data-empty="chart1DataEmpty"></ve-line>
 					</div>
 				</el-card>
 			</el-col>
@@ -95,13 +96,13 @@
 								<i class="el-icon-more"></i>
 							</span>
 							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item>刷新</el-dropdown-item>
+								<el-dropdown-item><span @click="getsource()">刷新</span></el-dropdown-item>
 								<el-dropdown-item>关闭</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
 					</div>
-					<div>
-						<ve-ring :data="chartData2"></ve-ring>
+					<div v-loading="chart2loading" element-loading-text="拼命加载中">
+						<ve-ring :data="chart2Data" :extend="chart2Set" :data-empty="chart2DataEmpty"></ve-ring>
 					</div>
 				</el-card>
 			</el-col>
@@ -117,6 +118,7 @@
 							</span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item>刷新</el-dropdown-item>
+								<el-dropdown-item>切换</el-dropdown-item>
 								<el-dropdown-item>关闭</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
@@ -164,68 +166,103 @@
 </template>
 
 <script>
+	import moment from 'moment';
+	import countTo from 'vue-count-to';
 	export default {
 		components: {
+			'countTo':countTo,
 			'full-calendar': require('vue-fullcalendar')
 		},
 		data() {
-			this.chartSet1 = {
+			this.chart1Set = {
+				// 'xAxis.0.axisLabel.rotate': 45
+			}
+			this.chart2Set = {
 				// 'xAxis.0.axisLabel.rotate': 45
 			}
 			return {
-				chart1loading: true,
+				params: {
+					type: 'source', //查询分类
+					flag: '1', //查询范围
+					target: '', //查询指标
+					year: '', //年度
+					begin: '', //开始日期
+					end: '', //结束日期
+					orderBy: '', //排序
+					count: '10'
+				},
+				//访问分析数据
+				chart1loading: false,
 				chart1option: false,
-				chartData1: {
-					columns: ['日期', 'pv统计', 'ip统计', '独立访客统计'],
+				chart1DataEmpty: false,
+				chart1Data: {
+					columns: [],
 					rows: []
 				},
-				chartData2: {
-					columns: ['访问类型', '访问量'],
-					rows: [{
-							'访问类型': '外部链接',
-							'访问量': 1393
-						},
-						{
-							'访问类型': '直接访问',
-							'访问量': 3530
-						},
-						{
-							'访问类型': '搜索引擎',
-							'访问量': 2923
-						}
-					]
+				//来源分析数据
+				chart2loading: false,
+				chart2option: false,
+				chart2DataEmpty: false,
+				chart2Data: {
+					columns: [],
+					rows: []
 				},
 				chartData3: {
-					columns: ['word', 'count'],
+					columns: ['word', '浏览量'],
 					rows: [{
 						'word': 'visualMap',
-						'count': 22199
+						'浏览量': 22199,
+						"占比": '1%'
+
 					}, {
 						'word': 'continuous',
-						'count': 10288
+						'浏览量': 10288,
+						"占比": '1%'
 					}, {
 						'word': 'contoller',
-						'count': 620
+						'浏览量': 620,
+						"占比": '1%'
 					}, {
 						'word': 'series',
-						'count': 274470
+						'浏览量': 274470,
+						"占比": '1%'
 					}, {
 						'word': 'gauge',
-						'count': 12311
+						'浏览量': 12311,
+						"占比": '1%'
 					}, {
 						'word': 'detail',
-						'count': 1206
+						'浏览量': 1206,
+						"占比": '1%'
 					}, {
 						'word': 'piecewise',
-						'count': 4885
+						'浏览量': 4885,
+						"占比": '1%'
 					}]
 				},
-				tableData: []
+				tableData: [],
+				page: {
+					//页面数据
+					source: [], //来访域名  type:array
+					keyword: [], //搜索词   type:array
+					pageNum: '',
+					adminNum: '', //会员数
+					pv: [], //获取pv、
+					ip: [], //ip、
+					fk: [], //访客数信息
+					avg: [], //平均访问时长  
+					wd: [], //时间维度
+					ss: [], //来源分析
+					ssKey: [], //来源键
+					sum: '',
+					sumkey: '',
+				},
 			}
 		},
 		created() {
-			this.getPv()
-			this.getsource();
+			// this.getPv();
+			// this.getsource();
+			// this.create('keyword');
 		},
 		mounted() {
 			var _this = this;
@@ -266,12 +303,52 @@
 					_this.tableData.push(arr)
 				});
 			}, 2000)
+			this.globalCount();
+			this.globalAdmin();
 			this.getPv();
 			this.getsource();
+			this.create('link');
 		},
 		methods: {
+			//获取pv、ip、访客数信息
+			getPv() {
+				var _this = this;
+				_this.chart1loading = true;
+				_this.$axios.post(_this.$api.flowPvList, {
+						flag: '4',
+						begin: '',
+						end: '',
+						statisDay: '',
+						year: ''
+					}).then(res => {
+						let data = [];
+						let arr = _this.chart1Data.rows;
+						arr.splice(0, arr.length);
+						if (res.body.list) {
+							res.body.list.forEach(element => {
+								data.push({
+									'日期': _this.timeFormat('day', element[4]),
+									'浏览量（PV）': element[0],
+									'统计（IP）': element[1],
+									'访客数（UV）': element[2]
+								})
+							});
+						}
+						_this.chart1Data.columns = ['日期', '浏览量（PV）', '统计（IP）', '访客数（UV）'];
+						_this.chart1Data.rows = data;
+						_this.chart1DataEmpty = !_this.chart1Data.rows.length;
+						setTimeout(() => {
+							_this.chart1loading = false;							
+						}, 1000);
+					})
+					.catch(err => {
+						console.log(err)
+					});
+			},
+			//获取来源 
 			getsource() {
-				//获取来源 
+				var _this = this;
+				_this.chart2loading = true;
 				let pam = {
 					type: 'source', //查询分类
 					flag: '1', //查询范围
@@ -282,36 +359,38 @@
 					orderBy: '', //排序
 					count: '10',
 				};
-				this.$axios.post(this.$api.flowSourceList, this.pam).then(res => {
-						console.log(res.body)
-					})
-					.catch(err => {
-					});
-			},
-			getPv() {
-				//获取pv、ip、访客数信息
-				this.$axios.post(this.$api.flowPvList, {
-						flag: '4',
-						begin: '',
-						end: '',
-						statisDay: '',
-						year: ''
-					}).then(res => {
-						res.body.list.forEach(element => {
-							this.chartData1.rows.push({
-								'日期': this.timeFormat('day', element[4]),
-								'pv统计': element[0],
-								'ip统计': element[1],
-								'独立访客统计': element[2]
+				_this.$axios.post(_this.$api.flowSourceList, _this.pam).then(res => {
+						let data1 = [];
+						let data2 = [];
+						_this.chart2Data.columns = [];
+						_this.chart2Data.rows = [];
+						let a = 0;
+						res.body.keys.forEach(item => {
+							data1.push(item)
+						})
+						for (let i in res.body.totalMap) {
+							data2.push({
+								'访问类型': res.body.keys[a],
+								'访问量': res.body.totalMap[i]
 							})
-						});
-						this.chart1option = true;
+							a++;
+						}
+						_this.chart2Data.columns = data1;
+						_this.chart2Data.rows = data2;
+						_this.chart2DataEmpty = !_this.chart2Data.rows.length;
+						console.log(_this.chart2Data.columns)
+						console.log(_this.chart2Data.rows)
+						console.log(_this.chart2DataEmpty)
+						setTimeout(() => {
+							_this.chart2loading = false;							
+						}, 1000);
 					})
 					.catch(err => {
 						console.log(err)
 					});
 			},
-			timeFormat(flag, timeName) { //格式化时间显示
+			//格式化时间显示
+			timeFormat(flag, timeName) {
 				let formatTime = '0';
 				if (flag == 'day' || flag == 'yesterday') { //小时转换
 					switch (timeName) {
@@ -440,7 +519,64 @@
 					formatTime = timeName;
 				}
 				return formatTime;
-			}
+			},
+			//获取欢迎页面需要的数据 
+			create(type) {
+				let _this = this;
+				if (type === 'link') {
+					_this.params.type = type;
+					_this.$axios.post(this.$api.flowSourceList, _this.params).then(res => {
+							// console.log(res)
+							// this.page.source = res.body.totalMap;
+							// let sum = 0;
+							// for (let x in res.body.totalMap) {
+							// 	sum += res.body.totalMap[x];
+							// }
+							// if (sum === 0) {
+							// 	sum = 1;
+							// }
+							// this.page.sum = sum;
+							_this.create('keyword');
+
+						})
+						.catch(err => {
+							this.loading = false;
+						});
+				}
+				if (type === 'keyword') {
+					_this.params.start_date = moment().subtract('days', 1).format('YYYY/MM/DD');
+					_this.params.end_date = moment().format('YYYY/MM/DD');
+					_this.params.method = 'overview/getWord';
+					_this.params.metrics = 'pv_count';
+					_this.params.type = type;
+					_this.$axios.post(_this.$api.flowSearchWordList, _this.params).then(res => {
+							// console.log(res.body.items)
+							// _this.page.keyword = res.body.items;
+						})
+						.catch(err => {
+							// _this.loading = false;
+						});
+				}
+
+			},
+			//获取内容总数
+			globalCount() {
+				this.$axios.post(this.$api.globalStatistic).then(res => {
+						this.page.pageNum = res.body
+					})
+					.catch(err => {});
+			},
+			//获取会员注册数
+			globalAdmin() {
+				this.$axios.post(this.$api.statisticMemberList, {
+						queryModel: 'month',
+						begin: '',
+						end: ''
+					}).then(res => {
+						this.page.adminNum = res.body
+					})
+					.catch(err => {});
+			},
 		}
 	}
 </script>
