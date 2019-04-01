@@ -14,7 +14,9 @@
 							<span class="up-num">({{page.pageNum.contentDayUncheckCount}})</span>
 						</p>
 						<!-- <p class="all-count">累计:&nbsp;&nbsp;{{page.pageNum.contentTotal}}</p> -->
-						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.contentTotal' :duration='3000'></countTo></p>
+						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.contentTotal'
+								:duration='3000'></countTo>
+						</p>
 					</div>
 				</div>
 			</el-col>
@@ -30,7 +32,9 @@
 							<span class="count-num">{{page.pageNum.commentDayTotalCount}}&nbsp;</span>
 							<span class="up-num">({{page.pageNum.commentDayUncheckCount}})</span>
 						</p>
-						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.commentTotal' :duration='3000'></countTo></p>
+						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.commentTotal'
+								:duration='3000'></countTo>
+						</p>
 					</div>
 				</div>
 			</el-col>
@@ -46,7 +50,9 @@
 							<span class="count-num">{{page.pageNum.guestbookDayTotalCount}}&nbsp;</span>
 							<span class="up-num">({{page.pageNum.guestbookDayUncheckTotalCount}})</span>
 						</p>
-						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.guestbookTotal' :duration='100'></countTo></p>
+						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.guestbookTotal'
+								:duration='100'></countTo>
+						</p>
 					</div>
 				</div>
 			</el-col>
@@ -62,7 +68,9 @@
 							<span class="count-num">{{page.pageNum.memberToday}}&nbsp;</span>
 							<!-- <span class="up-num">(0)</span> -->
 						</p>
-						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.memberTotal' :duration='100'></countTo></p>
+						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.memberTotal'
+								:duration='100'></countTo>
+						</p>
 					</div>
 				</div>
 			</el-col>
@@ -82,8 +90,9 @@
 							</el-dropdown-menu>
 						</el-dropdown>
 					</div>
-					<div v-loading="chart1loading" element-loading-text="拼命加载中">
-						<ve-line :data="chart1Data" :extend="chart1Set" :data-empty="chart1DataEmpty"></ve-line>
+					<div>
+						<ve-line :data="chart1Data" :extend="chart1Set" :data-empty="chart1DataEmpty"
+							:loading="chart1loading"></ve-line>
 					</div>
 				</el-card>
 			</el-col>
@@ -101,8 +110,9 @@
 							</el-dropdown-menu>
 						</el-dropdown>
 					</div>
-					<div v-loading="chart2loading" element-loading-text="拼命加载中">
-						<ve-ring :data="chart2Data" :extend="chart2Set" :data-empty="chart2DataEmpty"></ve-ring>
+					<div>
+						<ve-ring :data="chart2Data" :extend="chart2Set" :data-empty="chart2DataEmpty"
+							:loading="chart2loading"></ve-ring>
 					</div>
 				</el-card>
 			</el-col>
@@ -168,9 +178,10 @@
 <script>
 	import moment from 'moment';
 	import countTo from 'vue-count-to';
+	import 'v-charts/lib/style.css'
 	export default {
 		components: {
-			'countTo':countTo,
+			'countTo': countTo,
 			'full-calendar': require('vue-fullcalendar')
 		},
 		data() {
@@ -338,7 +349,7 @@
 						_this.chart1Data.rows = data;
 						_this.chart1DataEmpty = !_this.chart1Data.rows.length;
 						setTimeout(() => {
-							_this.chart1loading = false;							
+							_this.chart1loading = false;
 						}, 1000);
 					})
 					.catch(err => {
@@ -360,29 +371,21 @@
 					count: '10',
 				};
 				_this.$axios.post(_this.$api.flowSourceList, _this.pam).then(res => {
-						let data1 = [];
-						let data2 = [];
-						_this.chart2Data.columns = [];
-						_this.chart2Data.rows = [];
+					console.log(res.body)
+						let data = [];
 						let a = 0;
-						res.body.keys.forEach(item => {
-							data1.push(item)
-						})
 						for (let i in res.body.totalMap) {
-							data2.push({
+							data.push({
 								'访问类型': res.body.keys[a],
 								'访问量': res.body.totalMap[i]
 							})
 							a++;
 						}
-						_this.chart2Data.columns = data1;
-						_this.chart2Data.rows = data2;
+						_this.chart2Data.columns = ['访问类型', '访问量'];
+						_this.chart2Data.rows = data;
 						_this.chart2DataEmpty = !_this.chart2Data.rows.length;
-						console.log(_this.chart2Data.columns)
-						console.log(_this.chart2Data.rows)
-						console.log(_this.chart2DataEmpty)
 						setTimeout(() => {
-							_this.chart2loading = false;							
+							_this.chart2loading = false;
 						}, 1000);
 					})
 					.catch(err => {

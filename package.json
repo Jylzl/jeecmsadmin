@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tinymce/tinymce-vue": "^2.0.0",
+    "ajv": "^6.9.1",
     "axios": "^0.18.0",
     "crypto-js": "^3.1.9-1",
     "echarts": "^4.2.1",
@@ -18,7 +19,7 @@
     "fuse.js": "^3.4.4",
     "js-cookie": "^2.2.0",
     "moment": "^2.24.0",
-    "monaco-editor": "^0.16.2",
+    "monaco-editor": "^0.15.1",
     "nprogress": "^0.2.0",
     "qs": "^6.7.0",
     "sortablejs": "^1.8.4",
