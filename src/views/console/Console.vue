@@ -77,7 +77,7 @@
 		</el-row>
 		<el-row :gutter="24">
 			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-				<el-card class="box-card" shadow="never">
+				<el-card class="box-card" :body-style="{ padding: '20px 10px 5px 10px' }">
 					<div slot="header" class="clearfix card-header">
 						<span>访问分析</span>
 						<el-dropdown style="float: right;" trigger="click">
@@ -97,7 +97,7 @@
 				</el-card>
 			</el-col>
 			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-				<el-card class="box-card">
+				<el-card class="box-card" :body-style="{ padding: '20px 10px 5px 10px' }">
 					<div slot="header" class="clearfix card-header">
 						<span>来源分析</span>
 						<el-dropdown style="float: right;" trigger="click">
@@ -119,7 +119,7 @@
 		</el-row>
 		<el-row :gutter="24">
 			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-				<el-card class="box-card" shadow="never">
+				<el-card class="box-card" :body-style="{ padding: '20px 10px 5px 10px' }">
 					<div slot="header" class="clearfix card-header">
 						<span>热词分析</span>
 						<el-dropdown style="float: right;" trigger="click">
@@ -139,7 +139,7 @@
 				</el-card>
 			</el-col>
 			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-				<el-card class="box-card">
+				<el-card class="box-card" :body-style="{ padding: '0px' }">
 					<div slot="header" class="clearfix card-header">
 						<span>待办事项</span>
 						<el-dropdown style="float: right;" trigger="click">
@@ -152,7 +152,7 @@
 							</el-dropdown-menu>
 						</el-dropdown>
 					</div>
-					<div style="height:400px;">
+					<div style="height:425px;">
 						<el-table :data="tableData" stripe style="width: 100%" ref="multipleTable"
 							tooltip-effect="dark">
 							<el-table-column type="selection" width="55"></el-table-column>
@@ -168,6 +168,8 @@
 							<!-- <el-table-column prop="name" label="姓名" width="180"></el-table-column> -->
 							<el-table-column prop="matter" label="事项"></el-table-column>
 						</el-table>
+						<el-pagination small layout="prev, pager, next" :total="50">
+						</el-pagination>
 					</div>
 				</el-card>
 			</el-col>
@@ -371,26 +373,24 @@
 					count: '10',
 				};
 				_this.$axios.post(_this.$api.flowSourceList, _this.pam).then(res => {
-					console.log(res.body)
-						let data = [];
-						let a = 0;
-						for (let i in res.body.totalMap) {
-							data.push({
-								'访问类型': res.body.keys[a],
-								'访问量': res.body.totalMap[i]
-							})
-							a++;
-						}
-						_this.chart2Data.columns = ['访问类型', '访问量'];
-						_this.chart2Data.rows = data;
-						_this.chart2DataEmpty = !_this.chart2Data.rows.length;
-						setTimeout(() => {
-							_this.chart2loading = false;
-						}, 1000);
-					})
-					.catch(err => {
-						console.log(err)
-					});
+					let data = [];
+					let a = 0;
+					for (let i in res.body.totalMap) {
+						data.push({
+							'访问类型': res.body.keys[a],
+							'访问量': res.body.totalMap[i]
+						})
+						a++;
+					}
+					_this.chart2Data.columns = ['访问类型', '访问量'];
+					_this.chart2Data.rows = data;
+					_this.chart2DataEmpty = !_this.chart2Data.rows.length;
+					setTimeout(() => {
+						_this.chart2loading = false;
+					}, 1000);
+				}).catch(err => {
+					console.log(err)
+				});
 			},
 			//格式化时间显示
 			timeFormat(flag, timeName) {
@@ -553,7 +553,7 @@
 					_this.params.metrics = 'pv_count';
 					_this.params.type = type;
 					_this.$axios.post(_this.$api.flowSearchWordList, _this.params).then(res => {
-							// console.log(res.body.items)
+							console.log(res.body.items)
 							// _this.page.keyword = res.body.items;
 						})
 						.catch(err => {
