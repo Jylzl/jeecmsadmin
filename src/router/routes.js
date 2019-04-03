@@ -2068,6 +2068,13 @@ const ansycRoutes = [{
 			isLink: true
 		},
 		children: [{
+			path: '/baidu',
+			name: '百度统计', //百度统计
+			component: childView,
+			isParent: true,
+			redirect: '/webset/baidu',
+
+		}, {
 			path: '/webset',
 			name: '可访问性', //内容管理
 			component: childView,
@@ -2111,7 +2118,15 @@ const ansycRoutes = [{
 			},
 			hidden: false,
 		}]
-	}, //错误页面
+	}, //百度统计
+	{
+		path: '/webset/baidu',
+		name: '百度统计',
+		hidden: true,
+		component: resolve => {
+			require(['@/views/baidu/baidu.vue'], resolve)
+		}
+	},//错误页面
 	{
 		path: '*',
 		name: '404',
