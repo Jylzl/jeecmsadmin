@@ -34,6 +34,8 @@
         scrawlActionName: "uploadscrawl",
         videoActionName: "uploadvideo",
         fileActionName: "uploadfile",
+        imageFieldName: "file", // 提交的图片表单名称
+        imageMaxSize: 2048000, // 上传大小限制，单位B
         imageUrlPrefix: "",
         scrawlUrlPrefix: "",
         videoUrlPrefix: "",
@@ -511,7 +513,7 @@
             header: [],
             hr: [],
             i: ['class', 'style'],
-            img: ['src', 'alt', 'title', 'width', 'height', 'id', '_src', '_url', 'loadingclass', 'class', 'data-latex'],
+            img: ['style', 'src', 'alt', 'title', 'width', 'height', 'id', '_src', '_url', 'loadingclass', 'class', 'data-latex'],
             ins: ['datetime'],
             li: ['class', 'style'],
             mark: [],

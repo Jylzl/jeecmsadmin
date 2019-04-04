@@ -4,7 +4,10 @@
 			<el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
 				<div class="bg-box">
 					<div class="bg-green bg-icon">
-						<icon name="content" :w="48" :h="48"></icon>
+						<svg width="48" height="48">
+							<image xlink:href="@/assets/svg/content.svg" src="svg.png" width="48" height="48" />
+						</svg>
+						<!-- <icon name="content" :w="48" :h="48"></icon> -->
 						<p class="icon-title">内容发布数</p>
 					</div>
 					<div class="bg-info">
@@ -23,7 +26,10 @@
 			<el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
 				<div class="bg-box">
 					<div class="bg-yellow bg-icon">
-						<icon name="comment" :w="48" :h="48"></icon>
+						<svg width="48" height="48">
+							<image xlink:href="@/assets/svg/comment.svg" src="svg.png" width="48" height="48" />
+						</svg>
+						<!-- <icon name="comment" :w="48" :h="48"></icon> -->
 						<p class="icon-title">评论数</p>
 					</div>
 					<div class="bg-info">
@@ -41,7 +47,10 @@
 			<el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
 				<div class="bg-box">
 					<div class="bg-blue bg-icon">
-						<icon name="list" :w="48" :h="48"></icon>
+						<svg width="48" height="48">
+							<image xlink:href="@/assets/svg/list.svg" src="svg.png" width="48" height="48" />
+						</svg>
+						<!-- <icon name="list" :w="48" :h="48"></icon> -->
 						<p class="icon-title">留言数</p>
 					</div>
 					<div class="bg-info">
@@ -59,7 +68,10 @@
 			<el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
 				<div class="bg-box">
 					<div class="bg-purple bg-icon">
-						<icon name="news" :w="48" :h="48"></icon>
+						<svg width="48" height="48">
+							<image xlink:href="@/assets/svg/news.svg" src="svg.png" width="48" height="48" />
+						</svg>
+						<!-- <icon name="news" :w="48" :h="48"></icon> -->
 						<p class="icon-title">待办</p>
 					</div>
 					<div class="bg-info">
@@ -529,7 +541,7 @@
 				if (type === 'link') {
 					_this.params.type = type;
 					_this.$axios.post(this.$api.flowSourceList, _this.params).then(res => {
-							// console.log(res)
+							console.log(res)
 							// this.page.source = res.body.totalMap;
 							// let sum = 0;
 							// for (let x in res.body.totalMap) {
@@ -553,7 +565,8 @@
 					_this.params.metrics = 'pv_count';
 					_this.params.type = type;
 					_this.$axios.post(_this.$api.flowSearchWordList, _this.params).then(res => {
-							console.log(res.body.items)
+							console.log("-------------")
+							console.log(res)
 							// _this.page.keyword = res.body.items;
 						})
 						.catch(err => {

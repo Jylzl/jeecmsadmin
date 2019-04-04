@@ -1,6 +1,6 @@
 export default {
     selector: 'textarea#full-featured', // change this value according to your HTML
-    language_url: "http://127.0.0.1:8081/langs/zh_CN.js",
+    language_url: 'http://' + process.env.VUE_APP_APP_URL + ':' + process.env.VUE_APP_APP_PORT + "/langs/zh_CN.js",
     language: "zh_CN",
     directionality: "http://www.baidu.com",
     branding: false,

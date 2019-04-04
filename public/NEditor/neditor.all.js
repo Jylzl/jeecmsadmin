@@ -1,7 +1,7 @@
 /*!
  * neditor
- * version: 2.1.6
- * build: Mon Dec 17 2018 07:06:36 GMT+0000 (UTC)
+ * version: 2.1.14
+ * build: Fri Jan 11 2019 12:21:16 GMT+0000 (UTC)
  */
 
 (function(){
@@ -3805,20 +3805,10 @@ var domUtils = (dom.domUtils = {
       return result + "px";
     }
     try {
-      var value =
-        domUtils.getStyle(element, styleName) ||
-        browser.webkit && styleName === 'text-decoration'
-          ? domUtils
-              .getWindow(element)
-              .getComputedStyle(element)['webkitTextDecorationsInEffect']
-          : (window.getComputedStyle
-              ? domUtils
-                  .getWindow(element)
-                  .getComputedStyle(element, "")
-                  .getPropertyValue(styleName)
-              : (element.currentStyle || element.style)[
-                  utils.cssStyleToDomStyle(styleName)
-                ]);
+        var value = domUtils.getStyle(element, styleName) ||
+            (window.getComputedStyle 
+                ? domUtils.getWindow(element).getComputedStyle(element, "").getPropertyValue(styleName)
+                : (element.currentStyle || element.style)[utils.cssStyleToDomStyle(styleName)]);
     } catch (e) {
       return "";
     }
@@ -16464,7 +16454,7 @@ UE.plugins["list"] = function() {
       dot: ""
     },
     listDefaultPaddingLeft: "30",
-    listiconpath: "http://bs.baidu.com/listicon/",
+    listiconpath: me.options.UEDITOR_HOME_URL + "themes/ueditor-list/",
     maxListLevel: -1, //-1不限制
     disablePInList: false
   });

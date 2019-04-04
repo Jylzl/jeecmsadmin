@@ -17,8 +17,8 @@ module.exports = {
 	},
 	devServer: {
 		open: true,
-		host: "localhost",
-		port: 8089,
+		host: process.env.VUE_APP_APP_URL,
+		port: process.env.VUE_APP_APP_PORT,
 		https: false,
 		hotOnly: false,
 		proxy: {

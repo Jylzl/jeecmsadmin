@@ -49,7 +49,8 @@
 					</el-select>
 				</div>
 				<div class="right-top-right">
-					<el-button type="primary" size="mini" icon="el-icon-news" @click="saveMonacoEditor" :disabled="saveBtn">保存</el-button>
+					<el-button type="primary" size="mini" icon="el-icon-news" @click="saveMonacoEditor"
+						:disabled="saveBtn">保存</el-button>
 				</div>
 			</div>
 			<div class="right-table" v-loading="monacoeditoLoading" element-loading-text="保存中...">
@@ -222,7 +223,7 @@
 				fontSizes: [{
 						value: 12,
 						label: "12号"
-					},{
+					}, {
 						value: 14,
 						label: "14号"
 					}, {
@@ -239,61 +240,60 @@
 					}
 				],
 				languages: [{
-						value: "html",
-						label: "html"
-					},{
-						value: "javascript",
-						label: "javascript"
-					},{
-						value: "typescript",
-						label: "typescript"
-					}, {
-						value: "css",
-						label: "css"
-					}, {
-						value: "scss",
-						label: "scss"
-					}, {
-						value: "less",
-						label: "less"
-					}, {
-						value: "json",
-						label: "json"
-					}, {
-						value: "xml",
-						label: "xml"
-					}, {
-						value: "java",
-						label: "java"
-					}, {
-						value: "sql",
-						label: "sql"
-					}, {
-						value: "python",
-						label: "python"
-					}, {
-						value: "shell",
-						label: "shell"
-					}, {
-						value: "markdown",
-						label: "markdown"
-					}
-				],
+					value: "html",
+					label: "html"
+				}, {
+					value: "javascript",
+					label: "javascript"
+				}, {
+					value: "typescript",
+					label: "typescript"
+				}, {
+					value: "css",
+					label: "css"
+				}, {
+					value: "scss",
+					label: "scss"
+				}, {
+					value: "less",
+					label: "less"
+				}, {
+					value: "json",
+					label: "json"
+				}, {
+					value: "xml",
+					label: "xml"
+				}, {
+					value: "java",
+					label: "java"
+				}, {
+					value: "sql",
+					label: "sql"
+				}, {
+					value: "python",
+					label: "python"
+				}, {
+					value: "shell",
+					label: "shell"
+				}, {
+					value: "markdown",
+					label: "markdown"
+				}],
 				value: "",
 				input: "",
 				input5: "",
 				select: "",
 				radio: "只读",
-				saveBtn:true
+				saveBtn: true
 			};
 		},
 		mounted() {
 			let _this = this;
-			document.getElementById(_this.monacoeditorId).addEventListener('keydown', function(e) {
-			if(e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)){
+			document.getElementById(_this.monacoeditorId).addEventListener('keydown', function (e) {
+				if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
 					e.preventDefault();
 					if (_this.radio != "只读") {
-						_this.saveMonacoEditor();						
+						_this.saveMonacoEditor();
 					}
 				}
 			});
@@ -398,11 +398,11 @@
 					_this.monacoeditoLoading = false;
 				}, 2000);
 			},
-			changeRadio(){
+			changeRadio() {
 				if (this.radio == "可写") {
 					this.saveBtn = false;
 					this.readOnly = false;
-				}else{
+				} else {
 					this.saveBtn = true;
 					this.readOnly = true;
 				}
@@ -446,6 +446,7 @@
 
 	.right-table {
 		height: calc(100% - 50px);
+		overflow: hidden;
 	}
 
 	.right-bottom {

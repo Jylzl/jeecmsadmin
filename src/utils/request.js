@@ -97,7 +97,6 @@ service.interceptors.response.use(
 	},
 	error => {
 		showMessage('服务器响应失败');
-		router.push('/login');
 		return Promise.reject(error)
 	}
 )

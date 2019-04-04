@@ -1,7 +1,7 @@
 /*!
  * neditor parse
- * version: 2.1.6
- * build: Mon Dec 17 2018 07:06:36 GMT+0000 (UTC)
+ * version: 2.1.14
+ * build: Fri Jan 11 2019 12:21:16 GMT+0000 (UTC)
  */
 
 (function(){
@@ -967,7 +967,7 @@ UE.parse.register("list", function(utils) {
   utils.extend(this, {
     liiconpath : utils.removeLastbs(this.rootPath) + '/themes/ueditor-list/',
     listDefaultPaddingLeft: "20"
-  });
+  },true);
 
   var root = this.root,
     ols = root.getElementsByTagName("ol"),

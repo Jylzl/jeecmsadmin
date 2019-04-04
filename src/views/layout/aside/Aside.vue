@@ -8,15 +8,23 @@
 					background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :router="true"
 					:collapse="isCollapse" :unique-opened="true">
 					<template v-for="(item,index) in $store.state.perms.routers">
-						<template v-if="!item.hidden">
-							<el-submenu :index="item.path" v-if="!item.leaf" :key="index">
+						<template v-if="(item.meta) && !(item.meta.hidden)">
+							<el-menu-item v-if="item.meta && item.meta.leaf" :index="item.path" class="first-item"
+								:key="index">
+								<i :class="item.meta && item.meta.iconCls"
+									class="icon iconfont el-submenu-iconfont"></i>
+								<span class="collapse-font " slot="title">{{generateTitle('submenu',item.name)}}</span>
+							</el-menu-item>
+							<el-submenu v-else :index="item.path" :key="index">
 								<template slot="title">
-									<i :class="item.iconCls" class="icon iconfont el-submenu-iconfont"></i>
-									<span class="collapse-font" slot="title">{{generateTitle('submenu',item.name)}}</span>
+									<i :class="item.meta && item.meta.iconCls"
+										class="icon iconfont el-submenu-iconfont"></i>
+									<span class="collapse-font"
+										slot="title">{{generateTitle('submenu',item.name)}}</span>
 								</template>
 								<template v-for="(child,index2) in item.children">
-									<el-menu-item v-if="child.isParent" :index="child.path" :key="child.path"
-										class="parent-padding">
+									<el-menu-item v-if="child.meta && child.meta.isParent" :index="child.path"
+										:key="child.path" class="parent-padding">
 										{{child.name}}
 									</el-menu-item>
 									<el-submenu v-else :index="child.path" class="child-padding" :key="index2">
@@ -24,19 +32,15 @@
 											<span class="collapse-font">{{child.name}}</span>
 										</template>
 										<template v-for="child2 in child.children">
-											<el-menu-item v-if="!(child2.hidden)" :index="child2.path"
-												:key="child2.path">
+											<el-menu-item
+												v-if="!(child2.meta) || (child2.meta && !(child2.meta.hidden)) "
+												:index="child2.path" :key="child2.path">
 												{{child2.name}}
 											</el-menu-item>
 										</template>
 									</el-submenu>
 								</template>
 							</el-submenu>
-							<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.path" class="first-item"
-								:key="index">
-								<i :class="item.iconCls" class="icon iconfont el-submenu-iconfont"></i>
-								<span class="collapse-font " slot="title">{{generateTitle('submenu',item.name)}}</span>
-							</el-menu-item>
 						</template>
 					</template>
 				</el-menu>
@@ -48,7 +52,9 @@
 	</div>
 </template>
 <script>
-import { generateTitle } from '@/utils/i18n'
+	import {
+		generateTitle
+	} from '@/utils/i18n'
 	export default {
 		name: "Aside",
 		data() {
