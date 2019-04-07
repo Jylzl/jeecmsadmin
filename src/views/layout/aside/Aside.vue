@@ -13,29 +13,29 @@
 								:key="index">
 								<i :class="item.meta && item.meta.iconCls"
 									class="icon iconfont el-submenu-iconfont"></i>
-								<span class="collapse-font " slot="title">{{generateTitle('submenu',item.name)}}</span>
+								<span class="collapse-font " slot="title">{{generateTitle('submenu',item.meta.title)}}</span>
 							</el-menu-item>
 							<el-submenu v-else :index="item.path" :key="index">
 								<template slot="title">
 									<i :class="item.meta && item.meta.iconCls"
 										class="icon iconfont el-submenu-iconfont"></i>
 									<span class="collapse-font"
-										slot="title">{{generateTitle('submenu',item.name)}}</span>
+										slot="title">{{generateTitle('submenu',item.meta.title)}}</span>
 								</template>
 								<template v-for="(child,index2) in item.children">
 									<el-menu-item v-if="child.meta && child.meta.isParent" :index="child.path"
 										:key="child.path" class="parent-padding">
-										{{child.name}}
+										{{child.meta.title}}
 									</el-menu-item>
 									<el-submenu v-else :index="child.path" class="child-padding" :key="index2">
 										<template slot="title">
-											<span class="collapse-font">{{child.name}}</span>
+											<span class="collapse-font">{{child.meta.title}}</span>
 										</template>
 										<template v-for="child2 in child.children">
 											<el-menu-item
 												v-if="!(child2.meta) || (child2.meta && !(child2.meta.hidden)) "
 												:index="child2.path" :key="child2.path">
-												{{child2.name}}
+												{{child2.meta.title}}
 											</el-menu-item>
 										</template>
 									</el-submenu>
@@ -59,7 +59,7 @@
 		name: "Aside",
 		data() {
 			return {
-				activeIndex: "/work",
+				activeIndex: "/",
 				isCollapse: false,
 				input10: ""
 			};
