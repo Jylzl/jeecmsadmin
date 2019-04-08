@@ -8,10 +8,12 @@
 		<el-col :span="10">
 			<div class="user-console">
 				<el-dropdown trigger="click">
-					<span class="el-dropdown-link">
+					<div class="el-dropdown-link">
+						<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2030012986,1102835514&fm=200&gp=0.jpg"
+							alt="" class="user-header-img">
 						<el-badge is-dot class="item">{{userName}}</el-badge>
 						<i class="el-icon-arrow-down el-icon--right"></i>
-					</span>
+					</div>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item>用户设置</el-dropdown-item>
 						<el-dropdown-item>
@@ -23,10 +25,6 @@
 						</el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
-				<div class="user-header-img">
-					<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2030012986,1102835514&fm=200&gp=0.jpg"
-						alt="">
-				</div>
 				<div class="siteSearch-form" :class="{'show':show}">
 					<el-button type="text" icon="el-icon-search" @click.stop="siteSearchShow(true)"></el-button>
 					<el-select ref="siteSearchInput" v-model="search" :remote-method="querySearch" filterable
@@ -183,9 +181,9 @@
 						path: path.resolve(basePath, router.path),
 						name: [...prefixTitle]
 					}
-					if ( router.name) {
+					if (router.meta && router.meta.title) {
 						// generate internationalized title
-						data.name = [...data.name, router.name]
+						data.name = [...data.name, router.meta.title]
 						if (router.redirect !== 'noredirect') {
 							// only push the routes with title
 							// special case: need to exclude parent router without redirect
@@ -239,8 +237,18 @@
 </style>
 
 <style lang="scss" scoped>
+	.el-dropdown-link {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		height: 100%;
+		align-items: center;
+		padding: 0 5px;
+	}
+
 	.el-dropdown-link:hover {
 		cursor: pointer;
+		background-color: #ececec;
 	}
 
 	.nav-bar,
@@ -284,14 +292,14 @@
 		flex-direction: row-reverse;
 	}
 
-	.user-header-img {
+	.user-header-img1 {
 		display: -webkit-flex;
 		display: flex;
 		align-items: center;
 		margin-right: 8px;
 	}
 
-	.user-header-img img {
+	.user-header-img {
 		box-sizing: border-box;
 		display: block;
 		width: 32px;
@@ -299,6 +307,7 @@
 		border-radius: 50%;
 		border: 1px solid #e1e2e3;
 		padding: 1px;
+		margin-right: 8px;
 	}
 
 	.header-search-select {

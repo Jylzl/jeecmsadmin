@@ -46,17 +46,18 @@
 						<el-checkbox-button label="bb">推荐</el-checkbox-button>
 						<el-checkbox-button label="cc">共享</el-checkbox-button>
 					</el-checkbox-group>
-					<el-select v-model="contenteTypeValue" size="small" placeholder="类型" style="width:130px;" clearable >
+					<el-select v-model="contenteTypeValue" size="small" placeholder="类型" style="width:130px;" clearable>
 						<el-option v-for="item in contenteType" :key="item.value" :label="item.label"
 							:value="item.value">
 						</el-option>
 					</el-select>
-					<el-select v-model="contenteStateValue" size="small" placeholder="状态" style="width:130px;" clearable >
+					<el-select v-model="contenteStateValue" size="small" placeholder="状态" style="width:130px;"
+						clearable>
 						<el-option v-for="item in contenteState" :key="item.value" :label="item.label"
 							:value="item.value">
 						</el-option>
 					</el-select>
-					<el-select v-model="contenteSortValue" size="small" placeholder="排序" style="width:130px;" clearable >
+					<el-select v-model="contenteSortValue" size="small" placeholder="排序" style="width:130px;" clearable>
 						<el-option v-for="item in contenteSort" :key="item.value" :label="item.label"
 							:value="item.value">
 						</el-option>
@@ -80,12 +81,14 @@
 						<el-table-column prop="name" label="姓名" width="120"></el-table-column>
 						<el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
 					</el-table> -->
-					<el-table :data="tableData" row-key="id" ref="multipleTable" tooltip-effect="dark"
-						style="width: 100%" @selection-change="handleSelectionChange">
-						<el-table-column type="selection" width="55" align="center"></el-table-column>
-						<el-table-column v-for="(item, index) in col" :key="`col_${index}`" :prop="dropCol[index].prop"
-							:label="item.label"></el-table-column>
-					</el-table>
+					<div class="table-box">
+						<el-table :data="tableData" row-key="id" ref="multipleTable" tooltip-effect="dark"
+							style="width: 100%" @selection-change="handleSelectionChange">
+							<el-table-column type="selection" width="55" align="center"></el-table-column>
+							<el-table-column v-for="(item, index) in col" :key="`col_${index}`"
+								:prop="dropCol[index].prop" :label="item.label"></el-table-column>
+						</el-table>
+					</div>
 					<div class="list-paging">
 						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
 							:current-page="currentPage4" :page-sizes="[10, 20, 30, 50]" :page-size="10" :pager-count="5"
@@ -194,9 +197,9 @@
 					value: "ID降序",
 					label: "ID降序"
 				}],
-				contenteTypeValue:"",
-				contenteStateValue:"",
-				contenteSortValue:"",
+				contenteTypeValue: "",
+				contenteStateValue: "",
+				contenteSortValue: "",
 				value: "",
 				input: "",
 				input5: "",
@@ -389,7 +392,9 @@
 		background-color: #fff;
 		padding: 0;
 	}
-
+	.table-box{
+		height: 380px;
+	}
 	.list-paging {
 		box-sizing: border-box;
 		height: 50px;

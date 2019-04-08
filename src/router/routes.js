@@ -6,7 +6,8 @@ import lock from '@/views/account/Lock.vue'
 import layout from '@/views/layout/Layout.vue'
 import work from '@/views/console/Console.vue'
 
-import error from '@/views/error/404.vue'
+import error401 from '@/views/errorpage/401.vue'
+import error404 from '@/views/errorpage/404.vue'
 import childView from '@/components/childView/Index.vue'
 // const resourceTree = resolve => {
 // 	require(['@/views/interface/resource/tree.vue'], resolve)
@@ -63,6 +64,22 @@ const routes = [{
 		path: "/lock",
 		name: "锁屏",
 		component: lock
+	},
+	{
+		meta: {
+			title: '401',
+			hidden: true
+		},
+		path: '/401',
+		component: error401
+	},
+	{
+		meta: {
+			title: '404',
+			hidden: true
+		},
+		path: '/404',
+		component: error404
 	},
 	{
 		meta: {
@@ -250,7 +267,7 @@ const ansycRoutes = [{
 					path: '/traffic/trend', //趋势分析
 					name: '趋势分析',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -259,7 +276,7 @@ const ansycRoutes = [{
 					path: '/traffic/channel', //栏目访问量排行
 					name: '栏目访问量排行',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -277,7 +294,7 @@ const ansycRoutes = [{
 						path: '/sourceanalysis/class', //来源分类
 						name: '来源分类',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -287,7 +304,7 @@ const ansycRoutes = [{
 						path: '/sourceanalysis/engin', //搜索引擎
 						name: '搜索引擎',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -297,7 +314,7 @@ const ansycRoutes = [{
 						path: '/sourceanalysis/domain', //来访域名
 						name: '来访域名',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -307,7 +324,7 @@ const ansycRoutes = [{
 						path: '/sourceanalysis/city', //来访域名
 						name: '来访地区',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -317,7 +334,7 @@ const ansycRoutes = [{
 						path: '/sourceanalysis/keywords', //搜索词
 						name: '搜索词',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -336,7 +353,7 @@ const ansycRoutes = [{
 						path: '/surveyedanalysis/surveyed', //受访页面
 						name: '受访页面',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -346,7 +363,7 @@ const ansycRoutes = [{
 						path: '/surveyedanalysis/index', //入口页面
 						name: '入口页面',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -365,7 +382,7 @@ const ansycRoutes = [{
 						path: '/siteProfile/contentnum', //内容发布数
 						name: '内容发布数',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -375,7 +392,7 @@ const ansycRoutes = [{
 						path: '/siteProfile/worknum', //工作量
 						name: '工作量',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -385,7 +402,7 @@ const ansycRoutes = [{
 						path: '/siteProfile/commentnum', //评论数
 						name: '评论数',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -395,7 +412,7 @@ const ansycRoutes = [{
 						path: '/siteProfile/leavenum', //留言数
 						name: '留言数',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -405,7 +422,7 @@ const ansycRoutes = [{
 						path: '/siteProfile/usernum', //会员注册数
 						name: '会员注册数',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -418,7 +435,7 @@ const ansycRoutes = [{
 				path: '/loyalty', //忠诚度
 				name: '忠诚度',
 				component: resolve => {
-					require(['@/views/error/405.vue'], resolve)
+					require(['@/views/errorpage/405.vue'], resolve)
 				}
 			}
 		]
@@ -448,7 +465,7 @@ const ansycRoutes = [{
 						path: '/user/list', //会员列表
 						name: '会员列表',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -459,7 +476,7 @@ const ansycRoutes = [{
 						path: '/user/save', //会员添加
 						name: '会员添加',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -470,7 +487,7 @@ const ansycRoutes = [{
 						path: '/user/update', //会员添加
 						name: '会员修改',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -490,7 +507,7 @@ const ansycRoutes = [{
 						path: '/role/list',
 						name: '角色管理',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -501,7 +518,7 @@ const ansycRoutes = [{
 						path: '/role/save',
 						name: '角色添加',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -512,7 +529,7 @@ const ansycRoutes = [{
 						path: '/role/update',
 						name: '角色修改',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -523,7 +540,7 @@ const ansycRoutes = [{
 						path: '/role/members',
 						name: '成员列表',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -543,7 +560,7 @@ const ansycRoutes = [{
 					path: '/account/list',
 					name: '列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			}, {
@@ -562,7 +579,7 @@ const ansycRoutes = [{
 					path: '/adminGlobal/list', //管理员列表(全站)
 					name: '管理员(全站)列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -572,7 +589,7 @@ const ansycRoutes = [{
 					path: '/adminGlobal/edit', //管理员编辑页(全站)
 					name: '管理员(全站)编辑',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -582,7 +599,7 @@ const ansycRoutes = [{
 					path: '/adminGlobal/add', //管理员添加页(全站)
 					name: '管理员(全站)添加',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			}, {
@@ -601,7 +618,7 @@ const ansycRoutes = [{
 					path: '/adminGlocal/list', //管理员列表(本站)
 					name: '管理员(本站)列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -610,7 +627,7 @@ const ansycRoutes = [{
 					path: '/adminGlocal/edit', //管理员编辑页(本站)
 					name: '管理员(本站)修改',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -619,7 +636,7 @@ const ansycRoutes = [{
 					path: '/adminGlocal/add', //管理员添加页(本站)
 					name: '管理员(本站)添加',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			}, {
@@ -638,7 +655,7 @@ const ansycRoutes = [{
 					path: '/log/list', //日志列表
 					name: '日志列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			}, {
@@ -657,7 +674,7 @@ const ansycRoutes = [{
 					path: '/group/list', //会员组列表
 					name: '会员组列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -666,7 +683,7 @@ const ansycRoutes = [{
 					path: '/group/add', //会员组添加
 					name: '会员组添加',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -675,7 +692,7 @@ const ansycRoutes = [{
 					path: '/group/edit', //会员组修改
 					name: '会员组修改',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -695,7 +712,7 @@ const ansycRoutes = [{
 					path: '/department/tpm',
 					name: '部门模板', //部门管理
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					},
 					children: [{
 						meta: {
@@ -704,7 +721,7 @@ const ansycRoutes = [{
 						path: '/department/list', //部门列表
 						name: '部门列表',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}, {
 						meta: {
@@ -713,7 +730,7 @@ const ansycRoutes = [{
 						path: '/department/save', //部门添加
 						name: '部门添加',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}, {
 						meta: {
@@ -722,7 +739,7 @@ const ansycRoutes = [{
 						path: '/department/update', //部门添加
 						name: '部门修改',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}, {
 						meta: {
@@ -731,7 +748,7 @@ const ansycRoutes = [{
 						path: '/department/memberList', //部门添加
 						name: '部门成员列表',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}]
 				}]
@@ -751,7 +768,7 @@ const ansycRoutes = [{
 					path: '/message/list', //站内信列表
 					name: '站内信列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -760,7 +777,7 @@ const ansycRoutes = [{
 					path: '/message/add', //发送站内信
 					name: '发送站内信',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -769,7 +786,7 @@ const ansycRoutes = [{
 					path: '/message/seek', //查看站内信
 					name: '站内信查看',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -778,7 +795,7 @@ const ansycRoutes = [{
 					path: '/message/reply',
 					name: '站内信回复',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -787,7 +804,7 @@ const ansycRoutes = [{
 					path: '/message/forward',
 					name: '站内信转发',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			}
@@ -810,7 +827,7 @@ const ansycRoutes = [{
 				path: '/contentReuse',
 				name: '内容复用',
 				component: resolve => {
-					require(['@/views/error/405.vue'], resolve)
+					require(['@/views/errorpage/405.vue'], resolve)
 				}
 			},
 			{
@@ -829,7 +846,7 @@ const ansycRoutes = [{
 					path: '/workflow/list', //工作流列表
 					name: '工作流列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -838,7 +855,7 @@ const ansycRoutes = [{
 					path: '/workflow/save', //工作流添加
 					name: '工作流添加',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -847,7 +864,7 @@ const ansycRoutes = [{
 					path: '/workflow/update', //工作流修改
 					name: '工作流修改',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -867,7 +884,7 @@ const ansycRoutes = [{
 					path: '/link/list', //友情链接列表
 					name: '友情链接列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -876,7 +893,7 @@ const ansycRoutes = [{
 					path: '/link/save', //友情链接添加
 					name: '友情链接添加',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -885,7 +902,7 @@ const ansycRoutes = [{
 					path: '/link/update', //友情链接修改
 					name: '友情链接修改',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -894,7 +911,7 @@ const ansycRoutes = [{
 					path: '/link/typeList', //友情链接类别列表
 					name: '类别列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -914,7 +931,7 @@ const ansycRoutes = [{
 					path: '/ad/list',
 					name: '广告列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -923,7 +940,7 @@ const ansycRoutes = [{
 					path: '/ad/save',
 					name: '广告添加',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -932,7 +949,7 @@ const ansycRoutes = [{
 					path: '/ad/update',
 					name: '广告修改',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -941,7 +958,7 @@ const ansycRoutes = [{
 					path: '/adSpace/list',
 					name: '广告版位列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -961,7 +978,7 @@ const ansycRoutes = [{
 						path: '/contentShare/list',
 						name: '共享列表',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -971,7 +988,7 @@ const ansycRoutes = [{
 						path: '/contentShare/view',
 						name: '内容查看',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -992,7 +1009,7 @@ const ansycRoutes = [{
 					path: '/contentBuy/list', ////内容购买记录列表
 					name: '内容购买记录列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -1012,7 +1029,7 @@ const ansycRoutes = [{
 					path: '/userAccount/list', ////用户账户统计列表
 					name: '用户账户统计列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -1032,7 +1049,7 @@ const ansycRoutes = [{
 						path: '/charge/list', ////内容收费统计列表
 						name: '内容收费统计列表',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -1042,7 +1059,7 @@ const ansycRoutes = [{
 						path: '/charge/commission', ////2）平台佣金所得
 						name: '平台佣金所得',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -1063,7 +1080,7 @@ const ansycRoutes = [{
 					path: '/accountPay/list', ////转账管理列表
 					name: '转账列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -1083,7 +1100,7 @@ const ansycRoutes = [{
 						path: '/drawApply/list', ////提现管理列表
 						name: '提现列表',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -1093,7 +1110,7 @@ const ansycRoutes = [{
 						path: '/drawApply/traAccount', ////转账
 						name: '转账',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -1114,7 +1131,7 @@ const ansycRoutes = [{
 					path: '/comment/list', //评论列表
 					name: '评论列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -1123,7 +1140,7 @@ const ansycRoutes = [{
 					path: '/comment/itemList', //评论查看
 					name: '评论查看',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -1143,7 +1160,7 @@ const ansycRoutes = [{
 						path: '/job/list',
 						name: '职位申请列表',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -1153,7 +1170,7 @@ const ansycRoutes = [{
 						path: '/job/seek',
 						name: '简历查看',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -1180,7 +1197,7 @@ const ansycRoutes = [{
 								path: '/backups/list',
 								name: '备份列表',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -1190,7 +1207,7 @@ const ansycRoutes = [{
 								path: '/backups/seek',
 								name: '表字段列表',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							}
 						]
@@ -1202,7 +1219,7 @@ const ansycRoutes = [{
 						path: '/revert',
 						name: '恢复',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -1220,7 +1237,7 @@ const ansycRoutes = [{
 								path: '/backupsDir/list',
 								name: '备份目录列表',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -1230,7 +1247,7 @@ const ansycRoutes = [{
 								path: '/backupsDir/edit',
 								name: '备份目录重命名',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							}
 						]
@@ -1253,7 +1270,7 @@ const ansycRoutes = [{
 					path: '/vote/list', //问卷调查列表
 					name: '问卷列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -1262,7 +1279,7 @@ const ansycRoutes = [{
 					path: '/vote/save', //问卷新增
 					name: '问卷新增',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -1271,7 +1288,7 @@ const ansycRoutes = [{
 					path: '/vote/update', //问卷修改
 					name: '问卷修改',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -1291,7 +1308,7 @@ const ansycRoutes = [{
 					path: '/guestbook/list',
 					name: '留言列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -1300,7 +1317,7 @@ const ansycRoutes = [{
 					path: '/guestbook/save',
 					name: '留言新增',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -1309,7 +1326,7 @@ const ansycRoutes = [{
 					path: '/guestbookType/list',
 					name: '留言类型列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -1335,7 +1352,7 @@ const ansycRoutes = [{
 								path: '/collectionmanage/list',
 								name: '采集列表',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -1345,7 +1362,7 @@ const ansycRoutes = [{
 								path: '/collectionmanage/save',
 								name: '采集添加',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -1355,7 +1372,7 @@ const ansycRoutes = [{
 								path: '/collectionmanage/update',
 								name: '采集修改',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							}
 						]
@@ -1375,7 +1392,7 @@ const ansycRoutes = [{
 							path: '/collectionhistory/list',
 							name: '采集列表',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}]
 					},
@@ -1394,7 +1411,7 @@ const ansycRoutes = [{
 							path: '/collectionspeed/view',
 							name: '采集查看',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}]
 					}
@@ -1414,7 +1431,7 @@ const ansycRoutes = [{
 						path: '/weixinConfig',
 						name: '公众号设置',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -1432,7 +1449,7 @@ const ansycRoutes = [{
 								path: '/weixinMenu/list', ////自定义菜单列表
 								name: '自定义菜单列表',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -1442,7 +1459,7 @@ const ansycRoutes = [{
 								path: '/weixinMenu/add', ////自定义菜单添加
 								name: '自定义菜单添加',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -1452,7 +1469,7 @@ const ansycRoutes = [{
 								path: '/weixinMenu/edit', ////自定义菜单修改
 								name: '自定义菜单修改',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -1470,7 +1487,7 @@ const ansycRoutes = [{
 										path: '/weixinMenu/child/list', ////自定义菜单列表
 										name: '二级菜单列表',
 										component: resolve => {
-											require(['@/views/error/405.vue'], resolve)
+											require(['@/views/errorpage/405.vue'], resolve)
 										}
 									},
 									{
@@ -1480,7 +1497,7 @@ const ansycRoutes = [{
 										path: '/weixinMenu/child/add', ////自定义菜单添加
 										name: '二级菜单添加',
 										component: resolve => {
-											require(['@/views/error/405.vue'], resolve)
+											require(['@/views/errorpage/405.vue'], resolve)
 										}
 									},
 									{
@@ -1490,7 +1507,7 @@ const ansycRoutes = [{
 										path: '/weixinMenu/child/edit', ////自定义菜单修改
 										name: '二级菜单修改',
 										component: resolve => {
-											require(['@/views/error/405.vue'], resolve)
+											require(['@/views/errorpage/405.vue'], resolve)
 										}
 									}
 								]
@@ -1512,7 +1529,7 @@ const ansycRoutes = [{
 								path: '/weixinMessage/list',
 								name: '自定义回复列表',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -1522,7 +1539,7 @@ const ansycRoutes = [{
 								path: '/weixinMessage/add',
 								name: '自定义回复添加',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -1532,7 +1549,7 @@ const ansycRoutes = [{
 								path: '/weixinMessage/edit',
 								name: '自定义回复修改',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							}
 						]
@@ -1544,7 +1561,7 @@ const ansycRoutes = [{
 						path: '/weixinMessageDef',
 						name: '默认回复',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -1563,7 +1580,7 @@ const ansycRoutes = [{
 						path: '/statically/indexStatic',
 						name: '首页静态化',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -1573,7 +1590,7 @@ const ansycRoutes = [{
 						path: '/statically/channelStatic',
 						name: '栏目静态化',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -1583,7 +1600,7 @@ const ansycRoutes = [{
 						path: '/statically/contentStatic', //内容静态化
 						name: '内容静态化',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -1607,7 +1624,7 @@ const ansycRoutes = [{
 				path: '/fullTextSearch',
 				name: '全文检索', //全文检索
 				component: resolve => {
-					require(['@/views/error/405.vue'], resolve)
+					require(['@/views/errorpage/405.vue'], resolve)
 				}
 			},
 			{
@@ -1626,7 +1643,7 @@ const ansycRoutes = [{
 					path: '/dictionary/list', ////字典列表
 					name: '字典列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -1646,7 +1663,7 @@ const ansycRoutes = [{
 					path: '/contentCycle/list', ////字典列表
 					name: '内容回收站列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -1666,7 +1683,7 @@ const ansycRoutes = [{
 					path: '/crontab/list', //定时任务列表
 					name: '定时任务列表',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -1675,7 +1692,7 @@ const ansycRoutes = [{
 					path: '/crontab/save', //定时任务添加
 					name: '定时任务添加',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -1684,7 +1701,7 @@ const ansycRoutes = [{
 					path: '/crontab/update', //定时任务修改
 					name: '定时任务修改',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -1704,7 +1721,7 @@ const ansycRoutes = [{
 					path: '/file/list', //附件管理
 					name: '附件管理',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -1724,7 +1741,7 @@ const ansycRoutes = [{
 					path: '/dimensioncode/create', ////二维码管理创建
 					name: '二维码管理创建',
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -1744,7 +1761,7 @@ const ansycRoutes = [{
 						path: '/customForm/list', ////智能表单列表
 						name: '智能表单列表',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -1754,7 +1771,7 @@ const ansycRoutes = [{
 						path: '/customForm/add', ////智能表单添加
 						name: '智能表单添加',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -1764,7 +1781,7 @@ const ansycRoutes = [{
 						path: '/customForm/edit', ////智能表单修改
 						name: '智能表单修改',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -1782,7 +1799,7 @@ const ansycRoutes = [{
 								path: '/customForm/record/list', ////智能表单记录列表
 								name: '智能表单记录列表',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -1792,7 +1809,7 @@ const ansycRoutes = [{
 								path: '/customForm/record/view', ////智能表单记录详情
 								name: '智能表单记录详情',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							}
 						]
@@ -1815,7 +1832,7 @@ const ansycRoutes = [{
 						path: '/scoregroup/list', ////评分组管理列表
 						name: '评分组列表',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -1825,7 +1842,7 @@ const ansycRoutes = [{
 						path: '/scoregroup/add', ////评分组管理添加
 						name: '评分组添加',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -1835,7 +1852,7 @@ const ansycRoutes = [{
 						path: '/scoregroup/edit', ////评分组管理修改
 						name: '评分组修改',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -1853,7 +1870,7 @@ const ansycRoutes = [{
 								path: '/scoregroup/scoreitem/list', ////评分项管理列表
 								name: '评分项列表',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -1863,7 +1880,7 @@ const ansycRoutes = [{
 								path: '/scoregroup/scoreitem/add', ////评分项管理添加
 								name: '评分项添加',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -1873,7 +1890,7 @@ const ansycRoutes = [{
 								path: '/scoregroup/scoreitem/edit', ////评分项管理修改
 								name: '评分项修改',
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							}
 						]
@@ -1902,7 +1919,7 @@ const ansycRoutes = [{
 							path: '/tag/list', ////tag管理列表
 							name: 'tag列表',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}]
 					},
@@ -1921,7 +1938,7 @@ const ansycRoutes = [{
 							path: '/sensitivity/list', ////敏感词管理列表
 							name: '敏感词列表',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}]
 					},
@@ -1940,7 +1957,7 @@ const ansycRoutes = [{
 							path: '/keyword/list', ////敏感词管理列表
 							name: '关键词列表',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}]
 					},
@@ -1959,7 +1976,7 @@ const ansycRoutes = [{
 							path: '/origin/list', ////来源管理列表
 							name: '来源列表',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}]
 					},
@@ -1978,7 +1995,7 @@ const ansycRoutes = [{
 							path: '/searchwords/list', ////热词管理列表
 							name: '热词列表',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}]
 					}
@@ -2031,7 +2048,7 @@ const ansycRoutes = [{
 							path: '/templateadd',
 							name: '模板添加',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						},
 						{
@@ -2042,7 +2059,7 @@ const ansycRoutes = [{
 							path: '/templateedit',
 							name: '模板修改',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						},
 						{
@@ -2053,7 +2070,7 @@ const ansycRoutes = [{
 							path: '/templaterename',
 							name: '模板重命名',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}, {
 							meta: {
@@ -2063,7 +2080,7 @@ const ansycRoutes = [{
 							path: '/templatesetting',
 							name: '模板设置',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}
 					]
@@ -2094,7 +2111,7 @@ const ansycRoutes = [{
 							path: '/resourcelist',
 							name: '资源列表',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						},
 						{
@@ -2106,7 +2123,7 @@ const ansycRoutes = [{
 							path: '/resourceadd',
 							name: '资源添加',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						},
 						{
@@ -2117,7 +2134,7 @@ const ansycRoutes = [{
 							path: '/resourceedit',
 							name: '资源修改',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						},
 						{
@@ -2128,7 +2145,7 @@ const ansycRoutes = [{
 							path: '/resourcerename',
 							name: '资源重命名',
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}
 					]
@@ -2153,7 +2170,7 @@ const ansycRoutes = [{
 				path: '/siteConfig',
 				name: '站点设置', //站点设置
 				component: resolve => {
-					require(['@/views/error/405.vue'], resolve)
+					require(['@/views/errorpage/405.vue'], resolve)
 				}
 			},
 			{
@@ -2172,7 +2189,7 @@ const ansycRoutes = [{
 						path: '/stat/list',
 						name: '统计列表', //统计列表
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2182,7 +2199,7 @@ const ansycRoutes = [{
 						path: '/stat/add',
 						name: '统计添加', //统计添加
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2192,7 +2209,7 @@ const ansycRoutes = [{
 						path: '/stat/edit',
 						name: '统计修改', //统计修改
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -2213,7 +2230,7 @@ const ansycRoutes = [{
 					path: '/ftp/list',
 					name: 'FTP列表', //ftp管理列表
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -2222,7 +2239,7 @@ const ansycRoutes = [{
 					path: '/ftp/add',
 					name: 'FTP添加', //ftp管理添加
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}, {
 					meta: {
@@ -2231,7 +2248,7 @@ const ansycRoutes = [{
 					path: '/ftp/edit',
 					name: 'FTP修改', //ftp管理修改
 					component: resolve => {
-						require(['@/views/error/405.vue'], resolve)
+						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			},
@@ -2251,7 +2268,7 @@ const ansycRoutes = [{
 						path: '/oss/list',
 						name: 'oss管理列表',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2261,7 +2278,7 @@ const ansycRoutes = [{
 						path: '/oss/add',
 						name: 'OSS添加',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2271,7 +2288,7 @@ const ansycRoutes = [{
 						path: '/oss/edit',
 						name: 'OSS修改',
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -2292,7 +2309,7 @@ const ansycRoutes = [{
 						path: '/type/list',
 						name: '内容类型列表', //内容类型列表
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2302,7 +2319,7 @@ const ansycRoutes = [{
 						path: '/type/add',
 						name: '内容类型添加', //内容类型添加
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2312,7 +2329,7 @@ const ansycRoutes = [{
 						path: '/type/edit',
 						name: '内容类型修改', //内容类型修改
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -2333,7 +2350,7 @@ const ansycRoutes = [{
 						path: '/directive/list',
 						name: '标签向导列表', //标签向导列表
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2343,7 +2360,7 @@ const ansycRoutes = [{
 						path: '/directive/add',
 						name: '标签向导添加', //标签向导添加
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -2364,7 +2381,7 @@ const ansycRoutes = [{
 						path: '/model/list',
 						name: '模型列表', //模型管理列表
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}, {
 						meta: {
@@ -2373,7 +2390,7 @@ const ansycRoutes = [{
 						path: '/model/add',
 						name: '模型添加', //模型管理添加
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}, {
 						meta: {
@@ -2382,7 +2399,7 @@ const ansycRoutes = [{
 						path: '/model/edit',
 						name: '模型修改', //模型管理修改
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2392,7 +2409,7 @@ const ansycRoutes = [{
 						path: '/channelModel/list',
 						name: '栏目模型字段列表', //栏目模型
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2402,7 +2419,7 @@ const ansycRoutes = [{
 						path: '/channelModel/update',
 						name: '栏目模型字段修改', //栏目模型项修改
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2412,7 +2429,7 @@ const ansycRoutes = [{
 						path: '/channelModel/save',
 						name: '栏目模型字段添加', //栏目模型项添加
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2422,7 +2439,7 @@ const ansycRoutes = [{
 						path: '/contentModel/list',
 						name: '内容模型字段模型', //内容模型
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2432,7 +2449,7 @@ const ansycRoutes = [{
 						path: '/contentModel/update',
 						name: '内容模型字段修改', //内容模型项修改
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2442,7 +2459,7 @@ const ansycRoutes = [{
 						path: '/contentModel/save',
 						name: '内容模型字段添加', //内容模型项添加
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -2461,7 +2478,7 @@ const ansycRoutes = [{
 						path: '/globel/systemUpdate',
 						name: '系统设置', //全局设置-系统设置
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2471,7 +2488,7 @@ const ansycRoutes = [{
 						path: '/globel/loginUpdate',
 						name: '登录设置', //全局设置-登录设置
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2481,7 +2498,7 @@ const ansycRoutes = [{
 						path: '/globel/memberUpdate',
 						name: '会员设置', //全局设置-会员设置
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2499,7 +2516,7 @@ const ansycRoutes = [{
 								path: '/globel/registerModel/list',
 								name: '会员注册列表', //全局设置-会员注册管理列表
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -2509,7 +2526,7 @@ const ansycRoutes = [{
 								path: '/globel/registerModel/add',
 								name: '会员注册添加', //全局设置-会员注册管理添加
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -2519,7 +2536,7 @@ const ansycRoutes = [{
 								path: '/globel/registerModel/edit',
 								name: '会员注册修改', //全局设置-会员注册管理修改
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							}
 						]
@@ -2531,7 +2548,7 @@ const ansycRoutes = [{
 						path: '/globel/markUpdate',
 						name: '水印设置', //全局设置-水印设置
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2541,7 +2558,7 @@ const ansycRoutes = [{
 						path: '/globel/firewallUpdate',
 						name: '防火墙设置', //全局设置-防火墙设置
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2551,7 +2568,7 @@ const ansycRoutes = [{
 						path: '/globel/attrUpdate',
 						name: '其他设置', //全局设置-其他设置
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2561,7 +2578,7 @@ const ansycRoutes = [{
 						path: '/globel/companyUpdate',
 						name: '机构信息设置', //全局设置-机构信息设置
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2571,7 +2588,7 @@ const ansycRoutes = [{
 						path: '/globel/contentUpdate',
 						name: '内容佣金设置', //全局设置-内容佣金设置
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -2592,7 +2609,7 @@ const ansycRoutes = [{
 						path: '/site/list',
 						name: '站点列表', //站点管理列表
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2602,7 +2619,7 @@ const ansycRoutes = [{
 						path: '/site/add',
 						name: '站点添加', //站点管理添加
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2612,7 +2629,7 @@ const ansycRoutes = [{
 						path: '/site/edit',
 						name: '站点修改', //站点管理修改
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					}
 				]
@@ -2631,7 +2648,7 @@ const ansycRoutes = [{
 						path: '/apiManage/apiUpdate',
 						name: '接口设置', //接口管理-接口设置
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2641,7 +2658,7 @@ const ansycRoutes = [{
 						path: '/apiManage/apiSSOupdate',
 						name: '单点登录设置', //接口管理-sso设置
 						component: resolve => {
-							require(['@/views/error/405.vue'], resolve)
+							require(['@/views/errorpage/405.vue'], resolve)
 						}
 					},
 					{
@@ -2659,7 +2676,7 @@ const ansycRoutes = [{
 							path: '/apiManage/apiMan/list',
 							name: '接口列表', //接口管理-接口管理列表
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}, {
 							meta: {
@@ -2668,7 +2685,7 @@ const ansycRoutes = [{
 							path: '/apiManage/apiMan/add',
 							name: '接口添加', //接口管理-接口管理添加
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}, {
 							meta: {
@@ -2677,7 +2694,7 @@ const ansycRoutes = [{
 							path: '/apiManage/apiMan/edit',
 							name: '接口修改', //接口管理-接口管理修改
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}]
 					},
@@ -2696,7 +2713,7 @@ const ansycRoutes = [{
 							path: '/apiManage/apiUserMan/list',
 							name: '接口用户列表', //接口管理-接口用户管理列表
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}, {
 							meta: {
@@ -2705,7 +2722,7 @@ const ansycRoutes = [{
 							path: '/apiManage/apiUserMan/add',
 							name: '接口用户添加', //接口管理-接口用户管理添加
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}, {
 							meta: {
@@ -2714,7 +2731,7 @@ const ansycRoutes = [{
 							path: '/apiManage/apiUserMan/edit',
 							name: '接口用户修改', //接口管理-接口用户管理修改
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}]
 					},
@@ -2733,7 +2750,7 @@ const ansycRoutes = [{
 							path: '/apiManage/apiUseRecord/list',
 							name: '接口使用列表', //接口管理-接口使用记录列表
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}]
 					},
@@ -2752,7 +2769,7 @@ const ansycRoutes = [{
 							path: '/apiManage/apiRecord/list',
 							name: 'api接口记录列表', //接口管理-api接口记录列表
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}]
 					},
@@ -2771,7 +2788,7 @@ const ansycRoutes = [{
 							path: '/apiManage/apiInfo/list',
 							name: 'api接口列表', //接口管理-api接口管理列表
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}, {
 							meta: {
@@ -2780,7 +2797,7 @@ const ansycRoutes = [{
 							path: '/apiManage/apiInfo/add',
 							name: 'api接口添加', //接口管理-api接口管理添加
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}, {
 							meta: {
@@ -2789,7 +2806,7 @@ const ansycRoutes = [{
 							path: '/apiManage/apiInfo/edit',
 							name: 'api接口修改', //接口管理-api接口管理修改
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}]
 					},
@@ -2808,7 +2825,7 @@ const ansycRoutes = [{
 								path: '/apiManage/apiAccount/list',
 								name: 'api接口账户列表', //接口管理-api接口账户管理列表
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							}, {
 								meta: {
@@ -2817,7 +2834,7 @@ const ansycRoutes = [{
 								path: '/apiManage/apiAccount/add',
 								name: 'api接口账户添加', //接口管理-api接口账户管理添加
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							}, {
 								meta: {
@@ -2826,7 +2843,7 @@ const ansycRoutes = [{
 								path: '/apiManage/apiAccount/edit',
 								name: 'api接口账户查看', //接口管理-api接口账户管理查看
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -2836,7 +2853,7 @@ const ansycRoutes = [{
 								path: '/apiManage/apiAccount/update',
 								name: '独立密码修改', //接口管理-api接口账户管理查看
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							}
 						]
@@ -2864,7 +2881,7 @@ const ansycRoutes = [{
 								path: '/smsServer/smsServer/list',
 								name: '短信服务列表', //短信服务-短信服务管理列表
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -2874,7 +2891,7 @@ const ansycRoutes = [{
 								path: '/smsServer/smsServer/add',
 								name: '短信服务添加', //短信服务-短信服务管理添加
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							},
 							{
@@ -2884,7 +2901,7 @@ const ansycRoutes = [{
 								path: '/smsServer/smsServer/edit',
 								name: '短信服务修改', //短信服务-短信服务管理修改
 								component: resolve => {
-									require(['@/views/error/405.vue'], resolve)
+									require(['@/views/errorpage/405.vue'], resolve)
 								}
 							}
 						]
@@ -2904,7 +2921,7 @@ const ansycRoutes = [{
 							path: '/smsServer/smsServer/smsRecord',
 							name: '短信使用记录列表', //短信服务-短信使用记录
 							component: resolve => {
-								require(['@/views/error/405.vue'], resolve)
+								require(['@/views/errorpage/405.vue'], resolve)
 							}
 						}]
 					}
@@ -2989,7 +3006,7 @@ const ansycRoutes = [{
 			path: '/about/us',
 			name: '关于',
 			component: resolve => {
-				require(['@/views/error/405.vue'], resolve)
+				require(['@/views/errorpage/405.vue'], resolve)
 			}
 		}]
 	}, //百度统计
@@ -3003,16 +3020,14 @@ const ansycRoutes = [{
 		component: resolve => {
 			require(['@/views/baidu/baidu.vue'], resolve)
 		}
-	}, //错误页面
+	},
 	{
 		meta: {
 			title: '404',
-			role: 'index',
 			hidden: true
 		},
 		path: '*',
-		name: '404',
-		component: error,
+		redirect: '/404'
 	}
 ];
 

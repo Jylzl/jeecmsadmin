@@ -165,23 +165,29 @@
 						</el-dropdown>
 					</div>
 					<div style="height:425px;">
-						<el-table :data="tableData" stripe style="width: 100%" ref="multipleTable"
-							tooltip-effect="dark">
-							<el-table-column type="selection" width="55"></el-table-column>
-							<el-table-column prop="date" label="日期" width="160" sortable></el-table-column>
-							<el-table-column prop="name" label="状态" width="100">
-								<template slot-scope="scope">
-									<el-tag type="success" v-if="scope.row.type == '0'">已办</el-tag>
-									<el-tag type="warning" v-else-if="scope.row.type == '1'">待办</el-tag>
-									<el-tag type="danger" v-else-if="scope.row.type == '2'">加急</el-tag>
-									<el-tag type="info" v-else>正常</el-tag>
-								</template>
-							</el-table-column>
-							<!-- <el-table-column prop="name" label="姓名" width="180"></el-table-column> -->
-							<el-table-column prop="matter" label="事项"></el-table-column>
-						</el-table>
-						<el-pagination small layout="prev, pager, next" :total="50">
-						</el-pagination>
+						<div style="height:380px;">
+							<el-table :data="tableData" stripe style="width: 100%" ref="multipleTable"
+								tooltip-effect="dark">
+								<el-table-column type="selection" width="55"></el-table-column>
+								<el-table-column prop="date" label="日期" width="160" sortable></el-table-column>
+								<el-table-column prop="name" label="状态" width="100">
+									<template slot-scope="scope">
+										<el-tag type="success" v-if="scope.row.type == '0'">已办</el-tag>
+										<el-tag type="warning" v-else-if="scope.row.type == '1'">待办</el-tag>
+										<el-tag type="danger" v-else-if="scope.row.type == '2'">加急</el-tag>
+										<el-tag type="info" v-else>正常</el-tag>
+									</template>
+								</el-table-column>
+								<!-- <el-table-column prop="name" label="姓名" width="180"></el-table-column> -->
+								<el-table-column prop="matter" label="事项"></el-table-column>
+							</el-table>
+						</div>
+						<div style="height:45px;text-align:center;">
+							<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+								:current-page="1" :page-sizes="[100, 200, 300, 400]" :page-size="100"
+								layout="total, sizes, prev, pager, next, jumper" :total="4000">
+							</el-pagination>
+						</div>
 					</div>
 				</el-card>
 			</el-col>
@@ -364,7 +370,7 @@
 						_this.chart1DataEmpty = !_this.chart1Data.rows.length;
 						setTimeout(() => {
 							_this.chart1loading = false;
-						}, 1000);
+						}, 300);
 					})
 					.catch(err => {
 						console.log(err)
@@ -399,7 +405,7 @@
 					_this.chart2DataEmpty = !_this.chart2Data.rows.length;
 					setTimeout(() => {
 						_this.chart2loading = false;
-					}, 1000);
+					}, 300);
 				}).catch(err => {
 					console.log(err)
 				});
@@ -593,6 +599,12 @@
 					})
 					.catch(err => {});
 			},
+			handleSizeChange(val) {
+				console.log(`每页 ${val} 条`);
+			},
+			handleCurrentChange(val) {
+				console.log(`当前页: ${val}`);
+			}
 		}
 	}
 </script>

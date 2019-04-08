@@ -3,40 +3,48 @@
 		<div class="aside-top el-header el-menu"></div>
 		<div class="left-center">
 			<el-scrollbar wrap-class="scrollbar-wrapper ">
-				<el-menu :collapse-transition="false" :default-active="activeIndex"
+				<el-menu :collapse-transition="false" :default-active="$route.path"
 					class="el-menu-vertical-demo aside-menu" @open="handleOpen" @close="handleClose"
 					background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :router="true"
 					:collapse="isCollapse" :unique-opened="true">
-					<template v-for="(item,index) in $store.state.perms.routers">
+					<template v-for="item in $store.state.perms.routers">
 						<template v-if="(item.meta) && !(item.meta.hidden)">
-							<el-menu-item v-if="item.meta && item.meta.leaf" :index="item.path" class="first-item"
-								:key="index">
-								<i :class="item.meta && item.meta.iconCls"
-									class="icon iconfont el-submenu-iconfont"></i>
-								<span class="collapse-font " slot="title">{{generateTitle('submenu',item.meta.title)}}</span>
-							</el-menu-item>
-							<el-submenu v-else :index="item.path" :key="index">
+							<template v-if="item.meta && item.meta.leaf">
+								<el-menu-item v-if="item.redirect" :index="item.redirect" :key="item.redirect">
+									<i :class="item.meta && item.meta.iconCls"
+										class="icon iconfont el-submenu-iconfont"></i>
+									<span class="collapse-font "
+										slot="title">{{generateTitle('submenu',item.meta.title)}}</span>
+								</el-menu-item>
+								<el-menu-item v-else :index="item.path" :key="item.path">
+									<i :class="item.meta && item.meta.iconCls"
+										class="icon iconfont el-submenu-iconfont"></i>
+									<span class="collapse-font "
+										slot="title">{{generateTitle('submenu',item.meta.title)}}</span>
+								</el-menu-item>
+							</template>
+
+							<el-submenu v-else :index="item.path" :key="item.path">
 								<template slot="title">
 									<i :class="item.meta && item.meta.iconCls"
 										class="icon iconfont el-submenu-iconfont"></i>
 									<span class="collapse-font"
 										slot="title">{{generateTitle('submenu',item.meta.title)}}</span>
 								</template>
-								<template v-for="(child,index2) in item.children">
+								<template v-for="child in item.children">
 									<el-menu-item v-if="child.meta && child.meta.isParent" :index="child.path"
 										:key="child.path" class="parent-padding">
 										{{child.meta.title}}
 									</el-menu-item>
-									<el-submenu v-else :index="child.path" class="child-padding" :key="index2">
+									<el-submenu v-else :index="child.path" class="child-padding" :key="child.path">
 										<template slot="title">
 											<span class="collapse-font">{{child.meta.title}}</span>
 										</template>
 										<template v-for="child2 in child.children">
-											<el-menu-item
-												v-if="!(child2.meta) || (child2.meta && !(child2.meta.hidden)) "
-												:index="child2.path" :key="child2.path">
-												{{child2.meta.title}}
-											</el-menu-item>
+											<template v-if="!(child2.meta) || (child2.meta && !(child2.meta.hidden))">
+												<el-menu-item v-if="item.redirect" :index="child2.redirect" :key="child2.redirect">{{child2.meta.title}}</el-menu-item>
+												<el-menu-item v-else :index="child2.path" :key="child2.path">{{child2.meta.title}}</el-menu-item>
+											</template>
 										</template>
 									</el-submenu>
 								</template>
@@ -59,22 +67,20 @@
 		name: "Aside",
 		data() {
 			return {
-				activeIndex: "/",
+				// activeIndex: "/work",
 				isCollapse: false,
 				input10: ""
 			};
 		},
-		watch: {
-			$route: function (to, from) {
-				this.activeIndex = this.$route.path;
-			}
-		},
-		created() {
-			this.activeIndex = this.$route.matched[1].path;
-		},
-		mounted() {
-			this.activeIndex = this.$route.matched[1].path;
-		},
+		// watch: {
+		// 	$route: function (to, from) {
+		// 		this.activeIndex = this.$route.path;
+		// 	}
+		// },
+		// created() {
+		// 	this.activeIndex = this.$route.path;
+		// },
+		mounted() {},
 		methods: {
 			generateTitle,
 			handleOpen(key, keyPath) {

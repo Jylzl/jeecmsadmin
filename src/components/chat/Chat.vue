@@ -7,9 +7,18 @@
                 </div>
                 <div class="chat-card">
                     <div class="user-header-img">
-                        <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2030012986,1102835514&fm=200&gp=0.jpg"
-                            alt="">
-                        <span class="user-state"></span>
+                        <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2030012986,1102835514&fm=200&gp=0.jpg" alt="">
+                        <el-dropdown size="mini" trigger="click">
+                            <span class="el-dropdown-link">
+                                <span class="user-state"></span>                        
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item icon="el-icon-success">在线</el-dropdown-item>
+                                <el-dropdown-item icon="el-icon-time">忙碌</el-dropdown-item>
+                                <el-dropdown-item icon="el-icon-remove">隐身</el-dropdown-item>
+                                <el-dropdown-item icon="el-icon-circle-close">离开</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
                     </div>
                     <div class="user-inf">
                         <h3 class="user-name">李子隆</h3>
@@ -21,7 +30,7 @@
                 <el-input placeholder="搜索" size="medium" prefix-icon="el-icon-search" v-model="input21" clearable>
                 </el-input>
             </div>
-            <el-tabs v-model="activeName" :stretch="true" @tab-click="handleClick">
+            <el-tabs v-model="tabActiveName" :stretch="true" @tab-click="handleClick">
                 <el-tab-pane label="消息" name="first">
                     <el-scrollbar wrap-class="scrollbar-wrapper">
                         <ul class="chat-massage-list">
@@ -86,7 +95,7 @@
             return {
                 show: false,
                 input21: "",
-                activeName: "first",
+                tabActiveName: "first",
                 activeNames: ["1"]
             };
         },
@@ -201,11 +210,12 @@
         border-radius: 50%;
         position: relative;
     }
-
-    .chat-card .user-header-img .user-state {
+    .chat-card .user-header-img .el-dropdown{
         position: absolute;
         right: 0;
         bottom: 0;
+    }
+    .chat-card .user-header-img .user-state {
         display: block;
         width: 12px;
         height: 12px;
