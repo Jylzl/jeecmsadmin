@@ -2945,8 +2945,8 @@ const ansycRoutes = [{
 			},
 			path: '/baidu',
 			name: '百度统计',
-			redirect: '/webset/baidu',
-			component: childView,
+			redirect: '/baidu/index',
+			component: childView
 		}, {
 			meta: {
 				title: '可访问性',
@@ -3015,7 +3015,7 @@ const ansycRoutes = [{
 			title: '百度统计',
 			hidden: true
 		},
-		path: '/webset/baidu',
+		path: '/baidu/index',
 		name: '百度统计',
 		component: resolve => {
 			require(['@/views/baidu/baidu.vue'], resolve)
