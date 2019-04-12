@@ -665,7 +665,7 @@
 		box-sizing: border-box;
 		text-align: center;
 		padding-top: 22px;
-		width: 40%;
+		width: 32%;
 		height: 100%;
 	}
 
@@ -678,7 +678,7 @@
 
 	.bg-info {
 		box-sizing: border-box;
-		width: 60%;
+		width: 68%;
 		padding: 24px;
 		text-align: left;
 	}

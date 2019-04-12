@@ -248,7 +248,7 @@
 
 	.el-dropdown-link:hover {
 		cursor: pointer;
-		background-color: #ececec;
+		background-color: rgba(0,0,0,.025);;
 	}
 
 	.nav-bar,
