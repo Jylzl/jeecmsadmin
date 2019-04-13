@@ -10,7 +10,7 @@
 						:default-expanded-keys="['']" @node-click="getNodes" v-if="refash" :default-expand-all="true"
 						icon-class="no">
 						<span class="custom-tree-node" slot-scope="{ node, data }">
-							<span :title="node.label">{{ node.label }}</span>
+							<span :title="node.label" :data-data="data">{{ node.label }}</span>
 						</span>
 					</el-tree>
 				</el-scrollbar>
@@ -27,7 +27,7 @@
 					</el-breadcrumb>
 				</div>
 				<div class="right-top-right">
-					<el-dropdown>
+					<el-dropdown @command="addContent" v-perms="'/content/save'">
 						<el-button type="primary" icon="el-icon-edit" size="small">发布内容</el-button>
 						<el-dropdown-menu slot="dropdown">
 							<el-dropdown-item v-for="item in modelList" :key="item.id" :command="item.id">{{item.name}}
@@ -45,6 +45,9 @@
 						</el-checkbox-button>
 						<el-checkbox-button v-model="params.queryShare" label="queryShare">共享
 						</el-checkbox-button>
+						<!-- <el-checkbox-button v-model="params.queryTopLevel" @change="query" border>固顶</el-checkbox-button>
+						<el-checkbox-button v-model="params.queryRecommend" @change="query" border>推荐</el-checkbox-button>
+						<el-checkbox-button v-model="params.queryShare" @change="query" :true-label='1' :false-label='0' border>共享</el-checkbox-button> -->
 					</el-checkbox-group>
 					<el-select v-model="params.queryTypeId" size="small" placeholder="类型" style="width:130px;"
 						@change="query" clearable>
@@ -73,30 +76,12 @@
 				</div>
 			</div>
 			<div class="right-table">
-				<el-scrollbar wrap-class="scrollbar-wrapper ">
-					<!-- <el-table ref="multipleTable" :data="tableData3" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange">
-						<el-table-column type="selection" width="55"></el-table-column>
-						<el-table-column label="日期" width="120">
-							<template slot-scope="scope">{{ scope.row.date }}</template>
-						</el-table-column>
-						<el-table-column prop="name" label="姓名" width="120"></el-table-column>
-						<el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
-					</el-table> -->
+				<el-scrollbar wrap-class="scrollbar-wrapper">
 					<div class="table-box">
-						<!-- <el-table :data="tableData" row-key="id" ref="multipleTable" tooltip-effect="dark"
-							style="width: 100%" @selection-change="handleSelectionChange">
-							<el-table-column type="selection" width="46" align="center"></el-table-column>
-							<el-table-column v-for="(item, index) in dropCol" :width="item.width" :align="item.align"
-								:key="`col_${index}`" :prop="dropCol[index].prop" :label="item.label"></el-table-column>
-							操作 -->
-							<!-- <el-table-column label="操作" align="center">
-								<span slot-scope="scope">
-									{{scope.row.id}}
-								</span>
-							</el-table-column> -->
-
-						<!-- </el-table> -->
-						<el-table :data="tableData" row-key="id" ref="multipleTable" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange" :default-sort = "{prop: 'id', order: 'descending'}">
+						<el-table :data="tableData" row-key="id" ref="multipleTable" tooltip-effect="dark"
+							style="width: 100%" @selection-change="checkIdsAndStatus"
+							:default-sort="{prop: 'id', order: 'descending'}" :loading="loading"
+							@sort-change="sortChange">
 							<el-table-column type="expand" width="30" align="left">
 								<template slot-scope="props">
 									<el-form label-position="left" inline class="demo-table-expand">
@@ -129,28 +114,35 @@
 							<el-table-column label="标题" prop="title" :show-overflow-tooltip="true"></el-table-column>
 							<el-table-column label="置顶" prop="topLevel" width="60" align="center">
 								<div slot-scope="scope">
-									<el-input v-model.number="scope.row.topLevel" min="0" max="99" :maxlength="2" size="mini"></el-input>
+									<el-input v-model.number="scope.row.topLevel" min="0" max="99" :maxlength="2"
+										size="mini"></el-input>
 								</div>
 							</el-table-column>
 							<el-table-column label="类型" prop="typeName" width="80" align="center"></el-table-column>
 							<el-table-column label="发布者" prop="userName" width="100" align="left"></el-table-column>
-							<el-table-column label="发布时间" prop="releaseDate" width="160" align="center" :filters="[{text: '今天', value: '2016-05-01'}, {text: '本周', value: '2016-05-02'}, {text: '近七天', value: '2016-05-03'}, {text: '本月', value: '2016-05-04'}]" sortable></el-table-column>
+							<el-table-column label="发布时间" prop="releaseDate" width="160" align="center"
+								:filters="[{text: '今天', value: '2016-05-01'}, {text: '本周', value: '2016-05-02'}, {text: '近七天', value: '2016-05-03'}, {text: '本月', value: '2016-05-04'}]"
+								sortable></el-table-column>
 							<el-table-column label="状态" prop="status" width="80" align="center" sortable>
 								<div slot-scope="props">
 									{{filterStatus(props.row.status)}}
 								</div>
 							</el-table-column>
 							<el-table-column label="操作" prop="id" width="120" align="center">
-								<div>
-									<el-button type="text">修改</el-button>
-									<el-button type="text">删除</el-button>
+								<div slot-scope="scope">
+									<el-button type="text" v-show="scope.row.hasUpdateRight"
+										@click.native="routerLink('/content/update','update',scope.row.id)"
+										v-perms="'/content/update'">修改</el-button>
+									<el-button type="text" v-show="scope.row.hasDeleteRight"
+										@click.native="deleteBatch($api.contentDelete,scope.row.id)"
+										v-perms="'/content/delete'">删除</el-button>
 								</div>
 							</el-table-column>
 						</el-table>
 					</div>
 					<div class="list-paging">
 						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-							:current-page="params.pageNo" :page-sizes="[10, 20, 30, 50,100]"
+							:current-page="params.pageNo" :page-sizes="[5, 10, 20, 30, 50,100]"
 							:page-size="params.pageSize" :pager-count="5"
 							layout="total, sizes, prev, pager, next, jumper" :total="pageTotal">
 						</el-pagination>
@@ -158,20 +150,38 @@
 				</el-scrollbar>
 			</div>
 			<div class="right-bottom">
-				<el-button size="small">删除</el-button>
-				<el-button size="small">保存置顶</el-button>
-				<el-button size="small">推荐</el-button>
-				<el-button size="small">取消推荐</el-button>
-				<el-button size="small">移动</el-button>
-				<el-button size="small">复制</el-button>
-				<el-button size="small">审核</el-button>
-				<el-button size="small">退回</el-button>
-				<el-button size="small">提交</el-button>
-				<el-button size="small">生成静态页</el-button>
-				<el-button size="small">推送至专题</el-button>
-				<el-button size="small">归档</el-button>
-				<el-button size="small">出档</el-button>
-				<el-button size="small">群发微信</el-button>
+				<el-button size="small" :disabled="disabled" @click="deleteBatch($api.contentDelete,ids)"
+					v-perms="'/content/delete'">删除</el-button>
+				<el-button size="small" :disabled="disabled" @click="prioritysBatch($api.contentPriority)"
+					v-perms="'/content/priority'">保存置顶</el-button>
+				<el-button size="small" :disabled="disabled" @click="recommend(true)"
+					v-perms="'/content/contentRecommend'">推荐</el-button>
+				<el-button size="small" :disabled="disabled" @click="recommend(false)"
+					v-perms="'/content/contentRecommend'">取消推荐</el-button>
+				<el-button size="small" :disabled="disabled" @click="operate('move')" v-perms="'/content/contentMove'">
+					移动</el-button>
+				<el-button size="small" :disabled="disabled" @click="operate('copy')" v-perms="'/content/contentCopy'">
+					复制</el-button>
+				<el-button size="small" :disabled="disabled" @click="batch($api.contentCheck)"
+					v-perms="'/content/contentCheck'">审核</el-button>
+				<el-button size="small" :disabled="disabled" @click="reject()" v-perms="'/content/contentReject'">退回
+				</el-button>
+				<el-button size="small" :disabled="disabled" @click="batch($api.contentSubmit)"
+					v-perms="'/content/contentSubmit'">提交</el-button>
+				<el-button size="small" :disabled="disabled" @click="batch($api.contentStatic)"
+					v-perms="'/content/contentStatic'">生成静态页</el-button>
+				<el-button size="small" :disabled="disabled" @click="siteVisble=true"
+					v-if="$store.state.perms.isMasterSite" v-perms="'/content/contentPush'">推送</el-button>
+				<el-button size="small" :disabled="disabled" @click="siteVisble=true" v-else
+					v-perms="'/content/contentPush'">共享</el-button>
+				<el-button size="small" :disabled="disabled" @click="topicClick" v-perms="'/content/contentSend'">推送至专题
+				</el-button>
+				<el-button size="small" :disabled="disabled" @click="archiveBatch($api.contentPigeonhole,'archive')"
+					v-perms="'/content/contentPigeonhole'">归档</el-button>
+				<el-button size="small" :disabled="disabled" @click="archiveBatch($api.contentUnpigeonhole,'document')"
+					v-perms="'/content/contentUnpigeonhole'">出档</el-button>
+				<el-button size="small" :disabled="disabled" @click="sendWeiXin($api.contentSendToWeixin,ids)"
+					v-perms="'/content/contentSendToWeixin'">群发微信</el-button>
 			</div>
 		</el-main>
 	</el-container>
@@ -186,42 +196,42 @@
 				queryStatus: [{
 						label: "全部",
 						value: "all",
-						num:-2
+						num: -2
 					},
 					{
 						label: "投稿",
 						value: "contribute",
-						num:4
+						num: 4
 					},
 					{
 						label: "草稿",
 						value: "draft",
-						num:0
+						num: 0
 					},
 					{
 						label: "待审",
 						value: "prepared",
-						num:1
+						num: 1
 					},
 					{
 						label: "已审",
 						value: "passed",
-						num:3
+						num: 3
 					},
 					{
 						label: "已终审",
 						value: "checked",
-						num:2
+						num: 2
 					},
 					{
 						label: "退回",
 						value: "rejected",
-						num:-1
+						num: -1
 					},
 					{
 						label: "归档",
 						value: "pigeonhole",
-						num:5
+						num: 5
 					}
 				],
 				queryOrderBy: [{
@@ -407,19 +417,42 @@
 			this.getChannelInfo(); //模型列表
 			this.getTypeList(); //内容类型
 			this.getAllTotal(); //获取内容总数
-			console.log(this.tableData);
 		},
 		mounted() {
-			this.rowDrop();
-			this.columnDrop();
+			this.rowDrop(); //表格行拖拽
+			// this.columnDrop();//表格列拖拽
 		},
 		methods: {
-			filterStatus(data){
-				let arr = this.queryStatus.filter((item)=>{
+			sortChange(val) {
+				function orderNum(ascending, descending) {
+					if (val.order === "ascending") {
+						return ascending;
+					} else if (val.order === "descending") {
+						return descending;
+					} else {
+						return this.params.queryOrderBy
+					}
+				}
+				switch (val.prop) {
+					case 'id':
+						this.params.queryOrderBy = orderNum('1', '0')
+						break;
+					case 'releaseDate':
+						this.params.queryOrderBy = orderNum('3', '2')
+						break;
+					default:
+						break;
+				}
+				this.query();
+			},
+			//根据文章状态吗返回名称
+			filterStatus(data) {
+				let arr = this.queryStatus.filter((item) => {
 					return item.num == data;
 				})
 				return arr[0].label;
 			},
+			//固顶、推荐、共享
 			checkboxChange() {
 				this.params.queryTopLevel = false;
 				this.params.queryRecommend = false;
@@ -427,14 +460,21 @@
 				this.checkbox.forEach(element => {
 					this.params[element] = true;
 				});
+				this.params.queryShare = this.params.queryShare == true ? 1 : 0;
 				this.query();
+			},
+			//添加内容，获取栏目id 模型id
+			addContent(command) {
+				this.params.parentId = this.params.cid
+				this.params.modelId = command
+				this.routerLink('/content/edit', 'edit', 0, this.params)
 			},
 			getNodes(data, node) {
 				this.$emit("change", data, node);
 			},
+			//异步加载树形结构，加载栏目
 			ansyTree(node, resolve) {
 				let api = this.$api;
-				//异步加载树形结构
 				if (node.level === 0) {
 					return resolve([{
 						name: "根目录",
@@ -461,21 +501,6 @@
 						})
 						.catch(error => {});
 				}
-			},
-			handleNodeClick(data) {
-				console.log(data);
-			},
-			toggleSelection(rows) {
-				if (rows) {
-					rows.forEach(row => {
-						this.$refs.multipleTable.toggleRowSelection(row);
-					});
-				} else {
-					this.$refs.multipleTable.clearSelection();
-				}
-			},
-			handleSelectionChange(val) {
-				this.multipleSelection = val;
 			},
 			//分页一页数量改变
 			handleSizeChange(val) {
@@ -566,9 +591,91 @@
 			},
 			//查询
 			query() {
+				console.log("---------------------------a")
+				console.log(this.loading)
 				this.getTableData(this.params);
 				this.getAllTotal();
-			}
+				console.log(this.loading)
+				console.log("---------------------------aa")
+			},
+			//推送至专题
+			topicClick() {
+
+			},
+			reject() {
+				//退回操作
+				this.loading = true
+				let statusArr = this.status.split(',')
+				let mark = true
+				for (let key in statusArr) {
+					if (statusArr[key] != '1' || statusArr[key] != '2' || statusArr[key] != '4') {
+						//如果内容状态不是审核通过
+						this.errorMessage('只有审核通过、审核中、投稿状态的内容才能退回')
+						mark = false
+						this.loading = false
+						return true
+					}
+				}
+				if (mark) {
+					this.$prompt('请输入退回原因', '提示', {})
+						.then(({
+							value
+						}) => {
+							axios
+								.post(this.$api.contentReject, {
+									ids: this.ids,
+									rejectOpinion: value
+								})
+								.then(res => {
+									if (res.code == '200') {
+										this.successMessage('退回成功')
+										this.getTableData(this.params)
+										this.getAllTotal()
+									}
+								})
+						})
+						.catch(() => {})
+				}
+			},
+			recommend(state) {
+				//推荐操作
+				if (state) {
+					this.$prompt('请输入推荐等级', '提示', {
+							inputPattern: /^[0-9]+$/,
+							inputErrorMessage: '请输入正整数'
+						})
+						.then(({
+							value
+						}) => {
+							axios
+								.post(this.$api.contentRecommend, {
+									ids: this.ids,
+									level: value
+								})
+								.then(res => {
+									if (res.code == '200') {
+										this.successMessage('推荐成功')
+										this.getTableData(this.params)
+										this.getAllTotal()
+									}
+								})
+						})
+						.catch(() => {})
+				} else {
+					axios
+						.post(this.$api.contentRecommend, {
+							ids: this.ids,
+							level: -1
+						})
+						.then(res => {
+							if (res.code == '200') {
+								this.successMessage('取消推荐成功')
+								this.getTableData(this.params)
+								this.getAllTotal()
+							}
+						})
+				}
+			},
 		}
 	};
 </script>
@@ -670,9 +777,9 @@
 		padding: 0;
 	}
 
-	.table-box {
-		/* height: 380px; */
-	}
+	/* .table-box {
+		height: 380px;
+	} */
 
 	.list-paging {
 		box-sizing: border-box;

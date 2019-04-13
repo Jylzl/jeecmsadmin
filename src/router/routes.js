@@ -89,7 +89,7 @@ const routes = [{
 			leaf: true, //只有一个节点
 		},
 		path: '/',
-		name: 'Work',
+		name: '工作台',
 		redirect: '/work',
 		component: layout,
 		children: [{

@@ -21,11 +21,9 @@ export default {
         },
         getTableData(params) { //获取表格数据   
             this.loading = true;
-            this.state = false;
             this.$axios
                 .post(this.listUrl, params)
                 .then(res => {
-                    this.loading = false;
                     if (res.code == '200') {
                         if (res.totalCount != undefined) {
                             this.total = res.totalCount;
@@ -37,12 +35,12 @@ export default {
                         this.tableData = [];
                         this.state = true;
                     }
-
-
+                    this.loading = false;
                 })
                 .catch(error => {
                     this.loading = false;
                     this.state = false;
+                    console.log(error)
                 });
         },
         getPages(pageNo, pageSize) {
@@ -51,11 +49,12 @@ export default {
             this.params.pageSize = pageSize;
             this.getTableData(this.params);
         },
-        query() { //条件查询
+        //条件查询
+        query() {
             this.getTableData(this.params);
         },
-        checkIds(val) {
 
+        checkIds(val) {
             let ids = [];
             for (let i in val) {
                 ids.push(val[i].id);
@@ -66,7 +65,6 @@ export default {
         },
         //获取选中id和状态status
         checkIdsAndStatus(val) {
-
             let ids = [];
             let status = [];
             for (let i in val) {
@@ -78,27 +76,33 @@ export default {
             this.disabled = val.length > 0 ? false : true;
             this.checkedList = val;
         },
-        deleteBatch(url, ids) { //删除
+        //删除
+        deleteBatch(url, ids) {
+            this.loading = true;
             this.$confirm('是否确定删除？', '警告', {
                     type: "error"
                 })
-                .then(mes => {
+                .then(() => {
                     this.$axios.post(url, {
                         ids: ids
                     }).then(res => {
                         if (res.code == "200") {
                             this.successMessage('删除成功');
                             this.getTableData(this.params);
+                            this.query();
                         }
                     });
                 })
-                .catch(error => {});
+                .catch(error => {
+                    console.log(error)
+                });
         },
-        removeBatch(url, roleId, ids) { //移除
+        //移除
+        removeBatch(url, roleId, ids) {
             this.$confirm('确定移除吗？', '提示', {
                     type: "error"
                 })
-                .then(mes => {
+                .then(() => {
                     this.$axios.post(url, {
                         roleId: roleId,
                         userIds: ids
@@ -109,13 +113,16 @@ export default {
                         }
                     });
                 })
-                .catch(error => {});
+                .catch(error => {
+                    console.log(error)
+                });
         },
-        priorityBatch(url, ids, priorities, regDefId) { //保存排列循序
+        //保存排列循序
+        priorityBatch(url, ids, priorities, regDefId) {
             this.$confirm('是否保存排列顺序', '提示', {
                     type: "warning"
                 })
-                .then(mes => {
+                .then(() => {
                     this.$axios.post(url, {
                         ids: ids,
                         priorities: priorities,
@@ -127,13 +134,16 @@ export default {
                         }
                     });
                 })
-                .catch(error => {});
+                .catch(error => {
+                    console.log(error)
+                });
         },
-        prioritysBatchs(url, ids, priorities, disableds, regDefId) { //保存排列循序四个参数
+        //保存排列循序四个参数
+        prioritysBatchs(url, ids, priorities, disableds, regDefId) {
             this.$confirm('是否保存排序？', '提示', {
                     type: "warning"
                 })
-                .then(mes => {
+                .then(() => {
                     this.$axios.post(url, {
                         ids: ids,
                         priorities: priorities,
@@ -146,13 +156,16 @@ export default {
                         }
                     });
                 })
-                .catch(error => {});
+                .catch(error => {
+                    console.log(error)
+                });
         },
-        prioritysBatch(url, ids, priorities) { //保存排列
+        //保存排列
+        prioritysBatch(url, ids, priorities) {
             this.$confirm('是否保存排序？', '提示', {
                     type: "warning"
                 })
-                .then(mes => {
+                .then(() => {
                     this.$axios.post(url, {
                         ids: ids,
                         priorities: priorities
@@ -163,13 +176,16 @@ export default {
                         }
                     });
                 })
-                .catch(error => {});
+                .catch(error => {
+                    console.log(error)
+                });
         },
-        revertBatch(url, ids) { //批量还原
+        //批量还原
+        revertBatch(url, ids) {
             this.$confirm('是否确定还原？', '提示', {
                     type: "warning"
                 })
-                .then(mes => {
+                .then(() => {
                     this.$axios.post(url, {
                         ids: ids
                     }).then(res => {
@@ -179,13 +195,16 @@ export default {
                         }
                     });
                 })
-                .catch(error => {});
+                .catch(error => {
+                    console.log(error)
+                });
         },
-        reviewBatch(url, ids) { //批量审核
+        //批量审核
+        reviewBatch(url, ids) {
             this.$confirm('是否批量审核', '提示', {
                     type: "warning"
                 })
-                .then(mes => {
+                .then(() => {
                     this.$axios.post(url, {
                         ids: ids
                     }).then(res => {
@@ -197,7 +216,9 @@ export default {
                         }
                     });
                 })
-                .catch(error => {});
+                .catch(error => {
+                    console.log(error)
+                });
         }
     }
 }

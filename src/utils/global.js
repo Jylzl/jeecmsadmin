@@ -54,6 +54,15 @@ export default {
             })
         }
         //成功全局方法
+        Vue.prototype.message = function (value, type) {
+            type = type || 'warning';
+            this.$message({
+                showClose: true,
+                message: type,
+                type: type,
+                duration: 1000
+            });
+        }
         Vue.prototype.successMessage = function (value) {
             this.$message({
                 showClose: true,
@@ -77,7 +86,6 @@ export default {
         //获取站点名称
         Vue.prototype.$getSiteName = function () {
             let sites = store.state.perms.siteItems;
-
             for (let site of sites) {
                 if (site.id == this.$getSiteId()) {
                     return site.name;
@@ -112,9 +120,10 @@ export default {
                 var currentdate = date.getFullYear() + "-" + month + "-" + strDate;
                 return currentdate;
             },
+
             /**
              *@desc调换数组中指定下标相邻位置，返回更新好的数组
-             *@param {Array} arr 指定数组
+             *@param {Array} arr 指定数组        
              *@param {number} index 需要移动的对象的下标
              *@param {string} type 移动方式，提供上移（up），下移(down),默认为up
              */
@@ -126,6 +135,5 @@ export default {
                 }
                 return arr;
             }
-
     }
 }
