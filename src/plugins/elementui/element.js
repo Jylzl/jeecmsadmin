@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Cookies from 'js-cookie'
 import i18n from '@/i18n/index' // Internationalization
 import Element from 'element-ui'
+import 'element-ui/lib/theme-chalk/display.css';
 import './styles.scss'
 
 Vue.use(Element, {

@@ -45,9 +45,6 @@
 						</el-checkbox-button>
 						<el-checkbox-button v-model="params.queryShare" label="queryShare">共享
 						</el-checkbox-button>
-						<!-- <el-checkbox-button v-model="params.queryTopLevel" @change="query" border>固顶</el-checkbox-button>
-						<el-checkbox-button v-model="params.queryRecommend" @change="query" border>推荐</el-checkbox-button>
-						<el-checkbox-button v-model="params.queryShare" @change="query" :true-label='1' :false-label='0' border>共享</el-checkbox-button> -->
 					</el-checkbox-group>
 					<el-select v-model="params.queryTypeId" size="small" placeholder="类型" style="width:130px;"
 						@change="query" clearable>
@@ -61,7 +58,7 @@
 						</el-option>
 					</el-select>
 					<el-select v-model="params.queryOrderBy" size="small" placeholder="排序" style="width:130px;"
-						@change="query" clearable>
+						@change="query" class="hidden-lg-and-down" clearable>
 						<el-option v-for="item in queryOrderBy" :key="item.value" :label="item.label"
 							:value="item.value">
 						</el-option>
@@ -69,18 +66,17 @@
 				</div>
 				<div class="right-center-right">
 					<label for="">标题：</label>
-					<el-input v-model="params.queryTitle" placeholder="请输入内容" size="small"></el-input>
+					<el-input v-model="params.queryTitle" placeholder="请输入内容" @change="query" size="small" clearable></el-input>
 					<label for="">发布者：</label>
-					<el-input v-model="params.queryInputUsername" placeholder="请输入内容" size="small"></el-input>
+					<el-input v-model="params.queryInputUsername" placeholder="请输入内容" @change="query" size="small" clearable></el-input>
 					<el-button type="primary" size="small" icon="el-icon-search" @click="query">查询</el-button>
 				</div>
 			</div>
-			<div class="right-table">
+			<div class="right-table" v-loading="loading">
 				<el-scrollbar wrap-class="scrollbar-wrapper">
 					<div class="table-box">
 						<el-table :data="tableData" row-key="id" ref="multipleTable" tooltip-effect="dark"
 							style="width: 100%" @selection-change="checkIdsAndStatus"
-							:default-sort="{prop: 'id', order: 'descending'}" :loading="loading"
 							@sort-change="sortChange">
 							<el-table-column type="expand" width="30" align="left">
 								<template slot-scope="props">
@@ -169,19 +165,60 @@
 				<el-button size="small" :disabled="disabled" @click="batch($api.contentSubmit)"
 					v-perms="'/content/contentSubmit'">提交</el-button>
 				<el-button size="small" :disabled="disabled" @click="batch($api.contentStatic)"
-					v-perms="'/content/contentStatic'">生成静态页</el-button>
+					v-perms="'/content/contentStatic'" class="hidden-lg-and-down">生成静态页</el-button>
 				<el-button size="small" :disabled="disabled" @click="siteVisble=true"
-					v-if="$store.state.perms.isMasterSite" v-perms="'/content/contentPush'">推送</el-button>
+					v-if="$store.state.perms.isMasterSite" v-perms="'/content/contentPush'" class="hidden-lg-and-down">
+					推送</el-button>
 				<el-button size="small" :disabled="disabled" @click="siteVisble=true" v-else
-					v-perms="'/content/contentPush'">共享</el-button>
-				<el-button size="small" :disabled="disabled" @click="topicClick" v-perms="'/content/contentSend'">推送至专题
+					v-perms="'/content/contentPush'" class="hidden-lg-and-down">共享</el-button>
+				<el-button size="small" :disabled="disabled" @click="topicClick" v-perms="'/content/contentSend'"
+					class="hidden-lg-and-down">推送至专题
 				</el-button>
 				<el-button size="small" :disabled="disabled" @click="archiveBatch($api.contentPigeonhole,'archive')"
-					v-perms="'/content/contentPigeonhole'">归档</el-button>
+					v-perms="'/content/contentPigeonhole'" class="hidden-lg-and-down">归档</el-button>
 				<el-button size="small" :disabled="disabled" @click="archiveBatch($api.contentUnpigeonhole,'document')"
-					v-perms="'/content/contentUnpigeonhole'">出档</el-button>
+					v-perms="'/content/contentUnpigeonhole'" class="hidden-lg-and-down">出档</el-button>
 				<el-button size="small" :disabled="disabled" @click="sendWeiXin($api.contentSendToWeixin,ids)"
-					v-perms="'/content/contentSendToWeixin'">群发微信</el-button>
+					v-perms="'/content/contentSendToWeixin'" class="hidden-lg-and-down">群发微信</el-button>
+				<el-dropdown size="small" placement="top-end" class="hidden-lg-and-up">
+					<el-button size="small">更多菜单</el-button>
+					<el-dropdown-menu slot="dropdown">
+						<el-scrollbar wrap-class="scrollbar-wrapper">
+						<el-dropdown-item>
+							<el-button size="small" :disabled="disabled" @click="batch($api.contentStatic)" type="text"
+								v-perms="'/content/contentStatic'">生成静态页</el-button>
+						</el-dropdown-item>
+						<el-dropdown-item v-if="$store.state.perms.isMasterSite">
+							<el-button size="small" :disabled="disabled" @click="siteVisble=true" type="text"
+								v-perms="'/content/contentPush'">推送</el-button>
+						</el-dropdown-item>
+						<el-dropdown-item v-else>
+							<el-button size="small" :disabled="disabled" @click="siteVisble=true" type="text"
+								v-perms="'/content/contentPush'">共享</el-button>
+						</el-dropdown-item>
+						<el-dropdown-item>
+							<el-button size="small" :disabled="disabled" @click="topicClick" type="text"
+								v-perms="'/content/contentSend'">推送至专题
+							</el-button>
+						</el-dropdown-item>
+						<el-dropdown-item>
+							<el-button size="small" :disabled="disabled" type="text"
+								@click="archiveBatch($api.contentPigeonhole,'archive')"
+								v-perms="'/content/contentPigeonhole'">归档</el-button>
+						</el-dropdown-item>
+						<el-dropdown-item>
+							<el-button size="small" :disabled="disabled" type="text"
+								@click="archiveBatch($api.contentUnpigeonhole,'document')"
+								v-perms="'/content/contentUnpigeonhole'">出档</el-button>
+						</el-dropdown-item>
+						<el-dropdown-item>
+							<el-button size="small" :disabled="disabled" type="text"
+								@click="sendWeiXin($api.contentSendToWeixin,ids)"
+								v-perms="'/content/contentSendToWeixin'">群发微信</el-button>
+						</el-dropdown-item>
+						</el-scrollbar>
+					</el-dropdown-menu>
+				</el-dropdown>
 			</div>
 		</el-main>
 	</el-container>
@@ -424,6 +461,7 @@
 		},
 		methods: {
 			sortChange(val) {
+				console.log(val)
 				function orderNum(ascending, descending) {
 					if (val.order === "ascending") {
 						return ascending;
@@ -433,17 +471,22 @@
 						return this.params.queryOrderBy
 					}
 				}
-				switch (val.prop) {
-					case 'id':
-						this.params.queryOrderBy = orderNum('1', '0')
-						break;
-					case 'releaseDate':
-						this.params.queryOrderBy = orderNum('3', '2')
-						break;
-					default:
-						break;
+				if (val.prop) {
+					switch (val.prop) {
+						case 'id':
+							this.params.queryOrderBy = orderNum('1', '0')
+							break;
+						case 'releaseDate':
+							this.params.queryOrderBy = orderNum('3', '2')
+							break;
+						default:
+							break;
+					}
+				} else {
+					this.params.queryOrderBy = "";
 				}
 				this.query();
+				return false;
 			},
 			//根据文章状态吗返回名称
 			filterStatus(data) {
@@ -591,19 +634,15 @@
 			},
 			//查询
 			query() {
-				console.log("---------------------------a")
-				console.log(this.loading)
 				this.getTableData(this.params);
 				this.getAllTotal();
-				console.log(this.loading)
-				console.log("---------------------------aa")
 			},
 			//推送至专题
 			topicClick() {
 
 			},
+			//退回操作
 			reject() {
-				//退回操作
 				this.loading = true
 				let statusArr = this.status.split(',')
 				let mark = true
@@ -621,7 +660,7 @@
 						.then(({
 							value
 						}) => {
-							axios
+							this.$axios
 								.post(this.$api.contentReject, {
 									ids: this.ids,
 									rejectOpinion: value
@@ -637,45 +676,7 @@
 						.catch(() => {})
 				}
 			},
-			recommend(state) {
-				//推荐操作
-				if (state) {
-					this.$prompt('请输入推荐等级', '提示', {
-							inputPattern: /^[0-9]+$/,
-							inputErrorMessage: '请输入正整数'
-						})
-						.then(({
-							value
-						}) => {
-							axios
-								.post(this.$api.contentRecommend, {
-									ids: this.ids,
-									level: value
-								})
-								.then(res => {
-									if (res.code == '200') {
-										this.successMessage('推荐成功')
-										this.getTableData(this.params)
-										this.getAllTotal()
-									}
-								})
-						})
-						.catch(() => {})
-				} else {
-					axios
-						.post(this.$api.contentRecommend, {
-							ids: this.ids,
-							level: -1
-						})
-						.then(res => {
-							if (res.code == '200') {
-								this.successMessage('取消推荐成功')
-								this.getTableData(this.params)
-								this.getAllTotal()
-							}
-						})
-				}
-			},
+			
 		}
 	};
 </script>
@@ -725,8 +726,13 @@
 		padding: 10px 15px;
 	}
 
+	.right-bottom .el-dropdown,
 	.right-bottom .el-button+.el-button {
 		margin-left: 3px;
+	}
+
+	.right-bottom .el-dropdown .el-button{
+		height: 30px;
 	}
 
 	.right-center .right-center-left {

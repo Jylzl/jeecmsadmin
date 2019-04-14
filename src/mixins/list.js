@@ -19,7 +19,8 @@ export default {
             this.listUrl = url;
             this.getTableData(params)
         },
-        getTableData(params) { //获取表格数据   
+        //获取表格数据
+        getTableData(params) {
             this.loading = true;
             this.$axios
                 .post(this.listUrl, params)
@@ -43,17 +44,13 @@ export default {
                     console.log(error)
                 });
         },
+        //获取翻页数据
         getPages(pageNo, pageSize) {
-            //获取翻页数据
             this.params.pageNo = pageNo;
             this.params.pageSize = pageSize;
             this.getTableData(this.params);
         },
-        //条件查询
-        query() {
-            this.getTableData(this.params);
-        },
-
+        // 选中ID
         checkIds(val) {
             let ids = [];
             for (let i in val) {
@@ -78,24 +75,65 @@ export default {
         },
         //删除
         deleteBatch(url, ids) {
-            this.loading = true;
             this.$confirm('是否确定删除？', '警告', {
                     type: "error"
                 })
                 .then(() => {
+                    this.loading = true;
                     this.$axios.post(url, {
                         ids: ids
                     }).then(res => {
                         if (res.code == "200") {
                             this.successMessage('删除成功');
                             this.getTableData(this.params);
-                            this.query();
+                        } else {
+                            this.loading = false;
                         }
                     });
                 })
                 .catch(error => {
+                    this.loading = false;
                     console.log(error)
                 });
+        },
+        //推荐操作
+        recommend(state) {
+            if (state) {
+                this.$prompt('请输入推荐等级', '提示', {
+                        inputPattern: /^\d{1,4}$/,
+                        inputErrorMessage: '请输入正整数(并且小于9999)'
+                    })
+                    .then(({
+                        value
+                    }) => {
+                        this.$axios
+                            .post(this.$api.contentRecommend, {
+                                ids: this.ids,
+                                level: value
+                            })
+                            .then(res => {
+                                if (res.code == '200') {
+                                    this.successMessage('推荐成功')
+                                    this.getTableData(this.params)
+                                    this.getAllTotal()
+                                }
+                            })
+                    })
+                    .catch(() => {})
+            } else {
+                this.$axios
+                    .post(this.$api.contentRecommend, {
+                        ids: this.ids,
+                        level: -1
+                    })
+                    .then(res => {
+                        if (res.code == '200') {
+                            this.successMessage('取消推荐成功')
+                            this.getTableData(this.params)
+                            this.getAllTotal()
+                        }
+                    })
+            }
         },
         //移除
         removeBatch(url, roleId, ids) {
@@ -103,6 +141,7 @@ export default {
                     type: "error"
                 })
                 .then(() => {
+                    this.loading = true;
                     this.$axios.post(url, {
                         roleId: roleId,
                         userIds: ids
@@ -110,10 +149,13 @@ export default {
                         if (res.code == "200") {
                             this.successMessage('移除成功');
                             this.getTableData(this.params);
+                        } else {
+                            this.loading = false;
                         }
                     });
                 })
                 .catch(error => {
+                    this.loading = false;
                     console.log(error)
                 });
         },
@@ -123,6 +165,7 @@ export default {
                     type: "warning"
                 })
                 .then(() => {
+                    this.loading = true;
                     this.$axios.post(url, {
                         ids: ids,
                         priorities: priorities,
@@ -131,10 +174,13 @@ export default {
                         if (res.code == "200") {
                             this.successMessage('操作成功');
                             this.getTableData(this.params);
+                        } else {
+                            this.loading = false;
                         }
                     });
                 })
                 .catch(error => {
+                    this.loading = false;
                     console.log(error)
                 });
         },
@@ -144,6 +190,7 @@ export default {
                     type: "warning"
                 })
                 .then(() => {
+                    this.loading = true;
                     this.$axios.post(url, {
                         ids: ids,
                         priorities: priorities,
@@ -153,10 +200,13 @@ export default {
                         if (res.code == "200") {
                             this.successMessage('操作成功');
                             this.getTableData(this.params);
+                        } else {
+                            this.loading = false;
                         }
                     });
                 })
                 .catch(error => {
+                    this.loading = false;
                     console.log(error)
                 });
         },
@@ -166,6 +216,7 @@ export default {
                     type: "warning"
                 })
                 .then(() => {
+                    this.loading = true;
                     this.$axios.post(url, {
                         ids: ids,
                         priorities: priorities
@@ -173,10 +224,13 @@ export default {
                         if (res.code == "200") {
                             this.successMessage('保存成功');
                             this.getTableData(this.params);
+                        } else {
+                            this.loading = false;
                         }
                     });
                 })
                 .catch(error => {
+                    this.loading = false;
                     console.log(error)
                 });
         },
@@ -186,16 +240,20 @@ export default {
                     type: "warning"
                 })
                 .then(() => {
+                    this.loading = true;
                     this.$axios.post(url, {
                         ids: ids
                     }).then(res => {
                         if (res.code == "200") {
                             this.successMessage('还原成功');
                             this.getTableData(this.params);
+                        } else {
+                            this.loading = false;
                         }
                     });
                 })
                 .catch(error => {
+                    this.loading = false;
                     console.log(error)
                 });
         },
@@ -205,6 +263,7 @@ export default {
                     type: "warning"
                 })
                 .then(() => {
+                    this.loading = true;
                     this.$axios.post(url, {
                         ids: ids
                     }).then(res => {
@@ -213,10 +272,13 @@ export default {
                             setTimeout(() => {
                                 this.getTableData(this.params);
                             }, 800);
+                        } else {
+                            this.loading = false;
                         }
                     });
                 })
                 .catch(error => {
+                    this.loading = false;
                     console.log(error)
                 });
         }

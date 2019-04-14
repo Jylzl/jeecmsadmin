@@ -8,7 +8,7 @@ import {
 const user = {
 	state: {
 		//设置属性
-		userName: 'none',
+		userName: '',
 		localLanguage: 'zh'
 	},
 	mutations: {
