@@ -136,7 +136,7 @@
 							</el-table-column>
 						</el-table>
 					</div>
-					<div class="list-paging">
+					<div class="list-paging" v-show="pageTotal!=0">
 						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
 							:current-page="params.pageNo" :page-sizes="[5, 10, 20, 30, 50,100]"
 							:page-size="params.pageSize" :pager-count="5"
