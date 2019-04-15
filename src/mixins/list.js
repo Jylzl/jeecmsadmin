@@ -184,55 +184,30 @@ export default {
                     console.log(error)
                 });
         },
-        //保存排列循序四个参数
-        prioritysBatchs(url, ids, priorities, disableds, regDefId) {
-            this.$confirm('是否保存排序？', '提示', {
-                    type: "warning"
-                })
-                .then(() => {
-                    this.loading = true;
-                    this.$axios.post(url, {
-                        ids: ids,
-                        priorities: priorities,
-                        disableds: disableds,
-                        defId: regDefId
-                    }).then(res => {
-                        if (res.code == "200") {
-                            this.successMessage('操作成功');
-                            this.getTableData(this.params);
-                        } else {
-                            this.loading = false;
-                        }
-                    });
-                })
-                .catch(error => {
-                    this.loading = false;
-                    console.log(error)
-                });
-        },
         //保存排列
-        prioritysBatch(url, ids, priorities) {
-            this.$confirm('是否保存排序？', '提示', {
-                    type: "warning"
-                })
-                .then(() => {
-                    this.loading = true;
-                    this.$axios.post(url, {
-                        ids: ids,
-                        priorities: priorities
-                    }).then(res => {
-                        if (res.code == "200") {
-                            this.successMessage('保存成功');
-                            this.getTableData(this.params);
-                        } else {
-                            this.loading = false;
-                        }
-                    });
-                })
-                .catch(error => {
+        //保存置顶
+        prioritysBatch(url) {
+            this.loading = true;
+            let params = {
+                ids: this.ids,
+                topLevel: []
+            }
+            for (let i in this.checkedList) {
+                params.topLevel.push(this.checkedList[i].topLevel)
+                // params.topLevel.push(1);
+            }
+            params.topLevel = params.topLevel.join(',')
+            this.$axios.post(url, params).then(res => {
+                if (res.code == '200') {
+                    this.successMessage('操作成功'), this.getTableData(this.params)
+                    this.getAllTotal()
+                } else {
                     this.loading = false;
-                    console.log(error)
-                });
+                }
+            }).catch(error => {
+                this.loading = false;
+                console.log(error)
+            });
         },
         //批量还原
         revertBatch(url, ids) {
@@ -258,29 +233,118 @@ export default {
                 });
         },
         //批量审核
-        reviewBatch(url, ids) {
-            this.$confirm('是否批量审核', '提示', {
-                    type: "warning"
+        // reviewBatch(url, ids) {
+        //     this.$confirm('是否批量审核', '提示', {
+        //             type: "warning"
+        //         })
+        //         .then(() => {
+        //             this.loading = true;
+        //             this.$axios.post(url, {
+        //                 ids: ids
+        //             }).then(res => {
+        //                 if (res.code == "200") {
+        //                     this.successMessage('审核成功!');
+        //                     setTimeout(() => {
+        //                         this.getTableData(this.params);
+        //                     }, 800);
+        //                 } else {
+        //                     this.loading = false;
+        //                 }
+        //             });
+        //         })
+        //         .catch(error => {
+        //             this.loading = false;
+        //             console.log(error)
+        //         });
+        // },
+        batch(url) {
+            //只需要ids参数的批量操作
+            this.loading = true
+            this.$axios
+                .post(url, {
+                    ids: this.ids
                 })
-                .then(() => {
-                    this.loading = true;
-                    this.$axios.post(url, {
-                        ids: ids
-                    }).then(res => {
-                        if (res.code == "200") {
-                            this.successMessage('审核成功!');
-                            setTimeout(() => {
-                                this.getTableData(this.params);
-                            }, 800);
+                .then(res => {
+                    if (res.code == '200') {
+                        this.successMessage('操作成功')
+                    } else {
+                        this.loading = false;
+                    }
+                    this.getTableData(this.params)
+                    this.getAllTotal()
+                })
+                .catch(error => {
+                    this.loading = false
+                    console.log(error)
+                })
+        },
+        // 归档，出档
+        archiveBatch(url, action) {
+            //只需要ids和status参数的批量操作
+            this.loading = true
+            let statusArr = this.status.split(',')
+            let mark = true
+
+            if (action == 'archive') {
+                //归档
+                for (let key in statusArr) {
+                    if (statusArr[key] != '2') {
+                        //如果内容状态不是审核通过
+                        this.errorMessage('只有状态为审核的内容才能归档')
+                        mark = false
+                        this.loading = false
+                        return true
+                    }
+                }
+            } else if (action == 'document') {
+                //出档
+                for (let key in statusArr) {
+                    if (statusArr[key] != '5') {
+                        //如果内容状态不是审核通过
+                        this.errorMessage('只有归档的内容才能出档')
+                        mark = false
+                        this.loading = false
+                        return true
+                    }
+                }
+            }
+            if (mark) {
+                this.$axios
+                    .post(url, {
+                        ids: this.ids
+                    })
+                    .then(res => {
+                        this.loading = false
+                        if (res.code == '200') {
+                            this.successMessage('操作成功')
                         } else {
                             this.loading = false;
                         }
-                    });
-                })
-                .catch(error => {
+                        this.getTableData(this.params)
+                        this.getAllTotal()
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        this.loading = false
+                    })
+            }
+        },
+        // 推送至微信
+        sendWeiXin(url, ids) {
+            this.loading = true;
+            this.$axios.post(url, {
+                ids: ids
+            }).then(res => {
+                if (res.code == '200') {
+                    this.successMessage(res.message)
                     this.loading = false;
-                    console.log(error)
-                });
+                } else {
+                    this.loading = false;
+                }
+            }).catch(error => {
+                console.log(error)
+                this.loading = false
+            })
         }
     }
 }

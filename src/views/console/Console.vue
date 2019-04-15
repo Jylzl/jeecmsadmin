@@ -547,7 +547,6 @@
 				if (type === 'link') {
 					_this.params.type = type;
 					_this.$axios.post(this.$api.flowSourceList, _this.params).then(res => {
-							console.log(res)
 							// this.page.source = res.body.totalMap;
 							// let sum = 0;
 							// for (let x in res.body.totalMap) {

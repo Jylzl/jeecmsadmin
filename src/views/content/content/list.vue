@@ -66,9 +66,11 @@
 				</div>
 				<div class="right-center-right">
 					<label for="">标题：</label>
-					<el-input v-model="params.queryTitle" placeholder="请输入内容" @change="query" size="small" clearable></el-input>
+					<el-input v-model="params.queryTitle" placeholder="请输入内容" @change="query" size="small" clearable>
+					</el-input>
 					<label for="">发布者：</label>
-					<el-input v-model="params.queryInputUsername" placeholder="请输入内容" @change="query" size="small" clearable></el-input>
+					<el-input v-model="params.queryInputUsername" placeholder="请输入内容" @change="query" size="small"
+						clearable></el-input>
 					<el-button type="primary" size="small" icon="el-icon-search" @click="query">查询</el-button>
 				</div>
 			</div>
@@ -76,8 +78,7 @@
 				<el-scrollbar wrap-class="scrollbar-wrapper">
 					<div class="table-box">
 						<el-table :data="tableData" row-key="id" ref="multipleTable" tooltip-effect="dark"
-							style="width: 100%" @selection-change="checkIdsAndStatus"
-							@sort-change="sortChange">
+							style="width: 100%" @selection-change="checkIdsAndStatus" @sort-change="sortChange">
 							<el-table-column type="expand" width="30" align="left">
 								<template slot-scope="props">
 									<el-form label-position="left" inline class="demo-table-expand">
@@ -107,12 +108,17 @@
 							</el-table-column>
 							<el-table-column type="selection" width="46" align="center"></el-table-column>
 							<el-table-column label="ID" prop="id" width="100" sortable></el-table-column>
-							<el-table-column label="标题" prop="title" :show-overflow-tooltip="true"></el-table-column>
-							<el-table-column label="置顶" prop="topLevel" width="60" align="center">
-								<div slot-scope="scope">
+							<el-table-column label="标题" prop="title" :show-overflow-tooltip="true">
+								<template slot-scope="scope">
+									<a class="news-link" :href="scope.row.url" :title="scope.row.title"
+										target="_blank">{{scope.row.title}}</a>
+								</template>
+							</el-table-column>
+							<el-table-column label="置顶" prop="topLevel" width="80" align="center">
+								<template slot-scope="scope">
 									<el-input v-model.number="scope.row.topLevel" min="0" max="99" :maxlength="2"
 										size="mini"></el-input>
-								</div>
+								</template>
 							</el-table-column>
 							<el-table-column label="类型" prop="typeName" width="80" align="center"></el-table-column>
 							<el-table-column label="发布者" prop="userName" width="100" align="left"></el-table-column>
@@ -120,19 +126,19 @@
 								:filters="[{text: '今天', value: '2016-05-01'}, {text: '本周', value: '2016-05-02'}, {text: '近七天', value: '2016-05-03'}, {text: '本月', value: '2016-05-04'}]"
 								sortable></el-table-column>
 							<el-table-column label="状态" prop="status" width="80" align="center" sortable>
-								<div slot-scope="props">
+								<template slot-scope="props">
 									{{filterStatus(props.row.status)}}
-								</div>
+								</template>
 							</el-table-column>
 							<el-table-column label="操作" prop="id" width="120" align="center">
-								<div slot-scope="scope">
+								<template slot-scope="scope">
 									<el-button type="text" v-show="scope.row.hasUpdateRight"
 										@click.native="routerLink('/content/update','update',scope.row.id)"
 										v-perms="'/content/update'">修改</el-button>
 									<el-button type="text" v-show="scope.row.hasDeleteRight"
 										@click.native="deleteBatch($api.contentDelete,scope.row.id)"
 										v-perms="'/content/delete'">删除</el-button>
-								</div>
+								</template>
 							</el-table-column>
 						</el-table>
 					</div>
@@ -184,38 +190,38 @@
 					<el-button size="small">更多菜单</el-button>
 					<el-dropdown-menu slot="dropdown">
 						<el-scrollbar wrap-class="scrollbar-wrapper">
-						<el-dropdown-item>
-							<el-button size="small" :disabled="disabled" @click="batch($api.contentStatic)" type="text"
-								v-perms="'/content/contentStatic'">生成静态页</el-button>
-						</el-dropdown-item>
-						<el-dropdown-item v-if="$store.state.perms.isMasterSite">
-							<el-button size="small" :disabled="disabled" @click="siteVisble=true" type="text"
-								v-perms="'/content/contentPush'">推送</el-button>
-						</el-dropdown-item>
-						<el-dropdown-item v-else>
-							<el-button size="small" :disabled="disabled" @click="siteVisble=true" type="text"
-								v-perms="'/content/contentPush'">共享</el-button>
-						</el-dropdown-item>
-						<el-dropdown-item>
-							<el-button size="small" :disabled="disabled" @click="topicClick" type="text"
-								v-perms="'/content/contentSend'">推送至专题
-							</el-button>
-						</el-dropdown-item>
-						<el-dropdown-item>
-							<el-button size="small" :disabled="disabled" type="text"
-								@click="archiveBatch($api.contentPigeonhole,'archive')"
-								v-perms="'/content/contentPigeonhole'">归档</el-button>
-						</el-dropdown-item>
-						<el-dropdown-item>
-							<el-button size="small" :disabled="disabled" type="text"
-								@click="archiveBatch($api.contentUnpigeonhole,'document')"
-								v-perms="'/content/contentUnpigeonhole'">出档</el-button>
-						</el-dropdown-item>
-						<el-dropdown-item>
-							<el-button size="small" :disabled="disabled" type="text"
-								@click="sendWeiXin($api.contentSendToWeixin,ids)"
-								v-perms="'/content/contentSendToWeixin'">群发微信</el-button>
-						</el-dropdown-item>
+							<el-dropdown-item>
+								<el-button size="small" :disabled="disabled" @click="batch($api.contentStatic)"
+									type="text" v-perms="'/content/contentStatic'">生成静态页</el-button>
+							</el-dropdown-item>
+							<el-dropdown-item v-if="$store.state.perms.isMasterSite">
+								<el-button size="small" :disabled="disabled" @click="siteVisble=true" type="text"
+									v-perms="'/content/contentPush'">推送</el-button>
+							</el-dropdown-item>
+							<el-dropdown-item v-else>
+								<el-button size="small" :disabled="disabled" @click="siteVisble=true" type="text"
+									v-perms="'/content/contentPush'">共享</el-button>
+							</el-dropdown-item>
+							<el-dropdown-item>
+								<el-button size="small" :disabled="disabled" @click="topicClick" type="text"
+									v-perms="'/content/contentSend'">推送至专题
+								</el-button>
+							</el-dropdown-item>
+							<el-dropdown-item>
+								<el-button size="small" :disabled="disabled" type="text"
+									@click="archiveBatch($api.contentPigeonhole,'archive')"
+									v-perms="'/content/contentPigeonhole'">归档</el-button>
+							</el-dropdown-item>
+							<el-dropdown-item>
+								<el-button size="small" :disabled="disabled" type="text"
+									@click="archiveBatch($api.contentUnpigeonhole,'document')"
+									v-perms="'/content/contentUnpigeonhole'">出档</el-button>
+							</el-dropdown-item>
+							<el-dropdown-item>
+								<el-button size="small" :disabled="disabled" type="text"
+									@click="sendWeiXin($api.contentSendToWeixin,ids)"
+									v-perms="'/content/contentSendToWeixin'">群发微信</el-button>
+							</el-dropdown-item>
 						</el-scrollbar>
 					</el-dropdown-menu>
 				</el-dropdown>
@@ -462,6 +468,7 @@
 		methods: {
 			sortChange(val) {
 				console.log(val)
+
 				function orderNum(ascending, descending) {
 					if (val.order === "ascending") {
 						return ascending;
@@ -676,7 +683,7 @@
 						.catch(() => {})
 				}
 			},
-			
+
 		}
 	};
 </script>
@@ -731,7 +738,7 @@
 		margin-left: 3px;
 	}
 
-	.right-bottom .el-dropdown .el-button{
+	.right-bottom .el-dropdown .el-button {
 		height: 30px;
 	}
 
@@ -794,5 +801,11 @@
 		margin-top: 30px;
 		padding: 5px 15px;
 		text-align: right;
+	}
+
+	.news-link {
+		display: inline;
+		color: inherit;
+		text-decoration: none;
 	}
 </style>
