@@ -1,29 +1,15 @@
 <template>
 	<el-container>
 		<el-aside width="200px">
-			<div class="left-top">
-				<el-button type="text"><i class="el-icon-refresh"></i>&nbsp;&nbsp;刷新</el-button>
-			</div>
-			<div class="left-center">
-				<el-scrollbar wrap-class="scrollbar-wrapper">
-					<el-tree :props="props" :load="ansyTree" lazy :indent='16' node-key="id"
-						:default-expanded-keys="['']" @node-click="getNodes" v-if="refash" :default-expand-all="true"
-						icon-class="no">
-						<span class="custom-tree-node" slot-scope="{ node, data }">
-							<span :title="node.label" :data-data="data">{{ node.label }}</span>
-						</span>
-					</el-tree>
-				</el-scrollbar>
-			</div>
+			<cms-tree @change="getChannelId" :hasContent='true'></cms-tree>
 		</el-aside>
 		<el-main>
 			<div class="right-top">
 				<div class="right-top-left">
 					<el-breadcrumb separator="/">
-						<el-breadcrumb-item>首页</el-breadcrumb-item>
-						<el-breadcrumb-item>活动管理</el-breadcrumb-item>
-						<el-breadcrumb-item>活动列表</el-breadcrumb-item>
-						<el-breadcrumb-item>活动详情</el-breadcrumb-item>
+						<el-breadcrumb-item v-for="(item,index) in breadItems" :key="index">
+							<a href="javascript:void(0)" @click="clickBread(item.id,index)">{{item.name}}</a>
+						</el-breadcrumb-item>
 					</el-breadcrumb>
 				</div>
 				<div class="right-top-right">
@@ -46,12 +32,12 @@
 						<el-checkbox-button v-model="params.queryShare" label="queryShare">共享
 						</el-checkbox-button>
 					</el-checkbox-group>
-					<el-select v-model="params.queryTypeId" size="small" placeholder="类型" style="width:130px;"
+					<el-select v-model="params.queryTypeId" size="small" placeholder="类型" style="width:100px;"
 						@change="query" clearable>
 						<el-option v-for="item in typeList" :key="item.id" :label="item.name" :value="item.id">
 						</el-option>
 					</el-select>
-					<el-select v-model="params.queryStatus" size="small" placeholder="状态" style="width:130px;"
+					<el-select v-model="params.queryStatus" size="small" placeholder="状态" style="width:110px;"
 						@change="query" clearable>
 						<el-option v-for="item in queryStatus" :key="item.value" :label="item.label"
 							:value="item.value">
@@ -82,26 +68,23 @@
 							<el-table-column type="expand" width="30" align="left">
 								<template slot-scope="props">
 									<el-form label-position="left" inline class="demo-table-expand">
-										<el-form-item label="ID">
-											<span>{{ props.row.id }}</span>
+										<el-form-item label="所属栏目：">
+											<span>{{ props.row.channelName }}</span>
 										</el-form-item>
-										<el-form-item label="标题">
-											<span>{{ props.row.title }}</span>
-										</el-form-item>
-										<el-form-item label="置顶">
-											<span>{{ props.row.topLevel }}</span>
-										</el-form-item>
-										<el-form-item label="类型">
+										<el-form-item label="文章类型：">
 											<span>{{ props.row.typeName }}</span>
 										</el-form-item>
-										<el-form-item label="发布者">
-											<span>{{ props.row.userName }}</span>
+										<el-form-item label="是否置顶：">
+											<span>{{ props.row.topLevel }}</span>
 										</el-form-item>
-										<el-form-item label="发布者">
-											<span>{{ props.row.address }}</span>
+										<el-form-item label="是否推荐：">
+											<span>推荐{{props.row.recommendLevel}}</span>
 										</el-form-item>
-										<el-form-item label="点击">
+										<el-form-item label="点击量">
 											<span>{{ props.row.views }}</span>
+										</el-form-item>
+										<el-form-item label="评论量">
+											<span>{{ props.row.commentCount }}</span>
 										</el-form-item>
 									</el-form>
 								</template>
@@ -120,7 +103,6 @@
 										size="mini"></el-input>
 								</template>
 							</el-table-column>
-							<el-table-column label="类型" prop="typeName" width="80" align="center"></el-table-column>
 							<el-table-column label="发布者" prop="userName" width="100" align="left"></el-table-column>
 							<el-table-column label="发布时间" prop="releaseDate" width="160" align="center"
 								:filters="[{text: '今天', value: '2016-05-01'}, {text: '本周', value: '2016-05-02'}, {text: '近七天', value: '2016-05-03'}, {text: '本月', value: '2016-05-04'}]"
@@ -232,8 +214,12 @@
 <script>
 	import listMixins from "@/mixins/list";
 	import Sortable from "sortablejs";
+	import cmsTree from "@/components/cmscomponents/cmsTree.vue";
 	export default {
 		mixins: [listMixins],
+		components: {
+			cmsTree: cmsTree
+		},
 		data() {
 			return {
 				queryStatus: [{
@@ -374,8 +360,7 @@
 						value: "23"
 					}
 				],
-				props: {
-					//栏目树
+				props: { //栏目树
 					label: "name",
 					children: "zones",
 					isLeaf: "isChild",
@@ -452,7 +437,11 @@
 					https: "",
 					hasCollect: ""
 				},
-				typeList: [] //内容类型接口
+				typeList: [], //内容类型接口
+				breadItems: [{
+					name: "根目录",
+					id: ""
+				}] //面包屑
 			};
 		},
 		created() {
@@ -465,16 +454,30 @@
 			this.rowDrop(); //表格行拖拽
 			// this.columnDrop();//表格列拖拽
 		},
-		filters: {
-
-		},
+		filters: {},
 		methods: {
+			clickBread(id, index) {
+				//面包屑
+			},
+			creatBread(node, arr) {
+				if (node.parent != null) {
+					let params = {
+						name: node.data.name,
+						id: node.data.id
+					};
+					arr.push(params);
+					this.creatBread(node.parent, arr);
+				} else {
+					this.breadItems = arr.reverse();
+					return false;
+				}
+			},
 			filterHandler(value, row, column) {
-				console.log(value)
-				console.log(row)
-				console.log(column)
-				alert('1')
-				const property = column['property'];
+				console.log(value);
+				console.log(row);
+				console.log(column);
+				alert("1");
+				const property = column["property"];
 				return row[property] === value;
 			},
 			// 表头排序改变
@@ -485,16 +488,16 @@
 					} else if (val.order === "descending") {
 						return descending;
 					} else {
-						return this.params.queryOrderBy
+						return this.params.queryOrderBy;
 					}
 				}
 				if (val.prop) {
 					switch (val.prop) {
-						case 'id':
-							this.params.queryOrderBy = orderNum('1', '0')
+						case "id":
+							this.params.queryOrderBy = orderNum("1", "0");
 							break;
-						case 'releaseDate':
-							this.params.queryOrderBy = orderNum('3', '2')
+						case "releaseDate":
+							this.params.queryOrderBy = orderNum("3", "2");
 							break;
 						default:
 							break;
@@ -507,9 +510,9 @@
 			},
 			//根据文章状态吗返回名称
 			filterStatus(data) {
-				let arr = this.queryStatus.filter((item) => {
+				let arr = this.queryStatus.filter(item => {
 					return item.num == data;
-				})
+				});
 				return arr[0].label;
 			},
 			//固顶、推荐、共享
@@ -525,9 +528,9 @@
 			},
 			//添加内容，获取栏目id 模型id
 			addContent(command) {
-				this.params.parentId = this.params.cid
-				this.params.modelId = command
-				this.routerLink('/content/edit', 'edit', 0, this.params)
+				this.params.parentId = this.params.cid;
+				this.params.modelId = command;
+				this.routerLink("/content/edit", "edit", 0, this.params);
 			},
 			getNodes(data, node) {
 				this.$emit("change", data, node);
@@ -599,6 +602,14 @@
 					}
 				});
 			},
+			//获取栏目树点击
+			getChannelId(data, node) {
+				this.creatBread(node, []); //创建栏目导航
+				this.params.cid = data.id; //传递栏目id
+				this.getChannelInfo(data.id); //获取栏目信息
+				this.getTableData(this.params); //获取内容信息
+				this.getAllTotal();
+			},
 			//获取模型信息(发布内容)
 			getChannelInfo(channelId) {
 				let modelList = [];
@@ -655,25 +666,27 @@
 				this.getAllTotal();
 			},
 			//推送至专题
-			topicClick() {
-
-			},
+			topicClick() {},
 			//退回操作
 			reject() {
-				this.loading = true
-				let statusArr = this.status.split(',')
-				let mark = true
+				this.loading = true;
+				let statusArr = this.status.split(",");
+				let mark = true;
 				for (let key in statusArr) {
-					if (statusArr[key] != '1' || statusArr[key] != '2' || statusArr[key] != '4') {
+					if (
+						statusArr[key] != "1" ||
+						statusArr[key] != "2" ||
+						statusArr[key] != "4"
+					) {
 						//如果内容状态不是审核通过
-						this.errorMessage('只有审核通过、审核中、投稿状态的内容才能退回')
-						mark = false
-						this.loading = false
-						return true
+						this.errorMessage("只有审核通过、审核中、投稿状态的内容才能退回");
+						mark = false;
+						this.loading = false;
+						return true;
 					}
 				}
 				if (mark) {
-					this.$prompt('请输入退回原因', '提示', {})
+					this.$prompt("请输入退回原因", "提示", {})
 						.then(({
 							value
 						}) => {
@@ -683,17 +696,16 @@
 									rejectOpinion: value
 								})
 								.then(res => {
-									if (res.code == '200') {
-										this.successMessage('退回成功')
-										this.getTableData(this.params)
-										this.getAllTotal()
+									if (res.code == "200") {
+										this.successMessage("退回成功");
+										this.getTableData(this.params);
+										this.getAllTotal();
 									}
-								})
+								});
 						})
-						.catch(() => {})
+						.catch(() => {});
 				}
-			},
-
+			}
 		}
 	};
 </script>
@@ -708,13 +720,6 @@
 		border-right: 1px solid #d4dde2;
 		background-color: #fff;
 		line-height: 1;
-	}
-
-	.left-top {
-		box-sizing: border-box;
-		height: 50px;
-		padding: 5px;
-		line-height: 40px;
 	}
 
 	.right-top,
@@ -791,10 +796,6 @@
 		line-height: 40px;
 	}
 
-	.left-center {
-		height: calc(100% - 50px);
-	}
-
 	.el-main {
 		background-color: #fff;
 		padding: 0;
@@ -817,5 +818,20 @@
 		display: inline;
 		color: inherit;
 		text-decoration: none;
+	}
+
+	.demo-table-expand {
+		font-size: 0;
+	}
+
+	.demo-table-expand label {
+		width: 90px;
+		color: #99a9bf;
+	}
+
+	.demo-table-expand .el-form-item {
+		margin-right: 0;
+		margin-bottom: 0;
+		width: 20%;
 	}
 </style>

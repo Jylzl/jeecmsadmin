@@ -112,6 +112,7 @@ const ansycRoutes = [{
 		path: '/contentMange', //内容管理
 		name: '内容发布',
 		component: layout,
+		redirect: '/content/list',
 		children: [{
 			meta: {
 				title: '内容管理',
