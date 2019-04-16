@@ -570,8 +570,8 @@
 					_this.params.metrics = 'pv_count';
 					_this.params.type = type;
 					_this.$axios.post(_this.$api.flowSearchWordList, _this.params).then(res => {
-							console.log("-------------")
-							console.log(res)
+							// console.log("-------------")
+							// console.log(res)
 							// _this.page.keyword = res.body.items;
 						})
 						.catch(err => {

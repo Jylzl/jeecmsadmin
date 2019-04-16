@@ -107,7 +107,7 @@
 								</template>
 							</el-table-column>
 							<el-table-column type="selection" width="46" align="center"></el-table-column>
-							<el-table-column label="ID" prop="id" width="100" sortable></el-table-column>
+							<el-table-column label="ID" prop="id" width="100" sortable="custom"></el-table-column>
 							<el-table-column label="标题" prop="title" :show-overflow-tooltip="true">
 								<template slot-scope="scope">
 									<a class="news-link" :href="scope.row.url" :title="scope.row.title"
@@ -124,8 +124,8 @@
 							<el-table-column label="发布者" prop="userName" width="100" align="left"></el-table-column>
 							<el-table-column label="发布时间" prop="releaseDate" width="160" align="center"
 								:filters="[{text: '今天', value: '2016-05-01'}, {text: '本周', value: '2016-05-02'}, {text: '近七天', value: '2016-05-03'}, {text: '本月', value: '2016-05-04'}]"
-								sortable></el-table-column>
-							<el-table-column label="状态" prop="status" width="80" align="center" sortable>
+								sortable="custom" :filter-method="filterHandler"></el-table-column>
+							<el-table-column label="状态" prop="status" width="80" align="center" sortable="custom">
 								<template slot-scope="props">
 									{{filterStatus(props.row.status)}}
 								</template>
@@ -465,10 +465,20 @@
 			this.rowDrop(); //表格行拖拽
 			// this.columnDrop();//表格列拖拽
 		},
-		methods: {
-			sortChange(val) {
-				console.log(val)
+		filters: {
 
+		},
+		methods: {
+			filterHandler(value, row, column) {
+				console.log(value)
+				console.log(row)
+				console.log(column)
+				alert('1')
+				const property = column['property'];
+				return row[property] === value;
+			},
+			// 表头排序改变
+			sortChange(val) {
 				function orderNum(ascending, descending) {
 					if (val.order === "ascending") {
 						return ascending;

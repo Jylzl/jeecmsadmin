@@ -44,12 +44,6 @@ export default {
                     console.log(error)
                 });
         },
-        //获取翻页数据
-        getPages(pageNo, pageSize) {
-            this.params.pageNo = pageNo;
-            this.params.pageSize = pageSize;
-            this.getTableData(this.params);
-        },
         // 选中ID
         checkIds(val) {
             let ids = [];
@@ -89,6 +83,9 @@ export default {
                         } else {
                             this.loading = false;
                         }
+                    }).catch(error => {
+                        this.loading = false;
+                        console.log(error)
                     });
                 })
                 .catch(error => {
@@ -106,6 +103,7 @@ export default {
                     .then(({
                         value
                     }) => {
+                        this.loading = true;
                         this.$axios
                             .post(this.$api.contentRecommend, {
                                 ids: this.ids,
@@ -116,11 +114,20 @@ export default {
                                     this.successMessage('推荐成功')
                                     this.getTableData(this.params)
                                     this.getAllTotal()
+                                } else {
+                                    this.loading = false;
                                 }
-                            })
+                            }).catch(error => {
+                                this.loading = false;
+                                console.log(error)
+                            });
                     })
-                    .catch(() => {})
+                    .catch((error) => {
+                        this.loading = false;
+                        console.log(error)
+                    })
             } else {
+                this.loading = true;
                 this.$axios
                     .post(this.$api.contentRecommend, {
                         ids: this.ids,
@@ -131,8 +138,13 @@ export default {
                             this.successMessage('取消推荐成功')
                             this.getTableData(this.params)
                             this.getAllTotal()
+                        } else {
+                            this.loading = false;
                         }
-                    })
+                    }).catch(error => {
+                        this.loading = false;
+                        console.log(error)
+                    });
             }
         },
         //移除
@@ -152,6 +164,9 @@ export default {
                         } else {
                             this.loading = false;
                         }
+                    }).catch(error => {
+                        this.loading = false;
+                        console.log(error)
                     });
                 })
                 .catch(error => {
@@ -177,6 +192,9 @@ export default {
                         } else {
                             this.loading = false;
                         }
+                    }).catch(error => {
+                        this.loading = false;
+                        console.log(error)
                     });
                 })
                 .catch(error => {
@@ -225,6 +243,9 @@ export default {
                         } else {
                             this.loading = false;
                         }
+                    }).catch(error => {
+                        this.loading = false;
+                        console.log(error)
                     });
                 })
                 .catch(error => {

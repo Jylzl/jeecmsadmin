@@ -71,6 +71,7 @@ const routes = [{
 			hidden: true
 		},
 		path: '/401',
+		name: '401',
 		component: error401
 	},
 	{
@@ -79,6 +80,7 @@ const routes = [{
 			hidden: true
 		},
 		path: '/404',
+		name: '404',
 		component: error404
 	},
 	{
@@ -3006,7 +3008,7 @@ const ansycRoutes = [{
 			path: '/about/us',
 			name: '关于',
 			component: resolve => {
-				require(['@/views/errorpage/405.vue'], resolve)
+				require(['@/views/about/about.vue'], resolve)
 			}
 		}]
 	}, //百度统计
