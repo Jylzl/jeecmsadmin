@@ -1,94 +1,102 @@
 <template>
 	<div class="land-box">
 		<div class="land-box-center">
-			<div class="logo">Jeecms-logo</div>
-			<div class="land-form">
-				<el-tabs v-model="activeName" @tab-click="handleClick">
-					<el-tab-pane label="账号登陆" name="password">
-						<div class="card-box">
-							<el-form :model="landForm_password" ref="landForm_password" class="demo-ruleForm">
-								<el-form-item prop="user" :rules="user">
-									<el-autocomplete v-model="landForm_password.user" :fetch-suggestions="querySearch"
-										placeholder="请输入手机号/邮箱/用户名" :trigger-on-focus="false" @select="handleSelect"
-										style="width:100%;" :maxlength="20"
-										@keyup.enter.native="submitForm('landForm_password')">
-										<template slot-scope="{ item }">
-											<span class="fl">{{ item.value }}</span>
-											<el-button type="text" icon="el-icon-close" class="fr" title="删除账号信息"
-												@click="delLocalAccount(item.value)"></el-button>
-										</template>
-									</el-autocomplete>
-								</el-form-item>
-								<el-form-item prop="pswd" :rules="pswd">
-									<div class="show-pswd">
-										<el-input :type="pswdType" v-model.number="landForm_password.pswd"
-											autocomplete="off" placeholder="密码" maxlength="16" class="show-pswd-input"
-											@keyup.enter.native="submitForm('landForm_password')">
-										</el-input>
-										<el-button type="text" class="show-pswd-btn" title="显示密码" :icon="icon"
-											@mousedown.native="showPswd(true)" @mouseup.native="showPswd(false)">
-										</el-button>
-									</div>
-								</el-form-item>
-								<div class="forget-password">
-									<el-checkbox v-model="landForm_password.rememberPswd" @change="checkCookies">记住密码
-									</el-checkbox>
-									<router-link to="/register">忘记密码？</router-link>
-								</div>
-							</el-form>
-						</div>
-					</el-tab-pane>
-					<el-tab-pane label="免密登陆" name="phone">
-						<div class="card-box-two">
-							<el-form :model="landForm_phone" ref="landForm_phone" class="demo-ruleForm">
-								<el-row :gutter="20">
-									<el-col :span="8">
-										<el-form-item prop="age">
-											<el-select v-model="landForm_phone.areaCode" placeholder="请选择">
-												<el-option style="min-width:180px;" v-for="item in areaCodes"
-													:key="item.code" :label="item.code" :value="item.code">
-													<span class="fl">{{item.code}}</span>
-													<span
-														style="float: right; color: #8492a6; font-size: 13px">{{item.name}}</span>
-												</el-option>
-											</el-select>
-										</el-form-item>
-									</el-col>
-									<el-col :span="16">
-										<el-form-item prop="phone" :rules="phone">
-											<el-input type="tel" v-model.number="landForm_phone.phone"
-												autocomplete="off" placeholder="手机号" maxlength="20" clearable>
+			<div class="left">
+				<img :src="imgUrl" alt="" draggable="false">
+			</div>
+			<div class="right">
+				<div class="logo">Jeecms-logo</div>
+				<div class="land-form">
+					<el-tabs v-model="activeName" @tab-click="handleClick">
+						<el-tab-pane label="账号登陆" name="password">
+							<div class="card-box">
+								<el-form :model="landForm_password" ref="landForm_password" class="demo-ruleForm">
+									<el-form-item prop="user" :rules="user">
+										<el-autocomplete v-model="landForm_password.user"
+											:fetch-suggestions="querySearch" placeholder="请输入手机号/邮箱/用户名"
+											:trigger-on-focus="false" @select="handleSelect" style="width:100%;"
+											:maxlength="20" @keyup.enter.native="submitForm('landForm_password')">
+											<template slot-scope="{ item }">
+												<span class="fl">{{ item.value }}</span>
+												<el-button type="text" icon="el-icon-close" class="fr" title="删除账号信息"
+													@click="delLocalAccount(item.value)"></el-button>
+											</template>
+										</el-autocomplete>
+									</el-form-item>
+									<el-form-item prop="pswd" :rules="pswd">
+										<div class="show-pswd">
+											<el-input :type="pswdType" v-model.number="landForm_password.pswd"
+												autocomplete="off" placeholder="密码" maxlength="16"
+												class="show-pswd-input"
+												@keyup.enter.native="submitForm('landForm_password')">
 											</el-input>
-										</el-form-item>
-									</el-col>
-								</el-row>
-								<el-form-item prop="verificationCode" :rules="verificationCode">
-									<div class="get-code">
-										<el-input type="text" v-model.number="landForm_phone.verificationCode"
-											autocomplete="off" placeholder="6位数字验证码" maxlength="8"
-											class="get-code-input" @keyup.enter.native="submitForm('landForm_phone')">
-										</el-input>
-										<el-button type="text" class="get-code-btn">获取验证码</el-button>
+											<el-button type="text" class="show-pswd-btn" title="显示密码" :icon="icon"
+												@mousedown.native="showPswd(true)" @mouseup.native="showPswd(false)">
+											</el-button>
+										</div>
+									</el-form-item>
+									<div class="forget-password">
+										<el-checkbox v-model="landForm_password.rememberPswd" @change="checkCookies">
+											记住密码
+										</el-checkbox>
+										<router-link to="/register">忘记密码？</router-link>
 									</div>
-								</el-form-item>
-							</el-form>
-						</div>
-					</el-tab-pane>
-				</el-tabs>
-			</div>
-			<div class="land-form-btn">
-				<div id="your-dom-id" class="nc-container" v-show="aliyunShow"></div>
-				<el-button type="primary" @click="submitForm(submitFormName)" style="width:100%;"
-					:disabled="landLoading.disabled" :icon="landLoading.icon" v-show="!aliyunShow">
-					{{landLoading.content}}</el-button>
-			</div>
-			<div class="three-land">
-				<el-button type="text">
-					<icon name="icon_qq" :w="32" :h="32"></icon>
-				</el-button>
-				<el-button type="text">
-					<icon name="icon_weichat" :w="28" :h="28"></icon>
-				</el-button>
+								</el-form>
+							</div>
+						</el-tab-pane>
+						<el-tab-pane label="免密登陆" name="phone">
+							<div class="card-box-two">
+								<el-form :model="landForm_phone" ref="landForm_phone" class="demo-ruleForm">
+									<el-row :gutter="20">
+										<el-col :span="8">
+											<el-form-item prop="age">
+												<el-select v-model="landForm_phone.areaCode" placeholder="请选择">
+													<el-option style="min-width:180px;" v-for="item in areaCodes"
+														:key="item.code" :label="item.code" :value="item.code">
+														<span class="fl">{{item.code}}</span>
+														<span
+															style="float: right; color: #8492a6; font-size: 13px">{{item.name}}</span>
+													</el-option>
+												</el-select>
+											</el-form-item>
+										</el-col>
+										<el-col :span="16">
+											<el-form-item prop="phone" :rules="phone">
+												<el-input type="tel" v-model.number="landForm_phone.phone"
+													autocomplete="off" placeholder="手机号" maxlength="20" clearable>
+												</el-input>
+											</el-form-item>
+										</el-col>
+									</el-row>
+									<el-form-item prop="verificationCode" :rules="verificationCode">
+										<div class="get-code">
+											<el-input type="text" v-model.number="landForm_phone.verificationCode"
+												autocomplete="off" placeholder="6位数字验证码" maxlength="8"
+												class="get-code-input"
+												@keyup.enter.native="submitForm('landForm_phone')">
+											</el-input>
+											<el-button type="text" class="get-code-btn">获取验证码</el-button>
+										</div>
+									</el-form-item>
+								</el-form>
+							</div>
+						</el-tab-pane>
+					</el-tabs>
+				</div>
+				<div class="land-form-btn">
+					<div id="your-dom-id" class="nc-container" v-show="aliyunShow"></div>
+					<el-button type="primary" @click="submitForm(submitFormName)" style="width:100%;"
+						:disabled="landLoading.disabled" :icon="landLoading.icon" v-show="!aliyunShow">
+						{{landLoading.content}}</el-button>
+				</div>
+				<div class="three-land">
+					<el-button type="text">
+						<icon name="icon_qq" :w="32" :h="32"></icon>
+					</el-button>
+					<el-button type="text">
+						<icon name="icon_weichat" :w="28" :h="28"></icon>
+					</el-button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -107,6 +115,7 @@
 			var phone = result_phone;
 			var verificationCode = result_verificationCode;
 			return {
+				imgUrl:require('@/assets/img/land_bg_center.png'),
 				aliyunShow: false,
 				icon: "icon iconfont icon-icon_yulan",
 				submitFormName: "landForm_password",
@@ -414,7 +423,7 @@
 							//遍历网站名称
 							for (let i in this.$store.state.perms.siteItems) {
 								if (this.$store.state.perms.siteItems[i].id == localStorage.getItem(
-									'_site_id_param')) {
+										'_site_id_param')) {
 									siteName = this.$store.state.perms.siteItems[i].name;
 									break;
 								}
@@ -494,12 +503,25 @@
 	}
 
 	.land-box-center {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
 		box-sizing: border-box;
 		width: 1160px;
 		height: 542px;
-		padding-left: 679px;
-		background: #fff url(../../assets/img/land_bg_center.png) no-repeat center left;
-		background-size: 679px 542px;
+	}
+
+	.land-box-center>.left,
+	.land-box-center>.left img {
+		display: block;
+		width: 679px;
+		height: 542px;
+	}
+
+	.land-box-center>.right {
+		width: 481px;
+		height: 542px;
+		background-color: #fff;
 	}
 
 	.logo {

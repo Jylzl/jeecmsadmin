@@ -37,10 +37,8 @@ const service = axios.create({
 service.interceptors.request.use(
 	config => {
 		// Do something before request is sent
-
 		let appId = process.env.VUE_APP_appId; //appid
 		let appKey = process.env.VUE_APP_appKey; //appkey
-
 		let sessionKey = localStorage.getItem('sessionKey'); //sessionkey
 		let _site_id_param = localStorage.getItem('_site_id_param') || ''; //站点id
 		let params = {

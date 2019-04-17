@@ -7,9 +7,7 @@
 			<div class="right-top">
 				<div class="right-top-left">
 					<el-breadcrumb separator="/">
-						<el-breadcrumb-item v-for="(item,index) in breadItems" :key="index">
-							<a href="javascript:void(0)" @click="clickBread(item.id,index)">{{item.name}}</a>
-						</el-breadcrumb-item>
+						<el-breadcrumb-item v-for="(item,index) in breadItems" :key="index">{{item.name}}</el-breadcrumb-item>
 					</el-breadcrumb>
 				</div>
 				<div class="right-top-right">
@@ -456,22 +454,6 @@
 		},
 		filters: {},
 		methods: {
-			clickBread(id, index) {
-				//面包屑
-			},
-			creatBread(node, arr) {
-				if (node.parent != null) {
-					let params = {
-						name: node.data.name,
-						id: node.data.id
-					};
-					arr.push(params);
-					this.creatBread(node.parent, arr);
-				} else {
-					this.breadItems = arr.reverse();
-					return false;
-				}
-			},
 			filterHandler(value, row, column) {
 				console.log(value);
 				console.log(row);
@@ -601,6 +583,20 @@
 						this.dropCol.splice(evt.newIndex, 0, oldItem);
 					}
 				});
+			},
+			//创建面包屑
+			creatBread(node, arr) {
+				if (node.parent != null) {
+					let params = {
+						name: node.data.name,
+						id: node.data.id
+					};
+					arr.push(params);
+					this.creatBread(node.parent, arr);
+				} else {
+					this.breadItems = arr.reverse();
+					return false;
+				}
 			},
 			//获取栏目树点击
 			getChannelId(data, node) {
