@@ -7,7 +7,8 @@
 			<div class="right-top">
 				<div class="right-top-left">
 					<el-breadcrumb separator="/">
-						<el-breadcrumb-item v-for="(item,index) in breadItems" :key="index">{{item.name}}</el-breadcrumb-item>
+						<el-breadcrumb-item v-for="(item,index) in breadItems" :key="index">{{item.name}}
+						</el-breadcrumb-item>
 					</el-breadcrumb>
 				</div>
 				<div class="right-top-right">
@@ -206,6 +207,33 @@
 					</el-dropdown-menu>
 				</el-dropdown>
 			</div>
+			<!-- 移动栏目弹窗 -->
+			<el-dialog class="dialog" :title="labelDialogTitle" :visible.sync="channelVisble" width="25%"
+				:before-close="handleClose" :close-on-click-modal="false">
+				<div class="tree-layout">
+					<div class="tree">
+						<el-tree :load="ansyTree" lazy ref="channelTree" :props="props" @check-change="checkChange"
+							:default-expanded-keys="['']" show-checkbox :indent="16" node-key="id">
+						</el-tree>
+					</div>
+				</div>
+				<div class="dialog-footer" slot="footer">
+					<el-button @click="cancel" size="mini">取消</el-button>
+					<el-button type="primary" @click="confirm" size="mini">选择</el-button>
+				</div>
+			</el-dialog>
+			<!--专题弹窗-->
+			<el-dialog class="dialog" :title="labelDialogTitle" :visible.sync="topicVisble" width="25%"
+				:close-on-click-modal="false" :before-close="handleClose">
+				<el-checkbox-group v-model="topicIds" class="cms-checkbox-block" @change="handleChange">
+					<el-checkbox v-for="(item,index) in topicList" :key="index" :label="item.id">{{item.name}}
+					</el-checkbox>
+				</el-checkbox-group>
+				<span slot="footer" class="dialog-footer">
+					<el-button @click="topicCancel">返回</el-button>
+					<el-button type="primary" @click="confirmTopic">确定</el-button>
+				</span>
+			</el-dialog>
 		</el-main>
 	</el-container>
 </template>
@@ -439,7 +467,12 @@
 				breadItems: [{
 					name: "根目录",
 					id: ""
-				}] //面包屑
+				}], //面包屑
+				labelDialogTitle: '', //弹窗标题
+				channelVisble: false, //选择栏目弹窗,
+				topicVisble: false, //专题弹窗
+				topicIds: [], //选中的专题数组
+				topicList: [], //专题列表
 			};
 		},
 		created() {
@@ -454,6 +487,85 @@
 		},
 		filters: {},
 		methods: {
+			handleClose(done) {
+				done()
+			},
+			//栏目dialog取消按钮操作
+			cancel() {
+				this.channelVisble = false
+				this.$refs['channelTree'].setCheckedKeys([])
+			},
+			//栏目dialog确认按钮操作
+			confirm() {
+				let url = ''
+				let params = {} //请求api参数对象
+				params.channelId = this.currentCheckChannelId
+				params.ids = this.ids
+				if (this.operateType == 'move') {
+					url = this.$api.contentMove
+				} else if (this.operateType == 'copy') {
+					url = this.$api.contentCopy
+					params.siteId = this.$getSiteId()
+				} else {
+					return false
+				}
+				this.loading = true
+				this.$axios
+					.post(url, params)
+					.then(res => {
+						if (res.code == '200') {
+							this.loading = false
+							this.channelVisble = false
+							this.$refs['channelTree'].setCheckedKeys([])
+							this.successMessage('操作成功')
+							this.getTableData(this.params)
+							this.getAllTotal()
+						}
+					})
+					.catch(err => {
+						this.loading = false
+					})
+			},
+			//专题弹窗触发
+			topicClick() {
+				this.$axios.post(this.$api.topicListAll).then(res => {
+					if (res.code == '200') {
+						this.topicVisble = true
+						this.labelDialogTitle = '选择专题(' + this.$getSiteName() + ')'
+						this.topicList = res.body
+					}
+				})
+			},
+			topicCancel() {
+				// for (let key in this.topicList) {
+				//   this.$set(this.checked, key, [])
+				// }
+				this.topicVisble = false
+			},
+			handleChange() {
+				this.$emit('change', this.checked)
+			},
+			confirmTopic() {
+				let params = {
+					ids: this.ids,
+					topicIds: this.topicIds.join(',')
+				}
+				this.loading = true
+				this.$axios
+					.post(this.$api.contentSend, params)
+					.then(res => {
+						if (res.code == '200') {
+							this.topicVisble = false
+							this.loading = false
+							this.successMessage('操作成功')
+						} else {
+							this.loading = false
+						}
+					})
+					.catch(error => {
+						this.loading = false
+					})
+			},
 			filterHandler(value, row, column) {
 				console.log(value);
 				console.log(row);
@@ -661,8 +773,6 @@
 				this.getTableData(this.params);
 				this.getAllTotal();
 			},
-			//推送至专题
-			topicClick() {},
 			//退回操作
 			reject() {
 				this.loading = true;

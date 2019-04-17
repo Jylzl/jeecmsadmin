@@ -366,6 +366,19 @@ export default {
                 console.log(error)
                 this.loading = false
             })
+        },
+        operate(type) {
+            //复制及引用打开dialog触发事件
+            this.channelVisble = true
+            this.operateType = type
+            this.labelDialogTitle = '选择栏目(' + this.$getSiteName() + ')'
+          },
+          //栏目dialog节点选中事件，处理checkbox 只能选择一个
+      checkChange(node, checkStatus, childStatus) {
+        if (checkStatus) {
+          this.currentCheckChannelId = node.id
+          this.$refs['channelTree'].setCheckedKeys([node.id], true)
         }
+      },
     }
 }
