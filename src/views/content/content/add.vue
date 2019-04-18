@@ -3,19 +3,20 @@
 		<el-scrollbar wrap-class="scrollbar-wrapper">
 			<div class="cms-content-right" v-if="flag">
 				<el-form ref="form" :model="info" :rules="rules" class="cms-form" label-width="162px"
-					v-loading="loading" v-if="restState">
+					v-loading="loading" v-if="restState" label-position="right">
 					<!-- 动态表单 -->
 					<!-- 栏目 -->
 					<el-form-item label="选择栏目" class="flex-50" prop="parentId">
-						<el-cascader class="cms-width" :props="{'value':'id','label':'name','children':'child'}"
-							:options="channelList" v-model="info.parentId" filterable>
+						<el-tooltip class="item" effect="dark" content="只能选择最后一层" placement="top">
+						<el-cascader class="cms-width" :props="{'value':'id','label':'name','children':'child'}" :options="channelList" v-model="info.parentId" placeholder="请选择" filterable>
 						</el-cascader>
-						<span class="gray">只能选择最后一层</span>
+						</el-tooltip>
 					</el-form-item>
 					<!--关联副栏目  -->
 					<el-form-item label="关联副栏目" class="flex-50">
-						<el-button @click="channelVisble=true">关联副栏目</el-button>
-						<span class="gray">关联后本条内容将会出现在所选的栏目页，需要结合标签使用</span>
+						<el-tooltip class="item" effect="dark" content="关联后本条内容将会出现在所选的栏目页，需要结合标签使用" placement="top">
+							<el-button @click="channelVisble=true">关联副栏目</el-button>
+						</el-tooltip>
 					</el-form-item>
 					<!-- 模型弹窗 -->
 					<el-dialog class="dialog" title="选择副栏目" :visible.sync="channelVisble" width="30%">
@@ -59,21 +60,10 @@
 							:prop="(item.custom?'attr_':'')+item.field" :rules="item.required?fieldRequied:[]"
 							v-if="item.field!='channelId'&&item.field!='title'&&item.field!='typeImg'&&!(item.field=='titleImg'&&!hasTitleImg)&&!(item.field=='contentImg'&&!hasContentImg)">
 							<!-- 文本 -->
-							<el-input class="cms-width" v-model="info['attr_'+item.field]"
-								v-if="item.dataType==1&&item.custom">
-							</el-input>
-
-							<el-input class="cms-width" v-model="info[item.field]" v-if="item.dataType==1
-              &&!item.custom
-              &&item.field!='titleImg'
-              &&item.field!='contentImg'
-               &&item.field!='typeImg'
-               &&item.field!='attachments'
-               &&item.field!='media'
-               &&item.field!='name'
-                &&item.field!='origin'"></el-input>
+							<el-input class="cms-width" v-model="info['attr_'+item.field]" v-if="item.dataType==1&&item.custom" placeholder="111"></el-input>
+							<el-input class="cms-width" v-model="info[item.field]" v-if="item.dataType==1 &&!item.custom  &&item.field!='titleImg' &&item.field!='contentImg' &&item.field!='typeImg' &item.field!='attachments' &&item.field!='media' &&item.field!='name' &&item.field!='origin'" placeholder="用','分开"></el-input>
 							<!-- 动态提示 -->
-							<span class="gray" v-if="item.field=='tagStr'">用","分开</span>
+							<span class="gray" v-if="item.field=='tagStr'"></span>
 							<span class="gray" v-if="item.field=='shortTitle'">在列表中显示，留空则显示完整标题</span>
 							<div class="inline-block" v-if="item.field=='origin'">
 								<el-input v-model="info[item.field]" class="w40p inline-block"></el-input>
@@ -88,25 +78,25 @@
 								@blur="getPath">
 							</el-input>
 							<!-- 标题，内容图片 类型图 -->
-							<!-- <cms-upload :src="info[item.field]" :field="item.field"
+							<cms-upload :src="info[item.field]" :field="item.field"
 								v-if="item.field=='titleImg'&&hasTitleImg" :isMark="false" @get="getFieldImg">
 							</cms-upload>
 							<cms-upload :src="info[item.field]" :field="item.field"
 								v-if="item.field=='contentImg'&&hasContentImg" :isMark="false" @get="getFieldImg">
-							</cms-upload> -->
+							</cms-upload>
 							<!-- 附件 -->
-							<!-- <cms-multiple-upload v-if="item.field=='attachments'" @change="getAttachments">
-							</cms-multiple-upload> -->
+							<cms-multiple-upload v-if="item.field=='attachments'" @change="getAttachments">
+							</cms-multiple-upload>
 							<!--文档路径  -->
-							<!-- <cms-attach-upload :src="info['docPath']" v-if="item.field=='docPath'" :multiple="false"
+							<cms-attach-upload :src="info['docPath']" v-if="item.field=='docPath'" :multiple="false"
 								:isDoc="true" action='/api/member/upload/o_upload_doc' @change="getDocPath">
-							</cms-attach-upload> -->
+							</cms-attach-upload>
 							<!-- 图片集 -->
-							<!-- <cms-pictrues v-if="item.field=='pictures'" @change="getPics"></cms-pictrues> -->
+							<cms-pictrues v-if="item.field=='pictures'" @change="getPics"></cms-pictrues>
 							<!-- 多媒体 -->
 							<div v-if="item.field=='media'">
-								<!-- <cms-multiple-upload :src="info['mediaPath']" :multiple="false" field="mediaPath"
-									@get="getMediaPath" btnLabel="上传"></cms-multiple-upload> -->
+								<cms-multiple-upload :src="info['mediaPath']" :multiple="false" field="mediaPath"
+									@get="getMediaPath" btnLabel="上传"></cms-multiple-upload>
 								<label>播放器</label>
 								<el-radio-group v-model="info['mediaType']">
 									<el-radio label="WM"></el-radio>
@@ -169,7 +159,7 @@
 							</el-select>
 							<!-- 标题颜色 -->
 							<div v-if="item.field=='titleColor'" class="flex">
-								<el-color-picker v-model="info[item.field]"></el-color-picker>
+								<el-color-picker v-model="info[item.field]" size="mini"></el-color-picker>
 								<el-checkbox v-model="info['bold']" class="ml-24">是否加粗</el-checkbox>
 							</div>
 							<!-- 固顶级别 -->
@@ -204,9 +194,9 @@
 								</div>
 								<div v-if="isTypeImg" class="bread-box" style="margin-top:12px;">
 									<label for="" style="margin-right:10px;">类型图</label>
-									<!-- <cms-upload :src="info['typeImg']" field="typeImg" :isMark="false"
+									<cms-upload :src="info['typeImg']" field="typeImg" :isMark="false"
 										@get="getFieldImg">
-									</cms-upload> -->
+									</cms-upload>
 								</div>
 							</div>
 							<!-- 栏目模版 -->
@@ -285,12 +275,12 @@
 									</div>
 								</div>
 							</div>
-							<!-- <cms-multiple-upload :src="info['attr_'+item.field]" :multiple="false"
+							<cms-multiple-upload :src="info['attr_'+item.field]" :multiple="false"
 								:field="'attr_'+item.field" @get="getMediaPath" btnLabel="上传"
-								v-if="item.dataType==9&&item.custom"></cms-multiple-upload> -->
+								v-if="item.dataType==9&&item.custom"></cms-multiple-upload>
 							<!-- 自定义图片-->
-							<!-- <cms-upload :src="info['attr_'+item.field]" :field="'attr_'+item.field" @get="getFieldImg"
-								v-if="item.dataType==10&&item.custom"></cms-upload> -->
+							<cms-upload :src="info['attr_'+item.field]" :field="'attr_'+item.field" @get="getFieldImg"
+								v-if="item.dataType==10&&item.custom"></cms-upload>
 							<!--富文本编辑器-->
 							<div v-if="item.field=='txt'&&dataState">
 								<!-- <cms-export-upload :index="0" @get="getDocTxt"></cms-export-upload>
@@ -328,8 +318,18 @@
 <script>
 	import formMixins from "@/mixins/form";
 	import va from "@/rules";
+	import cmsUpload from '@/components/pagecomponents/cmsUpload.vue' //cms上传
+	import cmsMultipleUpload from '@/components/pagecomponents/cmsMultipleUpload.vue'
+	import cmsAttachUpload from '@/components/pagecomponents/cmsAttachUpload.vue'
+	import cmsPictrues from '@/components/pagecomponents/cmsPictrues.vue'
 	export default {
 		mixins: [formMixins],
+		components: {
+			"cms-upload":cmsUpload,
+			"cms-multiple-upload":cmsMultipleUpload,
+			"cms-attach-upload":cmsAttachUpload,
+			"cms-pictrues":cmsPictrues
+		},
 		data() {
 			let self = this;
 			let required = va.required("此项必填");
@@ -732,7 +732,8 @@
 
 
 <style lang="scss" scoped>
-@import url('../../../assets/css/common.scss');
+@import url('../../../assets/css/contentadd.scss');
+// @import url('../../../assets/css/common.scss');
 	.content-main {
 		box-sizing: border-box;
 		padding: 20px;

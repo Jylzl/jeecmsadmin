@@ -63,7 +63,6 @@ a {
 }
 
 .right-margin-220 {
-
   margin-left: 220px;
 }
 
@@ -604,7 +603,6 @@ a {
   line-height: 30px;
   font-size: 14px;
   color: #5a5e66;
-
   margin-right: 5px;
   padding: 0 10px;
 }
@@ -615,13 +613,10 @@ a {
   position: absolute;
   right: 5px;
   top: 9px;
-
 }
 
 .flex {
   display: flex;
-
-
 }
 
 .flex-date {
@@ -731,14 +726,11 @@ a {
 
 .flex-100 {
   width: 100%;
-
-
 }
 
 .cms-width-25 {
   width: 27%;
 }
-
 
 .content-flex-right {
   text-align: right;
@@ -748,10 +740,7 @@ a {
   .content-flex-right {
     text-align: left;
   }
-
 }
-
-
 
 @media screen and (max-width:1200px) {
   .flex-50 {
@@ -761,7 +750,6 @@ a {
   .cms-width {
     width: 320px;
   }
-
 
   .cms-form .el-form-item:nth-child(2) {
     border-top: 1px dashed #eee;
@@ -821,8 +809,6 @@ a {
 
 }
 
-
-
 .tree-layout {
   position: absolute;
   min-height: 100%;
@@ -850,8 +836,6 @@ a {
 .file-tree-items .el-tree-node>.el-tree-node__children {
   overflow: inherit;
 }
-
-
 
 .reflash {
   height: 50px;
@@ -886,7 +870,6 @@ a {
   color: #ffc822;
   font-size: 18px;
   margin-right: 4px;
-
   content: '\e616';
   width: 15px;
   height: 15px;
