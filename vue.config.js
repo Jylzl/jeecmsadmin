@@ -17,14 +17,14 @@ module.exports = {
 	},
 	devServer: {
 		open: true,
-		host: process.env.VUE_APP_APP_URL,
+		host: process.env.VUE_APP_APP_HOST,
 		port: process.env.VUE_APP_APP_PORT,
 		https: false,
 		hotOnly: false,
 		proxy: {
 			//配置跨域
 			"/api": {
-				target: process.env.VUE_APP_API_URL,
+				target: process.env.VUE_APP_SERVER_API,
 				changOrigin: true,
 				ws: true,
 				pathRewrite: {

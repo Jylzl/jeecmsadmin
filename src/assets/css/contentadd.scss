@@ -1,11 +1,16 @@
 .cms-form {
+    box-sizing: border-box;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    padding: 26px 0;
-    margin: 0 50px;
+    width: 100%;
+    padding: 30px 30px 30px 20px;
+}
+
+.cms-form .el-row {
+    width: 100%;
 }
 
 .cms-form .el-form-item {

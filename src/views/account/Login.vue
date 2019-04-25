@@ -573,6 +573,7 @@
 		box-sizing: border-box;
 		padding: 0 80px;
 		text-align: right;
+		margin-top: 10px;
 	}
 
 	.show-pswd,

@@ -29,7 +29,7 @@ function showMessage(value) {
 // create an axios instance
 const service = axios.create({
 	withCredentials: true,
-	baseURL: process.env.VUE_APP_API_URL, // api 的 base_url
+	baseURL: process.env.VUE_APP_SERVER_API, // api 的 base_url
 	timeout: 5000 // request timeout
 })
 
