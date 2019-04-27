@@ -3,6 +3,7 @@
         <div v-show="show" class="chat-box transition-box">
             <div class="chat-top">
                 <div class="chat-top-bar">
+                    <el-button type="text" icon="el-icon-minus" title="最小化" @click="hideChat()"></el-button>
                     <el-button type="text" icon="el-icon-close" title="关闭" @click="hideChat()"></el-button>
                 </div>
                 <div class="chat-card">
