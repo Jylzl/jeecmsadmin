@@ -10,7 +10,7 @@
                         <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2030012986,1102835514&fm=200&gp=0.jpg" alt="">
                         <el-dropdown size="mini" trigger="click">
                             <span class="el-dropdown-link">
-                                <span class="user-state"></span>                        
+                                <span class="user-state el-icon-success"></span>                        
                             </span>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item icon="el-icon-success">在线</el-dropdown-item>
@@ -217,10 +217,10 @@
     }
     .chat-card .user-header-img .user-state {
         display: block;
-        width: 12px;
-        height: 12px;
+        width: 14px;
+        height: 14px;
         border-radius: 50%;
-        background-color: #00ff7f;
+        color: #00ff7f;
         z-index: 10;
     }
 
