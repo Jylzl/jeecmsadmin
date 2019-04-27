@@ -567,10 +567,6 @@
 					})
 			},
 			filterHandler(value, row, column) {
-				console.log(value);
-				console.log(row);
-				console.log(column);
-				alert("1");
 				const property = column["property"];
 				return row[property] === value;
 			},

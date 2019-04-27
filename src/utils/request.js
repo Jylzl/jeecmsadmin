@@ -33,7 +33,6 @@ const service = axios.create({
 	timeout: 5000 // request timeout
 })
 
-// request interceptor（请求拦截器）
 service.interceptors.request.use(
 	config => {
 		// Do something before request is sent

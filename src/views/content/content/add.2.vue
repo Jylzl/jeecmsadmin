@@ -608,45 +608,35 @@
 				this.$axios.post(api.fullTextSearchChannelList, {
 					hasContentOnly: true
 				}).then(res => {
-					this.channelList = this.channelList.concat(res.body);
-					this.getDefaultInfo(); //数据回填
-
+					this.channelList =this.channelList.concat(res.body);
 				})
 				//关联专题列表
 				this.$axios.post(api.topicListAll, {
 					channelId: this.params.parentId
 				}).then(res => {
 					this.topicList = res.body;
-					this.getDefaultInfo(); //数据回填
-
 				})
 				//内容类型列表
 				this.$axios.post(api.typeList, {
 					containDisabled: false
 				}).then(res => {
 					this.typeList = res.body;
-					this.getDefaultInfo(); //数据回填
-
 				})
 				//会员组列表
 				this.$axios.post(api.groupList).then(res => {
 					this.groupList = res.body;
-					this.getDefaultInfo(); //数据回填
-
 				})
 				//所有模型
 				this.$axios.post(api.tplModelList, {
 					modelId: this.params.modelId
 				}).then(res => {
 					this.tplAll = res.body;
-					this.getDefaultInfo(); //数据回填
-
 				})
 				//打赏固定金额
-				this.$axios.post(api.configContentChargeGet).then(res => {
+				this.$axios.post(api.configContentChargeGet).then(res=>{
 					this.chargeMap = res.body.fixMap; //打赏固定金额
-					this.getDefaultInfo(); //数据回填
 				})
+				this.getDefaultInfo(); //数据回填
 			},
 			getEditorContent() {
 				//处理一下栏目的富文本内容,固定只有四个

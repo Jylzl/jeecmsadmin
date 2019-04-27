@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-row :gutter="24">
-			<el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+			<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
 				<div class="bg-box">
 					<div class="bg-green bg-icon">
 						<svg width="48" height="48">
@@ -23,7 +23,7 @@
 					</div>
 				</div>
 			</el-col>
-			<el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+			<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
 				<div class="bg-box">
 					<div class="bg-yellow bg-icon">
 						<svg width="48" height="48">
@@ -44,7 +44,7 @@
 					</div>
 				</div>
 			</el-col>
-			<el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+			<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
 				<div class="bg-box">
 					<div class="bg-blue bg-icon">
 						<svg width="48" height="48">
@@ -65,7 +65,7 @@
 					</div>
 				</div>
 			</el-col>
-			<el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+			<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
 				<div class="bg-box">
 					<div class="bg-purple bg-icon">
 						<svg width="48" height="48">
@@ -88,7 +88,7 @@
 			</el-col>
 		</el-row>
 		<el-row :gutter="24">
-			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+			<el-col :span="12" :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
 				<el-card class="box-card" :body-style="{ padding: '20px 10px 5px 10px' }">
 					<div slot="header" class="clearfix card-header">
 						<span>访问分析</span>
@@ -108,7 +108,7 @@
 					</div>
 				</el-card>
 			</el-col>
-			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+			<el-col :span="12" :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
 				<el-card class="box-card" :body-style="{ padding: '20px 10px 5px 10px' }">
 					<div slot="header" class="clearfix card-header">
 						<span>来源分析</span>
@@ -128,9 +128,7 @@
 					</div>
 				</el-card>
 			</el-col>
-		</el-row>
-		<el-row :gutter="24">
-			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+			<el-col :span="12" :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
 				<el-card class="box-card" :body-style="{ padding: '20px 10px 5px 10px' }">
 					<div slot="header" class="clearfix card-header">
 						<span>热词分析</span>
@@ -150,7 +148,7 @@
 					</div>
 				</el-card>
 			</el-col>
-			<el-col :span="12" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+			<el-col :span="12" :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
 				<el-card class="box-card" :body-style="{ padding: '0px' }">
 					<div slot="header" class="clearfix card-header">
 						<span>待办事项</span>
@@ -196,31 +194,31 @@
 </template>
 
 <script>
-	import moment from 'moment';
-	import countTo from 'vue-count-to';
-	import 'v-charts/lib/style.css'
+	import moment from "moment";
+	import countTo from "vue-count-to";
+	import "v-charts/lib/style.css";
 	export default {
 		components: {
-			'countTo': countTo,
-			'full-calendar': require('vue-fullcalendar')
+			countTo: countTo,
+			"full-calendar": require("vue-fullcalendar")
 		},
 		data() {
 			this.chart1Set = {
 				// 'xAxis.0.axisLabel.rotate': 45
-			}
+			};
 			this.chart2Set = {
 				// 'xAxis.0.axisLabel.rotate': 45
-			}
+			};
 			return {
 				params: {
-					type: 'source', //查询分类
-					flag: '1', //查询范围
-					target: '', //查询指标
-					year: '', //年度
-					begin: '', //开始日期
-					end: '', //结束日期
-					orderBy: '', //排序
-					count: '10'
+					type: "source", //查询分类
+					flag: "1", //查询范围
+					target: "", //查询指标
+					year: "", //年度
+					begin: "", //开始日期
+					end: "", //结束日期
+					orderBy: "", //排序
+					count: "10"
 				},
 				//访问分析数据
 				chart1loading: false,
@@ -239,56 +237,62 @@
 					rows: []
 				},
 				chartData3: {
-					columns: ['word', '浏览量'],
+					columns: ["word", "浏览量"],
 					rows: [{
-						'word': 'visualMap',
-						'浏览量': 22199,
-						"占比": '1%'
-
-					}, {
-						'word': 'continuous',
-						'浏览量': 10288,
-						"占比": '1%'
-					}, {
-						'word': 'contoller',
-						'浏览量': 620,
-						"占比": '1%'
-					}, {
-						'word': 'series',
-						'浏览量': 274470,
-						"占比": '1%'
-					}, {
-						'word': 'gauge',
-						'浏览量': 12311,
-						"占比": '1%'
-					}, {
-						'word': 'detail',
-						'浏览量': 1206,
-						"占比": '1%'
-					}, {
-						'word': 'piecewise',
-						'浏览量': 4885,
-						"占比": '1%'
-					}]
+							word: "visualMap",
+							浏览量: 22199,
+							占比: "1%"
+						},
+						{
+							word: "continuous",
+							浏览量: 10288,
+							占比: "1%"
+						},
+						{
+							word: "contoller",
+							浏览量: 620,
+							占比: "1%"
+						},
+						{
+							word: "series",
+							浏览量: 274470,
+							占比: "1%"
+						},
+						{
+							word: "gauge",
+							浏览量: 12311,
+							占比: "1%"
+						},
+						{
+							word: "detail",
+							浏览量: 1206,
+							占比: "1%"
+						},
+						{
+							word: "piecewise",
+							浏览量: 4885,
+							占比: "1%"
+						}
+					]
 				},
 				tableData: [],
 				page: {
 					//页面数据
 					source: [], //来访域名  type:array
 					keyword: [], //搜索词   type:array
-					pageNum: '',
-					adminNum: '', //会员数
+					pageNum: "",
+					adminNum: "", //会员数
 					pv: [], //获取pv、
 					ip: [], //ip、
 					fk: [], //访客数信息
-					avg: [], //平均访问时长  
+					avg: [], //平均访问时长
 					wd: [], //时间维度
 					ss: [], //来源分析
 					ssKey: [], //来源键
-					sum: '',
-					sumkey: '',
-				},
-			}
+					sum: "",
+					sumkey: ""
+				}
+			};
 		},
 		created() {
 			// this.getPv();
@@ -298,74 +302,87 @@
 		mounted() {
 			var _this = this;
 			var arrs = [{
-				date: '2016-05-02 12:12:12',
-				type: '0',
-				name: '王小虎a',
-				matter: '上海市普陀区金沙江路 1518 弄'
-			}, {
-				date: '2016-05-04 12:12:12',
-				type: '0',
-				name: '王小虎b',
-				matter: '上海市普陀区金沙江路 1517 弄'
-			}, {
-				date: '2016-05-01 12:12:12',
-				type: '1',
-				name: '王小虎c',
-				matter: '上海市普陀区金沙江路 1516 弄'
-			}, {
-				date: '2016-05-01 12:12:12',
-				type: '2',
-				name: '王小虎d',
-				matter: '上海市普陀区金沙江路 1515 弄'
-			}, {
-				date: '2016-05-01 12:12:12',
-				type: '1',
-				name: '王小虎d',
-				matter: '上海市普陀区金沙江路 1515 弄'
-			}, {
-				date: '2016-05-01 12:12:12',
-				type: '0',
-				name: '王小虎e',
-				matter: '上海市普陀区金沙江路 1514 弄'
-			}]
+					date: "2016-05-02 12:12:12",
+					type: "0",
+					name: "王小虎a",
+					matter: "上海市普陀区金沙江路 1518 弄"
+				},
+				{
+					date: "2016-05-04 12:12:12",
+					type: "0",
+					name: "王小虎b",
+					matter: "上海市普陀区金沙江路 1517 弄"
+				},
+				{
+					date: "2016-05-01 12:12:12",
+					type: "1",
+					name: "王小虎c",
+					matter: "上海市普陀区金沙江路 1516 弄"
+				},
+				{
+					date: "2016-05-01 12:12:12",
+					type: "2",
+					name: "王小虎d",
+					matter: "上海市普陀区金沙江路 1515 弄"
+				},
+				{
+					date: "2016-05-01 12:12:12",
+					type: "1",
+					name: "王小虎d",
+					matter: "上海市普陀区金沙江路 1515 弄"
+				},
+				{
+					date: "2016-05-01 12:12:12",
+					type: "0",
+					name: "王小虎e",
+					matter: "上海市普陀区金沙江路 1514 弄"
+				}
+			];
 			setTimeout(() => {
 				_this.tableData = [];
 				arrs.forEach(arr => {
-					_this.tableData.push(arr)
+					_this.tableData.push(arr);
 				});
-			}, 2000)
+			}, 2000);
 			this.globalCount();
 			this.globalAdmin();
 			this.getPv();
 			this.getsource();
-			this.create('link');
+			this.create("link");
 		},
 		methods: {
 			//获取pv、ip、访客数信息
 			getPv() {
 				var _this = this;
 				_this.chart1loading = true;
-				_this.$axios.post(_this.$api.flowPvList, {
-						flag: '4',
-						begin: '',
-						end: '',
-						statisDay: '',
-						year: ''
-					}).then(res => {
+				_this.$axios
+					.post(_this.$api.flowPvList, {
+						flag: "4",
+						begin: "",
+						end: "",
+						statisDay: "",
+						year: ""
+					})
+					.then(res => {
 						let data = [];
 						let arr = _this.chart1Data.rows;
 						arr.splice(0, arr.length);
 						if (res.body.list) {
 							res.body.list.forEach(element => {
 								data.push({
-									'日期': _this.timeFormat('day', element[4]),
-									'浏览量（PV）': element[0],
-									'统计（IP）': element[1],
-									'访客数（UV）': element[2]
-								})
+									日期: _this.timeFormat("day", element[4]),
+									"浏览量（PV）": element[0],
+									"统计（IP）": element[1],
+									"访客数（UV）": element[2]
+								});
 							});
 						}
-						_this.chart1Data.columns = ['日期', '浏览量（PV）', '统计（IP）', '访客数（UV）'];
+						_this.chart1Data.columns = [
+							"日期",
+							"浏览量（PV）",
+							"统计（IP）",
+							"访客数（UV）"
+						];
 						_this.chart1Data.rows = data;
 						_this.chart1DataEmpty = !_this.chart1Data.rows.length;
 						setTimeout(() => {
@@ -373,180 +390,186 @@
 						}, 300);
 					})
 					.catch(err => {
-						console.log(err)
+						console.log(err);
 					});
 			},
-			//获取来源 
+			//获取来源
 			getsource() {
 				var _this = this;
 				_this.chart2loading = true;
 				let pam = {
-					type: 'source', //查询分类
-					flag: '1', //查询范围
-					target: '0', //查询指标
-					year: '', //年度
-					begin: '', //开始日期
-					end: '', //结束日期
-					orderBy: '', //排序
-					count: '10',
+					type: "source", //查询分类
+					flag: "1", //查询范围
+					target: "0", //查询指标
+					year: "", //年度
+					begin: "", //开始日期
+					end: "", //结束日期
+					orderBy: "", //排序
+					count: "10"
 				};
-				_this.$axios.post(_this.$api.flowSourceList, _this.pam).then(res => {
-					let data = [];
-					let a = 0;
-					for (let i in res.body.totalMap) {
-						data.push({
-							'访问类型': res.body.keys[a],
-							'访问量': res.body.totalMap[i]
-						})
-						a++;
-					}
-					_this.chart2Data.columns = ['访问类型', '访问量'];
-					_this.chart2Data.rows = data;
-					_this.chart2DataEmpty = !_this.chart2Data.rows.length;
-					setTimeout(() => {
-						_this.chart2loading = false;
-					}, 300);
-				}).catch(err => {
-					console.log(err)
-				});
+				_this.$axios
+					.post(_this.$api.flowSourceList, _this.pam)
+					.then(res => {
+						let data = [];
+						let a = 0;
+						for (let i in res.body.totalMap) {
+							data.push({
+								访问类型: res.body.keys[a],
+								访问量: res.body.totalMap[i]
+							});
+							a++;
+						}
+						_this.chart2Data.columns = ["访问类型", "访问量"];
+						_this.chart2Data.rows = data;
+						_this.chart2DataEmpty = !_this.chart2Data.rows.length;
+						setTimeout(() => {
+							_this.chart2loading = false;
+						}, 300);
+					})
+					.catch(err => {
+						console.log(err);
+					});
 			},
 			//格式化时间显示
 			timeFormat(flag, timeName) {
-				let formatTime = '0';
-				if (flag == 'day' || flag == 'yesterday') { //小时转换
+				let formatTime = "0";
+				if (flag == "day" || flag == "yesterday") {
+					//小时转换
 					switch (timeName) {
 						case 0:
-							formatTime = "00:00-00:59"
+							formatTime = "00:00-00:59";
 							break;
 						case 1:
-							formatTime = "01:00-01:59"
+							formatTime = "01:00-01:59";
 							break;
 						case 2:
-							formatTime = "02:00-02:59"
+							formatTime = "02:00-02:59";
 							break;
 						case 3:
-							formatTime = "03:00-03:59"
+							formatTime = "03:00-03:59";
 							break;
 						case 4:
-							formatTime = "04:00-04:59"
+							formatTime = "04:00-04:59";
 							break;
 						case 5:
-							formatTime = "05:00-05:59"
+							formatTime = "05:00-05:59";
 							break;
 						case 6:
-							formatTime = "06:00-06:59"
+							formatTime = "06:00-06:59";
 							break;
 						case 7:
-							formatTime = "07:00-07:59"
+							formatTime = "07:00-07:59";
 							break;
 						case 8:
-							formatTime = "08:00-08:59"
+							formatTime = "08:00-08:59";
 							break;
 						case 9:
-							formatTime = "09:00-09:59"
+							formatTime = "09:00-09:59";
 							break;
 						case 10:
-							formatTime = "10:00-10:59"
+							formatTime = "10:00-10:59";
 							break;
 						case 11:
-							formatTime = "11:00-11:59"
+							formatTime = "11:00-11:59";
 							break;
 						case 12:
-							formatTime = "12:00-12:59"
+							formatTime = "12:00-12:59";
 							break;
 						case 13:
-							formatTime = "13:00-13:59"
+							formatTime = "13:00-13:59";
 							break;
 						case 14:
-							formatTime = "14:00-14:59"
+							formatTime = "14:00-14:59";
 							break;
 						case 15:
-							formatTime = "15:00-15:59"
+							formatTime = "15:00-15:59";
 							break;
 						case 16:
-							formatTime = "16:00-16:59"
+							formatTime = "16:00-16:59";
 							break;
 						case 17:
-							formatTime = "17:00-17:59"
+							formatTime = "17:00-17:59";
 							break;
 						case 18:
-							formatTime = "18:00-18:59"
+							formatTime = "18:00-18:59";
 							break;
 						case 19:
-							formatTime = "19:00-19:59"
+							formatTime = "19:00-19:59";
 							break;
 						case 20:
-							formatTime = "20:00-20:59"
+							formatTime = "20:00-20:59";
 							break;
 						case 21:
-							formatTime = "21:00-21:59"
+							formatTime = "21:00-21:59";
 							break;
 						case 22:
-							formatTime = "22:00-22:59"
+							formatTime = "22:00-22:59";
 							break;
 						case 23:
-							formatTime = "23:00-23:59"
+							formatTime = "23:00-23:59";
 							break;
 						default:
-							formatTime = "99:99:99~99:99:99:99"
+							formatTime = "99:99:99~99:99:99:99";
 							break;
 					}
 				}
-				if (flag == 'year') {
+				if (flag == "year") {
 					let date = new Date();
 					switch (timeName) {
 						case 1:
-							formatTime = date.getFullYear() + "-01"
+							formatTime = date.getFullYear() + "-01";
 							break;
 						case 2:
-							formatTime = date.getFullYear() + "-02"
+							formatTime = date.getFullYear() + "-02";
 							break;
 						case 3:
-							formatTime = date.getFullYear() + "-03"
+							formatTime = date.getFullYear() + "-03";
 							break;
 						case 4:
-							formatTime = date.getFullYear() + "-04"
+							formatTime = date.getFullYear() + "-04";
 							break;
 						case 5:
-							formatTime = date.getFullYear() + "-05"
+							formatTime = date.getFullYear() + "-05";
 							break;
 						case 6:
-							formatTime = date.getFullYear() + "-06"
+							formatTime = date.getFullYear() + "-06";
 							break;
 						case 7:
-							formatTime = date.getFullYear() + "-07"
+							formatTime = date.getFullYear() + "-07";
 							break;
 						case 8:
-							formatTime = date.getFullYear() + "-08"
+							formatTime = date.getFullYear() + "-08";
 							break;
 						case 9:
-							formatTime = date.getFullYear() + "-09"
+							formatTime = date.getFullYear() + "-09";
 							break;
 						case 10:
-							formatTime = date.getFullYear() + "-10"
+							formatTime = date.getFullYear() + "-10";
 							break;
 						case 11:
-							formatTime = date.getFullYear() + "-11"
+							formatTime = date.getFullYear() + "-11";
 							break;
 						case 12:
-							formatTime = date.getFullYear() + "-12"
+							formatTime = date.getFullYear() + "-12";
 							break;
 						default:
-							formatTime = "9999-99-99"
+							formatTime = "9999-99-99";
 							break;
 					}
 				}
-				if (flag == 'month' || flag == 'years') {
+				if (flag == "month" || flag == "years") {
 					formatTime = timeName;
 				}
 				return formatTime;
 			},
-			//获取欢迎页面需要的数据 
+			//获取欢迎页面需要的数据
 			create(type) {
 				let _this = this;
-				if (type === 'link') {
+				if (type === "link") {
 					_this.params.type = type;
-					_this.$axios.post(this.$api.flowSourceList, _this.params).then(res => {
+					_this.$axios
+						.post(this.$api.flowSourceList, _this.params)
+						.then(res => {
 							// this.page.source = res.body.totalMap;
 							// let sum = 0;
 							// for (let x in res.body.totalMap) {
@@ -556,20 +579,23 @@
 							// 	sum = 1;
 							// }
 							// this.page.sum = sum;
-							_this.create('keyword');
-
+							_this.create("keyword");
 						})
 						.catch(err => {
 							this.loading = false;
 						});
 				}
-				if (type === 'keyword') {
-					_this.params.start_date = moment().subtract('days', 1).format('YYYY/MM/DD');
-					_this.params.end_date = moment().format('YYYY/MM/DD');
-					_this.params.method = 'overview/getWord';
-					_this.params.metrics = 'pv_count';
+				if (type === "keyword") {
+					_this.params.start_date = moment()
+						.subtract("days", 1)
+						.format("YYYY/MM/DD");
+					_this.params.end_date = moment().format("YYYY/MM/DD");
+					_this.params.method = "overview/getWord";
+					_this.params.metrics = "pv_count";
 					_this.params.type = type;
-					_this.$axios.post(_this.$api.flowSearchWordList, _this.params).then(res => {
+					_this.$axios
+						.post(_this.$api.flowSearchWordList, _this.params)
+						.then(res => {
 							// console.log("-------------")
 							// console.log(res)
 							// _this.page.keyword = res.body.items;
@@ -578,23 +604,26 @@
 							// _this.loading = false;
 						});
 				}
-
 			},
 			//获取内容总数
 			globalCount() {
-				this.$axios.post(this.$api.globalStatistic).then(res => {
-						this.page.pageNum = res.body
+				this.$axios
+					.post(this.$api.globalStatistic)
+					.then(res => {
+						this.page.pageNum = res.body;
 					})
 					.catch(err => {});
 			},
 			//获取会员注册数
 			globalAdmin() {
-				this.$axios.post(this.$api.statisticMemberList, {
-						queryModel: 'month',
-						begin: '',
-						end: ''
-					}).then(res => {
-						this.page.adminNum = res.body
+				this.$axios
+					.post(this.$api.statisticMemberList, {
+						queryModel: "month",
+						begin: "",
+						end: ""
+					})
+					.then(res => {
+						this.page.adminNum = res.body;
 					})
 					.catch(err => {});
 			},
@@ -605,7 +634,7 @@
 				console.log(`当前页: ${val}`);
 			}
 		}
-	}
+	};
 </script>
 
 <style scoped>
@@ -626,8 +655,8 @@
 		line-height: 22px;
 	}
 
-	.el-row {
-		padding-bottom: 20px;
+	.el-col {
+		margin-bottom: 20px;
 	}
 
 	/* 样式重写 End*/

@@ -1,7 +1,6 @@
 <template>
 	<div class="cms-upload">
 		<div class="cms-upload-box">
-			<!--  -->
 			<el-upload name="uploadFile" :action="upLoadUrl" :data="data" :show-file-list="false"
 				:on-success="handleAvatarSuccess" :on-progress="handleAvatarProgress" class="cms-upload">
 				<i v-if="imageUrl==''" class="el-icon-plus avatar-uploader-icon"></i>
@@ -10,7 +9,8 @@
 				<img :src="imageUrl" class="back-img">
 				<div class="img-porp" @dblclick="dialogVisible=true">
 					<div class="el-icon-zoom-in cms-zoom-icon">
-						<span class="cms-zoom-font">双击查看大图</span></div>
+						<span class="cms-zoom-font">双击查看大图</span>
+					</div>
 					<div class="cms-img-bottom">
 						<el-upload name="uploadFile" :action="upLoadUrl" :data="data" :show-file-list="false"
 							:on-success="handleAvatarSuccess" :on-progress="handleAvatarProgress" class="cms-again">
@@ -37,7 +37,7 @@
 <script>
 	import {
 		getRand
-	} from "@/utils/random";
+	} from "@/utils/random.js";
 	import {
 		signParams
 	} from "@/utils/aes.js";
@@ -73,7 +73,7 @@
 					this.$getUrl() + this.src : this.src,
 				upLoadUrl: this.$store.state.sys.baseUrl + api.bsaeUpload,
 				params: {
-					appId: process.env.appId,
+					appId: process.env.VUE_APP_appId,
 					sessionKey: localStorage.getItem("sessionKey"),
 					type: "image",
 					nonceStr: rand
@@ -88,6 +88,8 @@
 
 		methods: {
 			handleAvatarSuccess(res, file) {
+				console.log("a---------")
+				console.log(res)
 				//上传成功服务器响应
 				if (res.code == "200" && res.body != "") {
 					this.status = "success";
@@ -128,7 +130,6 @@
 						this.$emit("get", this.src, this.field, this.index, this.pIndex);
 						this.$emit("change", this.src, this.index, this.pIndex);
 					}, 1000);
-
 					this.errorMessage("上传失败:" + res.code);
 				}
 			},
@@ -148,7 +149,7 @@
 			}
 		},
 		created() {
-			this.data = signParams(this.params, process.env.appKey);
+			this.data = signParams(this.params, process.env.VUE_APP_appKey);
 			//console.log("src:"+this.src);
 			// this.imageUrl = this.src.indexOf('http') >= 0 ?this.src : this.getUrl()+this.src;
 		},
@@ -168,7 +169,7 @@
 			},
 			params: {
 				handler(curVal, oldVal) {
-					this.data = signParams(curVal, process.env.appKey);
+					this.data = signParams(curVal, process.env.VUE_APP_appKey);
 				},
 				deep: true
 			}

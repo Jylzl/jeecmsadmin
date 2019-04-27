@@ -72,7 +72,7 @@ export default {
     return {
       uploadUrl: this.$store.state.sys.baseUrl + (this.action == ''?this.$api.bsaeUpload:this.action ),
       params:{
-          appId: process.env.appId,
+          appId: process.env.VUE_APP_appId,
           sessionKey: localStorage.getItem("sessionKey"),
           type: "attach",
           nonceStr: rand,
@@ -95,7 +95,7 @@ export default {
     }
   },
   created(){
-    this.data=signParams(this.params,process.env.appKey);
+    this.data=signParams(this.params,process.env.VUE_APP_appKey);
   },
 };
 </script>

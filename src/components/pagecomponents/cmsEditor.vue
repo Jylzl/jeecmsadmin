@@ -82,7 +82,7 @@ export default {
                 "/api/member/ueditor/upload?sessionKey=" +
                 localStorage.getItem("sessionKey") +
                 "&appId=" +
-                process.env.appId
+                process.env.VUE_APP_appId
               );
             } else if (action == "uploadvideo") {
               return (
@@ -90,7 +90,7 @@ export default {
                 "/api/member/ueditor/upload?sessionKey=" +
                 localStorage.getItem("sessionKey") +
                 "&appId=" +
-                process.env.appId
+                process.env.VUE_APP_appId
               );
             } else if (action == "uploadfile") {
               return (
@@ -98,7 +98,7 @@ export default {
                 "/api/member/ueditor/upload?sessionKey=" +
                 localStorage.getItem("sessionKey") +
                 "&appId=" +
-                process.env.appId
+                process.env.VUE_APP_appId
               );
             } else if (action == "catchimage") {
               return (
@@ -106,7 +106,7 @@ export default {
                 "/api/member/ueditor/getRemoteImage?sessionKey=" +
                 localStorage.getItem("sessionKey") +
                 "&appId=" +
-                process.env.appId
+                process.env.VUE_APP_appId
               );
             } else if (action == "uploadscrawl") {
               return (
@@ -114,7 +114,7 @@ export default {
                 "/api/member//ueditor/scrawlImage?Type=Image&sessionKey=" +
                 localStorage.getItem("sessionKey") +
                 "&appId=" +
-                process.env.appId
+                process.env.VUE_APP_appId
               );
             } else if (action == "listimage" || action == "listfile") {
               return (
@@ -122,7 +122,7 @@ export default {
                 "/api/member/ueditor/imageManager?picNum=50&insite=false&sessionKey=" +
                 localStorage.getItem("sessionKey") +
                 "&appId=" +
-                process.env.appId
+                process.env.VUE_APP_appId
               );
             } else if (action == "config") {
               return "./static/ueditor/config.json";
