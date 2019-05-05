@@ -1,4 +1,5 @@
 @charset "utf-8";
+
 /* dialog样式 */
 .wrapper {
     zoom: 1;
@@ -13,8 +14,9 @@
 
 /*tab样式框大小*/
 .tabhead {
-    float:left;
+    float: left;
 }
+
 .tabbody {
     width: 100%;
     height: 346px;
@@ -89,7 +91,7 @@
     color: #cccccc;
     font-size: 18px;
     position: relative;
-    top:0;
+    top: 0;
     *top: 10px;
 }
 
@@ -201,7 +203,6 @@
     margin: 0;
     border-radius: 0;
     background: none;
-    -webkit-box-shadow: 0 0 0;
 }
 
 #upload .filelist li p.progress span {
@@ -222,14 +223,13 @@
     -o-animation: progressmove 2s linear infinite;
     -ms-animation: progressmove 2s linear infinite;
     animation: progressmove 2s linear infinite;
-
-    -webkit-transform: translateZ(0);
 }
 
 @-webkit-keyframes progressmove {
     0% {
         background-position: 0 0;
     }
+
     100% {
         background-position: 17px 0;
     }
@@ -239,6 +239,7 @@
     0% {
         background-position: 0 0;
     }
+
     100% {
         background-position: 17px 0;
     }
@@ -248,6 +249,7 @@
     0% {
         background-position: 0 0;
     }
+
     100% {
         background-position: 17px 0;
     }
@@ -274,12 +276,14 @@
     -ms-transition: 200ms ease-out;
     transition: 200ms ease-out;
 }
+
 #upload .filelist li p.imgWrap.notimage {
     margin-top: 0;
     width: 111px;
     height: 111px;
     border: 1px #eeeeee solid;
 }
+
 #upload .filelist li p.imgWrap.notimage i.file-preview {
     margin-top: 15px;
 }
@@ -298,7 +302,7 @@
     line-height: 28px;
     width: 100%;
     z-index: 100;
-    display:none;
+    display: none;
 }
 
 #upload .filelist li .success {
@@ -320,7 +324,8 @@
     border: 1px solid #eeeeee;
     border-radius: 0;
 }
-#upload .filelist li.filePickerBlock div.webuploader-pick  {
+
+#upload .filelist li.filePickerBlock div.webuploader-pick {
     width: 100%;
     height: 100%;
     margin: 0;
@@ -343,17 +348,14 @@
 }
 
 #upload .filelist div.file-panel span {
-    width: 24px;
-    height: 24px;
     display: inline;
-    float: right;
     text-indent: -9999px;
     overflow: hidden;
     background: url(./images/icons.png) no-repeat;
     background: url(./images/icons.gif) no-repeat \9;
     margin: 5px 1px 1px;
     cursor: pointer;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -361,7 +363,7 @@
 }
 
 #upload .filelist div.file-panel span.rotateLeft {
-    display:none;
+    display: none;
     background-position: 0 -24px;
 }
 
@@ -370,7 +372,7 @@
 }
 
 #upload .filelist div.file-panel span.rotateRight {
-    display:none;
+    display: none;
     background-position: -24px -24px;
 }
 
@@ -409,6 +411,7 @@
     color: #6dbfff;
     margin: 0 10px 0 0;
 }
+
 #upload .statusBar .progress span.percentage {
     width: 0;
     height: 100%;
@@ -417,6 +420,7 @@
     background: #1483d8;
     position: absolute;
 }
+
 #upload .statusBar .progress span.text {
     position: relative;
     z-index: 10;
@@ -437,8 +441,8 @@
 
 #filePickerBtn {
     display: inline-block;
-    float: left;
 }
+
 #upload .statusBar .btns .webuploader-pick,
 #upload .statusBar .btns .uploadBtn,
 #upload .statusBar .btns .uploadBtn.state-uploading,
@@ -452,12 +456,12 @@
     margin-left: 10px;
     cursor: pointer;
     font-size: 14px;
-    float: left;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
+
 #upload .statusBar .btns .webuploader-pick-hover,
 #upload .statusBar .btns .uploadBtn:hover,
 #upload .statusBar .btns .uploadBtn.state-uploading:hover,
@@ -466,20 +470,21 @@
 }
 
 #upload .statusBar .btns .uploadBtn,
-#upload .statusBar .btns .uploadBtn.state-paused{
+#upload .statusBar .btns .uploadBtn.state-paused {
     background: #00b7ee;
     color: #fff;
     border-color: transparent;
 }
+
 #upload .statusBar .btns .uploadBtn:hover,
-#upload .statusBar .btns .uploadBtn.state-paused:hover{
+#upload .statusBar .btns .uploadBtn.state-paused:hover {
     background: #00a2d4;
 }
 
 #upload .statusBar .btns .uploadBtn.disabled {
     pointer-events: none;
-    filter:alpha(opacity=60);
-    -moz-opacity:0.6;
+    filter: alpha(opacity=60);
+    -moz-opacity: 0.6;
     -khtml-opacity: 0.6;
     opacity: 0.6;
 }
@@ -492,19 +497,22 @@
     height: 336px;
     padding: 10px 0 0 0;
 }
-#online #fileList{
+
+#online #fileList {
     width: 100%;
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
 }
+
 #online ul {
     display: block;
     list-style: none;
     margin: 0;
     padding: 0;
 }
+
 #online li {
     float: left;
     display: block;
@@ -519,18 +527,21 @@
     cursor: pointer;
     position: relative;
 }
+
 #online li.clearFloat {
     float: none;
     clear: both;
     display: block;
-    width:0;
-    height:0;
+    width: 0;
+    height: 0;
     margin: 0;
     padding: 0;
 }
+
 #online li img {
     cursor: pointer;
 }
+
 #online li div.file-wrapper {
     cursor: pointer;
     position: absolute;
@@ -540,7 +551,8 @@
     border: 1px solid #eee;
     background: url("./images/bg.png") repeat;
 }
-#online li div span.file-title{
+
+#online li div span.file-title {
     display: block;
     padding: 0 3px;
     margin: 3px 0 0 0;
@@ -554,6 +566,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 #online li .icon {
     cursor: pointer;
     width: 113px;
@@ -565,16 +578,19 @@
     border: 0;
     background-repeat: no-repeat;
 }
+
 #online li .icon:hover {
     width: 107px;
     height: 107px;
     border: 3px solid #1094fa;
 }
+
 #online li.selected .icon {
     background-image: url(images/success.png);
     background-image: url(images/success.gif) \9;
     background-position: 75px 75px;
 }
+
 #online li.selected .icon:hover {
     width: 107px;
     height: 107px;
@@ -594,41 +610,51 @@ i.file-preview {
     background-position: -140px center;
     background-repeat: no-repeat;
 }
-i.file-preview.file-type-dir{
+
+i.file-preview.file-type-dir {
     background-position: 0 center;
 }
-i.file-preview.file-type-file{
+
+i.file-preview.file-type-file {
     background-position: -140px center;
 }
-i.file-preview.file-type-filelist{
+
+i.file-preview.file-type-filelist {
     background-position: -210px center;
 }
+
 i.file-preview.file-type-zip,
 i.file-preview.file-type-rar,
 i.file-preview.file-type-7z,
 i.file-preview.file-type-tar,
 i.file-preview.file-type-gz,
-i.file-preview.file-type-bz2{
+i.file-preview.file-type-bz2 {
     background-position: -280px center;
 }
+
 i.file-preview.file-type-xls,
-i.file-preview.file-type-xlsx{
+i.file-preview.file-type-xlsx {
     background-position: -350px center;
 }
+
 i.file-preview.file-type-doc,
-i.file-preview.file-type-docx{
+i.file-preview.file-type-docx {
     background-position: -420px center;
 }
+
 i.file-preview.file-type-ppt,
-i.file-preview.file-type-pptx{
+i.file-preview.file-type-pptx {
     background-position: -490px center;
 }
-i.file-preview.file-type-vsd{
+
+i.file-preview.file-type-vsd {
     background-position: -560px center;
 }
-i.file-preview.file-type-pdf{
+
+i.file-preview.file-type-pdf {
     background-position: -630px center;
 }
+
 i.file-preview.file-type-txt,
 i.file-preview.file-type-md,
 i.file-preview.file-type-json,
@@ -639,18 +665,22 @@ i.file-preview.file-type-js,
 i.file-preview.file-type-css,
 i.file-preview.file-type-php,
 i.file-preview.file-type-jsp,
-i.file-preview.file-type-asp{
+i.file-preview.file-type-asp {
     background-position: -700px center;
 }
-i.file-preview.file-type-apk{
+
+i.file-preview.file-type-apk {
     background-position: -770px center;
 }
-i.file-preview.file-type-exe{
+
+i.file-preview.file-type-exe {
     background-position: -840px center;
 }
-i.file-preview.file-type-ipa{
+
+i.file-preview.file-type-ipa {
     background-position: -910px center;
 }
+
 i.file-preview.file-type-mp4,
 i.file-preview.file-type-swf,
 i.file-preview.file-type-mkv,
@@ -662,21 +692,23 @@ i.file-preview.file-type-mpeg,
 i.file-preview.file-type-ogv,
 i.file-preview.file-type-webm,
 i.file-preview.file-type-rm,
-i.file-preview.file-type-rmvb{
+i.file-preview.file-type-rmvb {
     background-position: -980px center;
 }
+
 i.file-preview.file-type-ogg,
 i.file-preview.file-type-wav,
 i.file-preview.file-type-wmv,
 i.file-preview.file-type-mid,
-i.file-preview.file-type-mp3{
+i.file-preview.file-type-mp3 {
     background-position: -1050px center;
 }
+
 i.file-preview.file-type-jpg,
 i.file-preview.file-type-jpeg,
 i.file-preview.file-type-gif,
 i.file-preview.file-type-bmp,
 i.file-preview.file-type-png,
-i.file-preview.file-type-psd{
+i.file-preview.file-type-psd {
     background-position: -140px center;
 }

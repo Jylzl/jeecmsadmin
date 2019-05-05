@@ -38,7 +38,7 @@
 
     /* 初始化tabbody */
     function setTabFocus(id) {
-        if(!id) return;
+        if (!id) return;
         var i, bodyId, tabs = $G('tabhead').children;
         for (i = 0; i < tabs.length; i++) {
             bodyId = tabs[i].getAttribute('data-content-id');
@@ -74,7 +74,9 @@
     function initButtons() {
 
         dialog.onok = function () {
-            var remote = false, list = [], id, tabs = $G('tabhead').children;
+            var remote = false,
+                list = [],
+                id, tabs = $G('tabhead').children;
             for (var i = 0; i < tabs.length; i++) {
                 if (domUtils.hasClass(tabs[i], 'focus')) {
                     id = tabs[i].getAttribute('data-content-id');
@@ -103,7 +105,7 @@
                     break;
             }
 
-            if(list) {
+            if (list) {
                 editor.execCommand('insertimage', list);
                 remote && editor.fireEvent("catchRemoteImage");
             }
@@ -112,22 +114,22 @@
 
 
     /* 初始化对其方式的点击事件 */
-    function initAlign(){
+    function initAlign() {
         /* 点击align图标 */
-        domUtils.on($G("alignIcon"), 'click', function(e){
+        domUtils.on($G("alignIcon"), 'click', function (e) {
             var target = e.target || e.srcElement;
-            if(target.className && target.className.indexOf('-align') != -1) {
+            if (target.className && target.className.indexOf('-align') != -1) {
                 setAlign(target.getAttribute('data-align'));
             }
         });
     }
 
     /* 设置对齐方式 */
-    function setAlign(align){
+    function setAlign(align) {
         align = align || 'none';
         var aligns = $G("alignIcon").children;
-        for(i = 0; i < aligns.length; i++){
-            if(aligns[i].getAttribute('data-align') == align) {
+        for (i = 0; i < aligns.length; i++) {
+            if (aligns[i].getAttribute('data-align') == align) {
                 domUtils.addClass(aligns[i], 'focus');
                 $G("align").value = aligns[i].getAttribute('data-align');
             } else {
@@ -136,9 +138,9 @@
         }
     }
     /* 获取对齐方式 */
-    function getAlign(){
+    function getAlign() {
         var align = $G("align").value || 'none';
-        return align == 'none' ? '':align;
+        return align == 'none' ? '' : align;
     }
 
 
@@ -176,38 +178,38 @@
             domUtils.on($G("border"), 'keyup', updatePreview);
             domUtils.on($G("title"), 'keyup', updatePreview);
 
-            domUtils.on($G("width"), 'keyup', function(){
-                if(locker.checked) {
-                    var proportion =locker.getAttribute('data-proportion');
+            domUtils.on($G("width"), 'keyup', function () {
+                if (locker.checked) {
+                    var proportion = locker.getAttribute('data-proportion');
                     $G('height').value = Math.round(this.value / proportion);
                 } else {
                     _this.updateLocker();
                 }
                 updatePreview();
             });
-            domUtils.on($G("height"), 'keyup', function(){
-                if(locker.checked) {
-                    var proportion =locker.getAttribute('data-proportion');
+            domUtils.on($G("height"), 'keyup', function () {
+                if (locker.checked) {
+                    var proportion = locker.getAttribute('data-proportion');
                     $G('width').value = Math.round(this.value * proportion);
                 } else {
                     _this.updateLocker();
                 }
                 updatePreview();
             });
-            domUtils.on($G("lock"), 'change', function(){
-                var proportion = parseInt($G("width").value) /parseInt($G("height").value);
+            domUtils.on($G("lock"), 'change', function () {
+                var proportion = parseInt($G("width").value) / parseInt($G("height").value);
                 locker.setAttribute('data-proportion', proportion);
             });
 
-            function updatePreview(){
+            function updatePreview() {
                 _this.setPreview();
             }
         },
-        updateLocker: function(){
+        updateLocker: function () {
             var width = $G('width').value,
                 height = $G('height').value,
                 locker = $G('lock');
-            if(width && height && width == parseInt(width) && height == parseInt(height)) {
+            if (width && height && width == parseInt(width) && height == parseInt(height)) {
                 locker.disabled = false;
                 locker.title = '';
             } else {
@@ -216,7 +218,7 @@
                 locker.title = lang.remoteLockError;
             }
         },
-        setImage: function(img){
+        setImage: function (img) {
             /* 不是正常的图片 */
             if (!img.tagName || img.tagName.toLowerCase() != 'img' && !img.getAttribute("src") || !img.src) return;
 
@@ -226,7 +228,7 @@
 
             /* 防止onchange事件循环调用 */
             if (src !== $G("url").value) $G("url").value = src;
-            if(src) {
+            if (src) {
                 /* 设置表单内容 */
                 $G("width").value = img.width || '';
                 $G("height").value = img.height || '';
@@ -238,14 +240,14 @@
                 this.updateLocker();
             }
         },
-        getData: function(){
+        getData: function () {
             var data = {};
-            for(var k in this.dom){
+            for (var k in this.dom) {
                 data[k] = this.dom[k].value;
             }
             return data;
         },
-        setPreview: function(){
+        setPreview: function () {
             var url = $G('url').value,
                 ow = $G('width').value,
                 oh = $G('height').value,
@@ -255,17 +257,17 @@
                 width,
                 height;
 
-            width = ((!ow || !oh) ? preview.offsetWidth:Math.min(ow, preview.offsetWidth));
-            width = width+(border*2) > preview.offsetWidth ? width:(preview.offsetWidth - (border*2));
-            height = (!ow || !oh) ? '':width*oh/ow;
+            width = ((!ow || !oh) ? preview.offsetWidth : Math.min(ow, preview.offsetWidth));
+            width = width + (border * 2) > preview.offsetWidth ? width : (preview.offsetWidth - (border * 2));
+            height = (!ow || !oh) ? '' : width * oh / ow;
 
-            if(url) {
+            if (url) {
                 preview.innerHTML = '<img src="' + url + '" width="' + width + '" height="' + height + '" border="' + border + 'px solid #000" title="' + title + '" />';
             }
         },
         getInsertList: function () {
             var data = this.getData();
-            if(data['url']) {
+            if (data['url']) {
                 return [{
                     src: data['url'],
                     _src: data['url'],
@@ -302,48 +304,48 @@
         /* 初始化容器 */
         initUploader: function () {
             var _this = this,
-                $ = jQuery,    // just in case. Make sure it's not an other libaray.
+                $ = jQuery, // just in case. Make sure it's not an other libaray.
                 $wrap = _this.$wrap,
-            // 图片容器
+                // 图片容器
                 $queue = $wrap.find('.filelist'),
-            // 状态栏，包括进度和控制按钮
+                // 状态栏，包括进度和控制按钮
                 $statusBar = $wrap.find('.statusBar'),
-            // 文件总体选择信息。
+                // 文件总体选择信息。
                 $info = $statusBar.find('.info'),
-            // 上传按钮
+                // 上传按钮
                 $upload = $wrap.find('.uploadBtn'),
-            // 上传按钮
+                // 上传按钮
                 $filePickerBtn = $wrap.find('.filePickerBtn'),
-            // 上传按钮
+                // 上传按钮
                 $filePickerBlock = $wrap.find('.filePickerBlock'),
-            // 没选择文件之前的内容。
+                // 没选择文件之前的内容。
                 $placeHolder = $wrap.find('.placeholder'),
-            // 总体进度条
+                // 总体进度条
                 $progress = $statusBar.find('.progress').hide(),
-            // 添加的文件数量
+                // 添加的文件数量
                 fileCount = 0,
-            // 添加的文件总大小
+                // 添加的文件总大小
                 fileSize = 0,
-            // 优化retina, 在retina下这个值是2
+                // 优化retina, 在retina下这个值是2
                 ratio = window.devicePixelRatio || 1,
-            // 缩略图大小
+                // 缩略图大小
                 thumbnailWidth = 113 * ratio,
                 thumbnailHeight = 113 * ratio,
-            // 可能有pedding, ready, uploading, confirm, done.
+                // 可能有pedding, ready, uploading, confirm, done.
                 state = '',
-            // 所有文件的进度信息，key为file id
+                // 所有文件的进度信息，key为file id
                 percentages = {},
                 supportTransition = (function () {
                     var s = document.createElement('p').style,
                         r = 'transition' in s ||
-                            'WebkitTransition' in s ||
-                            'MozTransition' in s ||
-                            'msTransition' in s ||
-                            'OTransition' in s;
+                        'WebkitTransition' in s ||
+                        'MozTransition' in s ||
+                        'msTransition' in s ||
+                        'OTransition' in s;
                     s = null;
                     return r;
                 })(),
-            // WebUploader实例
+                // WebUploader实例
                 uploader,
                 actionUrl = editor.getActionUrl(editor.getOpt('imageActionName')),
                 acceptExtensions = (editor.getOpt('imageAllowFiles') || [".png", ".jpg", ".jpeg", ".gif", ".bmp"]).join('').replace(/\./g, ',').replace(/^[,]/, ''),
@@ -372,7 +374,7 @@
                 server: actionUrl,
                 fileVal: editor.getOpt('imageFieldName'),
                 duplicate: true,
-                fileSingleSizeLimit: imageMaxSize,    // 默认 2 M
+                fileSingleSizeLimit: imageMaxSize, // 默认 2 M
                 compress: false
             });
             uploader.addButton({
@@ -388,15 +390,15 @@
             // 当有文件添加进来时执行，负责view的创建
             function addFile(file) {
                 var $li = $('<li id="' + file.id + '">' +
-                    '<p class="title">' + file.name + '</p>' +
-                    '<p class="imgWrap"></p>' +
-                    '<p class="progress"><span></span></p>' +
-                    '</li>'),
+                        '<p class="title">' + file.name + '</p>' +
+                        '<p class="imgWrap"></p>' +
+                        '<p class="progress"><span></span></p>' +
+                        '</li>'),
 
                     $btns = $('<div class="file-panel">' +
-                    '<span class="cancel">' + lang.uploadDelete + '</span>' +
-                    '<span class="rotateRight">' + lang.uploadTurnRight + '</span>' +
-                    '<span class="rotateLeft">' + lang.uploadTurnLeft + '</span></div>').appendTo($li),
+                        '<span class="cancel">' + lang.uploadDelete + '</span>' +
+                        '<span class="rotateRight">' + lang.uploadTurnRight + '</span>' +
+                        '<span class="rotateLeft">' + lang.uploadTurnLeft + '</span></div>').appendTo($li),
                     $prgress = $li.find('p.progress span'),
                     $wrap = $li.find('p.imgWrap'),
                     $info = $('<p class="error"></p>').hide().appendTo($li),
@@ -439,7 +441,7 @@
                             }
                         }, thumbnailWidth, thumbnailHeight);
                     }
-                    percentages[ file.id ] = [ file.size, 0 ];
+                    percentages[file.id] = [file.size, 0];
                     file.rotation = 0;
 
                     /* 检查文件格式 */
@@ -459,25 +461,28 @@
                     // 成功
                     if (cur === 'error' || cur === 'invalid') {
                         showError(file.statusText);
-                        percentages[ file.id ][ 1 ] = 1;
+                        percentages[file.id][1] = 1;
                     } else if (cur === 'interrupt') {
                         showError('interrupt');
                     } else if (cur === 'queued') {
-                        percentages[ file.id ][ 1 ] = 0;
+                        percentages[file.id][1] = 0;
                     } else if (cur === 'progress') {
                         $info.hide();
                         $prgress.css('display', 'block');
-                    } else if (cur === 'complete') {
-                    }
+                    } else if (cur === 'complete') {}
 
                     $li.removeClass('state-' + prev).addClass('state-' + cur);
                 });
 
                 $li.on('mouseenter', function () {
-                    $btns.stop().animate({height: 30});
+                    $btns.stop().animate({
+                        height: 30
+                    });
                 });
                 $li.on('mouseleave', function () {
-                    $btns.stop().animate({height: 0});
+                    $btns.stop().animate({
+                        height: 0
+                    });
                 });
 
                 $btns.on('click', 'span', function () {
@@ -516,7 +521,7 @@
             // 负责view的销毁
             function removeFile(file) {
                 var $li = $('#' + file.id);
-                delete percentages[ file.id ];
+                delete percentages[file.id];
                 updateTotalProgress();
                 $li.off().find('.file-panel').off().end().remove();
             }
@@ -528,8 +533,8 @@
                     percent;
 
                 $.each(percentages, function (k, v) {
-                    total += v[ 0 ];
-                    loaded += v[ 0 ] * v[ 1 ];
+                    total += v[0];
+                    loaded += v[0] * v[1];
                 });
 
                 percent = total ? loaded / total : 0;
@@ -555,34 +560,39 @@
                             $queue.addClass('element-invisible');
                             $statusBar.addClass('element-invisible');
                             $placeHolder.removeClass('element-invisible');
-                            $progress.hide(); $info.hide();
+                            $progress.hide();
+                            $info.hide();
                             uploader.refresh();
                             break;
 
-                        /* 可以开始上传 */
+                            /* 可以开始上传 */
                         case 'ready':
                             $placeHolder.addClass('element-invisible');
                             $queue.removeClass('element-invisible');
                             $statusBar.removeClass('element-invisible');
-                            $progress.hide(); $info.show();
+                            $progress.hide();
+                            $info.show();
                             $upload.text(lang.uploadStart);
                             uploader.refresh();
                             break;
 
-                        /* 上传中 */
+                            /* 上传中 */
                         case 'uploading':
-                            $progress.show(); $info.hide();
+                            $progress.show();
+                            $info.hide();
                             $upload.text(lang.uploadPause);
                             break;
 
-                        /* 暂停上传 */
+                            /* 暂停上传 */
                         case 'paused':
-                            $progress.show(); $info.hide();
+                            $progress.show();
+                            $info.hide();
                             $upload.text(lang.uploadContinue);
                             break;
 
                         case 'confirm':
-                            $progress.show(); $info.hide();
+                            $progress.show();
+                            $info.hide();
                             $upload.text(lang.uploadStart);
 
                             stats = uploader.getStats();
@@ -593,7 +603,8 @@
                             break;
 
                         case 'finish':
-                            $progress.hide(); $info.show();
+                            $progress.hide();
+                            $info.show();
                             if (stats.uploadFailNum) {
                                 $upload.text(lang.uploadRetry);
                             } else {
@@ -616,7 +627,8 @@
             }
 
             function updateStatus() {
-                var text = '', stats;
+                var text = '',
+                    stats;
 
                 if (state === 'ready') {
                     text = lang.updateStatusReady.replace('_', fileCount).replace('_KB', WebUploader.formatSize(fileSize));
@@ -628,8 +640,8 @@
                 } else {
                     stats = uploader.getStats();
                     text = lang.updateStatusFinish.replace('_', fileCount).
-                        replace('_KB', WebUploader.formatSize(fileSize)).
-                        replace('_', stats.successNum);
+                    replace('_KB', WebUploader.formatSize(fileSize)).
+                    replace('_', stats.successNum);
 
                     if (stats.uploadFailNum) {
                         text += lang.updateStatusError.replace('_', stats.uploadFailNum);
@@ -696,7 +708,7 @@
                     $percent = $li.find('.progress span');
 
                 $percent.css('width', percentage * 100 + '%');
-                percentages[ file.id ][ 1 ] = percentage;
+                percentages[file.id][1] = percentage;
                 updateTotalProgress();
             });
 
@@ -714,15 +726,13 @@
                 }
             });
 
-            uploader.on('uploadError', function (file, code) {
-            });
+            uploader.on('uploadError', function (file, code) {});
             uploader.on('error', function (code, file) {
                 if (code == 'Q_TYPE_DENIED' || code == 'F_EXCEED_SIZE') {
                     addFile(file);
                 }
             });
-            uploader.on('uploadComplete', function (file, ret) {
-            });
+            uploader.on('uploadComplete', function (file, ret) {});
 
             /* 上传按钮 */
             $upload.on('click', function () {
@@ -731,11 +741,11 @@
                 }
 
                 if (state === 'ready') {
-                    window.setTimeout(function() {
+                    window.setTimeout(function () {
                         uploader.upload();
                     }, 500);
                 } else if (state === 'paused') {
-                    window.setTimeout(function() {
+                    window.setTimeout(function () {
                         uploader.upload();
                     }, 500);
                 } else if (state === 'uploading') {
@@ -747,8 +757,9 @@
             updateTotalProgress();
         },
         getQueueCount: function () {
-            var file, i, status, readyFile = 0, files = this.uploader.getFiles();
-            for (i = 0; file = files[i++]; ) {
+            var file, i, status, readyFile = 0,
+                files = this.uploader.getFiles();
+            for (i = 0; file = files[i++];) {
                 status = file.getStatus();
                 if (status == 'queued' || status == 'uploading' || status == 'progress') readyFile++;
             }
@@ -767,8 +778,8 @@
 
             for (i = 0; i < this.imageList.length; i++) {
                 data = this.imageList[i];
-                
-                if(imageSrcFieldKeys.length > 1) {
+
+                if (imageSrcFieldKeys.length > 1) {
                     function setImageSrc(obj, keys, index) {
                         obj = obj[keys[index]];
                         if (index < keys.length - 1) {
@@ -777,12 +788,12 @@
                             imageSrc = obj;
                         }
                     }
-    
+
                     setImageSrc(data, imageSrcFieldKeys, 0);
                 } else {
                     imageSrc = data[imageSrcField];
                 }
-                
+
                 list.push({
                     src: prefix + imageSrc,
                     _src: prefix + imageSrc,
@@ -822,7 +833,7 @@
             var _this = this;
 
             /* 滚动拉取图片 */
-            domUtils.on($G('imageList'), 'scroll', function(e){
+            domUtils.on($G('imageList'), 'scroll', function (e) {
                 var panel = this;
                 if (panel.scrollHeight - (panel.offsetHeight + panel.scrollTop) < 10) {
                     _this.getImageData();
@@ -855,7 +866,7 @@
             this.getImageData();
         },
         /* 重置界面 */
-        reset: function() {
+        reset: function () {
             this.initContainer();
             this.initData();
         },
@@ -863,13 +874,13 @@
         getImageData: function () {
             var _this = this;
 
-            if(!_this.listEnd && !this.isLoadingData) {
+            if (!_this.listEnd && !this.isLoadingData) {
                 this.isLoadingData = true;
                 var url = editor.getActionUrl(editor.getOpt('imageManagerActionName')),
                     isJsonp = utils.isCrossDomainUrl(url);
                 ajax.request(url, {
                     'timeout': 100000,
-                    'dataType': isJsonp ? 'jsonp':'',
+                    'dataType': isJsonp ? 'jsonp' : '',
                     'data': utils.extend({
                         start: this.listIndex,
                         size: this.listSize
@@ -877,17 +888,17 @@
                     'method': 'get',
                     'onsuccess': function (r) {
                         try {
-                            var json = isJsonp ? r:eval('(' + r.responseText + ')');
+                            var json = isJsonp ? r : eval('(' + r.responseText + ')');
                             if (json.state == 'SUCCESS') {
                                 _this.pushData(json.list);
                                 _this.listIndex = parseInt(json.start) + parseInt(json.list.length);
-                                if(_this.listIndex >= json.total) {
+                                if (_this.listIndex >= json.total) {
                                     _this.listEnd = true;
                                 }
                                 _this.isLoadingData = false;
                             }
                         } catch (e) {
-                            if(r.responseText.indexOf('ue_separate_ue') != -1) {
+                            if (r.responseText.indexOf('ue_separate_ue') != -1) {
                                 var list = r.responseText.split(r.responseText);
                                 _this.pushData(list);
                                 _this.listIndex = parseInt(list.length);
@@ -907,18 +918,18 @@
             var i, item, img, icon, _this = this,
                 urlPrefix = editor.getOpt('imageManagerUrlPrefix');
             for (i = 0; i < list.length; i++) {
-                if(list[i] && list[i].url) {
+                if (list[i] && list[i].url) {
                     item = document.createElement('li');
                     img = document.createElement('img');
                     icon = document.createElement('span');
 
-                    domUtils.on(img, 'load', (function(image){
-                        return function(){
+                    domUtils.on(img, 'load', (function (image) {
+                        return function () {
                             _this.scale(image, image.parentNode.offsetWidth, image.parentNode.offsetHeight);
                         }
                     })(img));
                     img.width = 113;
-                    img.setAttribute('src', urlPrefix + list[i].url + (list[i].url.indexOf('?') == -1 ? '?noCache=':'&noCache=') + (+new Date()).toString(36) );
+                    img.setAttribute('src', urlPrefix + list[i].url + (list[i].url.indexOf('?') == -1 ? '?noCache=' : '&noCache=') + (+new Date()).toString(36));
                     img.setAttribute('_src', urlPrefix + list[i].url);
                     domUtils.addClass(icon, 'icon');
 
@@ -956,7 +967,9 @@
             }
         },
         getInsertList: function () {
-            var i, lis = this.list.children, list = [], align = getAlign();
+            var i, lis = this.list.children,
+                list = [],
+                align = getAlign();
             for (i = 0; i < lis.length; i++) {
                 if (domUtils.hasClass(lis[i], 'selected')) {
                     var img = lis[i].firstChild,
@@ -982,31 +995,31 @@
         init: function () {
             this.initEvents();
         },
-        initEvents: function(){
+        initEvents: function () {
             var _this = this;
 
             /* 点击搜索按钮 */
-            domUtils.on($G('searchBtn'), 'click', function(){
+            domUtils.on($G('searchBtn'), 'click', function () {
                 var key = $G('searchTxt').value;
-                if(key && key != lang.searchRemind) {
+                if (key && key != lang.searchRemind) {
                     _this.getImageData();
                 }
             });
             /* 点击清除妞 */
-            domUtils.on($G('searchReset'), 'click', function(){
+            domUtils.on($G('searchReset'), 'click', function () {
                 $G('searchTxt').value = lang.searchRemind;
                 $G('searchListUl').innerHTML = '';
                 $G('searchType').selectedIndex = 0;
             });
             /* 搜索框聚焦 */
-            domUtils.on($G('searchTxt'), 'focus', function(){
+            domUtils.on($G('searchTxt'), 'focus', function () {
                 var key = $G('searchTxt').value;
-                if(key && key == lang.searchRemind) {
+                if (key && key == lang.searchRemind) {
                     $G('searchTxt').value = '';
                 }
             });
             /* 搜索框回车键搜索 */
-            domUtils.on($G('searchTxt'), 'keydown', function(e){
+            domUtils.on($G('searchTxt'), 'keydown', function (e) {
                 var keyCode = e.keyCode || e.which;
                 if (keyCode == 13) {
                     $G('searchBtn').click();
@@ -1014,7 +1027,7 @@
             });
 
             /* 选中图片 */
-            domUtils.on($G('searchList'), 'click', function(e){
+            domUtils.on($G('searchList'), 'click', function (e) {
                 var target = e.target || e.srcElement,
                     li = target.parentNode.parentNode;
 
@@ -1042,7 +1055,7 @@
                 img.style.marginTop = '-' + parseInt((img.height - h) / 2) + 'px';
             }
         },
-        getImageData: function(){
+        getImageData: function () {
             var _this = this,
                 key = $G('searchTxt').value,
                 type = $G('searchType').value,
@@ -1053,11 +1066,11 @@
             $G('searchListUl').innerHTML = lang.searchLoading;
             ajax.request(url, {
                 'dataType': 'jsonp',
-                'onsuccess':function(json){
+                'onsuccess': function (json) {
                     var list = [];
-                    if(json && json.data) {
-                        for(var i = 0; i < json.data.length; i++) {
-                            if(json.data[i].objURL) {
+                    if (json && json.data) {
+                        for (var i = 0; i < json.data.length; i++) {
+                            if (json.data[i].objURL) {
                                 list.push({
                                     title: json.data[i].fromPageTitleEnc,
                                     src: json.data[i].thumbURL,
@@ -1068,7 +1081,7 @@
                     }
                     _this.setList(list);
                 },
-                'onerror':function(){
+                'onerror': function () {
                     $G('searchListUl').innerHTML = lang.searchRetry;
                 }
             });
@@ -1079,7 +1092,7 @@
                 listUl = $G('searchListUl');
 
             listUl.innerHTML = '';
-            if(list.length) {
+            if (list.length) {
                 for (i = 0; i < list.length; i++) {
                     item = document.createElement('li');
                     p = document.createElement('p');
@@ -1112,9 +1125,9 @@
                 align = getAlign(),
                 list = [],
                 items = $G('searchListUl').children;
-            for(var i = 0; i < items.length; i++) {
+            for (var i = 0; i < items.length; i++) {
                 child = items[i].firstChild && items[i].firstChild.firstChild;
-                if(child.tagName && child.tagName.toLowerCase() == 'img' && domUtils.hasClass(items[i], 'selected')) {
+                if (child.tagName && child.tagName.toLowerCase() == 'img' && domUtils.hasClass(items[i], 'selected')) {
                     src = child.src;
                     list.push({
                         src: src,

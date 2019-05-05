@@ -5,7 +5,7 @@
  * @returns 返回自定义的上传接口
  */
 UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
-UE.Editor.prototype.getActionUrl = function(action) {
+UE.Editor.prototype.getActionUrl = function (action) {
     /* 按config中的xxxActionName返回对应的接口地址 */
     if (action == 'uploadimage' || action == 'uploadscrawl') {
         return 'http://a.b.com/upload.php';
@@ -22,14 +22,14 @@ UE.Editor.prototype.getActionUrl = function(action) {
  * @param {Object} editor  编辑器对象
  * @returns imageUploadService 对象
  */
-window.UEDITOR_CONFIG['imageUploadService'] = function(context, editor) {
+window.UEDITOR_CONFIG['imageUploadService'] = function (context, editor) {
     return {
         /** 
          * 触发fileQueued事件时执行
          * 当文件被加入队列以后触发，用来设置上传相关的数据 (比如: url和自定义参数)
          * @param {Object} file 当前选择的文件对象
          */
-        setUploadData: function(file) {
+        setUploadData: function (file) {
             return file;
         },
         /**
@@ -40,7 +40,7 @@ window.UEDITOR_CONFIG['imageUploadService'] = function(context, editor) {
          * @param {Object} headers 可以扩展此对象来控制上传头部
          * @returns 上传参数对象
          */
-        setFormData: function(object, data, headers) {
+        setFormData: function (object, data, headers) {
             return data;
         },
         /**
@@ -49,7 +49,7 @@ window.UEDITOR_CONFIG['imageUploadService'] = function(context, editor) {
          * @param {Object} uploader
          * @returns uploader
          */
-        setUploaderOptions: function(uploader) {
+        setUploaderOptions: function (uploader) {
             return uploader;
         },
         /**
@@ -58,7 +58,7 @@ window.UEDITOR_CONFIG['imageUploadService'] = function(context, editor) {
          * @param {Object} res 上传接口返回的response
          * @returns {Boolean} 上传接口返回的response成功状态条件 (比如: res.code == 200)
          */
-        getResponseSuccess: function(res) {
+        getResponseSuccess: function (res) {
             return res.code == 200;
         },
         /* 指定上传接口返回的response中图片路径的字段，默认为 url
@@ -74,14 +74,14 @@ window.UEDITOR_CONFIG['imageUploadService'] = function(context, editor) {
  * @param {Object} editor  编辑器对象
  * @returns videoUploadService 对象
  */
-window.UEDITOR_CONFIG['videoUploadService'] = function(context, editor) {
+window.UEDITOR_CONFIG['videoUploadService'] = function (context, editor) {
     return {
         /** 
          * 触发fileQueued事件时执行
          * 当文件被加入队列以后触发，用来设置上传相关的数据 (比如: url和自定义参数)
          * @param {Object} file 当前选择的文件对象
          */
-        setUploadData: function(file) {
+        setUploadData: function (file) {
             return file;
         },
         /**
@@ -92,7 +92,7 @@ window.UEDITOR_CONFIG['videoUploadService'] = function(context, editor) {
          * @param {Object} headers 可以扩展此对象来控制上传头部
          * @returns 上传参数对象
          */
-        setFormData: function(object, data, headers) {
+        setFormData: function (object, data, headers) {
             return data;
         },
         /**
@@ -101,7 +101,7 @@ window.UEDITOR_CONFIG['videoUploadService'] = function(context, editor) {
          * @param {Object} uploader
          * @returns uploader
          */
-        setUploaderOptions: function(uploader) {
+        setUploaderOptions: function (uploader) {
             return uploader;
         },
         /**
@@ -110,7 +110,7 @@ window.UEDITOR_CONFIG['videoUploadService'] = function(context, editor) {
          * @param {Object} res 上传接口返回的response
          * @returns {Boolean} 上传接口返回的response成功状态条件 (比如: res.code == 200)
          */
-        getResponseSuccess: function(res) {
+        getResponseSuccess: function (res) {
             return res.code == 200;
         },
         /* 指定上传接口返回的response中视频路径的字段，默认为 url
@@ -126,7 +126,7 @@ window.UEDITOR_CONFIG['videoUploadService'] = function(context, editor) {
  * @param {Object} editor  编辑器对象
  * @returns scrawlUploadService 对象
  */
-window.UEDITOR_CONFIG['scrawlUploadService'] = function(context, editor) {
+window.UEDITOR_CONFIG['scrawlUploadService'] = function (context, editor) {
     return scrawlUploadService = {
         /**
          * 点击涂鸦模态框确认按钮时触发
@@ -146,7 +146,7 @@ window.UEDITOR_CONFIG['scrawlUploadService'] = function(context, editor) {
          * 指定上传接口返回的response中涂鸦图片路径的字段，默认为 url 
          * res.videoSrcField = 'url';
          */
-        uploadScraw: function(file, base64, success, fail) {
+        uploadScraw: function (file, base64, success, fail) {
 
             /* 模拟上传操作 */
             var formData = new FormData();
@@ -155,10 +155,14 @@ window.UEDITOR_CONFIG['scrawlUploadService'] = function(context, editor) {
             $.ajax({
                 url: editor.getActionUrl(editor.getOpt('scrawlActionName')),
                 type: 'POST',
+                //ajax2.0可以不用设置请求头，但是jq帮我们自动设置了，这样的话需要我们自己取消掉
+                contentType: false,
+                //取消帮我们格式化数据，是什么就是什么
+                processData: false,
                 data: formData
-            }).done(function(res) {
+            }).done(function (res) {
                 var res = JSON.parse(res);
-                
+
                 /* 上传接口返回的response成功状态条件 (比如: res.code == 200) */
                 res.responseSuccess = res.code == 200;
 
@@ -169,7 +173,7 @@ window.UEDITOR_CONFIG['scrawlUploadService'] = function(context, editor) {
 
                 /* 上传成功 */
                 success.call(context, res);
-            }).fail(function(err) {
+            }).fail(function (err) {
                 /* 上传失败 */
                 fail.call(context, err);
             });
@@ -183,14 +187,14 @@ window.UEDITOR_CONFIG['scrawlUploadService'] = function(context, editor) {
  * @param {Object} editor  编辑器对象
  * @returns fileUploadService 对象
  */
-window.UEDITOR_CONFIG['fileUploadService'] = function(context, editor) {
+window.UEDITOR_CONFIG['fileUploadService'] = function (context, editor) {
     return {
         /** 
          * 触发fileQueued事件时执行
          * 当文件被加入队列以后触发，用来设置上传相关的数据 (比如: url和自定义参数)
          * @param {Object} file 当前选择的文件对象
          */
-        setUploadData: function(file) {
+        setUploadData: function (file) {
             return file;
         },
         /**
@@ -201,7 +205,7 @@ window.UEDITOR_CONFIG['fileUploadService'] = function(context, editor) {
          * @param {Object} headers 可以扩展此对象来控制上传头部
          * @returns 上传参数对象
          */
-        setFormData: function(object, data, headers) {
+        setFormData: function (object, data, headers) {
             return data;
         },
         /**
@@ -210,7 +214,7 @@ window.UEDITOR_CONFIG['fileUploadService'] = function(context, editor) {
          * @param {Object} uploader
          * @returns uploader
          */
-        setUploaderOptions: function(uploader) {
+        setUploaderOptions: function (uploader) {
             return uploader;
         },
         /**
@@ -219,7 +223,7 @@ window.UEDITOR_CONFIG['fileUploadService'] = function(context, editor) {
          * @param {Object} res 上传接口返回的response
          * @returns {Boolean} 上传接口返回的response成功状态条件 (比如: res.code == 200)
          */
-        getResponseSuccess: function(res) {
+        getResponseSuccess: function (res) {
             return res.code == 200;
         },
         /* 指定上传接口返回的response中附件路径的字段，默认为 url

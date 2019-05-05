@@ -1,23 +1,21 @@
 <!doctype html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>neditor图片对话框</title>
     <script type="text/javascript" src="../internal.js"></script>
-
     <!-- jquery -->
     <script type="text/javascript" src="../../third-party/jquery-1.10.2.min.js"></script>
-
     <!-- webuploader -->
     <script src="../../third-party/webuploader/webuploader.js"></script>
     <link rel="stylesheet" type="text/css" href="../../third-party/webuploader/webuploader.css">
-
     <!-- image dialog -->
     <link rel="stylesheet" href="image.css" type="text/css" />
     <!--<link rel="stylesheet" href="../fonts/buttoniconex.css">-->
 </head>
-<body>
 
+<body>
     <div class="wrapper">
         <div id="tabhead" class="tabhead">
             <span class="tab" data-content-id="remote"><var id="lang_tab_remote"></var></span>
@@ -27,15 +25,15 @@
         </div>
         <div class="alignBar">
             <label class="algnLabel"><var id="lang_input_align"></var></label>
-                <span id="alignIcon">
-                    <span id="noneAlign" class="none-align focus" data-align="none">
-                        <!--<i class="icon edui-icon"></i>-->
-                    </span>
-                    <span id="leftAlign" class="left-align" data-align="left"></span>
-                    <span id="rightAlign" class="right-align" data-align="right"></span>
-                    <span id="centerAlign" class="center-align" data-align="center"></span>
+            <span id="alignIcon">
+                <span id="noneAlign" class="none-align focus" data-align="none">
+                    <!--<i class="icon edui-icon"></i>-->
                 </span>
-            <input id="align" name="align" type="hidden" value="none"/>
+                <span id="leftAlign" class="left-align" data-align="left"></span>
+                <span id="rightAlign" class="right-align" data-align="right"></span>
+                <span id="centerAlign" class="center-align" data-align="center"></span>
+            </span>
+            <input id="align" name="align" type="hidden" value="none" />
         </div>
         <div id="tabbody" class="tabbody">
 
@@ -44,30 +42,34 @@
                 <div class="top">
                     <div class="row">
                         <label for="url"><var id="lang_input_url"></var></label>
-                        <span><input class="text" id="url" type="text"/></span>
+                        <span><input class="text" id="url" type="text" /></span>
                     </div>
                     <div class="row">
                         <label><var id="lang_input_size"></var></label>
-                        <span><var id="lang_input_width">&nbsp;&nbsp;</var><input class="text" type="text" id="width"/>px </span>
-                        <span><var id="lang_input_height">&nbsp;&nbsp;</var><input class="text" type="text" id="height"/>px </span>
+                        <span><var id="lang_input_width">&nbsp;&nbsp;</var><input class="text" type="text"
+                                id="width" />px </span>
+                        <span><var id="lang_input_height">&nbsp;&nbsp;</var><input class="text" type="text"
+                                id="height" />px </span>
                         <span><input id="lock" type="checkbox" disabled="disabled"><span id="lockicon"></span></span>
                     </div>
                 </div>
                 <div class="left">
                     <div class="row">
                         <label><var id="lang_input_border"></var></label>
-                        <span><input class="text" type="text" id="border"/>px </span>
+                        <span><input class="text" type="text" id="border" />px </span>
                     </div>
                     <div class="row">
                         <label><var id="lang_input_vhspace"></var></label>
-                        <span><input class="text" type="text" id="vhSpace"/>px </span>
+                        <span><input class="text" type="text" id="vhSpace" />px </span>
                     </div>
                     <div class="row">
                         <label><var id="lang_input_title"></var></label>
                         <span><textarea class="text" id="title" cols="30" rows="3"></textarea></span>
                     </div>
                 </div>
-                <div class="right"><div id="preview"></div></div>
+                <div class="right">
+                    <div id="preview"></div>
+                </div>
             </div>
 
             <!-- 上传图片 -->
@@ -77,7 +79,8 @@
                         <div class="progress">
                             <span class="text">0%</span>
                             <span class="percentage"></span>
-                        </div><div class="info"></div>
+                        </div>
+                        <div class="info"></div>
                         <div class="btns">
                             <div id="filePickerBtn"></div>
                             <div class="uploadBtn"><var id="lang_start_upload"></var></div>
@@ -112,16 +115,17 @@
                         <option value="&lm=6&st=-1&face=0&s="></option>
                         <option value="&lm=7&st=-1&face=0&s="></option>
                     </select>
-                    <input id="searchReset" type="button"  />
-                    <input id="searchBtn" type="button"  />
+                    <input id="searchReset" type="button" />
+                    <input id="searchBtn" type="button" />
                 </div>
-                <div id="searchList" class="searchList"><ul id="searchListUl"></ul></div>
-                <div class="pagination">每页显示 <input type="number" id="pageNum" class="text num" value="50"/> 条</div>
+                <div id="searchList" class="searchList">
+                    <ul id="searchListUl"></ul>
+                </div>
+                <div class="pagination">每页显示 <input type="number" id="pageNum" class="text num" value="50" /> 条</div>
             </div>
-
         </div>
     </div>
     <script type="text/javascript" src="image.js"></script>
-
 </body>
+
 </html>

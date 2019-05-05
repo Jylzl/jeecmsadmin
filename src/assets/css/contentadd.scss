@@ -1,14 +1,3 @@
-.cms-form {
-    box-sizing: border-box;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    width: 100%;
-    padding: 30px 30px 30px 20px;
-}
-
 .cms-form .el-row {
     width: 100%;
 }
@@ -19,92 +8,39 @@
     border-top: 1px dashed #eee;
 }
 
-.cms-body .cms-form>.flex-50:first-child,
-.cms-body .cms-form>.flex-50:nth-child(2),
-.cms-body .cms-form>.flex-100:first-child {
-    border-top: none;
-}
-
-.flex-100 {
+.width_100 {
     width: 100%;
 }
 
-.flex-50 {
-    width: 50%;
+.w100 {
+    width: 100px !important;
 }
 
-.gray {
-    display: block;
-    font-size: 12px;
-    line-height: 1;
-    padding-top: 6px;
-    color: #acb5bb;
+.w150 {
+    width: 150px !important;
+}
+
+.w200 {
+    width: 200px !important;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.media-upload {
+    position: relative;
+}
+
+.media-player {
+    position: absolute;
+    top: 0;
+    left: 100px;
+    height: 36px;
+    line-height: 36px;
 }
 
 
-@media screen and (max-width:1200px) {
-    .flex-50 {
-        width: 100%;
-    }
-
-    .cms-width {
-        width: 320px;
-    }
-
-    .cms-form .el-form-item:nth-child(2) {
-        border-top: 1px dashed #eee;
-    }
-}
-
-@media screen and (min-width:1201px) and (max-width:1366px) {
-    .flex-50 {
-        width: 50%;
-    }
-
-    .flex-50 .cms-width {
-        min-width: 192px;
-        width: 90%;
-    }
-
-    .flex-100 .cms-width {
-        width: 84%;
-    }
-
-}
-
-@media screen and (min-width:1367px) and (max-width:1439px) {
-
-    .flex-50 .cms-width {
-        min-width: 192px;
-        width: 61%;
-    }
-
-    .flex-100 .cms-width {
-        width: 84%;
-    }
-
-}
-
-@media screen and (min-width:1440px) and (max-width:1600px) {
-    .flex-50 .cms-width {
-        min-width: 192px;
-        width: 61%;
-    }
-
-    .flex-100 .cms-width {
-        width: 83%;
-    }
-
-}
-
-@media screen and (min-width:1601px) and (max-width:1920px) {
-    .flex-50 .cms-width {
-        min-width: 192px;
-        width: 61%;
-    }
-
-    .flex-100 .cms-width {
-        width: 83%;
-    }
-
+.form-footer {
+    margin-top: 20px;
 }

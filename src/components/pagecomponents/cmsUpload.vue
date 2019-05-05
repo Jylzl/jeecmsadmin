@@ -23,8 +23,8 @@
 				</div>
 			</div>
 			<!-- 进度条 -->
-			<el-progress type="circle" :percentage="percentage" :status="status" class="cms-progress" v-if="uploadStar">
-			</el-progress>
+			<!-- <el-progress type="circle" :percentage="percentage" :status="status" class="cms-progress" v-if="uploadStar"> -->
+			<!-- </el-progress> -->
 			<el-dialog :visible.sync="dialogVisible" size="tiny">
 				<img width="100%" :src="imageUrl" alt="">
 			</el-dialog>
@@ -88,8 +88,6 @@
 
 		methods: {
 			handleAvatarSuccess(res, file) {
-				console.log("a---------")
-				console.log(res)
 				//上传成功服务器响应
 				if (res.code == "200" && res.body != "") {
 					this.status = "success";

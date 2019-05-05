@@ -1,21 +1,19 @@
 <template>
     <div>
-        <el-upload class="upload-attach" :action="uploadUrl" :data="data" :multiple="multiple" :limit="limit"
-            :name="name" :on-progress='onProgress' :on-success="onSuccess" :on-error="onError" :show-file-list="false"
+        <el-upload class="upload-attach" :action="uploadUrl" :data="data" :multiple="multiple" :limit="limit" :name="name" :on-progress='onProgress' :on-success="onSuccess" :on-error="onError" :show-file-list="false"
             ref="upload">
-            <el-button type="primary">批量上传</el-button>
-            <span class="file-gray">只能上传图片类型</span>
+            <el-tooltip class="item" effect="dark" content="只能上传图片类型" placement="right">
+                <el-button type="primary">批量上传</el-button>
+            </el-tooltip>
         </el-upload>
-        <div v-if="uploading" class="w-350">
+        <div v-if="uploading">
             <span class="file-gray">正在上传：</span>
             <span class="file-gray"><i class="el-icon-document"></i>{{fileName}}</span>
-            <el-progress :percentage="percentage" :status="status"></el-progress>
+            <el-progress :percentage="percentage" :status="status" type="circle"></el-progress>
         </div>
-        <div>
-            <cms-pictrues-items :index='index' :src='item' v-for="(item,index) in fileList" :key="index"
-                @getItems="getPicInfo" @delete='delFileList' class="pics-items-left"></cms-pictrues-items>
-        </div>
-
+        <el-row :gutter="20">
+            <cms-pictrues-items :index='index' :src='item' v-for="(item,index) in fileList" :key="index"  @getItems="getPicInfo" @delete='delFileList' class="pics-items-left"></cms-pictrues-items>
+        </el-row>
     </div>
 </template>
 
@@ -134,7 +132,6 @@
                 this.$emit('change', this.fileList); //返回列表
             },
 
-
             onError(err, file, fileList) {
                 this.errorMessage("上传失败");
                 this.$refs["upload"].clearFiles();
@@ -149,7 +146,6 @@
                     if (this.propList.length > 0) {
                         this.fileList = this.propList;
                     }
-
                 },
                 deep: true
             }
@@ -202,10 +198,5 @@
             float: right;
             margin-right: 10px;
         }
-    }
-
-    .pics-items-left {
-        float: left;
-        margin-right: 55px;
     }
 </style>

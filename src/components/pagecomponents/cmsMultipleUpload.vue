@@ -8,7 +8,7 @@
 		<div v-if="showFileList && uploading" class="w-350">
 			<span class="file-gray">正在上传：</span>
 			<span class="file-gray"><i class="el-icon-document"></i>{{fileName}}</span>
-			<el-progress :percentage="percentage" :status="status"></el-progress>
+			<!-- <el-progress :percentage="percentage" :status="status"></el-progress> -->
 		</div>
 		<div v-if="showFileList && fileList.length>0">
 			<span class="file-gray">文件列表：</span>
@@ -19,7 +19,7 @@
 							<i class="el-icon-document"></i>
 							{{item.name}}
 						</label>
-						<i class="cms-delete-little iconfont icon-shanchu1" @click="delFileList(index)"></i>
+						<i class="cms-delete-little el-icon-close" @click="delFileList(index)"></i>
 					</a>
 				</li>
 			</ul>
