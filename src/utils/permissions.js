@@ -2,7 +2,7 @@
 // 页面加载进度条
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-
+import getPageTitle from '@/utils/get-page-title'
 import router from '@/router/index' //路由
 import {
     store
@@ -10,6 +10,9 @@ import {
 
 router.beforeEach((to, from, next) => {
     NProgress.start();
+    // set page title
+    document.title = getPageTitle(to.meta.title)
+
     let user = localStorage.getItem('sessionKey'); //登录标示
     let perms = store.state.perms.perms; //登录状态
     if (user == null && to.path != '/login') {

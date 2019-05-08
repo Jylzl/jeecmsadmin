@@ -1,4 +1,14 @@
+'use strict'
+const path = require('path')
+const defaultSettings = require('./src/settings.js')
+
+function resolve(dir) {
+	return path.join(__dirname, dir)
+}
+
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const name = defaultSettings.title || 'vue Element Admin' // page title
+
 module.exports = {
 	publicPath: "/", // 根路径
 	outputDir: "dist", //构建输出目录
@@ -30,6 +40,16 @@ module.exports = {
 				pathRewrite: {
 					"^/api": ""
 				}
+			}
+		}
+	},
+	configureWebpack: {
+		// provide the app's title in webpack's name field, so that
+		// it can be accessed in index.html to inject the correct title.
+		name: name,
+		resolve: {
+			alias: {
+				'@': resolve('src')
 			}
 		}
 	}
