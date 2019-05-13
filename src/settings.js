@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'jeecms',
+  title: '政务CMS',
 
   /**
    * @type {boolean} true | false

@@ -147,7 +147,7 @@ const ansycRoutes = [{
 				path: '/content/update',
 				name: '内容修改',
 				component: resolve => {
-					require(['@/views/content/content/add.vue'], resolve)
+					require(['@/views/content/content/edit.vue'], resolve)
 				}
 			}]
 		}, {
