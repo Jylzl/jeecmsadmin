@@ -129,6 +129,7 @@ import PanThumb from '@/components/PanThumb'
 		/*垂直居中*/
 		justify-content: center;
 		/*水平居中*/
+		background-size: cover;
 	}
 
 	.land-box-center {

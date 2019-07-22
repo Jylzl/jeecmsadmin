@@ -20,7 +20,8 @@
 						<el-col :span="5">
 							<!--关联副栏目  -->
 							<el-form-item label="关联副栏目">
-								<el-tooltip class="item" effect="dark" content="关联后本条内容将会出现在所选的栏目页，需要结合标签使用"	placement="top">
+								<el-tooltip class="item" effect="dark" content="关联后本条内容将会出现在所选的栏目页，需要结合标签使用"
+									placement="top">
 									<el-button @click="channelVisble=true">关联副栏目</el-button>
 								</el-tooltip>
 							</el-form-item>
@@ -29,7 +30,8 @@
 							<!-- 关联专题 -->
 							<el-form-item label="关联专题" prop="topicIds">
 								<el-select class="width_100" v-model="info['topicIds']">
-									<el-option v-for="(item,index) in topicList" :key="index" :label="item.name" :value="item.id"></el-option>
+									<el-option v-for="(item,index) in topicList" :key="index" :label="item.name"
+										:value="item.id"></el-option>
 								</el-select>
 							</el-form-item>
 						</el-col>
@@ -55,10 +57,15 @@
 						<template v-for="(item,index) in itemList">
 							<el-col :key="index" :span="item.width?item.width:24" v-if="item">
 								<!-- 系统字段 -->
-								<el-form-item :label="item.label" :prop="(item.custom?'attr_':'')+item.field" :rules="item.required?fieldRequied:[]" v-if="item.field!='channelId'&&item.field!='title'&&item.field!='typeImg'&&!(item.field=='titleImg'&&!hasTitleImg)&&!(item.field=='contentImg'&&!hasContentImg)">
+								<el-form-item :label="item.label" :prop="(item.custom?'attr_':'')+item.field"
+									:rules="item.required?fieldRequied:[]"
+									v-if="item.field!='channelId'&&item.field!='title'&&item.field!='typeImg'&&!(item.field=='titleImg'&&!hasTitleImg)&&!(item.field=='contentImg'&&!hasContentImg)">
 									<!-- 文本 -->
-									<el-input class="cms-width" v-model="info['attr_'+item.field]" v-if="item.dataType==1&&item.custom"></el-input>
-									<el-input class="cms-width" v-model="info[item.field]" v-if="item.dataType==1  &&!item.custom  &&item.field!='titleImg'  &&item.field!='contentImg' &&item.field!='typeImg' &&item.field!='attachments' &&item.field!='media' &&item.field!='name' &&item.field!='origin'"></el-input>
+									<el-input class="cms-width" v-model="info['attr_'+item.field]"
+										v-if="item.dataType==1&&item.custom"></el-input>
+									<el-input class="cms-width" v-model="info[item.field]"
+										v-if="item.dataType==1  &&!item.custom  &&item.field!='titleImg'  &&item.field!='contentImg' &&item.field!='typeImg' &&item.field!='attachments' &&item.field!='media' &&item.field!='name' &&item.field!='origin'">
+									</el-input>
 									<el-row v-if="item.field=='origin'">
 										<el-col :span="9">
 											<el-input v-model="info[item.field]"></el-input>
@@ -70,24 +77,31 @@
 											</div>
 										</el-col>
 									</el-row>
-									<el-input v-if="item.field=='name'" class="cms-width" v-model="info[item.field]" @blur="getPath">
+									<el-input v-if="item.field=='name'" class="cms-width" v-model="info[item.field]"
+										@blur="getPath">
 									</el-input>
 									<!-- 标题，内容图片 类型图 -->
-									<cms-upload :src="info[item.field]" :field="item.field" v-if="item.field=='titleImg'&&hasTitleImg" :isMark="false" @get="getFieldImg">
+									<cms-upload :src="info[item.field]" :field="item.field"
+										v-if="item.field=='titleImg'&&hasTitleImg" :isMark="false" @get="getFieldImg">
 									</cms-upload>
-									<cms-upload :src="info[item.field]" :field="item.field" v-if="item.field=='contentImg'&&hasContentImg" :isMark="false" @get="getFieldImg">
+									<cms-upload :src="info[item.field]" :field="item.field"
+										v-if="item.field=='contentImg'&&hasContentImg" :isMark="false"
+										@get="getFieldImg">
 									</cms-upload>
 									<!-- 附件 -->
 									<cms-multiple-upload v-if="item.field=='attachments'" @change="getAttachments">
 									</cms-multiple-upload>
 									<!--文档路径  -->
-									<cms-attach-upload :src="info['docPath']" v-if="item.field=='docPath'" :multiple="false" :isDoc="true" action='/api/member/upload/o_upload_doc' @change="getDocPath">
+									<cms-attach-upload :src="info['docPath']" v-if="item.field=='docPath'"
+										:multiple="false" :isDoc="true" action='/api/member/upload/o_upload_doc'
+										@change="getDocPath">
 									</cms-attach-upload>
 									<!-- 图片集 -->
 									<cms-pictrues v-if="item.field=='pictures'" @change="getPics"></cms-pictrues>
 									<!-- 多媒体 -->
 									<div v-if="item.field=='media'" class="media-upload">
-										<cms-multiple-upload :src="info['mediaPath']" :multiple="false" field="mediaPath" @get="getMediaPath" btnLabel="上传"></cms-multiple-upload>
+										<cms-multiple-upload :src="info['mediaPath']" :multiple="false"
+											field="mediaPath" @get="getMediaPath" btnLabel="上传"></cms-multiple-upload>
 										<div class="media-player">
 											<label style="padding: 0 10px 0 20px;">播放器</label>
 											<el-radio-group v-model="info['mediaType']">
@@ -100,34 +114,47 @@
 										</div>
 									</div>
 									<!-- 整形文本 -->
-									<el-input class="cms-width" v-model.number="info['attr_'+item.field]" v-if="item.dataType==2&&item.custom" type="number" min='0'></el-input>
-									<el-input class="cms-width" v-model="info[item.field]" v-if="item.dataType==2&&!item.custom"></el-input>
+									<el-input class="cms-width" v-model.number="info['attr_'+item.field]"
+										v-if="item.dataType==2&&item.custom" type="number" min='0'></el-input>
+									<el-input class="cms-width" v-model="info[item.field]"
+										v-if="item.dataType==2&&!item.custom"></el-input>
 									<!-- 浮点形文本 -->
-									<el-input class="cms-width" v-model="info['attr_'+item.field]" v-if="item.dataType==3&&item.custom"></el-input>
+									<el-input class="cms-width" v-model="info['attr_'+item.field]"
+										v-if="item.dataType==3&&item.custom"></el-input>
 									<!-- 文本区 -->
-									<el-input class="cms-width" v-model="info['attr_'+item.field]" type="textarea" v-if="item.dataType==4&&item.custom">
+									<el-input class="cms-width" v-model="info['attr_'+item.field]" type="textarea"
+										v-if="item.dataType==4&&item.custom">
 									</el-input>
-									<el-input class="cms-width" v-model="info[item.field]" type="textarea" v-if="item.dataType==4&&  !item.custom&& item.field!='txt' &&item.field!='txt1' &&item.field!='txt2' &&item.field!='txt3' &&item.field!='docPath' &&item.field!='pictures' ">
+									<el-input class="cms-width" v-model="info[item.field]" type="textarea"
+										v-if="item.dataType==4&&  !item.custom&& item.field!='txt' &&item.field!='txt1' &&item.field!='txt2' &&item.field!='txt3' &&item.field!='docPath' &&item.field!='pictures' ">
 									</el-input>
 									<!-- 日期 -->
-									<el-date-picker class="cms-width" v-model="info['attr_'+item.field]" type="date" value-format="yyyy-MM-dd" v-if="item.dataType==5&&item.custom"></el-date-picker>
-									<el-date-picker class="cms-width" v-model="info[item.field]" type="date" value-format="yyyy-MM-dd" v-if="item.dataType==5&&!item.custom&&item.field!='releaseDate'"></el-date-picker>
+									<el-date-picker class="cms-width" v-model="info['attr_'+item.field]" type="date"
+										value-format="yyyy-MM-dd" v-if="item.dataType==5&&item.custom"></el-date-picker>
+									<el-date-picker class="cms-width" v-model="info[item.field]" type="date"
+										value-format="yyyy-MM-dd"
+										v-if="item.dataType==5&&!item.custom&&item.field!='releaseDate'">
+									</el-date-picker>
 									<!-- 发布时间，归档日期 -->
 									<el-row v-if="item.field=='releaseDate'">
 										<el-col :span="8">
-											<el-date-picker v-model="info['releaseDate']" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" class="w200">
+											<el-date-picker v-model="info['releaseDate']" type="datetime"
+												value-format="yyyy-MM-dd HH:mm:ss" class="w200">
 											</el-date-picker>
 										</el-col>
 										<el-col :span="16">
 											<label class="el-form-item__label" style="width:162px;">归档日期</label>
 											<div style="margin-left: 162px;">
-												<el-date-picker v-model="info['pigeonholeDate']" type="date" value-format="yyyy-MM-dd" class="w200"></el-date-picker>
+												<el-date-picker v-model="info['pigeonholeDate']" type="date"
+													value-format="yyyy-MM-dd" class="w200"></el-date-picker>
 											</div>
 										</el-col>
 									</el-row>
 									<!-- 下拉列表 -->
-									<el-select class="cms-width" v-model="info['attr_'+item.field]" v-if="item.dataType==6&&item.custom">
-										<el-option v-for="(opt,optIndex) in item.optValue" :key="optIndex" :label="opt" :value="opt"></el-option>
+									<el-select class="cms-width" v-model="info['attr_'+item.field]"
+										v-if="item.dataType==6&&item.custom">
+										<el-option v-for="(opt,optIndex) in item.optValue" :key="optIndex" :label="opt"
+											:value="opt"></el-option>
 									</el-select>
 									<!-- 标题颜色 -->
 									<el-row v-if="item.field=='titleColor'">
@@ -144,63 +171,81 @@
 									<!-- 固顶级别 -->
 									<el-row v-if="item.field=='topLevel'">
 										<el-col :span="8">
-											<el-input-number v-model="info['topLevel']" controls-position="right" :min="0" class="w200"></el-input-number>
+											<el-input-number v-model="info['topLevel']" controls-position="right"
+												:min="0" class="w200"></el-input-number>
 										</el-col>
 										<el-col :span="8">
 											<label class="el-form-item__label" style="width:162px;">固顶到期日期</label>
 											<div style="margin-left: 162px;">
-												<el-date-picker class="w200" type="date" value-format="yyyy-MM-dd" v-model="info['topLevelDate']"></el-date-picker>
+												<el-date-picker class="w200" type="date" value-format="yyyy-MM-dd"
+													v-model="info['topLevelDate']"></el-date-picker>
 											</div>
 										</el-col>
 										<el-col :span="8">
 											<label class="el-form-item__label" style="width:162px;">排序时间</label>
 											<div style="margin-left: 162px;">
-												<el-date-picker class="w200" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" v-model="info['sortDate']"></el-date-picker>
+												<el-date-picker class="w200" type="datetime"
+													value-format="yyyy-MM-dd HH:mm:ss" v-model="info['sortDate']">
+												</el-date-picker>
 											</div>
 										</el-col>
 									</el-row>
 									<!--内容类型-->
 									<div v-if="item.field=='typeId'">
 										<el-select class="w200" v-model="info['typeId']" @change="getTypeId">
-											<el-option v-for="(item,index) in typeList" :key="index" :label="item.name" :value="item.id"></el-option>
+											<el-option v-for="(item,index) in typeList" :key="index" :label="item.name"
+												:value="item.id"></el-option>
 										</el-select>
-										<el-checkbox class="ml-24" v-model="info['recommend']" style="margin-left:10px;">推荐</el-checkbox>
+										<el-checkbox class="ml-24" v-model="info['recommend']"
+											style="margin-left:10px;">推荐</el-checkbox>
 										<el-checkbox v-model="info['draft']">草稿</el-checkbox>
 										<div class="mt-10" v-if="info['recommend']" style="margin-left:-162px;">
 											<label class="el-form-item__label" style="width:162px;">推荐等级</label>
 											<div style="margin-left: 162px;">
-												<el-input-number v-model="info['recommendLevel']" controls-position="right" :min="0" class="w150"></el-input-number>
+												<el-input-number v-model="info['recommendLevel']"
+													controls-position="right" :min="0" class="w150"></el-input-number>
 											</div>
 										</div>
 										<div v-if="isTypeImg" class="mt-10" style="margin-left:-162px;">
 											<label class="el-form-item__label" style="width:162px;">类型图</label>
 											<div style="margin-left: 162px;">
-												<cms-upload :src="info['typeImg']" field="typeImg" :isMark="false" @get="getFieldImg"> </cms-upload>
+												<cms-upload :src="info['typeImg']" field="typeImg" :isMark="false"
+													@get="getFieldImg"> </cms-upload>
 											</div>
 										</div>
 									</div>
 									<!-- 栏目模版 -->
-									<el-select class="cms-width" v-model="info[item.field]" v-if="item.field=='tplContent'">
+									<el-select class="cms-width" v-model="info[item.field]"
+										v-if="item.field=='tplContent'">
 										<el-option label="默认" value="/default/content/news.html"></el-option>
-										<el-option v-for="(item,index) in tplAll.contentTpl" :key="index" :label="item" :value="item"></el-option>
+										<el-option v-for="(item,index) in tplAll.contentTpl" :key="index" :label="item"
+											:value="item"></el-option>
 									</el-select>
 									<!-- 栏目手机模板 -->
-									<el-select class="cms-width" v-model="info[item.field]" v-if="item.field=='tplMobileContent'">
+									<el-select class="cms-width" v-model="info[item.field]"
+										v-if="item.field=='tplMobileContent'">
 										<el-option label="默认" value=""></el-option>
-										<el-option v-for="(item,index) in tplAll.contentMobileTpl" :key="index" :label="item" :value="item"></el-option>
+										<el-option v-for="(item,index) in tplAll.contentMobileTpl" :key="index"
+											:label="item" :value="item"></el-option>
 									</el-select>
 									<!-- 复选框 -->
 									<!-- 自定义字段拼接名称-->
-									<el-checkbox-group v-model="info['attr_'+item.field]" v-if="item.dataType==7&&item.custom">
-										<el-checkbox v-for="(opt,optIndex) in item.optValue" :key="optIndex" :label="opt"></el-checkbox>
+									<el-checkbox-group v-model="info['attr_'+item.field]"
+										v-if="item.dataType==7&&item.custom">
+										<el-checkbox v-for="(opt,optIndex) in item.optValue" :key="optIndex"
+											:label="opt"></el-checkbox>
 									</el-checkbox-group>
 									<!-- 浏览权限 -->
-									<el-checkbox-group v-model="info[item.field]" v-if="item.dataType==7&&!item.custom&&item.field=='viewGroupIds'">
-										<el-checkbox v-for="(item,index) in groupList" :key="index" :label="item.id">{{item.name}}</el-checkbox>
+									<el-checkbox-group v-model="info[item.field]"
+										v-if="item.dataType==7&&!item.custom&&item.field=='viewGroupIds'">
+										<el-checkbox v-for="(item,index) in groupList" :key="index" :label="item.id">
+											{{item.name}}</el-checkbox>
 									</el-checkbox-group>
 									<!-- 单选框 -->
-									<el-radio-group v-model="info['attr_'+item.field]" v-if="item.dataType==8&&item.custom">
-										<el-radio :label="opt" v-for="(opt,optIndex) in item.optValue" :key="optIndex"></el-radio>
+									<el-radio-group v-model="info['attr_'+item.field]"
+										v-if="item.dataType==8&&item.custom">
+										<el-radio :label="opt" v-for="(opt,optIndex) in item.optValue" :key="optIndex">
+										</el-radio>
 									</el-radio-group>
 									<!-- 是否开放 -->
 									<el-radio-group v-model="info['isOpen']" v-if="item.field=='isOpen'">
@@ -219,7 +264,9 @@
 											<div class="mt-10" v-if="info['charge']==1">
 												<label class="el-form-item__label" style="width:162px;">收费金额</label>
 												<div style="margin-left: 162px;">
-													<el-input-number v-model="info.chargeAmount" controls-position="right" :min="0" class="w150"></el-input-number>
+													<el-input-number v-model="info.chargeAmount"
+														controls-position="right" :min="0" class="w150">
+													</el-input-number>
 												</div>
 											</div>
 											<div class="mt-10" v-if="info['charge']==2">
@@ -233,13 +280,21 @@
 															</el-select>
 														</el-col>
 														<el-col :span="20">
-															<div  v-if="info['rewardPattern']==false&&info['charge']==2">
-																<el-input-number v-model="info['rewardRandomMin']" controls-position="right" :min="0" class="w150"></el-input-number>
+															<div v-if="info['rewardPattern']==false&&info['charge']==2">
+																<el-input-number v-model="info['rewardRandomMin']"
+																	controls-position="right" :min="0" class="w150">
+																</el-input-number>
 																<label>&nbsp;&nbsp;至&nbsp;&nbsp;</label>
-																<el-input-number v-model="info['rewardRandomMax']" controls-position="right" :min="0" class="w150"></el-input-number>
+																<el-input-number v-model="info['rewardRandomMax']"
+																	controls-position="right" :min="0" class="w150">
+																</el-input-number>
 															</div>
-															<div  v-if="info['rewardPattern']==true&&info['charge']==2">
-																<el-input-number v-for="item in chargeMap" :key="item.key" v-model="item.value" controls-position="right" :min="0" style="margin-right:5px;" class="w150"></el-input-number>
+															<div v-if="info['rewardPattern']==true&&info['charge']==2">
+																<el-input-number v-for="item in chargeMap"
+																	:key="item.key" v-model="item.value"
+																	controls-position="right" :min="0"
+																	style="margin-right:5px;" class="w150">
+																</el-input-number>
 															</div>
 														</el-col>
 													</el-row>
@@ -247,25 +302,28 @@
 											</div>
 										</div>
 									</div>
-									<cms-multiple-upload :src="info['attr_'+item.field]" :multiple="false" :field="'attr_'+item.field" @get="getMediaPath" btnLabel="上传" v-if="item.dataType==9&&item.custom"></cms-multiple-upload>
+									<cms-multiple-upload :src="info['attr_'+item.field]" :multiple="false"
+										:field="'attr_'+item.field" @get="getMediaPath" btnLabel="上传"
+										v-if="item.dataType==9&&item.custom"></cms-multiple-upload>
 									<!-- 自定义图片-->
-									<cms-upload :src="info['attr_'+item.field]" :field="'attr_'+item.field" @get="getFieldImg" v-if="item.dataType==10&&item.custom"></cms-upload>
+									<cms-upload :src="info['attr_'+item.field]" :field="'attr_'+item.field"
+										@get="getFieldImg" v-if="item.dataType==10&&item.custom"></cms-upload>
 									<!--富文本编辑器-->
 									<div v-if="item.field=='txt'&&dataState">
 										<cms-export-upload :index="0" @get="getDocTxt()"></cms-export-upload>
-										<cms-neditor :destroy="false"  v-model="info['txt']" :index="0"></cms-neditor>
+										<cms-neditor :destroy="false" v-model="info['txt']" :index="0"></cms-neditor>
 									</div>
 									<div v-if="item.field=='txt1'&&dataState">
 										<cms-export-upload :index="1" @get="getDocTxt()"></cms-export-upload>
-										<cms-neditor :destroy="false"  v-model="info['txt1']" :index="1"></cms-neditor>
+										<cms-neditor :destroy="false" v-model="info['txt1']" :index="1"></cms-neditor>
 									</div>
 									<div v-if="item.field=='txt2'&&dataState">
 										<cms-export-upload :index="2" @get="getDocTxt()"></cms-export-upload>
-										<cms-neditor :destroy="false"  v-model="info['txt2']" :index="2"></cms-neditor>
+										<cms-neditor :destroy="false" v-model="info['txt2']" :index="2"></cms-neditor>
 									</div>
 									<div v-if="item.field=='txt3'&&dataState">
 										<cms-export-upload :index="3" @get="getDocTxt()"></cms-export-upload>
-										<cms-neditor :destroy="false"  v-model="info['txt3']" :index="3"></cms-neditor>
+										<cms-neditor :destroy="false" v-model="info['txt3']" :index="3"></cms-neditor>
 									</div>
 								</el-form-item>
 							</el-col>
@@ -323,8 +381,8 @@
 			"cms-multiple-upload": cmsMultipleUpload,
 			"cms-attach-upload": cmsAttachUpload,
 			"cms-pictrues": cmsPictrues,
-			"cms-neditor":cmsNEditor,
-			"cms-export-upload":cmsExportUpload
+			"cms-neditor": cmsNEditor,
+			"cms-export-upload": cmsExportUpload
 		},
 		data() {
 			let self = this;
@@ -436,15 +494,13 @@
 					});
 			},
 			getTypeId(val) {
-				this.$axios
-					.post(this.$api.typeGet, {
-						id: val
-					})
-					.then(res => {
-						if (res.code == "200") {
-							this.isTypeImg = res.body.hasImage;
-						}
-					});
+				this.$axios.post(this.$api.typeGet, {
+					id: val
+				}).then(res => {
+					if (res.code == "200") {
+						this.isTypeImg = res.body.hasImage;
+					}
+				});
 			},
 			getPath(event) {
 				//自动获取栏目路径
@@ -476,9 +532,11 @@
 			getMediaPath(path, field) {
 				this.info[field] = path; //媒体路径
 			},
-			//将文档内容添加至富文本
+			getUeditor(ue, index) {
+				this.ue[index] = ue; //获取ue实例
+			},
 			getDocTxt(txt, index) {
-				this.info['txt'+index==0?'':index] = txt;
+				this.ue[index].execCommand("inserthtml", txt);
 			},
 			getDataInfo(id) {
 				//先获取模型id
@@ -542,68 +600,69 @@
 				this.$set(this.info, "charge", 0);
 			},
 			getAllList() {
-				let _this = this;
 				let api = this.$api; //API地址
 				if (this.params.parentId == "") {
 					this.params.parentId = 0;
 				}
+				this.$axios.post(api.channelGet, {
+					id: this.params.parentId
+				}).then(res => {
+					this.hasContentImg = res.body.hasContentImg;
+					this.hasTitleImg = res.body.hasTitleImg;
+					if (this.params.parentId != 0) {
+						//栏目数据回填
+						this.info.parentId = res.body.nodeIds; //层级id[]
+					} else {
+						this.info.parentId = [""]; //层级id[]
+					}
+				});
 				this.$axios
-					.post(api.channelGet, {
-						id: this.params.parentId
-					})
-					.then(res => {
-						this.hasContentImg = res.body.hasContentImg;
-						this.hasTitleImg = res.body.hasTitleImg;
-						if (this.params.parentId != 0) {
-							//栏目数据回填
-							this.info.parentId = res.body.nodeIds; //层级id[]
-						} else {
-							this.info.parentId = [""]; //层级id[]
-						}
+					.all([
+						this.$axios.post(api.fullTextSearchChannelList, {
+							hasContentOnly: true
+						}), //栏目列表
+						this.$axios.post(api.topicListAll, {
+							channelId: this.params.parentId
+						}), //关联专题列表
+						this.$axios.post(api.typeList, {
+							containDisabled: false
+						}), //内容类型列表
+						this.$axios.post(api.groupList), //会员组列表
+						this.$axios.post(api.tplModelList, {
+							modelId: this.params.modelId
+						}),
+						this.$axios.post(api.configContentChargeGet)
+					])
+					.then(
+						this.$axios.spread((channels, topicList, type, groups, tplAll, charge) => {
+							this.channelList = this.channelList.concat(channels.body); //栏目列表
+							this.topicList = topicList.body; //关联专题列表
+							this.typeList = type.body; //内容类型列表
+							this.groupList = groups.body; //会员组列表
+							this.tplAll = tplAll.body; //所有模型
+
+							this.chargeMap = charge.body.fixMap; //打赏固定金额
+							this.getDefaultInfo(); //数据回填
+						})
+					)
+					.catch(err => {
+						this.loading = false;
 					});
-				//栏目列表
-				this.$axios.post(api.fullTextSearchChannelList, {
-					hasContentOnly: true
-				}).then(res => {
-					this.channelList = this.channelList.concat(res.body);
-					this.getDefaultInfo(); //数据回填
-
-				})
-				//关联专题列表
-				this.$axios.post(api.topicListAll, {
-					channelId: this.params.parentId
-				}).then(res => {
-					this.topicList = res.body;
-					this.getDefaultInfo(); //数据回填
-
-				})
-				//内容类型列表
-				this.$axios.post(api.typeList, {
-					containDisabled: false
-				}).then(res => {
-					this.typeList = res.body;
-					this.getDefaultInfo(); //数据回填
-
-				})
-				//会员组列表
-				this.$axios.post(api.groupList).then(res => {
-					this.groupList = res.body;
-					this.getDefaultInfo(); //数据回填
-
-				})
-				//所有模型
-				this.$axios.post(api.tplModelList, {
-					modelId: this.params.modelId
-				}).then(res => {
-					this.tplAll = res.body;
-					this.getDefaultInfo(); //数据回填
-
-				})
-				//打赏固定金额
-				this.$axios.post(api.configContentChargeGet).then(res => {
-					this.chargeMap = res.body.fixMap; //打赏固定金额
-					this.getDefaultInfo(); //数据回填
-				})
+			},
+			getEditorContent() {
+				//处理一下栏目的富文本内容,固定只有四个
+				if (this.info.txt != undefined) {
+					this.info.txt = this.ue[0].getContent();
+				}
+				if (this.info.txt1 != undefined) {
+					this.info.txt1 = this.ue[1].getContent();
+				}
+				if (this.info.txt2 != undefined) {
+					this.info.txt2 = this.ue[2].getContent();
+				}
+				if (this.info.txt3 != undefined) {
+					this.info.txt3 = this.ue[3].getContent();
+				}
 			},
 			getParams() {
 				//获取到处理完成给后台提交的对象
@@ -613,6 +672,7 @@
 				let attachmentNames = [];
 				let attachmentPaths = [];
 				let charge = [];
+				this.getEditorContent();
 				for (let j = 0; j < this.info.pics.length; j++) {
 					//处理图集
 					picPaths.push(this.info.pics[j].path);
@@ -707,7 +767,7 @@
 		},
 		created() {
 			//初始获取数据
-			// this.$store.dispatch("setCollapse", true); //收缩状态栏
+			this.$store.dispatch("setCollapse", true); //收缩状态栏
 			this.ansyTree();
 			this.info.parentId = [this.params.parentId];
 			this.info.modelId = parseInt(this.params.modelId);

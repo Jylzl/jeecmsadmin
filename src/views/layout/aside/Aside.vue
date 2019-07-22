@@ -1,6 +1,6 @@
 <template>
 	<div class="aside">
-		<div class="aside-top el-header el-menu"></div>
+		<div class="aside-top el-header el-menu">政务-CMS</div>
 		<div class="left-center">
 			<el-scrollbar wrap-class="scrollbar-wrapper ">
 				<el-menu :collapse-transition="false" :default-active="$route.path"
@@ -155,5 +155,6 @@
 		width: 24px;
 		text-align: center;
 		font-size: 18px;
+		color: #FFF;
 	}
 </style>

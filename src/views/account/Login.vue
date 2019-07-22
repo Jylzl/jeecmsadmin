@@ -8,7 +8,7 @@
 				<div class="logo">Jeecms-logo</div>
 				<div class="land-form">
 					<el-tabs v-model="activeName" @tab-click="handleClick">
-						<el-tab-pane label="账号登陆" name="password">
+						<el-tab-pane label="账号登录" name="password">
 							<div class="card-box">
 								<el-form :model="landForm_password" ref="landForm_password" class="demo-ruleForm">
 									<el-form-item prop="user" :rules="user">
@@ -44,7 +44,7 @@
 								</el-form>
 							</div>
 						</el-tab-pane>
-						<el-tab-pane label="免密登陆" name="phone">
+						<el-tab-pane label="免密登录" name="phone">
 							<div class="card-box-two">
 								<el-form :model="landForm_phone" ref="landForm_phone" class="demo-ruleForm">
 									<el-row :gutter="20">
@@ -151,8 +151,8 @@
 					}
 				],
 				landForm_password: {
-					user: "",
-					pswd: "",
+					user: "admin",
+					pswd: "password",
 					rememberPswd: true
 				},
 				landForm_phone: {
@@ -163,7 +163,7 @@
 				landLoading: {
 					disabled: false,
 					icon: "",
-					content: "登陆"
+					content: "登录"
 				},
 				areaCodes: [{
 						name: "中国大陆",
@@ -258,7 +258,7 @@
 			submitForm(formName) {
 				this.$refs[formName].validate(valid => {
 					if (valid) {
-						this.landLoading.content = "正在登陆...";
+						this.landLoading.content = "正在登录...";
 						this.landLoading.icon = "el-icon-loading";
 						this.landLoading.disabled = true;
 						this.$store
@@ -269,25 +269,25 @@
 							.then(res => {
 								switch (res.code) {
 									case "200":
-										// 登陆成功
+										// 登录成功
 										this.landSuccess();
 										break;
 									case "304":
-										// 登陆失败
+										// 登录失败
 										this.landFail("warning", "用户或密码名错误!");
 										break;
 									case "301":
-										// 登陆失败
+										// 登录失败
 										this.landFail("warning", res.message + "!");
 										break;
 									default:
-										// 登陆失败
+										// 登录失败
 										this.landFail();
 										break;
 								}
 							})
 							.catch(() => {
-								// 登陆失败
+								// 登录失败
 								this.landFail();
 							});
 					} else {
@@ -320,7 +320,7 @@
 				} else if (tab.name == "phone") {
 					this.submitFormName = "landForm_phone";
 				}
-				//重置登陆
+				//重置登录
 				this.restLand();
 			},
 			handleSelect(item) {
@@ -363,7 +363,7 @@
 						// window.console && console.log(data.csessionid)
 						// window.console && console.log(data.sig)
 						setTimeout(() => {
-							//登陆成功手动清除cookies记录的登录次数
+							//登录成功手动清除cookies记录的登录次数
 							Cookies.remove("landingTimes");
 							_this.aliyunShow = false;
 						}, 1200);
@@ -383,7 +383,7 @@
 					.then(res => {
 						if (res.code == "200") {
 							this.$router.addRoutes(this.$store.state.perms.addRouters);
-							//登陆成功后，先清除旧用户信息，然后判断用户是否勾选记住密码，是则将用户信息插入数组，否则仅记住用户名，然后将数组加密后存入cookies
+							//登录成功后，先清除旧用户信息，然后判断用户是否勾选记住密码，是则将用户信息插入数组，否则仅记住用户名，然后将数组加密后存入cookies
 							this.rememberUsers = this.rememberUsers.filter(
 								user => user.value != this.landForm_password.user
 							);
@@ -417,7 +417,7 @@
 									expires: 7
 								}
 							);
-							//登陆成功手动清除cookies记录的登录次数
+							//登录成功手动清除cookies记录的登录次数
 							Cookies.remove("landingTimes");
 							let siteName = "";
 							//遍历网站名称
@@ -429,12 +429,12 @@
 								}
 							}
 							this.$notify({
-								title: '登陆成功',
+								title: '登录成功',
 								message: '欢迎进入 ' + siteName + " 后台管理系统",
 								type: 'success',
 								showClose: true
 							});
-							//重置登陆样式
+							//重置登录样式
 							this.restLand();
 							this.$router.push({
 								path: "/work" //跳转的路径
@@ -449,7 +449,7 @@
 			},
 			landFail(type, msg) {
 				this.loading = false;
-				// 登陆失败五次启用阿里云人机验证
+				// 登录失败五次启用阿里云人机验证
 				Cookies.set(
 					"landingTimes",
 					Cookies.get("landingTimes") ?
@@ -467,7 +467,7 @@
 				} else {
 					this.aliyunShow = false;
 				}
-				//重置登陆样式
+				//重置登录样式
 				this.restLand();
 				if (type) {
 					this.$message({
@@ -476,14 +476,14 @@
 					});
 				} else {
 					this.$message({
-						message: "登陆失败",
+						message: "登录失败",
 						type: "warning",
 						center: true
 					});
 				}
 			},
 			restLand() {
-				this.landLoading.content = "登陆";
+				this.landLoading.content = "登录";
 				this.landLoading.icon = "";
 				this.landLoading.disabled = false;
 			}
@@ -500,6 +500,7 @@
 		/*垂直居中*/
 		justify-content: center;
 		/*水平居中*/
+		background-size: cover;
 	}
 
 	.land-box-center {

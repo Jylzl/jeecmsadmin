@@ -6,3 +6,26 @@ $--color-primary: #1F6FB5;
 
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 @import "~element-ui/packages/theme-chalk/src/index";
+
+// 卡片
+.el-card__header {
+    padding: 10px 15px;
+    font-size: 14px;
+}
+
+.el-card__header>div {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 20px;
+    justify-content: space-between;
+}
+
+.el-card__body {
+    padding: 0;
+}
+
+// 时间轴
+.el-timeline .el-timeline-item:last-child {
+    padding-bottom: 0;
+}

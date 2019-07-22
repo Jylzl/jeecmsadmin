@@ -28,10 +28,11 @@ function showMessage(value) {
 
 // create an axios instance
 const service = axios.create({
-	withCredentials: true,
+	withCredentials: false,
 	baseURL: process.env.VUE_APP_SERVER_API, // api 的 base_url
 	timeout: 5000 // request timeout
 })
+service.__proto__ = axios
 
 service.interceptors.request.use(
 	config => {

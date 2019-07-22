@@ -1,196 +1,251 @@
 <template>
-	<div>
-		<el-row :gutter="24">
-			<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-				<div class="bg-box">
-					<div class="bg-green bg-icon">
-						<svg width="48" height="48">
-							<image xlink:href="@/assets/svg/content.svg" src="svg.png" width="48" height="48" />
-						</svg>
-						<!-- <icon name="content" :w="48" :h="48"></icon> -->
-						<p class="icon-title">内容发布数</p>
-					</div>
-					<div class="bg-info">
-						<p class="today-count">
-							<span class="todat-title">今日</span>
-							<span class="count-num">{{page.pageNum.contentDayTotalCount}}&nbsp;</span>
-							<span class="up-num">({{page.pageNum.contentDayUncheckCount}})</span>
-						</p>
-						<!-- <p class="all-count">累计:&nbsp;&nbsp;{{page.pageNum.contentTotal}}</p> -->
-						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.contentTotal'
-								:duration='3000'></countTo>
-						</p>
-					</div>
-				</div>
-			</el-col>
-			<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-				<div class="bg-box">
-					<div class="bg-yellow bg-icon">
-						<svg width="48" height="48">
-							<image xlink:href="@/assets/svg/comment.svg" src="svg.png" width="48" height="48" />
-						</svg>
-						<!-- <icon name="comment" :w="48" :h="48"></icon> -->
-						<p class="icon-title">评论数</p>
-					</div>
-					<div class="bg-info">
-						<p class="today-count">
-							<span class="todat-title">今日</span>
-							<span class="count-num">{{page.pageNum.commentDayTotalCount}}&nbsp;</span>
-							<span class="up-num">({{page.pageNum.commentDayUncheckCount}})</span>
-						</p>
-						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.commentTotal'
-								:duration='3000'></countTo>
-						</p>
-					</div>
-				</div>
-			</el-col>
-			<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-				<div class="bg-box">
-					<div class="bg-blue bg-icon">
-						<svg width="48" height="48">
-							<image xlink:href="@/assets/svg/list.svg" src="svg.png" width="48" height="48" />
-						</svg>
-						<!-- <icon name="list" :w="48" :h="48"></icon> -->
-						<p class="icon-title">留言数</p>
-					</div>
-					<div class="bg-info">
-						<p class="today-count">
-							<span class="todat-title">今日</span>
-							<span class="count-num">{{page.pageNum.guestbookDayTotalCount}}&nbsp;</span>
-							<span class="up-num">({{page.pageNum.guestbookDayUncheckTotalCount}})</span>
-						</p>
-						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.guestbookTotal'
-								:duration='100'></countTo>
-						</p>
-					</div>
-				</div>
-			</el-col>
-			<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-				<div class="bg-box">
-					<div class="bg-purple bg-icon">
-						<svg width="48" height="48">
-							<image xlink:href="@/assets/svg/news.svg" src="svg.png" width="48" height="48" />
-						</svg>
-						<!-- <icon name="news" :w="48" :h="48"></icon> -->
-						<p class="icon-title">待办</p>
-					</div>
-					<div class="bg-info">
-						<p class="today-count">
-							<span class="todat-title">今日</span>
-							<span class="count-num">{{page.pageNum.memberToday}}&nbsp;</span>
-							<!-- <span class="up-num">(0)</span> -->
-						</p>
-						<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0' :endVal='page.pageNum.memberTotal'
-								:duration='100'></countTo>
-						</p>
-					</div>
-				</div>
-			</el-col>
-		</el-row>
-		<el-row :gutter="24">
-			<el-col :span="12" :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-				<el-card class="box-card" :body-style="{ padding: '20px 10px 5px 10px' }">
-					<div slot="header" class="clearfix card-header">
-						<span>访问分析</span>
-						<el-dropdown style="float: right;" trigger="click">
-							<span class="el-dropdown-link">
-								<i class="el-icon-more"></i>
-							</span>
-							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item><span @click="getPv()">刷新</span></el-dropdown-item>
-								<el-dropdown-item>详情</el-dropdown-item>
-							</el-dropdown-menu>
-						</el-dropdown>
-					</div>
-					<div>
-						<ve-line :data="chart1Data" :extend="chart1Set" :data-empty="chart1DataEmpty"
-							:loading="chart1loading"></ve-line>
-					</div>
-				</el-card>
-			</el-col>
-			<el-col :span="12" :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-				<el-card class="box-card" :body-style="{ padding: '20px 10px 5px 10px' }">
-					<div slot="header" class="clearfix card-header">
-						<span>来源分析</span>
-						<el-dropdown style="float: right;" trigger="click">
-							<span class="el-dropdown-link">
-								<i class="el-icon-more"></i>
-							</span>
-							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item><span @click="getsource()">刷新</span></el-dropdown-item>
-								<el-dropdown-item>关闭</el-dropdown-item>
-							</el-dropdown-menu>
-						</el-dropdown>
-					</div>
-					<div>
-						<ve-ring :data="chart2Data" :extend="chart2Set" :data-empty="chart2DataEmpty"
-							:loading="chart2loading"></ve-ring>
-					</div>
-				</el-card>
-			</el-col>
-			<el-col :span="12" :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-				<el-card class="box-card" :body-style="{ padding: '20px 10px 5px 10px' }">
-					<div slot="header" class="clearfix card-header">
-						<span>热词分析</span>
-						<el-dropdown style="float: right;" trigger="click">
-							<span class="el-dropdown-link">
-								<i class="el-icon-more"></i>
-							</span>
-							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item>刷新</el-dropdown-item>
-								<el-dropdown-item>切换</el-dropdown-item>
-								<el-dropdown-item>关闭</el-dropdown-item>
-							</el-dropdown-menu>
-						</el-dropdown>
-					</div>
-					<div>
-						<ve-line :data="chartData3"></ve-line>
-					</div>
-				</el-card>
-			</el-col>
-			<el-col :span="12" :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-				<el-card class="box-card" :body-style="{ padding: '0px' }">
-					<div slot="header" class="clearfix card-header">
-						<span>待办事项</span>
-						<el-dropdown style="float: right;" trigger="click">
-							<span class="el-dropdown-link">
-								<i class="el-icon-more"></i>
-							</span>
-							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item>刷新</el-dropdown-item>
-								<el-dropdown-item>关闭</el-dropdown-item>
-							</el-dropdown-menu>
-						</el-dropdown>
-					</div>
-					<div style="height:425px;">
-						<div style="height:380px;">
-							<el-table :data="tableData" stripe style="width: 100%" ref="multipleTable"
-								tooltip-effect="dark">
-								<el-table-column type="selection" width="55"></el-table-column>
-								<el-table-column prop="date" label="日期" width="160" sortable></el-table-column>
-								<el-table-column prop="name" label="状态" width="100">
-									<template slot-scope="scope">
-										<el-tag type="success" v-if="scope.row.type == '0'">已办</el-tag>
-										<el-tag type="warning" v-else-if="scope.row.type == '1'">待办</el-tag>
-										<el-tag type="danger" v-else-if="scope.row.type == '2'">加急</el-tag>
-										<el-tag type="info" v-else>正常</el-tag>
-									</template>
-								</el-table-column>
-								<!-- <el-table-column prop="name" label="姓名" width="180"></el-table-column> -->
-								<el-table-column prop="matter" label="事项"></el-table-column>
-							</el-table>
+	<el-container>
+		<el-main>
+			<el-scrollbar wrap-class="scrollbar-wrapper">
+				<el-row :gutter="24">
+					<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
+						<div class="bg-box">
+							<div class="bg-green bg-icon">
+								<svg width="48" height="48">
+									<image xlink:href="@/assets/svg/content.svg" src="svg.png" width="48" height="48" />
+								</svg>
+								<!-- <icon name="content" :w="48" :h="48"></icon> -->
+								<p class="icon-title">内容发布数</p>
+							</div>
+							<div class="bg-info">
+								<p class="today-count">
+									<span class="todat-title">今日</span>
+									<span class="count-num">{{page.pageNum.contentDayTotalCount}}&nbsp;</span>
+									<span class="up-num">({{page.pageNum.contentDayUncheckCount}})</span>
+								</p>
+								<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0'
+										:endVal='page.pageNum.contentTotal' :duration='3000'></countTo>
+								</p>
+							</div>
 						</div>
-						<div style="height:45px;text-align:center;">
-							<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-								:current-page="1" :page-sizes="[100, 200, 300, 400]" :page-size="100"
-								layout="total, sizes, prev, pager, next, jumper" :total="4000">
-							</el-pagination>
+					</el-col>
+					<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
+						<div class="bg-box">
+							<div class="bg-yellow bg-icon">
+								<svg width="48" height="48">
+									<image xlink:href="@/assets/svg/comment.svg" src="svg.png" width="48" height="48" />
+								</svg>
+								<!-- <icon name="comment" :w="48" :h="48"></icon> -->
+								<p class="icon-title">评论数</p>
+							</div>
+							<div class="bg-info">
+								<p class="today-count">
+									<span class="todat-title">今日</span>
+									<span class="count-num">{{page.pageNum.commentDayTotalCount}}&nbsp;</span>
+									<span class="up-num">({{page.pageNum.commentDayUncheckCount}})</span>
+								</p>
+								<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0'
+										:endVal='page.pageNum.commentTotal' :duration='3000'></countTo>
+								</p>
+							</div>
 						</div>
-					</div>
-				</el-card>
-			</el-col>
-		</el-row>
-	</div>
+					</el-col>
+					<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
+						<div class="bg-box">
+							<div class="bg-blue bg-icon">
+								<svg width="48" height="48">
+									<image xlink:href="@/assets/svg/list.svg" src="svg.png" width="48" height="48" />
+								</svg>
+								<!-- <icon name="list" :w="48" :h="48"></icon> -->
+								<p class="icon-title">留言数</p>
+							</div>
+							<div class="bg-info">
+								<p class="today-count">
+									<span class="todat-title">今日</span>
+									<span class="count-num">{{page.pageNum.guestbookDayTotalCount}}&nbsp;</span>
+									<span class="up-num">({{page.pageNum.guestbookDayUncheckTotalCount}})</span>
+								</p>
+								<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0'
+										:endVal='page.pageNum.guestbookTotal' :duration='100'></countTo>
+								</p>
+							</div>
+						</div>
+					</el-col>
+					<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
+						<div class="bg-box">
+							<div class="bg-purple bg-icon">
+								<svg width="48" height="48">
+									<image xlink:href="@/assets/svg/news.svg" src="svg.png" width="48" height="48" />
+								</svg>
+								<!-- <icon name="news" :w="48" :h="48"></icon> -->
+								<p class="icon-title">待办</p>
+							</div>
+							<div class="bg-info">
+								<p class="today-count">
+									<span class="todat-title">今日</span>
+									<span class="count-num">{{page.pageNum.memberToday}}&nbsp;</span>
+								</p>
+								<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0'
+										:endVal='page.pageNum.memberTotal' :duration='100'></countTo>
+								</p>
+							</div>
+						</div>
+					</el-col>
+				</el-row>
+				<div class="box-card sys-inf">
+					<el-row :gutter="20">
+						<el-col :span="4" :xl="4" :lg="4" :md="8" :sm="8" v-for="(item,index) in numList" :key="index"
+							class="m-b-20">
+							<div :class="'inf-card inf-card_'+(index+1)">
+								<div class="inf-card-title">{{item.name}}</div>
+								<div class="inf-card-num">
+									<countTo :startVal='0' :endVal='item.num' :duration='3000'></countTo>
+								</div>
+							</div>
+						</el-col>
+					</el-row>
+				</div>
+				<div class="box-card personal-inf">
+					<el-row :gutter="20">
+						<el-col :span="8" :xl="8" :lg="8" :md="12" :sm="12" class="m-b-20">
+							<el-card :body-style="{ padding: '15px' }">
+								<div slot="header">
+									<span>快捷操作</span>
+								</div>
+								<div class="text item">
+									<el-row :gutter="10">
+										<el-col :span="6">
+											<el-link :underline="false" class="personal-inf-card">
+												<div class="card-icon">
+													<i class="el-icon-edit"></i>
+												</div>
+												<div class="card-inf">数据发布</div>
+											</el-link>
+										</el-col>
+										<el-col :span="6">
+											<el-link :underline="false" class="personal-inf-card">
+												<div class="card-icon">
+													<i class="el-icon-cpu"></i>
+												</div>
+												<div class="card-inf">数据清洗</div>
+											</el-link>
+										</el-col>
+										<el-col :span="6">
+											<el-link :underline="false" class="personal-inf-card">
+												<div class="card-icon">
+													<i class="el-icon-search"></i>
+												</div>
+												<div class="card-inf">数据检索</div>
+											</el-link>
+										</el-col>
+										<el-col :span="6">
+											<el-link :underline="false" class="personal-inf-card">
+												<div class="card-icon">
+													<i class="el-icon-pie-chart"></i>
+												</div>
+												<div class="card-inf">数据统计</div>
+											</el-link>
+										</el-col>
+										<el-col :span="6">
+											<el-link :underline="false" class="personal-inf-card">
+												<div class="card-icon">
+													<i class="el-icon-setting"></i>
+												</div>
+												<div class="card-inf">个人设置</div>
+											</el-link>
+										</el-col>
+									</el-row>
+								</div>
+							</el-card>
+						</el-col>
+						<el-col :span="8" :xl="8" :lg="8" :md="12" :sm="12" class="m-b-20">
+							<el-card :body-style="{ padding: '15px' }">
+								<div slot="header">
+									<span>本级内容</span>
+								</div>
+								<div class="text item">
+									<el-row :gutter="10" class="personal-content">
+										<el-col :span="12" v-for="(item,index) in personalContent" :key="index">
+											<el-link :underline="false" class="personal-content-card">
+												<div class="card-title">{{item.title}}</div>
+												<div class="card-content">{{item.count}}</div>
+											</el-link>
+										</el-col>
+									</el-row>
+								</div>
+							</el-card>
+						</el-col>
+						<el-col :span="8" :xl="8" :lg="8" :md="24" :sm="24" class="m-b-20">
+							<el-card :body-style="{ padding: '15px' }">
+								<div slot="header">
+									<span>待办事项</span>
+									<el-tooltip class="item" effect="dark" content="查看更多" placement="top">
+										<el-button type="text" class="tab-more">更多<i class="el-icon-arrow-right"></i>
+										</el-button>
+									</el-tooltip>
+								</div>
+								<div class="personal-item">
+									<el-timeline style="width:100%;">
+										<el-timeline-item v-for="(activity, index) in activities" :key="index"
+											:icon="activity.icon" :type="activity.type" :color="activity.color"
+											:size="activity.size" :timestamp="activity.timestamp" placement="top"
+											:hide-timestamp="true">
+											<p class="timeline-content">
+												<el-link :underline="false" class="timeline-content-title">
+													{{activity.content}}</el-link>
+												<span class="timeline-content-time">一天前</span>
+											</p>
+										</el-timeline-item>
+									</el-timeline>
+								</div>
+							</el-card>
+						</el-col>
+					</el-row>
+				</div>
+				<div class="box-card sys-chart">
+					<el-row :gutter="20">
+						<el-col :span="16" :xl="16" :lg="16" :md="24" :sm="24">
+							<el-card :body-style="{ padding: '15px' }">
+								<div slot="header">
+									<span>数据概览</span>
+									<ul class="tab-spot">
+										<li :class="{active:sysChartItem==0}" @click="tabSpotChange('sysChartItem',0)">0
+										</li>
+										<li :class="{active:sysChartItem==1}" @click="tabSpotChange('sysChartItem',1)">1
+										</li>
+										<li :class="{active:sysChartItem==2}" @click="tabSpotChange('sysChartItem',2)">2
+										</li>
+									</ul>
+								</div>
+								<div class="sys-chart-body">
+									<div v-show="sysChartItem == 0">
+										<ve-line :data="chart1Data" :extend="chart1Set" :data-empty="chart1DataEmpty"
+											:loading="chart1loading"></ve-line>
+									</div>
+									<div v-show="sysChartItem == 1">
+									</div>
+									<div v-show="sysChartItem == 2">
+										<div id="chart-03"></div>
+									</div>
+								</div>
+							</el-card>
+						</el-col>
+						<el-col :span="8" :xl="8" :lg="8" :md="24" :sm="24">
+							<el-card :body-style="{ padding: '15px' }">
+								<div slot="header">
+									<span>数据类型</span>
+									<ul class="tab-spot">
+										<li class="active">1</li>
+										<li>2</li>
+										<li>3</li>
+									</ul>
+								</div>
+								<div class="text item">
+									<ve-ring :data="chart2Data" :extend="chart2Set" :data-empty="chart2DataEmpty"
+										:loading="chart2loading"></ve-ring>
+								</div>
+							</el-card>
+						</el-col>
+					</el-row>
+				</div>
+			</el-scrollbar>
+		</el-main>
+	</el-container>
 </template>
 
 <script>
@@ -205,11 +260,77 @@
 		data() {
 			this.chart1Set = {
 				// 'xAxis.0.axisLabel.rotate': 45
+				stack: {
+					'用户': ['访问用户', '下单用户']
+				},
+				area: true
 			};
 			this.chart2Set = {
 				// 'xAxis.0.axisLabel.rotate': 45
 			};
 			return {
+				sysChartItem: 0,
+				numList: [{
+						name: '资源总数',
+						num: 30479
+					}, {
+						name: '资源入库量',
+						num: 195902
+					}, {
+						name: '资源调用量',
+						num: 226386
+					},
+					{
+						name: '资源共享量',
+						num: 36564
+					},
+					{
+						name: '待清洗量',
+						num: 74512
+					},
+					{
+						name: '待审核量',
+						num: 24580
+					}
+				],
+				personalContent: [{
+					title: '待清洗内容',
+					count: 60
+				}, {
+					title: '待分类内容',
+					count: 60
+				}, {
+					title: '待打标内容',
+					count: 60
+				}, {
+					title: '待审核内容',
+					count: 100
+				}],
+				activities: [{
+					content: '待审核内容20条',
+					timestamp: '2018-04-12 20:46',
+					color: '#0bbd87'
+				}, {
+					content: '待清洗数据100条',
+					timestamp: '2018-04-03 20:46',
+					color: '#0bbd87'
+				}, {
+					content: '未读消息5条',
+					timestamp: '2018-04-03 20:46',
+					size: 'large'
+				}, {
+					content: '未读消息5条',
+					timestamp: '2018-04-03 20:46',
+					size: 'large'
+				}, {
+					content: '未读消息5条',
+					timestamp: '2018-04-03 20:46',
+					size: 'large'
+				}, {
+					content: '未读消息5条',
+					timestamp: '2018-04-03 20:46',
+					size: 'large'
+				}],
 				params: {
 					type: "source", //查询分类
 					flag: "1", //查询范围
@@ -354,9 +475,9 @@
 			//获取pv、ip、访客数信息
 			getPv() {
 				var _this = this;
-				_this.chart1loading = true;
-				_this.$axios
-					.post(_this.$api.flowPvList, {
+				this.chart1loading = true;
+				this.$axios
+					.post(this.$api.flowPvList, {
 						flag: "4",
 						begin: "",
 						end: "",
@@ -626,12 +747,6 @@
 						this.page.adminNum = res.body;
 					})
 					.catch(err => {});
-			},
-			handleSizeChange(val) {
-				console.log(`每页 ${val} 条`);
-			},
-			handleCurrentChange(val) {
-				console.log(`当前页: ${val}`);
 			}
 		}
 	};
@@ -653,10 +768,6 @@
 
 	.card-header {
 		line-height: 22px;
-	}
-
-	.el-col {
-		margin-bottom: 20px;
 	}
 
 	/* 样式重写 End*/
@@ -736,5 +847,184 @@
 	.today-count .up-num {
 		font-size: 14px;
 		color: #ff724c;
+	}
+
+	.m-t-20 {
+		margin-top: 20px;
+	}
+
+	.m-b-20 {
+		margin-bottom: 20px;
+	}
+
+
+	.el-timeline-item {
+		padding-bottom: 17px;
+	}
+
+	/* 第一部分 */
+	.box-top {
+		overflow: hidden;
+	}
+
+	.inf-card {
+		display: block;
+		box-sizing: border-box;
+		height: 100px;
+		padding: 10px 10px 20px 10px;
+		border: 1px solid #eee;
+		border-radius: 2px;
+		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+	}
+
+	.inf-card .inf-card-title {
+		height: 20px;
+		line-height: 20px;
+		font-size: 15px;
+		color: #fff;
+	}
+
+	.inf-card .inf-card-num {
+		height: 60px;
+		line-height: 60px;
+		font-family: Arial;
+		font-size: 26px;
+		font-weight: bold;
+		color: #fff;
+		text-align: center;
+	}
+
+	.box-card {
+		overflow: hidden;
+	}
+
+	.tab-more {
+		font-size: 12px;
+		padding: 0;
+	}
+
+	.sys-inf .inf-card_1 {
+		background: linear-gradient(to right, #2f80ed, #54c9f2);
+	}
+
+	.sys-inf .inf-card_2 {
+		background: linear-gradient(to right, #03c9fb, #3bd3af);
+	}
+
+	.sys-inf .inf-card_3 {
+		background: linear-gradient(to right, #3387ed, #56ccf2);
+	}
+
+	.sys-inf .inf-card_4 {
+		background: linear-gradient(to right, #068095, #78ffd6);
+	}
+
+	.sys-inf .inf-card_5 {
+		background: linear-gradient(to right, #30a0ed, #55cbf2);
+	}
+
+	.sys-inf .inf-card_6 {
+		background: linear-gradient(to right, #3286ed, #56ccf2);
+	}
+
+	/* tab选项卡更多 */
+	.tab-spot {
+		font-size: 0;
+	}
+
+	.tab-spot li {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background: #e2e2e2;
+		margin: 0 3px;
+		vertical-align: middle;
+		cursor: pointer;
+	}
+
+	.tab-spot li.active,
+	.tab-spot li:hover {
+		background-color: #999;
+	}
+
+	/* 个人控制台 */
+	.personal-inf-card {
+		display: block;
+		height: 84px;
+	}
+
+	.personal-inf .el-col:nth-child(n + 5),
+	.personal-content .el-col:nth-child(n + 3) {
+		margin-top: 10px;
+	}
+
+	.personal-inf-card .card-icon {
+		height: 60px;
+		line-height: 60px;
+		text-align: center;
+		font-size: 28px;
+		background-color: #f8f8f8;
+		border-radius: 2px;
+	}
+
+	.personal-inf-card .card-inf {
+		height: 24px;
+		line-height: 24px;
+		font-size: 14px;
+		text-align: center;
+	}
+
+	.personal-content-card {
+		box-sizing: border-box;
+		display: block;
+		height: 84px;
+		padding: 10px;
+		background-color: #F8F8F8;
+	}
+
+	.personal-content-card .card-title {
+		height: 24px;
+		line-height: 24px;
+	}
+
+	.personal-content-card .card-content {
+		height: 40px;
+		line-height: 40px;
+		font-size: 30px;
+		font-weight: bold;
+		color: #009688;
+		text-align: left;
+	}
+
+	.personal-item {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		height: 178px;
+	}
+
+	#chart-01,
+	#chart-02,
+	#chart-03 {
+		width: 100%;
+		height: 400px;
+	}
+
+	.timeline-content {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.timeline-content .timeline-content-title {
+		color: #333;
+		font-size: 15px;
+	}
+
+	.timeline-content .timeline-content-time {
+		color: #999;
+		font-size: 14px;
 	}
 </style>
