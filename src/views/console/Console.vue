@@ -2,99 +2,59 @@
 	<el-container>
 		<el-main>
 			<el-scrollbar wrap-class="scrollbar-wrapper">
-				<el-row :gutter="24">
-					<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-						<div class="bg-box">
-							<div class="bg-green bg-icon">
-								<svg width="48" height="48">
-									<image xlink:href="@/assets/svg/content.svg" src="svg.png" width="48" height="48" />
-								</svg>
-								<!-- <icon name="content" :w="48" :h="48"></icon> -->
-								<p class="icon-title">内容发布数</p>
-							</div>
-							<div class="bg-info">
-								<p class="today-count">
-									<span class="todat-title">今日</span>
-									<span class="count-num">{{page.pageNum.contentDayTotalCount}}&nbsp;</span>
-									<span class="up-num">({{page.pageNum.contentDayUncheckCount}})</span>
-								</p>
-								<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0'
-										:endVal='page.pageNum.contentTotal' :duration='3000'></countTo>
-								</p>
-							</div>
-						</div>
-					</el-col>
-					<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-						<div class="bg-box">
-							<div class="bg-yellow bg-icon">
-								<svg width="48" height="48">
-									<image xlink:href="@/assets/svg/comment.svg" src="svg.png" width="48" height="48" />
-								</svg>
-								<!-- <icon name="comment" :w="48" :h="48"></icon> -->
-								<p class="icon-title">评论数</p>
-							</div>
-							<div class="bg-info">
-								<p class="today-count">
-									<span class="todat-title">今日</span>
-									<span class="count-num">{{page.pageNum.commentDayTotalCount}}&nbsp;</span>
-									<span class="up-num">({{page.pageNum.commentDayUncheckCount}})</span>
-								</p>
-								<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0'
-										:endVal='page.pageNum.commentTotal' :duration='3000'></countTo>
-								</p>
-							</div>
-						</div>
-					</el-col>
-					<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-						<div class="bg-box">
-							<div class="bg-blue bg-icon">
-								<svg width="48" height="48">
-									<image xlink:href="@/assets/svg/list.svg" src="svg.png" width="48" height="48" />
-								</svg>
-								<!-- <icon name="list" :w="48" :h="48"></icon> -->
-								<p class="icon-title">留言数</p>
-							</div>
-							<div class="bg-info">
-								<p class="today-count">
-									<span class="todat-title">今日</span>
-									<span class="count-num">{{page.pageNum.guestbookDayTotalCount}}&nbsp;</span>
-									<span class="up-num">({{page.pageNum.guestbookDayUncheckTotalCount}})</span>
-								</p>
-								<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0'
-										:endVal='page.pageNum.guestbookTotal' :duration='100'></countTo>
-								</p>
-							</div>
-						</div>
-					</el-col>
-					<el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-						<div class="bg-box">
-							<div class="bg-purple bg-icon">
-								<svg width="48" height="48">
-									<image xlink:href="@/assets/svg/news.svg" src="svg.png" width="48" height="48" />
-								</svg>
-								<!-- <icon name="news" :w="48" :h="48"></icon> -->
-								<p class="icon-title">待办</p>
-							</div>
-							<div class="bg-info">
-								<p class="today-count">
-									<span class="todat-title">今日</span>
-									<span class="count-num">{{page.pageNum.memberToday}}&nbsp;</span>
-								</p>
-								<p class="all-count">累计:&nbsp;&nbsp;<countTo :startVal='0'
-										:endVal='page.pageNum.memberTotal' :duration='100'></countTo>
-								</p>
-							</div>
-						</div>
-					</el-col>
-				</el-row>
 				<div class="box-card sys-inf">
 					<el-row :gutter="20">
-						<el-col :span="4" :xl="4" :lg="4" :md="8" :sm="8" v-for="(item,index) in numList" :key="index"
-							class="m-b-20">
-							<div :class="'inf-card inf-card_'+(index+1)">
-								<div class="inf-card-title">{{item.name}}</div>
+						<el-col :span="4" :xl="4" :lg="4" :md="8" :sm="8" class="m-b-20">
+							<div class="inf-card inf-card_1">
+								<div class="inf-card-title">文章总数</div>
 								<div class="inf-card-num">
-									<countTo :startVal='0' :endVal='item.num' :duration='3000'></countTo>
+									<countTo :startVal='0' :endVal='page.pageNum.contentTotal' :duration='3000'>
+									</countTo>
+								</div>
+							</div>
+						</el-col>
+						<el-col :span="4" :xl="4" :lg="4" :md="8" :sm="8" class="m-b-20">
+							<div class="inf-card inf-card_2">
+								<div class="inf-card-title">评论总数</div>
+								<div class="inf-card-num">
+									<countTo :startVal='0' :endVal='page.pageNum.commentTotal' :duration='3000'>
+									</countTo>
+								</div>
+							</div>
+						</el-col>
+						<el-col :span="4" :xl="4" :lg="4" :md="8" :sm="8" class="m-b-20">
+							<div class="inf-card inf-card_3">
+								<div class="inf-card-title">留言总数</div>
+								<div class="inf-card-num">
+									<countTo :startVal='0' :endVal='page.pageNum.guestbookTotal' :duration='3000'>
+									</countTo>
+								</div>
+							</div>
+						</el-col>
+						<el-col :span="4" :xl="4" :lg="4" :md="8" :sm="8" class="m-b-20">
+							<div class="inf-card inf-card_4">
+								<div class="inf-card-title">会员总数</div>
+								<div class="inf-card-num">
+									<countTo :startVal='0' :endVal='page.pageNum.memberTotal' :duration='3000'>
+									</countTo>
+								</div>
+							</div>
+						</el-col>
+						<el-col :span="4" :xl="4" :lg="4" :md="8" :sm="8" class="m-b-20">
+							<div class="inf-card inf-card_5">
+								<div class="inf-card-title">留言总数</div>
+								<div class="inf-card-num">
+									<countTo :startVal='0' :endVal='page.pageNum.guestbookTotal' :duration='3000'>
+									</countTo>
+								</div>
+							</div>
+						</el-col>
+						<el-col :span="4" :xl="4" :lg="4" :md="8" :sm="8" class="m-b-20">
+							<div class="inf-card inf-card_6">
+								<div class="inf-card-title">会员总数</div>
+								<div class="inf-card-num">
+									<countTo :startVal='0' :endVal='page.pageNum.memberTotal' :duration='3000'>
+									</countTo>
 								</div>
 							</div>
 						</el-col>
@@ -156,14 +116,32 @@
 						<el-col :span="8" :xl="8" :lg="8" :md="12" :sm="12" class="m-b-20">
 							<el-card :body-style="{ padding: '15px' }">
 								<div slot="header">
-									<span>本级内容</span>
+									<span>今日统计</span>
 								</div>
 								<div class="text item">
 									<el-row :gutter="10" class="personal-content">
-										<el-col :span="12" v-for="(item,index) in personalContent" :key="index">
+										<el-col :span="12">
 											<el-link :underline="false" class="personal-content-card">
-												<div class="card-title">{{item.title}}</div>
-												<div class="card-content">{{item.count}}</div>
+												<div class="card-title">内容发布量</div>
+												<div class="card-content">{{page.pageNum.contentDayTotalCount}}</div>
+											</el-link>
+										</el-col>
+										<el-col :span="12">
+											<el-link :underline="false" class="personal-content-card">
+												<div class="card-title">评论数</div>
+												<div class="card-content">{{page.pageNum.commentDayTotalCount}}</div>
+											</el-link>
+										</el-col>
+										<el-col :span="12">
+											<el-link :underline="false" class="personal-content-card">
+												<div class="card-title">留言数</div>
+												<div class="card-content">{{page.pageNum.guestbookDayTotalCount}}</div>
+											</el-link>
+										</el-col>
+										<el-col :span="12">
+											<el-link :underline="false" class="personal-content-card">
+												<div class="card-title">会员数</div>
+												<div class="card-content">{{page.pageNum.memberToday}}</div>
 											</el-link>
 										</el-col>
 									</el-row>
@@ -202,24 +180,27 @@
 						<el-col :span="16" :xl="16" :lg="16" :md="24" :sm="24">
 							<el-card :body-style="{ padding: '15px' }">
 								<div slot="header">
-									<span>数据概览</span>
+									<span>{{sysChartItem.title}}</span>
 									<ul class="tab-spot">
-										<li :class="{active:sysChartItem==0}" @click="tabSpotChange('sysChartItem',0)">0
+										<li :class="{active:sysChartItem.active==0}"
+											@click="tabSpotChange('sysChartItem',0,'趋势分析')">0
 										</li>
-										<li :class="{active:sysChartItem==1}" @click="tabSpotChange('sysChartItem',1)">1
+										<li :class="{active:sysChartItem.active==1}"
+											@click="tabSpotChange('sysChartItem',1,'标题2')">1
 										</li>
-										<li :class="{active:sysChartItem==2}" @click="tabSpotChange('sysChartItem',2)">2
+										<li :class="{active:sysChartItem.active==2}"
+											@click="tabSpotChange('sysChartItem',2,'标题3')">2
 										</li>
 									</ul>
 								</div>
 								<div class="sys-chart-body">
-									<div v-show="sysChartItem == 0">
-										<ve-line :data="chart1Data" :extend="chart1Set" :data-empty="chart1DataEmpty"
-											:loading="chart1loading"></ve-line>
+									<div v-show="sysChartItem.active == 0">
+										<ve-line :data="chart1Data" :extend="chart1Set" :loading="chart1loading"
+											ref="sysChartItem0"></ve-line>
 									</div>
-									<div v-show="sysChartItem == 1">
+									<div v-show="sysChartItem.active == 1">
 									</div>
-									<div v-show="sysChartItem == 2">
+									<div v-show="sysChartItem.active == 2">
 										<div id="chart-03"></div>
 									</div>
 								</div>
@@ -228,16 +209,28 @@
 						<el-col :span="8" :xl="8" :lg="8" :md="24" :sm="24">
 							<el-card :body-style="{ padding: '15px' }">
 								<div slot="header">
-									<span>数据类型</span>
+									<span>{{dataChartItem.title}}</span>
 									<ul class="tab-spot">
-										<li class="active">1</li>
-										<li>2</li>
-										<li>3</li>
+										<li :class="{active:dataChartItem.active==0}"
+											@click="tabSpotChange('dataChartItem',0,'来源分析')">0
+										</li>
+										<li :class="{active:dataChartItem.active==1}"
+											@click="tabSpotChange('dataChartItem',1,'标题2')">1
+										</li>
+										<li :class="{active:dataChartItem.active==2}"
+											@click="tabSpotChange('dataChartItem',2,'标题3')">2
+										</li>
 									</ul>
 								</div>
-								<div class="text item">
-									<ve-ring :data="chart2Data" :extend="chart2Set" :data-empty="chart2DataEmpty"
-										:loading="chart2loading"></ve-ring>
+								<div class="sys-chart-body">
+									<div v-show="dataChartItem.active == 0">
+										<ve-ring :data="chart2Data" :extend="chart2Set" :loading="chart2loading"
+											ref="dataChartItem0"></ve-ring>
+									</div>
+									<div v-show="dataChartItem.active == 1">
+									</div>
+									<div v-show="dataChartItem.active == 2">
+									</div>
 								</div>
 							</el-card>
 						</el-col>
@@ -251,61 +244,27 @@
 <script>
 	import moment from "moment";
 	import countTo from "vue-count-to";
-	import "v-charts/lib/style.css";
 	export default {
 		components: {
-			countTo: countTo,
-			"full-calendar": require("vue-fullcalendar")
+			countTo: countTo
 		},
 		data() {
 			this.chart1Set = {
-				// 'xAxis.0.axisLabel.rotate': 45
 				stack: {
-					'用户': ['访问用户', '下单用户']
+					'数量': ['浏览量（PV）', '统计（IP）', '访客数（UV）']
 				},
 				area: true
 			};
-			this.chart2Set = {
-				// 'xAxis.0.axisLabel.rotate': 45
-			};
+			this.chart2Set = {};
 			return {
-				sysChartItem: 0,
-				numList: [{
-						name: '资源总数',
-						num: 30479
-					}, {
-						name: '资源入库量',
-						num: 195902
-					}, {
-						name: '资源调用量',
-						num: 226386
-					},
-					{
-						name: '资源共享量',
-						num: 36564
-					},
-					{
-						name: '待清洗量',
-						num: 74512
-					},
-					{
-						name: '待审核量',
-						num: 24580
-					}
-				],
-				personalContent: [{
-					title: '待清洗内容',
-					count: 60
-				}, {
-					title: '待分类内容',
-					count: 60
-				}, {
-					title: '待打标内容',
-					count: 60
-				}, {
-					title: '待审核内容',
-					count: 100
-				}],
+				sysChartItem: {
+					active: 0,
+					title: '趋势分析'
+				},
+				dataChartItem: {
+					active: 0,
+					title: '来源分析'
+				},
 				activities: [{
 					content: '待审核内容20条',
 					timestamp: '2018-04-12 20:46',
@@ -343,62 +302,23 @@
 				},
 				//访问分析数据
 				chart1loading: false,
-				chart1option: false,
-				chart1DataEmpty: false,
 				chart1Data: {
-					columns: [],
+					columns: [
+						"日期",
+						"浏览量（PV）",
+						"统计（IP）",
+						"访客数（UV）"
+					],
 					rows: []
 				},
 				//来源分析数据
 				chart2loading: false,
-				chart2option: false,
-				chart2DataEmpty: false,
 				chart2Data: {
-					columns: [],
+					columns: ["访问类型", "访问量"],
 					rows: []
 				},
-				chartData3: {
-					columns: ["word", "浏览量"],
-					rows: [{
-							word: "visualMap",
-							浏览量: 22199,
-							占比: "1%"
-						},
-						{
-							word: "continuous",
-							浏览量: 10288,
-							占比: "1%"
-						},
-						{
-							word: "contoller",
-							浏览量: 620,
-							占比: "1%"
-						},
-						{
-							word: "series",
-							浏览量: 274470,
-							占比: "1%"
-						},
-						{
-							word: "gauge",
-							浏览量: 12311,
-							占比: "1%"
-						},
-						{
-							word: "detail",
-							浏览量: 1206,
-							占比: "1%"
-						},
-						{
-							word: "piecewise",
-							浏览量: 4885,
-							占比: "1%"
-						}
-					]
-				},
-				tableData: [],
+				//页面数据
 				page: {
-					//页面数据
 					source: [], //来访域名  type:array
 					keyword: [], //搜索词   type:array
 					pageNum: "",
@@ -415,66 +335,28 @@
 				}
 			};
 		},
-		created() {
-			// this.getPv();
-			// this.getsource();
-			// this.create('keyword');
-		},
+		created() {},
 		mounted() {
-			var _this = this;
-			var arrs = [{
-					date: "2016-05-02 12:12:12",
-					type: "0",
-					name: "王小虎a",
-					matter: "上海市普陀区金沙江路 1518 弄"
-				},
-				{
-					date: "2016-05-04 12:12:12",
-					type: "0",
-					name: "王小虎b",
-					matter: "上海市普陀区金沙江路 1517 弄"
-				},
-				{
-					date: "2016-05-01 12:12:12",
-					type: "1",
-					name: "王小虎c",
-					matter: "上海市普陀区金沙江路 1516 弄"
-				},
-				{
-					date: "2016-05-01 12:12:12",
-					type: "2",
-					name: "王小虎d",
-					matter: "上海市普陀区金沙江路 1515 弄"
-				},
-				{
-					date: "2016-05-01 12:12:12",
-					type: "1",
-					name: "王小虎d",
-					matter: "上海市普陀区金沙江路 1515 弄"
-				},
-				{
-					date: "2016-05-01 12:12:12",
-					type: "0",
-					name: "王小虎e",
-					matter: "上海市普陀区金沙江路 1514 弄"
-				}
-			];
-			setTimeout(() => {
-				_this.tableData = [];
-				arrs.forEach(arr => {
-					_this.tableData.push(arr);
-				});
-			}, 2000);
 			this.globalCount();
 			this.globalAdmin();
 			this.getPv();
 			this.getsource();
-			this.create("link");
+			this.create('link');
 		},
 		methods: {
+			//选项卡切换
+			tabSpotChange(item, index, title) {
+				this[item].active = index;
+				this[item].title = title;
+				// this.$refs[item + index].resize()
+				if (this.$refs[item + index] != undefined) {
+					this.$nextTick(_ => {
+						this.$refs[item + index].echarts.resize()
+					})
+				}
+			},
 			//获取pv、ip、访客数信息
 			getPv() {
-				var _this = this;
 				this.chart1loading = true;
 				this.$axios
 					.post(this.$api.flowPvList, {
@@ -486,28 +368,19 @@
 					})
 					.then(res => {
 						let data = [];
-						let arr = _this.chart1Data.rows;
-						arr.splice(0, arr.length);
 						if (res.body.list) {
 							res.body.list.forEach(element => {
 								data.push({
-									日期: _this.timeFormat("day", element[4]),
+									"日期": this.timeFormat("day", element[4]),
 									"浏览量（PV）": element[0],
 									"统计（IP）": element[1],
 									"访客数（UV）": element[2]
 								});
 							});
 						}
-						_this.chart1Data.columns = [
-							"日期",
-							"浏览量（PV）",
-							"统计（IP）",
-							"访客数（UV）"
-						];
-						_this.chart1Data.rows = data;
-						_this.chart1DataEmpty = !_this.chart1Data.rows.length;
+						this.chart1Data.rows = data;
 						setTimeout(() => {
-							_this.chart1loading = false;
+							this.chart1loading = false;
 						}, 300);
 					})
 					.catch(err => {
@@ -516,8 +389,7 @@
 			},
 			//获取来源
 			getsource() {
-				var _this = this;
-				_this.chart2loading = true;
+				this.chart2loading = true;
 				let pam = {
 					type: "source", //查询分类
 					flag: "1", //查询范围
@@ -528,8 +400,8 @@
 					orderBy: "", //排序
 					count: "10"
 				};
-				_this.$axios
-					.post(_this.$api.flowSourceList, _this.pam)
+				this.$axios
+					.post(this.$api.flowSourceList, this.pam)
 					.then(res => {
 						let data = [];
 						let a = 0;
@@ -540,11 +412,9 @@
 							});
 							a++;
 						}
-						_this.chart2Data.columns = ["访问类型", "访问量"];
-						_this.chart2Data.rows = data;
-						_this.chart2DataEmpty = !_this.chart2Data.rows.length;
+						this.chart2Data.rows = data;
 						setTimeout(() => {
-							_this.chart2loading = false;
+							this.chart2loading = false;
 						}, 300);
 					})
 					.catch(err => {
@@ -685,46 +555,40 @@
 			},
 			//获取欢迎页面需要的数据
 			create(type) {
-				let _this = this;
-				if (type === "link") {
-					_this.params.type = type;
-					_this.$axios
-						.post(this.$api.flowSourceList, _this.params)
-						.then(res => {
-							// this.page.source = res.body.totalMap;
-							// let sum = 0;
-							// for (let x in res.body.totalMap) {
-							// 	sum += res.body.totalMap[x];
-							// }
-							// if (sum === 0) {
-							// 	sum = 1;
-							// }
-							// this.page.sum = sum;
-							_this.create("keyword");
+				console.log(type)
+				this.params.type = type;
+				if (type === 'link') {
+					this.$axios.post(this.$api.flowSourceList, this.params).then(res => {
+							this.page.source = res.body.totalMap;
+							let sum = 0;
+							for (let x in res.body.totalMap) {
+								sum += res.body.totalMap[x];
+							}
+							if (sum === 0) {
+								sum = 1;
+							}
+							this.page.sum = sum;
+							console.log("ppp")
+							this.create('keyword');
+						})
+						.catch(err => {
+							this.loading = false;
+						});
+				} else if (type === 'keyword') {
+					this.params.start_date = moment().day(1).format('yyyy/MM/dd');
+					this.params.end_date = moment().format('yyyy/MM/dd');
+					this.params.method = 'overview/getWord';
+					this.params.metrics = 'pv_count';
+					this.$axios.post(this.$api.flowSearchWordList, this.params).then(res => {
+							console.log("azzzz")
+							console.log(res)
+							this.page.keyword = res.body.items;
 						})
 						.catch(err => {
 							this.loading = false;
 						});
 				}
-				if (type === "keyword") {
-					_this.params.start_date = moment()
-						.subtract("days", 1)
-						.format("YYYY/MM/DD");
-					_this.params.end_date = moment().format("YYYY/MM/DD");
-					_this.params.method = "overview/getWord";
-					_this.params.metrics = "pv_count";
-					_this.params.type = type;
-					_this.$axios
-						.post(_this.$api.flowSearchWordList, _this.params)
-						.then(res => {
-							// console.log("-------------")
-							// console.log(res)
-							// _this.page.keyword = res.body.items;
-						})
-						.catch(err => {
-							// _this.loading = false;
-						});
-				}
+
 			},
 			//获取内容总数
 			globalCount() {
@@ -782,6 +646,7 @@
 		display: -webkit-box;
 		display: -ms-flexbox;
 		display: flex;
+		overflow: hidden;
 	}
 
 	.bg-box .bg-green {
