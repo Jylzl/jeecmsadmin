@@ -90,8 +90,6 @@ const perm = {
                         method: 'post'
                     })
                     .then(res => {
-                        console.log("权限")
-                        console.log(res)
                         let asRouters;
                         if (res.body.perms == '*') {
                             asRouters = ansycRoutes;
