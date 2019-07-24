@@ -195,7 +195,7 @@
 								</div>
 								<div class="sys-chart-body">
 									<div v-show="sysChartItem.active == 0">
-										<ve-line :data="chart1Data" :extend="chart1Set" :loading="chart1loading"
+										<ve-line :data="chart1Data" :settings="chart1Set" :loading="chart1loading"
 											ref="sysChartItem0"></ve-line>
 									</div>
 									<div v-show="sysChartItem.active == 1">
@@ -575,8 +575,8 @@
 							this.loading = false;
 						});
 				} else if (type === 'keyword') {
-					this.params.start_date = moment().day(1).format('yyyy/MM/dd');
-					this.params.end_date = moment().format('yyyy/MM/dd');
+					this.params.start_date = moment().day(0).format('YYYY/MM/DD');
+					this.params.end_date = moment().format('YYYY/MM/DD');
 					this.params.method = 'overview/getWord';
 					this.params.metrics = 'pv_count';
 					this.$axios.post(this.$api.flowSearchWordList, this.params).then(res => {
