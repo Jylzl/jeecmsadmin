@@ -1,7 +1,7 @@
 <template>
 	<el-row type="flex" justify="space-between">
 		<el-col :span="11">
-			<el-badge is-dot class="item">{{siteName}}</el-badge>
+			{{siteName}}
 		</el-col>
 		<el-col :span="5">
 		</el-col>

@@ -50,7 +50,7 @@
 				</div>
 				<div class="right-top-right">
 					<el-button type="primary" size="mini" icon="el-icon-refresh-right" @click="saveMonacoEditor" :disabled="saveBtn">重置</el-button>
-					<el-button type="primary" size="mini" icon="el-icon-news" @click="saveMonacoEditor" :disabled="saveBtn">保存</el-button>
+					<el-button type="primary" size="mini" icon="el-icon-receiving" @click="saveMonacoEditor" :disabled="saveBtn">保存</el-button>
 				</div>
 			</div>
 			<div class="right-table" v-loading="monacoeditoLoading" element-loading-text="保存中...">

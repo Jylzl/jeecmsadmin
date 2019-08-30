@@ -1,5 +1,5 @@
 <template>
-	<div style="height:100%;">
+	<div class="h100">
 		<Breadcrumb />
 		<div class="main-view">
 			<router-view></router-view>
@@ -16,7 +16,7 @@
 		}
 	}
 </script>
-<style>
+<style scoped>
 	.main-view {
 		height: calc(100% - 50px);
 	}

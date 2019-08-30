@@ -1,109 +1,96 @@
 <template>
-	<el-container>
-		<el-aside :width="width">
-			<Aside v-on:change-width="setWidth($event)"/>
-		</el-aside>
-		<el-container>
-			<el-header>
-				<Header />
-			</el-header>
-			<el-main id="js_mainBox">
-				<Main />
-			</el-main>
-			<el-footer height="40px">
-				<Footer />
-			</el-footer>
+	<el-container class="h100">
+		<el-header>
+			<Header />
+		</el-header>
+		<el-container class="p-body">
+			<el-aside :width="width">
+				<Aside />
+			</el-aside>
+			<el-container>
+				<el-main id="js_mainBox">
+					<Main />
+				</el-main>
+				<el-footer height="40px">
+					<Footer />
+				</el-footer>
+			</el-container>
 		</el-container>
 	</el-container>
 </template>
 <script>
-	// @ is an alias to /src
-	import Header from '@/views/layout/header/Header.vue'
-	import Main from '@/views/layout/main/Main.vue'
-	import Aside from '@/views/layout/aside/Aside.vue'
-	import Footer from '@/views/layout/footer/Footer.vue'
-	export default {
-		name: 'Layout',
-		components: {
-			Header,
-			Aside,
-			Main,
-			Footer
-		},
-		data() {
-			return {
-				width:'220px'
-			}
-		},
-		computed:{
-		},
-		methods: {
-			setWidth(width){
-				this.width = width;
-			}
+// @ is an alias to /src
+import Header from "@/views/layout/header/Header.vue";
+import Main from "@/views/layout/main/Main.vue";
+import Aside from "@/views/layout/aside/Aside.vue";
+import Footer from "@/views/layout/footer/Footer.vue";
+export default {
+	name: "Layout",
+	components: {
+		Header,
+		Aside,
+		Main,
+		Footer
+	},
+	data() {
+		return {};
+	},
+	computed: {
+		width() {
+			return this.$store.getters.getAsideWidth;
 		}
-	}
+	},
+	methods: {}
+};
 </script>
 <style>
-	.el-header {
-		height: 60px;
-		background: #fff;
-		border-bottom: 1px solid #e0e4e9;
-		box-shadow: 10px 1px 15px rgba(0, 0, 0, 0.17);
-	}
-	.el-header,
-	.el-footer {
-		color: #333;
-		line-height: 60px;
-	}
-	.el-aside {
-		background-color: #d3dce6;
-		color: #333;
-		line-height: 200px;
-	}
-	main.el-main {
-		/* background-color: #e9eef3; */
-		background-color: #f8f8f8;
-		color: #333;
-		padding-top: 0;
-		height: 100%;
-	}
-	body #app>.el-container {
-		height: 100%;
-	}
-	.el-container:nth-child(5) .el-aside,
-	.el-container:nth-child(6) .el-aside {
-		line-height: 260px;
-	}
-	.el-container:nth-child(7) .el-aside {
-		line-height: 320px;
-	}
-	#app .sidebar-container {
-		-webkit-transition: width 0.28s;
-		transition: width 0.28s;
-		width: 200px !important;
-		height: 100%;
-		position: fixed;
-		font-size: 0px;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		z-index: 1001;
-		overflow: hidden;
-	}
-	#app .scrollbar-wrapper {
-		overflow-x: hidden !important;
-	}
-	.el-aside {
-		text-align: left;
-	}
-	.el-footer {
-		overflow: hidden;
-		line-height: 40px;
-		border-top: 1px solid #e0e4e9;
-		box-shadow: 10px -1px 15px rgba(0, 0, 0, 0.17);
-	}
-	.el-scrollbar {
-		height: 100%;
-	}
+.el-header {
+	height: 60px;
+	background: #165abb url("../../assets/img/header_bg.png") no-repeat right
+		center;
+	border-bottom: 1px solid #e0e4e9;
+	box-shadow: 10px 1px 15px rgba(0, 0, 0, 0.17);
+	color: #ffffff;
+}
+
+.p-body {
+	height: calc(100% - 60px);
+}
+
+.el-header,
+.el-footer {
+	color: #333;
+	line-height: 60px;
+}
+.el-aside {
+	background-color: #d3dce6;
+	color: #333;
+	line-height: 200px;
+}
+
+#js_mainBox {
+	padding: 0;
+}
+
+main.el-main {
+	background-color: #f8f8f8;
+	color: #333;
+	padding-top: 0;
+	height: 100%;
+}
+
+.el-footer {
+	overflow: hidden;
+	line-height: 40px;
+	border-top: 1px solid #e0e4e9;
+	box-shadow: 10px -1px 15px rgba(0, 0, 0, 0.17);
+}
+
+#app .scrollbar-wrapper {
+	overflow-x: hidden !important;
+}
+
+.el-scrollbar {
+	height: 100%;
+}
 </style>

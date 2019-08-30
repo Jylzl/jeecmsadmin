@@ -14,17 +14,6 @@ module.exports = {
 	outputDir: "dist", //构建输出目录
 	assetsDir: "assets", //静态资源目录
 	lintOnSave: false, // 是否开启eslint保存检测，有效值true/false/error
-	// chainWebpack: config => {
-	// 	config.plugin('provide').use(MonacoWebpackPlugin)
-	// },
-	configureWebpack: {
-		node: {
-			process: true,
-		},
-		plugins: [
-			new MonacoWebpackPlugin()
-		]
-	},
 	devServer: {
 		open: true,
 		host: process.env.VUE_APP_APP_HOST,
@@ -51,6 +40,12 @@ module.exports = {
 			alias: {
 				'@': resolve('src')
 			}
-		}
+		},
+		node: {
+			process: true,
+		},
+		plugins: [
+			new MonacoWebpackPlugin()
+		]
 	}
 };

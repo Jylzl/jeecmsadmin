@@ -3,8 +3,8 @@ import {
 } from '@/config/config.js'
 const systemConfig = {
 	state: {
-		collapse: false,
 		pwdCollapse: false,
+		collapse: false,
 		asideWidth: '220px',
 		baseUrl: setBaseUrl(),
 		resourceUpLoad: setBaseUrl() + '/api/admin/resource/upload',
@@ -19,7 +19,7 @@ const systemConfig = {
 			} else {
 				state.collapse = value ? true : false;
 			}
-			state.asideWidth = state.collapse ? '50px' : '220px';
+			state.asideWidth = state.collapse ? '65px' : '220px';
 		},
 		PWD_SET: (state, value) => {
 			state.pwdCollapse = value;
