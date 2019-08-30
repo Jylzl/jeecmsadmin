@@ -20,10 +20,10 @@
 </template>
 <script>
 // @ is an alias to /src
-import Header from "@/views/layout/header/Header.vue";
-import Main from "@/views/layout/main/Main.vue";
-import Aside from "@/views/layout/aside/Aside.vue";
-import Footer from "@/views/layout/footer/Footer.vue";
+import Header from "@/layout/header/Header.vue";
+import Main from "@/layout/main/Main.vue";
+import Aside from "@/layout/aside/Aside.vue";
+import Footer from "@/layout/footer/Footer.vue";
 export default {
 	name: "Layout",
 	components: {
@@ -46,7 +46,7 @@ export default {
 <style>
 .el-header {
 	height: 60px;
-	background: #165abb url("../../assets/img/header_bg.png") no-repeat right
+	background: #165abb url("../assets/img/header_bg.png") no-repeat right
 		center;
 	border-bottom: 1px solid #e0e4e9;
 	box-shadow: 10px 1px 15px rgba(0, 0, 0, 0.17);
@@ -57,15 +57,11 @@ export default {
 	height: calc(100% - 60px);
 }
 
-.el-header,
-.el-footer {
-	color: #333;
+.el-header {
 	line-height: 60px;
 }
-.el-aside {
-	background-color: #d3dce6;
-	color: #333;
-	line-height: 200px;
+.el-footer {
+	line-height: 40px;
 }
 
 #js_mainBox {
@@ -75,7 +71,6 @@ export default {
 
 main.el-main {
 	background-color: #f8f8f8;
-	color: #333;
 	padding-top: 0;
 	height: 100%;
 }
@@ -85,13 +80,5 @@ main.el-main {
 	line-height: 40px;
 	border-top: 1px solid #e0e4e9;
 	box-shadow: 10px -1px 15px rgba(0, 0, 0, 0.17);
-}
-
-#app .scrollbar-wrapper {
-	overflow-x: hidden !important;
-}
-
-.el-scrollbar {
-	height: 100%;
 }
 </style>

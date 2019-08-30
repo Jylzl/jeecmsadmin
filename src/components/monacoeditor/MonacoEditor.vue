@@ -18,7 +18,12 @@ export default {
 			type: String,
 			required: true,
 			default: function() {
-				return "monacoId";
+				return (
+					"monacoId" +
+					Math.random()
+						.toString()
+						.slice(-10)
+				);
 			}
 		},
 		value: {

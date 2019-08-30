@@ -21,81 +21,82 @@
 </template>
 
 <script>
-	import pathToRegexp from "path-to-regexp";
-	export default {
-		data() {
-			return {
-				levelList: null
-			};
-		},
-		watch: {
-			$route() {
-				this.getBreadcrumb();
-			}
-		},
-		created() {
+import pathToRegexp from "path-to-regexp";
+export default {
+	data() {
+		return {
+			levelList: null
+		};
+	},
+	watch: {
+		$route() {
 			this.getBreadcrumb();
+		}
+	},
+	created() {
+		this.getBreadcrumb();
+	},
+	computed: {
+		iconClass() {
+			return this.$store.getters.getCollapse
+				? "el-icon-s-unfold"
+				: "el-icon-s-fold";
 		},
-		computed: {
-			iconClass() {
-				return this.$store.getters.getCollapse ?
-					"el-icon-s-unfold" :
-					"el-icon-s-fold";
-			},
-			title() {
-				return this.$store.getters.getCollapse ? "展开" : "折叠";
-			}
-		},
-		methods: {
-			getBreadcrumb() {
-				let matched = this.$route.matched.filter(item => item.name);
-				const first = matched[0];
-				if (
-					first &&
-					first.name.trim().toLocaleLowerCase() !==
+		title() {
+			return this.$store.getters.getCollapse ? "展开" : "折叠";
+		}
+	},
+	methods: {
+		getBreadcrumb() {
+			let matched = this.$route.matched.filter(item => item.name);
+			const first = matched[0];
+			if (
+				first &&
+				first.name.trim().toLocaleLowerCase() !==
 					"Dashboard".toLocaleLowerCase()
-				) {
-					matched = [{
+			) {
+				matched = [
+					{
 						path: "/work",
 						name: "首页"
-					}].concat(matched);
-				}
-				this.levelList = matched.filter(item => item.name);
-			},
-			//侧边栏关闭收缩展开
-			setCollapse() {
-				this.$store.dispatch("setCollapse");
+					}
+				].concat(matched);
 			}
+			this.levelList = matched.filter(item => item.name);
+		},
+		//侧边栏关闭收缩展开
+		setCollapse() {
+			this.$store.dispatch("setCollapse");
 		}
-	};
+	}
+};
 </script>
 
 <style lang="scss" scoped>
-	.p-breadcrumb {
-		box-sizing: border-box;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		height: 50px;
-		padding-left: 20px;
-	}
+.p-breadcrumb {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	height: 46px;
+	padding-left: 20px;
+}
 
-	.breadcrumb-left{
-		padding-right: 10px;
-	}
+.breadcrumb-left {
+	padding-right: 10px;
+}
 
-	.breadcrumb-btn {
-		font-size: 20px;
-	}
+.breadcrumb-btn {
+	font-size: 20px;
+}
 
-	.app-breadcrumb.el-breadcrumb {
-		display: block;
-		font-size: 14px;
-		line-height: 50px;
-
-		.no-redirect {
-			color: #97a8be;
-			cursor: text;
-		}
+.app-breadcrumb.el-breadcrumb {
+	display: block;
+	font-size: 14px;
+	line-height: 46px;
+	.no-redirect {
+		color: #97a8be;
+		cursor: text;
 	}
+}
 </style>

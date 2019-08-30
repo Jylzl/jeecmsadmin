@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import login from '@/views/account/Login.vue'
 import lock from '@/views/account/Lock.vue'
-import layout from '@/views/layout/Layout.vue'
+import layout from '@/layout/Layout.vue'
 import work from '@/views/console/Console.vue'
 
 import error401 from '@/views/errorpage/401.vue'

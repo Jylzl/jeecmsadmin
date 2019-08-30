@@ -1,83 +1,74 @@
 <template>
 	<div id="app" oncontextmenu="self.event.returnValue=false">
 		<router-view />
-		<BackToTop />
 	</div>
 </template>
 <script>
-	import BackToTop from "@/components/BackToTop/index.vue";
-
-	export default {
-		components: {
-			BackToTop
-		}
-	};
+export default {
+	components: {}
+};
 </script>
 <style lang="scss">
-	@import url(./assets/css/rest.min.css);
-	@import url(./assets/iconfont/iconfont.css);
+@import url(./assets/css/rest.min.css);
+@import url(./assets/iconfont/iconfont.css);
 
-	html,
-	body {
-		box-sizing: border-box;
-		margin: 0;
-		width: 100%;
-		height: 100%;
+html,
+body {
+	box-sizing: border-box;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#app {
+	height: 100%;
+	font-family: "Avenir", Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	color: #2c3e50;
+}
+
+@media (-webkit-max-device-pixel-ratio: 1) {
+	::-webkit-scrollbar-track-piece {
+		background-color: #ffffff;
 	}
 
-	#app {
-		height: 100%;
-		font-family: "Avenir", Helvetica, Arial, sans-serif;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		color: #2c3e50;
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
 	}
 
-	@media (-webkit-max-device-pixel-ratio: 1) {
-		::-webkit-scrollbar-track-piece {
-			background-color: #ffffff;
-		}
-
-		::-webkit-scrollbar {
-			width: 8px;
-			height: 8px;
-		}
-
-		::-webkit-scrollbar-thumb {
-			background-color: #c2c2c2;
-			background-clip: padding-box;
-			min-height: 28px;
-		}
-
-		::-webkit-scrollbar-thumb:hover {
-			background-color: #a0a0a0;
-		}
+	::-webkit-scrollbar-thumb {
+		background-color: #c2c2c2;
+		background-clip: padding-box;
+		min-height: 28px;
 	}
 
-	.clearfix:after {
-		content: "";
-		display: block;
-		clear: both;
-		height: 0;
+	::-webkit-scrollbar-thumb:hover {
+		background-color: #a0a0a0;
 	}
+}
 
-	.clearfix {
-		zoom: 1;
-	}
+.clearfix:after {
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+}
 
-	.fl {
-		float: left;
-	}
+.clearfix {
+	zoom: 1;
+}
 
-	.fr {
-		float: right;
-	}
+.fl {
+	float: left;
+}
 
-	.el-scrollbar__view {
-		height: 100%;
-	}
+.fr {
+	float: right;
+}
 
-	.h100{
-		height: 100%;
-	}
+.h100 {
+	height: 100%;
+}
 </style>
