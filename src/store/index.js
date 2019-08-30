@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import system from '@/store/module/system'
+import sys from '@/store/module/system'
 import user from "@/store/module/user"
 import perms from "@/store/module/perms"
 
@@ -10,7 +10,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 
   modules: {
-    system,
+    sys,
     user,
     perms
   },
