@@ -1,5 +1,5 @@
 <!--
- * @description: Description
+ * @description: 侧边导航栏
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-02-18 19:16:03
  * @LastAuthor: lizlong
@@ -12,18 +12,12 @@
 			<template v-for="item in $store.state.perms.routers">
 				<template v-if="(item.meta) && !(item.meta.hidden)">
 					<template v-if="item.meta && item.meta.leaf">
-						<el-menu-item v-if="item.redirect" :index="item.redirect" :key="item.redirect">
-							<i :class="item.meta && item.meta.iconCls" class="icon iconfont el-submenu-iconfont"></i>
-							<span class="collapse-font "
-								slot="title">{{generateTitle('submenu',item.meta.title)}}</span>
-						</el-menu-item>
-						<el-menu-item v-else :index="item.path" :key="item.path">
+						<el-menu-item :index="item.redirect || item.path" :key="item.redirect || item.path">
 							<i :class="item.meta && item.meta.iconCls" class="icon iconfont el-submenu-iconfont"></i>
 							<span class="collapse-font "
 								slot="title">{{generateTitle('submenu',item.meta.title)}}</span>
 						</el-menu-item>
 					</template>
-
 					<el-submenu v-else :index="item.path" :key="item.path">
 						<template slot="title">
 							<i :class="item.meta && item.meta.iconCls" class="icon iconfont el-submenu-iconfont"></i>
@@ -40,10 +34,8 @@
 								</template>
 								<template v-for="child2 in child.children">
 									<template v-if="!(child2.meta) || (child2.meta && !(child2.meta.hidden))">
-										<el-menu-item v-if="item.redirect" :index="child2.redirect"
-											:key="child2.redirect">{{child2.meta.title}}</el-menu-item>
-										<el-menu-item v-else :index="child2.path" :key="child2.path">
-											{{child2.meta.title}}</el-menu-item>
+										<el-menu-item :index="child2.redirect ||  child2.path"
+											:key="child2.redirect || child2.path">{{child2.meta.title}}</el-menu-item>
 									</template>
 								</template>
 							</el-submenu>
