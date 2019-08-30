@@ -62,7 +62,7 @@
 			<div class="right-table" v-loading="loading">
 				<el-scrollbar wrap-class="scrollbar-wrapper">
 					<div class="table-box">
-						<el-table :data="tableData" row-key="id" ref="multipleTable" tooltip-effect="dark"
+						<el-table :data="tableData" row-key="id" ref="multipleTable" tooltip-effect="dark" size="small"
 							style="width: 100%" @selection-change="checkIdsAndStatus" @sort-change="sortChange">
 							<el-table-column type="expand" width="30" align="left">
 								<template slot-scope="props">

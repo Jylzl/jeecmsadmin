@@ -7,7 +7,7 @@
 			<el-aside :width="width">
 				<Aside />
 			</el-aside>
-			<el-container>
+			<el-container class="h100">
 				<el-main id="js_mainBox">
 					<Main />
 				</el-main>
@@ -69,6 +69,7 @@ export default {
 }
 
 #js_mainBox {
+	height: 100%;
 	padding: 0;
 }
 
