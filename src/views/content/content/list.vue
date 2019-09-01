@@ -12,8 +12,8 @@
 					</el-breadcrumb>
 				</div>
 				<div class="right-top-right">
-					<el-dropdown @command="addContent" v-perms="'/content/save'">
-						<el-button type="primary" icon="el-icon-edit" size="small">发布内容</el-button>
+					<el-dropdown @command="addContent" v-perms="'/content/save'" placement="bottom">
+						<el-button type="primary" icon="el-icon-edit-outline" size="small">发布内容</el-button>
 						<el-dropdown-menu slot="dropdown">
 							<el-dropdown-item v-for="item in modelList" :key="item.id" :command="item.id">{{item.name}}
 							</el-dropdown-item>
@@ -113,99 +113,88 @@
 							</el-table-column>
 							<el-table-column label="操作" prop="id" width="120" align="center">
 								<template slot-scope="scope">
-									<el-button type="text" v-show="scope.row.hasUpdateRight"
-										@click.native="routerLink('/content/update','update',scope.row.id)"
-										v-perms="'/content/update'">修改</el-button>
-									<el-button type="text" v-show="scope.row.hasDeleteRight"
+									<el-button type="primary" icon="el-icon-edit" size="mini" circle
+										v-show="scope.row.hasUpdateRight"
+										@click.native="routerLink('/content/edit','update',scope.row.id)"
+										v-perms="'/content/update'"></el-button>
+									<el-button type="danger" icon="el-icon-delete" size="mini" circle
+										v-show="scope.row.hasDeleteRight"
 										@click.native="deleteBatch($api.contentDelete,scope.row.id)"
-										v-perms="'/content/delete'">删除</el-button>
+										v-perms="'/content/delete'"></el-button>
 								</template>
 							</el-table-column>
 						</el-table>
 					</div>
-					<div class="list-paging" v-show="pageTotal!=0">
-						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-							:current-page="params.pageNo" :page-sizes="[5, 10, 20, 30, 50,100]"
-							:page-size="params.pageSize" :pager-count="5"
-							layout="total, sizes, prev, pager, next, jumper" :total="pageTotal">
-						</el-pagination>
-					</div>
 				</el-scrollbar>
 			</div>
 			<div class="right-bottom">
-				<el-button size="small" :disabled="disabled" @click="deleteBatch($api.contentDelete,ids)"
-					v-perms="'/content/delete'">删除</el-button>
-				<el-button size="small" :disabled="disabled" @click="prioritysBatch($api.contentPriority)"
-					v-perms="'/content/priority'">保存置顶</el-button>
-				<el-button size="small" :disabled="disabled" @click="recommend(true)"
-					v-perms="'/content/contentRecommend'">推荐</el-button>
-				<el-button size="small" :disabled="disabled" @click="recommend(false)"
-					v-perms="'/content/contentRecommend'">取消推荐</el-button>
-				<el-button size="small" :disabled="disabled" @click="operate('move')" v-perms="'/content/contentMove'">
-					移动</el-button>
-				<el-button size="small" :disabled="disabled" @click="operate('copy')" v-perms="'/content/contentCopy'">
-					复制</el-button>
-				<el-button size="small" :disabled="disabled" @click="batch($api.contentCheck)"
-					v-perms="'/content/contentCheck'">审核</el-button>
-				<el-button size="small" :disabled="disabled" @click="reject()" v-perms="'/content/contentReject'">退回
-				</el-button>
-				<el-button size="small" :disabled="disabled" @click="batch($api.contentSubmit)"
-					v-perms="'/content/contentSubmit'">提交</el-button>
-				<el-button size="small" :disabled="disabled" @click="batch($api.contentStatic)"
-					v-perms="'/content/contentStatic'" class="hidden-lg-and-down">生成静态页</el-button>
-				<el-button size="small" :disabled="disabled" @click="siteVisble=true"
-					v-if="$store.state.perms.isMasterSite" v-perms="'/content/contentPush'" class="hidden-lg-and-down">
-					推送</el-button>
-				<el-button size="small" :disabled="disabled" @click="siteVisble=true" v-else
-					v-perms="'/content/contentPush'" class="hidden-lg-and-down">共享</el-button>
-				<el-button size="small" :disabled="disabled" @click="topicClick" v-perms="'/content/contentSend'"
-					class="hidden-lg-and-down">推送至专题
-				</el-button>
-				<el-button size="small" :disabled="disabled" @click="archiveBatch($api.contentPigeonhole,'archive')"
-					v-perms="'/content/contentPigeonhole'" class="hidden-lg-and-down">归档</el-button>
-				<el-button size="small" :disabled="disabled" @click="archiveBatch($api.contentUnpigeonhole,'document')"
-					v-perms="'/content/contentUnpigeonhole'" class="hidden-lg-and-down">出档</el-button>
-				<el-button size="small" :disabled="disabled" @click="sendWeiXin($api.contentSendToWeixin,ids)"
-					v-perms="'/content/contentSendToWeixin'" class="hidden-lg-and-down">群发微信</el-button>
-				<el-dropdown size="small" placement="top-end" class="hidden-lg-and-up">
-					<el-button size="small">更多菜单</el-button>
-					<el-dropdown-menu slot="dropdown">
-						<el-scrollbar wrap-class="scrollbar-wrapper">
-							<el-dropdown-item>
-								<el-button size="small" :disabled="disabled" @click="batch($api.contentStatic)"
-									type="text" v-perms="'/content/contentStatic'">生成静态页</el-button>
-							</el-dropdown-item>
-							<el-dropdown-item v-if="$store.state.perms.isMasterSite">
-								<el-button size="small" :disabled="disabled" @click="siteVisble=true" type="text"
-									v-perms="'/content/contentPush'">推送</el-button>
-							</el-dropdown-item>
-							<el-dropdown-item v-else>
-								<el-button size="small" :disabled="disabled" @click="siteVisble=true" type="text"
-									v-perms="'/content/contentPush'">共享</el-button>
-							</el-dropdown-item>
-							<el-dropdown-item>
-								<el-button size="small" :disabled="disabled" @click="topicClick" type="text"
-									v-perms="'/content/contentSend'">推送至专题
-								</el-button>
-							</el-dropdown-item>
-							<el-dropdown-item>
-								<el-button size="small" :disabled="disabled" type="text"
-									@click="archiveBatch($api.contentPigeonhole,'archive')"
-									v-perms="'/content/contentPigeonhole'">归档</el-button>
-							</el-dropdown-item>
-							<el-dropdown-item>
-								<el-button size="small" :disabled="disabled" type="text"
-									@click="archiveBatch($api.contentUnpigeonhole,'document')"
-									v-perms="'/content/contentUnpigeonhole'">出档</el-button>
-							</el-dropdown-item>
-							<el-dropdown-item>
-								<el-button size="small" :disabled="disabled" type="text"
-									@click="sendWeiXin($api.contentSendToWeixin,ids)"
-									v-perms="'/content/contentSendToWeixin'">群发微信</el-button>
-							</el-dropdown-item>
-						</el-scrollbar>
-					</el-dropdown-menu>
-				</el-dropdown>
+				<div class="right-bottom-left">
+					<el-button size="small" :disabled="disabled" @click="deleteBatch($api.contentDelete,ids)"
+						v-perms="'/content/delete'">删除</el-button>
+					<el-button size="small" :disabled="disabled" @click="prioritysBatch($api.contentPriority)"
+						v-perms="'/content/priority'">保存置顶</el-button>
+					<el-button size="small" :disabled="disabled" @click="recommend(true)"
+						v-perms="'/content/contentRecommend'">推荐</el-button>
+					<el-button size="small" :disabled="disabled" @click="recommend(false)"
+						v-perms="'/content/contentRecommend'">取消推荐</el-button>
+					<el-button size="small" :disabled="disabled" @click="operate('move')"
+						v-perms="'/content/contentMove'">
+						移动</el-button>
+					<el-button size="small" :disabled="disabled" @click="operate('copy')"
+						v-perms="'/content/contentCopy'">
+						复制</el-button>
+					<el-button size="small" :disabled="disabled" @click="batch($api.contentCheck)"
+						v-perms="'/content/contentCheck'">审核</el-button>
+					<el-button size="small" :disabled="disabled" @click="reject()" v-perms="'/content/contentReject'">退回
+					</el-button>
+					<el-button size="small" :disabled="disabled" @click="batch($api.contentSubmit)"
+						v-perms="'/content/contentSubmit'">提交</el-button>
+					<el-dropdown size="small" placement="top-end">
+						<el-button size="small" :class="{'is-disabled':disabled}">更多菜单</el-button>
+						<el-dropdown-menu slot="dropdown">
+							<el-scrollbar wrap-class="scrollbar-wrapper">
+								<el-dropdown-item>
+									<el-button size="small" :disabled="disabled" @click="batch($api.contentStatic)"
+										type="text" v-perms="'/content/contentStatic'">生成静态页</el-button>
+								</el-dropdown-item>
+								<el-dropdown-item v-if="$store.state.perms.isMasterSite">
+									<el-button size="small" :disabled="disabled" @click="siteVisble=true" type="text"
+										v-perms="'/content/contentPush'">推送</el-button>
+								</el-dropdown-item>
+								<el-dropdown-item v-else>
+									<el-button size="small" :disabled="disabled" @click="siteVisble=true" type="text"
+										v-perms="'/content/contentPush'">共享</el-button>
+								</el-dropdown-item>
+								<el-dropdown-item>
+									<el-button size="small" :disabled="disabled" @click="topicClick" type="text"
+										v-perms="'/content/contentSend'">推送至专题
+									</el-button>
+								</el-dropdown-item>
+								<el-dropdown-item>
+									<el-button size="small" :disabled="disabled" type="text"
+										@click="archiveBatch($api.contentPigeonhole,'archive')"
+										v-perms="'/content/contentPigeonhole'">归档</el-button>
+								</el-dropdown-item>
+								<el-dropdown-item>
+									<el-button size="small" :disabled="disabled" type="text"
+										@click="archiveBatch($api.contentUnpigeonhole,'document')"
+										v-perms="'/content/contentUnpigeonhole'">出档</el-button>
+								</el-dropdown-item>
+								<el-dropdown-item>
+									<el-button size="small" :disabled="disabled" type="text"
+										@click="sendWeiXin($api.contentSendToWeixin,ids)"
+										v-perms="'/content/contentSendToWeixin'">群发微信</el-button>
+								</el-dropdown-item>
+							</el-scrollbar>
+						</el-dropdown-menu>
+					</el-dropdown>
+				</div>
+				<div>
+					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+						:current-page="params.pageNo" :page-sizes="[5, 10, 20, 30, 50,100]" :page-size="params.pageSize"
+						:pager-count="5" layout="total, sizes, prev, pager, next, jumper" :total="pageTotal">
+					</el-pagination>
+				</div>
 			</div>
 			<!-- 移动栏目弹窗 -->
 			<el-dialog class="dialog" :title="labelDialogTitle" :visible.sync="channelVisble" width="25%"
@@ -620,7 +609,7 @@
 			addContent(command) {
 				this.params.parentId = this.params.cid;
 				this.params.modelId = command;
-				this.routerLink("/content/edit", "edit", 0, this.params);
+				this.routerLink("/content/add", "edit", 0, this.params);
 			},
 			getNodes(data, node) {
 				this.$emit("change", data, node);
@@ -844,19 +833,22 @@
 	.right-bottom {
 		display: flex;
 		flex-direction: row;
-		justify-content: center;
+		align-items: center;
+		justify-content: space-between;
 		box-sizing: border-box;
 		height: 50px;
 		padding: 10px 15px;
 	}
 
-	.right-bottom .el-dropdown,
-	.right-bottom .el-button+.el-button {
-		margin-left: 3px;
+	.right-bottom-left{
+		display: flex;
+		align-items: center;
 	}
 
-	.right-bottom .el-dropdown .el-button {
-		height: 30px;
+	.right-bottom .el-dropdown,
+	.right-bottom .el-button+.el-button {
+		vertical-align: middle;
+		margin-left: 3px;
 	}
 
 	.right-center .right-center-left {
@@ -877,7 +869,6 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		/*垂直居中*/
 	}
 
 	.right-center .right-center-right>button {
@@ -894,46 +885,14 @@
 		margin-left: 0;
 	}
 
-	.el-breadcrumb {
-		line-height: 40px;
-	}
-
 	.el-main {
 		background-color: #fff;
 		padding: 0;
-	}
-
-	/* .table-box {
-		height: 380px;
-	} */
-
-	.list-paging {
-		box-sizing: border-box;
-		height: 50px;
-		line-height: 50px;
-		margin-top: 30px;
-		padding: 5px 15px;
-		text-align: right;
 	}
 
 	.news-link {
 		display: inline;
 		color: inherit;
 		text-decoration: none;
-	}
-
-	.demo-table-expand {
-		font-size: 0;
-	}
-
-	.demo-table-expand label {
-		width: 90px;
-		color: #99a9bf;
-	}
-
-	.demo-table-expand .el-form-item {
-		margin-right: 0;
-		margin-bottom: 0;
-		width: 20%;
 	}
 </style>

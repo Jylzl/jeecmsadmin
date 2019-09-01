@@ -10,8 +10,8 @@
 				<transition-group name="breadcrumb">
 					<template v-for="(item,index) in levelList">
 						<el-breadcrumb-item :key="index" v-if="item.redirect==='noredirect'||index==levelList.length-1">
-							{{item.name}}</el-breadcrumb-item>
-						<el-breadcrumb-item :to="{ path: item.path }" :key="index" v-else>{{item.name}}
+							{{item.meta.title}}</el-breadcrumb-item>
+						<el-breadcrumb-item :to="{ path: item.path }" :key="index" v-else>{{item.meta.title}}
 						</el-breadcrumb-item>
 					</template>
 				</transition-group>
@@ -53,12 +53,15 @@ export default {
 			if (
 				first &&
 				first.name.trim().toLocaleLowerCase() !==
-					"Dashboard".toLocaleLowerCase()
+					"index".toLocaleLowerCase()
 			) {
 				matched = [
 					{
 						path: "/work",
-						name: "首页"
+						name: "work",
+						meta: {
+							title: "首页"
+						}
 					}
 				].concat(matched);
 			}

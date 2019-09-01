@@ -1,7 +1,8 @@
 <template>
 	<div style="height:100%">
 		<div class="left-top">
-			<el-button type="text" @click="reflashClick"><i class="el-icon-refresh"></i>&nbsp;&nbsp;刷新</el-button>
+			<el-button type="text" @click="reflashClick"><i
+					:class="{'el-icon-refresh':refash,'el-icon-loading':!refash}"></i>&nbsp;&nbsp;刷新</el-button>
 			<el-button type="text" @click.self="clickEvent" v-if="copy">复制栏目</el-button>
 		</div>
 		<div class="left-center">
@@ -97,7 +98,7 @@
 <style lang='scss' scoped>
 	.left-top {
 		display: flex;
-		justify-content:space-between;
+		justify-content: space-between;
 		align-items: center;
 		box-sizing: border-box;
 		height: 50px;

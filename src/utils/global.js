@@ -5,6 +5,7 @@ import {
 } from '@/store/index'
 import service from "@/utils/request";
 import api from "@/api/api";
+import code from "@/code/code";
 
 var chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
@@ -17,10 +18,12 @@ function generateMixed(n) {
     return res;
 }
 export default {
+    // eslint-disable-next-line no-unused-vars
     install(Vue, options) {
-        console.log(options)
         Vue.prototype.$axios = service; //axios全局方法
         Vue.prototype.$api = api; //api地址全局方法
+        Vue.prototype.$code = code; //code状态码全局方法
+
         /**
          * path 路径
          * params {}
@@ -34,15 +37,9 @@ export default {
             params['noce_str'] = generateMixed(7);
             let obj = arguments[3] ? arguments[3] : null;
 
-            if (obj != null) {
-                try {
-                    if (typeof obj == "object") {
-                        for (let key in obj) {
-                            params[key] = obj[key];
-                        }
-                    }
-                } catch (error) {
-                    throw error
+            if (obj != null && typeof obj == "object") {
+                for (let key in obj) {
+                    params[key] = obj[key];
                 }
             }
             router.push({
@@ -50,24 +47,38 @@ export default {
                 query: params
             })
         }
-        //成功全局方法
+        //自定义类型的提示，默认警告
         Vue.prototype.message = function (value, type) {
-            type = type || 'warning';
+            type = type || 'info';
             this.$message({
                 showClose: true,
-                message: type,
+                message: value,
                 type: type,
-                duration: 1000
+                duration: 2000
             });
         }
+
+        //警告消息提示
+        Vue.prototype.warningMessage = function (value) {
+            this.$message({
+                showClose: true,
+                message: value,
+                type: 'warning',
+                duration: 2000
+            });
+        }
+
+        //成功消息提示
         Vue.prototype.successMessage = function (value) {
             this.$message({
                 showClose: true,
                 message: value,
                 type: 'success',
-                duration: 1000
+                duration: 2000
             });
         }
+
+        //失败消息提示
         Vue.prototype.errorMessage = function (value) {
             this.$message({
                 showClose: true,

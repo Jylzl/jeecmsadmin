@@ -30,6 +30,16 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     padding-bottom: 0;
 }
 
+//表格
+.el-table--small {
+    font-size: 14px;
+}
+
+//输入框背景色透明
+.el-input input {
+    background-color: transparent;
+}
+
 //滚动条
 .el-scrollbar,
 .el-scrollbar__view {

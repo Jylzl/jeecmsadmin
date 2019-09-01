@@ -1,6 +1,13 @@
+<!--
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-08-31 02:17:29
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-08-31 19:47:43
+ -->
 <template>
 	<el-container class="h100">
-		<el-header>
+		<el-header class="p-header">
 			<Header />
 		</el-header>
 		<el-container class="p-body">
@@ -11,7 +18,7 @@
 				<el-main id="js_mainBox">
 					<Main />
 				</el-main>
-				<el-footer height="40px">
+				<el-footer height="40px" class="p-footer">
 					<Footer />
 				</el-footer>
 			</el-container>
@@ -44,24 +51,26 @@ export default {
 };
 </script>
 <style>
-.el-header {
+header.p-header {
 	height: 60px;
+	padding: 0 8px;
 	background: #165abb url("../assets/img/header_bg.png") no-repeat right
 		center;
 	border-bottom: 1px solid #e0e4e9;
 	box-shadow: 10px 1px 15px rgba(0, 0, 0, 0.17);
 	color: #ffffff;
+	line-height: 60px;
 }
 
 .p-body {
 	height: calc(100% - 60px);
 }
 
-.el-header {
-	line-height: 60px;
-}
-.el-footer {
+footer.p-footer {
+	overflow: hidden;
 	line-height: 40px;
+	border-top: 1px solid #e0e4e9;
+	box-shadow: 10px -1px 15px rgba(0, 0, 0, 0.17);
 }
 
 #js_mainBox {
@@ -73,12 +82,5 @@ main.el-main {
 	background-color: #f8f8f8;
 	padding-top: 0;
 	height: 100%;
-}
-
-.el-footer {
-	overflow: hidden;
-	line-height: 40px;
-	border-top: 1px solid #e0e4e9;
-	box-shadow: 10px -1px 15px rgba(0, 0, 0, 0.17);
 }
 </style>

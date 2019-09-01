@@ -74,7 +74,7 @@
 												<div class="card-icon">
 													<i class="el-icon-edit"></i>
 												</div>
-												<div class="card-inf">数据发布</div>
+												<div class="card-inf">内容发布</div>
 											</el-link>
 										</el-col>
 										<el-col :span="6">
@@ -555,7 +555,6 @@
 			},
 			//获取欢迎页面需要的数据
 			create(type) {
-				console.log(type)
 				this.params.type = type;
 				if (type === 'link') {
 					this.$axios.post(this.$api.flowSourceList, this.params).then(res => {
@@ -568,7 +567,6 @@
 								sum = 1;
 							}
 							this.page.sum = sum;
-							console.log("ppp")
 							this.create('keyword');
 						})
 						.catch(err => {
@@ -580,8 +578,6 @@
 					this.params.method = 'overview/getWord';
 					this.params.metrics = 'pv_count';
 					this.$axios.post(this.$api.flowSearchWordList, this.params).then(res => {
-							console.log("azzzz")
-							console.log(res)
 							this.page.keyword = res.body.items;
 						})
 						.catch(err => {
