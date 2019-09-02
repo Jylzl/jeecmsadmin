@@ -22,9 +22,11 @@ export default {
         //获取表格数据
         getTableData(params) {
             this.loading = true;
+            this.state = false;
             this.$axios
                 .post(this.listUrl, params)
                 .then(res => {
+                    this.loading = false;
                     if (res.code == '200') {
                         if (res.totalCount != undefined) {
                             this.total = res.totalCount;
@@ -36,15 +38,25 @@ export default {
                         this.tableData = [];
                         this.state = true;
                     }
-                    this.loading = false;
+
+
                 })
-                .catch(error => {
+                .catch(err => {
                     this.loading = false;
                     this.state = false;
-                    console.log(error)
+                    console.log(err)
                 });
         },
-        // 选中ID
+        //获取翻页数据
+        getPages(pageNo, pageSize) {
+            this.params.pageNo = pageNo;
+            this.params.pageSize = pageSize;
+            this.getTableData(this.params);
+        },
+        //条件查询
+        query() {
+            this.getTableData(this.params);
+        },
         checkIds(val) {
             let ids = [];
             for (let i in val) {
@@ -73,79 +85,18 @@ export default {
                     type: "error"
                 })
                 .then(() => {
-                    this.loading = true;
                     this.$axios.post(url, {
                         ids: ids
                     }).then(res => {
                         if (res.code == "200") {
                             this.successMessage('删除成功');
                             this.getTableData(this.params);
-                        } else {
-                            this.loading = false;
                         }
-                    }).catch(error => {
-                        this.loading = false;
-                        console.log(error)
                     });
                 })
-                .catch(error => {
-                    this.loading = false;
-                    console.log(error)
+                .catch(err => {
+                    console.log(err)
                 });
-        },
-        //推荐操作
-        recommend(state) {
-            if (state) {
-                this.$prompt('请输入推荐等级', '提示', {
-                        inputPattern: /^\d{1,4}$/,
-                        inputErrorMessage: '请输入正整数(并且小于9999)'
-                    })
-                    .then(({
-                        value
-                    }) => {
-                        this.loading = true;
-                        this.$axios
-                            .post(this.$api.contentRecommend, {
-                                ids: this.ids,
-                                level: value
-                            })
-                            .then(res => {
-                                if (res.code == '200') {
-                                    this.successMessage('推荐成功')
-                                    this.getTableData(this.params)
-                                    this.getAllTotal()
-                                } else {
-                                    this.loading = false;
-                                }
-                            }).catch(error => {
-                                this.loading = false;
-                                console.log(error)
-                            });
-                    })
-                    .catch((error) => {
-                        this.loading = false;
-                        console.log(error)
-                    })
-            } else {
-                this.loading = true;
-                this.$axios
-                    .post(this.$api.contentRecommend, {
-                        ids: this.ids,
-                        level: -1
-                    })
-                    .then(res => {
-                        if (res.code == '200') {
-                            this.successMessage('取消推荐成功')
-                            this.getTableData(this.params)
-                            this.getAllTotal()
-                        } else {
-                            this.loading = false;
-                        }
-                    }).catch(error => {
-                        this.loading = false;
-                        console.log(error)
-                    });
-            }
         },
         //移除
         removeBatch(url, roleId, ids) {
@@ -153,7 +104,6 @@ export default {
                     type: "error"
                 })
                 .then(() => {
-                    this.loading = true;
                     this.$axios.post(url, {
                         roleId: roleId,
                         userIds: ids
@@ -161,17 +111,11 @@ export default {
                         if (res.code == "200") {
                             this.successMessage('移除成功');
                             this.getTableData(this.params);
-                        } else {
-                            this.loading = false;
                         }
-                    }).catch(error => {
-                        this.loading = false;
-                        console.log(error)
                     });
                 })
-                .catch(error => {
-                    this.loading = false;
-                    console.log(error)
+                .catch(err => {
+                    console.log(err)
                 });
         },
         //保存排列循序
@@ -180,7 +124,6 @@ export default {
                     type: "warning"
                 })
                 .then(() => {
-                    this.loading = true;
                     this.$axios.post(url, {
                         ids: ids,
                         priorities: priorities,
@@ -189,43 +132,54 @@ export default {
                         if (res.code == "200") {
                             this.successMessage('操作成功');
                             this.getTableData(this.params);
-                        } else {
-                            this.loading = false;
                         }
-                    }).catch(error => {
-                        this.loading = false;
-                        console.log(error)
                     });
                 })
-                .catch(error => {
-                    this.loading = false;
-                    console.log(error)
+                .catch(err => {
+                    console.log(err)
+                });
+        },
+        //保存排列循序四个参数
+        prioritysBatchs(url, ids, priorities, disableds, regDefId) {
+            this.$confirm('是否保存排序？', '提示', {
+                    type: "warning"
+                })
+                .then(() => {
+                    this.$axios.post(url, {
+                        ids: ids,
+                        priorities: priorities,
+                        disableds: disableds,
+                        defId: regDefId
+                    }).then(res => {
+                        if (res.code == "200") {
+                            this.successMessage('操作成功');
+                            this.getTableData(this.params);
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.log(err)
                 });
         },
         //保存排列
-        //保存置顶
-        prioritysBatch(url) {
-            this.loading = true;
-            let params = {
-                ids: this.ids,
-                topLevel: []
-            }
-            for (let i in this.checkedList) {
-                params.topLevel.push(this.checkedList[i].topLevel)
-                // params.topLevel.push(1);
-            }
-            params.topLevel = params.topLevel.join(',')
-            this.$axios.post(url, params).then(res => {
-                if (res.code == '200') {
-                    this.successMessage('操作成功'), this.getTableData(this.params)
-                    this.getAllTotal()
-                } else {
-                    this.loading = false;
-                }
-            }).catch(error => {
-                this.loading = false;
-                console.log(error)
-            });
+        prioritysBatch(url, ids, priorities) {
+            this.$confirm('是否保存排序？', '提示', {
+                    type: "warning"
+                })
+                .then(() => {
+                    this.$axios.post(url, {
+                        ids: ids,
+                        priorities: priorities
+                    }).then(res => {
+                        if (res.code == "200") {
+                            this.successMessage('保存成功');
+                            this.getTableData(this.params);
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.log(err)
+                });
         },
         //批量还原
         revertBatch(url, ids) {
@@ -233,152 +187,46 @@ export default {
                     type: "warning"
                 })
                 .then(() => {
-                    this.loading = true;
                     this.$axios.post(url, {
                         ids: ids
                     }).then(res => {
                         if (res.code == "200") {
                             this.successMessage('还原成功');
                             this.getTableData(this.params);
-                        } else {
-                            this.loading = false;
                         }
-                    }).catch(error => {
-                        this.loading = false;
-                        console.log(error)
                     });
                 })
-                .catch(error => {
-                    this.loading = false;
-                    console.log(error)
+                .catch(err => {
+                    console.log(err)
                 });
         },
         //批量审核
-        // reviewBatch(url, ids) {
-        //     this.$confirm('是否批量审核', '提示', {
-        //             type: "warning"
-        //         })
-        //         .then(() => {
-        //             this.loading = true;
-        //             this.$axios.post(url, {
-        //                 ids: ids
-        //             }).then(res => {
-        //                 if (res.code == "200") {
-        //                     this.successMessage('审核成功!');
-        //                     setTimeout(() => {
-        //                         this.getTableData(this.params);
-        //                     }, 800);
-        //                 } else {
-        //                     this.loading = false;
-        //                 }
-        //             });
-        //         })
-        //         .catch(error => {
-        //             this.loading = false;
-        //             console.log(error)
-        //         });
-        // },
-        batch(url) {
-            //只需要ids参数的批量操作
-            this.loading = true
-            this.$axios
-                .post(url, {
-                    ids: this.ids
+        reviewBatch(url, ids) {
+            this.$confirm('是否批量审核', '提示', {
+                    type: "warning"
                 })
-                .then(res => {
-                    if (res.code == '200') {
-                        this.successMessage('操作成功')
-                    } else {
-                        this.loading = false;
-                    }
-                    this.getTableData(this.params)
-                    this.getAllTotal()
-                })
-                .catch(error => {
-                    this.loading = false
-                    console.log(error)
-                })
-        },
-        // 归档，出档
-        archiveBatch(url, action) {
-            //只需要ids和status参数的批量操作
-            this.loading = true
-            let statusArr = this.status.split(',')
-            let mark = true
-
-            if (action == 'archive') {
-                //归档
-                for (let key in statusArr) {
-                    if (statusArr[key] != '2') {
-                        //如果内容状态不是审核通过
-                        this.errorMessage('只有状态为审核的内容才能归档')
-                        mark = false
-                        this.loading = false
-                        return true
-                    }
-                }
-            } else if (action == 'document') {
-                //出档
-                for (let key in statusArr) {
-                    if (statusArr[key] != '5') {
-                        //如果内容状态不是审核通过
-                        this.errorMessage('只有归档的内容才能出档')
-                        mark = false
-                        this.loading = false
-                        return true
-                    }
-                }
-            }
-            if (mark) {
-                this.$axios
-                    .post(url, {
-                        ids: this.ids
-                    })
-                    .then(res => {
-                        this.loading = false
-                        if (res.code == '200') {
-                            this.successMessage('操作成功')
-                        } else {
-                            this.loading = false;
+                .then(() => {
+                    this.$axios.post(url, {
+                        ids: ids
+                    }).then(res => {
+                        if (res.code == "200") {
+                            this.successMessage('审核成功!');
+                            setTimeout(() => {
+                                this.getTableData(this.params);
+                            }, 800);
                         }
-                        this.getTableData(this.params)
-                        this.getAllTotal()
-                    })
-                    .catch(error => {
-                        console.log(error)
-                        this.loading = false
-                    })
+                    });
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+        },
+        //栏目dialog节点选中事件，处理checkbox 只能选择一个
+        checkChange(node, checkStatus) {
+            if (checkStatus) {
+                this.currentCheckChannelId = node.id
+                this.$refs['channelTree'].setCheckedKeys([node.id], true)
             }
-        },
-        // 推送至微信
-        sendWeiXin(url, ids) {
-            this.loading = true;
-            this.$axios.post(url, {
-                ids: ids
-            }).then(res => {
-                if (res.code == '200') {
-                    this.successMessage(res.message)
-                    this.loading = false;
-                } else {
-                    this.loading = false;
-                }
-            }).catch(error => {
-                console.log(error)
-                this.loading = false
-            })
-        },
-        operate(type) {
-            //复制及引用打开dialog触发事件
-            this.channelVisble = true
-            this.operateType = type
-            this.labelDialogTitle = '选择栏目(' + this.$getSiteName() + ')'
-          },
-          //栏目dialog节点选中事件，处理checkbox 只能选择一个
-      checkChange(node, checkStatus, childStatus) {
-        if (checkStatus) {
-          this.currentCheckChannelId = node.id
-          this.$refs['channelTree'].setCheckedKeys([node.id], true)
         }
-      },
     }
 }

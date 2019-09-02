@@ -25,7 +25,7 @@
 			<!-- 进度条 -->
 			<!-- <el-progress type="circle" :percentage="percentage" :status="status" class="cms-progress" v-if="uploadStar"> -->
 			<!-- </el-progress> -->
-			<el-dialog :visible.sync="dialogVisible" size="tiny">
+			<el-dialog :visible.sync="dialogVisible">
 				<img width="100%" :src="imageUrl" alt="">
 			</el-dialog>
 		</div>

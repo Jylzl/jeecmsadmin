@@ -15,8 +15,10 @@ import Icon from "vue2-svg-icon/Icon.vue";
 import i18n from '@/i18n/index' // Internationalization
 import global from "@/utils/global" //全局方法
 import '@/utils/permissions' //全局路由钩子
+import cmsComponents from "@/components/index"; //自定义全局组件
 import '@/directive/index' //自定义指令集
 
+Vue.use(cmsComponents);
 Vue.use(VCharts);
 Vue.component("icon", Icon);
 Vue.use(global);
