@@ -11,7 +11,8 @@
 			<div class="topic-top-left">
 			</div>
 			<div class="topic-top-right">
-				<el-button type="primary" icon="el-icon-edit-outline" size="small">发布专题</el-button>
+				<el-button type="primary" icon="el-icon-edit-outline" size="small"
+					@click="routerLink('/topic/add','save',0)" v-perms="'/topic/save'">发布专题</el-button>
 			</div>
 		</div>
 		<div class="topic-center">
@@ -44,7 +45,7 @@
 			<el-scrollbar wrap-class="scrollbar-wrapper">
 				<div class="table-box">
 					<el-table :data="tableData" row-key="id" ref="multipleTable" tooltip-effect="dark" size="small"
-						style="width: 100%" @selection-change="checkIdsAndStatus" @sort-change="sortChange">
+						style="width: 100%" @selection-change="checkIdsAndStatus" @sort-change="sortChange" stripe>
 						<el-table-column type="selection" width="46" align="center"></el-table-column>
 						<el-table-column label="ID" prop="id" width="100" sortable="custom"></el-table-column>
 						<el-table-column label="标题" prop="name" :show-overflow-tooltip="true">
@@ -75,8 +76,7 @@
 						</el-table-column> -->
 						<el-table-column label="操作" prop="id" width="120" align="center">
 							<template slot-scope="scope">
-								<cms-button type="edit"
-									@click.native="routerLink('/topic/update','update',scope.row.id)"
+								<cms-button type="edit" @click.native="routerLink('/topic/edit','update',scope.row.id)"
 									v-perms="'/topic/update'"></cms-button>
 								<cms-button type="delete" @click.native="deleteBatch($api.topicDelete,scope.row.id)"
 									v-perms="'/topic/delete'"></cms-button>

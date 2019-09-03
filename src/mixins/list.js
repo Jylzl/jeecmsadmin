@@ -38,8 +38,7 @@ export default {
                         this.tableData = [];
                         this.state = true;
                     }
-
-
+                    console.log(this.tableData)
                 })
                 .catch(err => {
                     this.loading = false;

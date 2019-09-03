@@ -18,29 +18,29 @@ export default {
 	},
 	computed: {
 		title() {
-			let titie = "";
+			let title = "";
 			if (this.type == "edit") {
-				titie = "修改";
+				title = "修改";
 			}
 			if (this.type == "delete") {
-				titie = "删除";
+				title = "删除";
 			}
 			if (this.type == "rename") {
-				titie = "重命名";
+				title = "重命名";
 			}
 			if (this.type == "view") {
-				titie = "查看";
+				title = "查看";
 			}
 			if (this.type == "user") {
-				titie = "成员管理";
+				title = "成员管理";
 			}
 			if (this.type == "down") {
-				titie = "下载";
+				title = "下载";
 			}
 			if (this.type == "formList") {
-				titie = "代码调用";
+				title = "代码调用";
 			}
-			return titie;
+			return title;
 		},
 		inf() {
 			return this.backData();
@@ -48,41 +48,41 @@ export default {
 	},
 	methods: {
 		backData() {
-			let titie = "";
+			let title = "";
 			let type = "";
 			let icon = "";
 
 			if (this.type == "edit") {
-				titie = "修改";
+				title = "修改";
 				type = "primary";
 				icon = "el-icon-edit";
 			} else if (this.type == "delete") {
-				titie = "删除";
+				title = "删除";
 				type = "danger";
 				icon = "el-icon-delete";
 			} else if (this.type == "rename") {
-				titie = "重命名";
+				title = "重命名";
 				type = "warning";
 				icon = "el-icon-magic-stick";
 			} else if (this.type == "view") {
-				titie = "查看";
+				title = "查看";
 				type = "success";
 				icon = "el-icon-magic-view";
 			} else if (this.type == "user") {
-				titie = "成员管理";
+				title = "成员管理";
 				type = "info";
 				icon = "el-icon-magic-user";
 			} else if (this.type == "down") {
-				titie = "下载";
+				title = "下载";
 				type = "info";
 				icon = "el-icon-download";
 			} else if (this.type == "formList") {
-				titie = "代码调用";
+				title = "代码调用";
 				type = "info";
 				icon = "el-icon-paperclip";
 			}
 			return {
-				titie: titie,
+				title: title,
 				type: type,
 				icon: icon
 			};

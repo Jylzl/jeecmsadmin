@@ -63,7 +63,7 @@
 				<el-scrollbar wrap-class="scrollbar-wrapper">
 					<div class="table-box">
 						<el-table :data="tableData" row-key="id" ref="multipleTable" tooltip-effect="dark" size="small"
-							style="width: 100%" @selection-change="checkIdsAndStatus" @sort-change="sortChange">
+							style="width: 100%" @selection-change="checkIdsAndStatus" @sort-change="sortChange" stripe>
 							<el-table-column type="expand" width="30" align="left">
 								<template slot-scope="props">
 									<el-form label-position="left" inline class="demo-table-expand">
@@ -92,6 +92,8 @@
 							<el-table-column label="ID" prop="id" width="100" sortable="custom"></el-table-column>
 							<el-table-column label="标题" prop="title" :show-overflow-tooltip="true">
 								<template slot-scope="scope">
+									<a class="cms-channel-name" :href="scope.row.channelUrl"
+										:title="scope.row.channelName" target="_blank">[{{scope.row.channelName}}]</a>
 									<a class="news-link" :href="scope.row.url" :title="scope.row.title"
 										target="_blank">{{scope.row.title}}</a>
 								</template>
@@ -188,10 +190,11 @@
 					</el-dropdown>
 				</div>
 				<div>
-					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+					<!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
 						:current-page="params.pageNo" :page-sizes="[5, 10, 20, 30, 50,100]" :page-size="params.pageSize"
 						:pager-count="5" layout="total, sizes, prev, pager, next, jumper" :total="pageTotal">
-					</el-pagination>
+					</el-pagination> -->
+					<cms-pagination :total="pageTotal" @change="getPages"></cms-pagination>
 				</div>
 			</div>
 			<!-- 移动栏目弹窗 -->
@@ -896,9 +899,15 @@ export default {
 	padding: 0;
 }
 
+.cms-channel-name {
+	display: inline;
+	text-decoration: none;
+	color: inherit;
+}
+
 .news-link {
 	display: inline;
-	color: inherit;
 	text-decoration: none;
+	color: #4184b7;
 }
 </style>

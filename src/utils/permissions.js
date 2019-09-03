@@ -15,11 +15,11 @@ router.beforeEach((to, from, next) => {
 
     let user = localStorage.getItem('sessionKey'); //登录标示
     let perms = store.state.perms.perms; //登录状态
-    if (user == null && to.path != '/login') {
-        next('/login');
+    if (to.path == '/login' || to.path == '/404' || to.path == '/401') {
+        next();
     } else {
-        if (to.path == '/login') {
-            next();
+        if (user == null) {
+            next('/login');
         } else {
             if (perms) {
                 next();
@@ -33,6 +33,24 @@ router.beforeEach((to, from, next) => {
             }
         }
     }
+    // if (user == null && to.path != '/login') {
+    //     next('/login');
+    // } else {
+    //     if (to.path == '/login') {
+    //         next();
+    //     } else {
+    //         if (perms) {
+    //             next();
+    //         } else {
+    //             store.dispatch('setRouters').then(() => {
+    //                 router.addRoutes(store.state.perms.addRouters);
+    //                 next({
+    //                     ...to
+    //                 }) // hack方法 确保addRoutes已完成
+    //             })
+    //         }
+    //     }
+    // }
 })
 
 router.afterEach(() => {
