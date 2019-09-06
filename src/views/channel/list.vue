@@ -1,3 +1,10 @@
+<!--
+ * @description: 栏目列表
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-09-05 15:53:28
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-05 16:17:16
+ -->
 <template>
 	<el-container>
 		<el-aside width="200px">
@@ -523,6 +530,7 @@
 						}
 					})
 					.catch(err => {
+						console.log(err)
 						this.loading = false
 					})
 			},
@@ -562,7 +570,8 @@
 							this.loading = false
 						}
 					})
-					.catch(error => {
+					.catch(err => {
+						console.log(err)
 						this.loading = false
 					})
 			},
@@ -652,7 +661,9 @@
 							}
 							return resolve(data);
 						})
-						.catch(error => {});
+						.catch(err => {
+							console.log(err)
+						});
 				}
 			},
 			//分页一页数量改变

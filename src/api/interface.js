@@ -7,7 +7,7 @@ export function getResourceTree(params) {
 		method: 'post',
 		data: params
 	})
-};
+}
 /*资源信息获取*/
 export function getResourceList(params) {
 	return request({
@@ -15,14 +15,14 @@ export function getResourceList(params) {
 		method: 'post',
 		data: params
 	})
-};
+}
 export function getTemplateList(params) {
 	return request({
 		url: '/api/admin/template/list',
 		method: 'post',
 		data: params
 	})
-};
+}
 /*资源详细*/
 export function getResourceInfo(params) {
 	return request({
@@ -30,7 +30,7 @@ export function getResourceInfo(params) {
 		method: 'post',
 		data: params
 	})
-};
+}
 
 export function getTemplateInfo(params) {
 	return request({
@@ -38,7 +38,7 @@ export function getTemplateInfo(params) {
 		method: 'post',
 		data: params
 	})
-};
+}
 
 
 /*批量删除资源*/
@@ -49,7 +49,7 @@ export function deleteResourceList(params) {
 		signValidate: true,
 		data: params
 	})
-};
+}
 
 export function deleteTemplateList(params) {
 	return request({
@@ -58,7 +58,7 @@ export function deleteTemplateList(params) {
 		signValidate: true,
 		data: params
 	})
-};
+}
 
 
 
@@ -70,7 +70,7 @@ export function creatResourceFile(params) {
 		signValidate: true,
 		data: params
 	})
-};
+}
 
 export function creatTemplateFile(params) {
 	return request({
@@ -79,7 +79,7 @@ export function creatTemplateFile(params) {
 		signValidate: true,
 		data: params
 	})
-};
+}
 
 
 
@@ -93,7 +93,7 @@ export function reName(params) {
 		signValidate: true,
 		data: params
 	})
-};
+}
 
 export function templateReName(params) {
 	return request({
@@ -102,7 +102,7 @@ export function templateReName(params) {
 		signValidate: true,
 		data: params
 	})
-};
+}
 
 
 
@@ -114,7 +114,7 @@ export function updateResourceInfo(params) {
 		signValidate: true,
 		data: params
 	})
-};
+}
 
 /* 修改模版*/
 export function addResourceInfo(params) {
@@ -124,7 +124,7 @@ export function addResourceInfo(params) {
 		signValidate: true,
 		data: params
 	})
-};
+}
 export function addTemplateInfo(params) {
 	return request({
 		url: '/api/admin/template/save',
@@ -132,7 +132,7 @@ export function addTemplateInfo(params) {
 		signValidate: true,
 		data: params
 	})
-};
+}
 
 
 
@@ -144,7 +144,7 @@ export function getTemplateTree(params) {
 		method: 'post',
 		data: params
 	})
-};
+}
 
 /**获取方案**/
 export function getSolutions(params) {
@@ -153,7 +153,7 @@ export function getSolutions(params) {
 		method: 'post',
 		data: params
 	})
-};
+}
 
 export function setSolutions(params) {
 	return request({
@@ -162,4 +162,4 @@ export function setSolutions(params) {
 		signValidate: true,
 		data: params
 	})
-};
+}

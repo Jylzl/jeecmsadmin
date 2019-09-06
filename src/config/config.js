@@ -9,4 +9,4 @@ export function setBaseUrl(state) {
         apiUrl = 'http://' + process.env.VUE_APP_APP_HOST + ':' + process.env.VUE_APP_APP_PORT;
     }
     return apiUrl;
-};
+}

@@ -1,3 +1,10 @@
+/**
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-09-05 15:53:28
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-05 16:35:01
+ */
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')

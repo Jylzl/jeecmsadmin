@@ -1,3 +1,10 @@
+<!--
+ * @description: 控制台
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-09-05 15:53:28
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-05 16:22:11
+ -->
 <template>
 	<el-container>
 		<el-main>
@@ -582,6 +589,7 @@
 						})
 						.catch(err => {
 							this.loading = false;
+							console.log(err)
 						});
 				}
 
@@ -593,7 +601,9 @@
 					.then(res => {
 						this.page.pageNum = res.body;
 					})
-					.catch(err => {});
+					.catch(err => {
+						console.log(err)
+					});
 			},
 			//获取会员注册数
 			globalAdmin() {
@@ -606,7 +616,9 @@
 					.then(res => {
 						this.page.adminNum = res.body;
 					})
-					.catch(err => {});
+					.catch(err => {
+						console.log(err)
+					});
 			}
 		}
 	};

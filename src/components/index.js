@@ -1,3 +1,10 @@
+/**
+ * @description: 全局组件注册
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-09-05 15:53:28
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-05 16:26:17
+ */
 // import appMain from "@/components/appMain.vue";
 import cmsInput from '@/components/pagecomponents/cmsInput.vue' //横向标签组件
 import cmsButton from '@/components/pagecomponents/cmsButton.vue' //cms图标按钮组件
