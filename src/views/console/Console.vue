@@ -49,7 +49,7 @@
 						</el-col>
 						<el-col :span="4" :xl="4" :lg="4" :md="8" :sm="8" class="m-b-20">
 							<div class="inf-card inf-card_5">
-								<div class="inf-card-title">留言总数</div>
+								<div class="inf-card-title">咨询总数</div>
 								<div class="inf-card-num">
 									<countTo :startVal='0' :endVal='page.pageNum.guestbookTotal' :duration='3000'>
 									</countTo>
@@ -58,7 +58,7 @@
 						</el-col>
 						<el-col :span="4" :xl="4" :lg="4" :md="8" :sm="8" class="m-b-20">
 							<div class="inf-card inf-card_6">
-								<div class="inf-card-title">会员总数</div>
+								<div class="inf-card-title">投诉总数</div>
 								<div class="inf-card-num">
 									<countTo :startVal='0' :endVal='page.pageNum.memberTotal' :duration='3000'>
 									</countTo>

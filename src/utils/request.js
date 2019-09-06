@@ -82,9 +82,11 @@ service.interceptors.response.use(
 				break;
 			case '3':
 			case '302':
-				showMessage(res.code + ":" + res.message);
-				localStorage.setItem('sessionKey', '');
-				localStorage.setItem('userName', '');
+				if (localStorage.getItem('sessionKey')) {
+					showMessage(res.code + ":" + res.message);
+					localStorage.setItem('sessionKey', '');
+					localStorage.setItem('userName', '');
+				}
 				router.push('/login');
 				break;
 			default:
