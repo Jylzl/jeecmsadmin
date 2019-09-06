@@ -1,4 +1,10 @@
-// import Vue from 'vue'
+/**
+ * @description: 全局方法定义
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-09-05 15:53:28
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-06 14:50:21
+ */
 import router from '@/router/index'
 import {
     store
@@ -87,10 +93,12 @@ export default {
                 duration: 2500
             });
         }
+
         //获取站点ID
         Vue.prototype.$getSiteId = function () {
             return localStorage.getItem('_site_id_param');
         }
+
         //获取站点名称
         Vue.prototype.$getSiteName = function () {
             let sites = store.state.perms.siteItems;
@@ -101,6 +109,8 @@ export default {
             }
             return '';
         }
+
+        //获取url
         Vue.prototype.$getUrl = function () {
             let url = store.state.sys.baseUrl;
             let http = url.substring(0, url.indexOf("//") + 2);
@@ -110,38 +120,40 @@ export default {
             }
             return http + url;
         }
+
+        // 页面重载
         Vue.prototype.$reset = function () {
             window.location.reload();
         }
 
         //获取当前时间
         Vue.prototype.$getNowDate = function () {
-                var date = new Date();
-                var month = date.getMonth() + 1;
-                var strDate = date.getDate();
-                if (month >= 1 && month <= 9) {
-                    month = "0" + month;
-                }
-                if (strDate >= 0 && strDate <= 9) {
-                    strDate = "0" + strDate;
-                }
-                var currentdate = date.getFullYear() + "-" + month + "-" + strDate;
-                return currentdate;
-            },
-
-            /**
-             *@desc调换数组中指定下标相邻位置，返回更新好的数组
-             *@param {Array} arr 指定数组        
-             *@param {number} index 需要移动的对象的下标
-             *@param {string} type 移动方式，提供上移（up），下移(down),默认为up
-             */
-            Vue.prototype.$switchArrOrder = function (arr, index, type = 'up') {
-                if (type == 'up') {
-                    arr.splice(index, 1, ...arr.splice(index - 1, 1, arr[index]));
-                } else if (type == 'down') {
-                    arr.splice(index, 1, ...arr.splice(index + 1, 1, arr[index]));
-                }
-                return arr;
+            var date = new Date();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
             }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = date.getFullYear() + "-" + month + "-" + strDate;
+            return currentdate;
+        }
+
+        /**
+         *@desc调换数组中指定下标相邻位置，返回更新好的数组
+         *@param {Array} arr 指定数组        
+         *@param {number} index 需要移动的对象的下标
+         *@param {string} type 移动方式，提供上移（up），下移(down),默认为up
+         */
+        Vue.prototype.$switchArrOrder = function (arr, index, type = 'up') {
+            if (type == 'up') {
+                arr.splice(index, 1, ...arr.splice(index - 1, 1, arr[index]));
+            } else if (type == 'down') {
+                arr.splice(index, 1, ...arr.splice(index + 1, 1, arr[index]));
+            }
+            return arr;
+        }
     }
 }

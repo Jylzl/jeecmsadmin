@@ -1,3 +1,10 @@
+<!--
+ * @description: 文档导入
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-05-05 08:33:53
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-06 18:13:29
+ -->
 <template>
     <div style="margin-bottom:12px;">
         <el-upload class="upload-attach" :action="uploadUrl" :data="data" :multiple="multiple" :limit="limit"

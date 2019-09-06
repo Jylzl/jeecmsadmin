@@ -1,3 +1,10 @@
+/**
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-09-06 11:03:56
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-06 17:43:54
+ */
 import axios from 'axios'
 import qs from 'qs'
 import router from '@/router/index'
@@ -7,15 +14,9 @@ import {
 import {
 	getRand
 } from '@/utils/random'
-// import {
-//   store
-// } from '@/store/index.js';
 import {
 	signParams
 } from "@/utils/aes.js";
-// import {
-//   getToken
-// } from '@/utils/auth'
 
 function showMessage(value) {
 	return Message({
@@ -75,9 +76,7 @@ service.interceptors.response.use(
 		const res = response.data;
 		switch (res.code) {
 			case '200':
-				break;
 			case '301':
-				break;
 			case '304':
 				break;
 			case '3':

@@ -1,5 +1,10 @@
-// 全局路由钩子
-// 页面加载进度条
+/**
+ * @description: 全局路由钩子、页面加载进度条
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-09-05 15:53:28
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-06 14:51:42
+ */
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import getPageTitle from '@/utils/get-page-title'
@@ -10,7 +15,7 @@ import {
 
 router.beforeEach((to, from, next) => {
     NProgress.start();
-    // set page title
+    // 设置页面标题
     document.title = getPageTitle(to.meta.title)
 
     let user = localStorage.getItem('sessionKey'); //登录标示
@@ -33,24 +38,6 @@ router.beforeEach((to, from, next) => {
             }
         }
     }
-    // if (user == null && to.path != '/login') {
-    //     next('/login');
-    // } else {
-    //     if (to.path == '/login') {
-    //         next();
-    //     } else {
-    //         if (perms) {
-    //             next();
-    //         } else {
-    //             store.dispatch('setRouters').then(() => {
-    //                 router.addRoutes(store.state.perms.addRouters);
-    //                 next({
-    //                     ...to
-    //                 }) // hack方法 确保addRoutes已完成
-    //             })
-    //         }
-    //     }
-    // }
 })
 
 router.afterEach(() => {

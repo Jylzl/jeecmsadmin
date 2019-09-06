@@ -1,12 +1,20 @@
-import axios from "axios";
+/**
+ * @description: 表单方法
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-04-13 10:12:13
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-06 14:24:50
+ */
+import request from '@/utils/request'
+
 export default {
     data() {
         return {
-            loading: true,//遮罩
-            id: this.$route.query.id,//id
-            type: this.$route.query.type,//操作类型
-            dataInfo: {},//基础表单信息
-            form: this.$refs['form']//
+            loading: true, //遮罩
+            id: this.$route.query.id, //id
+            type: this.$route.query.type, //操作类型
+            dataInfo: {}, //基础表单信息
+            form: this.$refs['form'] //
         }
     },
     methods: {
@@ -15,7 +23,10 @@ export default {
          * @param {number} id 
          * @param {object} obj 
          */
-        getDataInfo(id, obj) { },
+        getDataInfo(id, obj) {
+            console.log(id)
+            console.log(obj)
+        },
         /**
          * @param {booealn} state 是否继续添加
          * @param {string} url 添加方法的api地址 
@@ -24,11 +35,11 @@ export default {
          */
         saveDataInfo(state, url, params, backUrl) {
             let form = this.$refs['form'];
-            form.validate((valid) => {//验证方法
+            form.validate((valid) => { //验证方法
                 if (valid) {
                     this.loading = true;
-                    axios.post(url, params)
-                        .then(res => {       
+                    request.post(url, params)
+                        .then(res => {
                             if (res.code == "200") {
                                 this.successMessage('添加成功');
                                 if (state) {
@@ -40,7 +51,10 @@ export default {
                                 }
                             }
                             this.loading = false;
-                        }).catch(error => { this.loading = false; })
+                        }).catch(err => {
+                            this.loading = false;
+                            console.log(err)
+                        })
                 } else {
                     return false
                 }
@@ -48,24 +62,27 @@ export default {
         },
         updateDataInfo(url, params, backUrl) {
             let form = this.$refs['form'];
-            form.validate((valid) => {//验证方法
+            form.validate((valid) => { //验证方法
                 if (valid) {
                     this.loading = true;
-                    axios.post(url, params)
+                    request.post(url, params)
                         .then(res => {
                             this.loading = false;
                             if (res.code == "200") {
                                 this.successMessage('修改成功');
-                                if(backUrl==''){
+                                if (backUrl == '') {
                                     return false;
-                                }else{
+                                } else {
                                     setTimeout(() => {
                                         this.routerLink(backUrl);
                                     }, 1000);
                                 }
-                                
+
                             }
-                        }).catch(error => { this.loading = false; })
+                        }).catch(err => {
+                            this.loading = false;
+                            console.log(err)
+                        })
                 } else {
                     return false
                 }

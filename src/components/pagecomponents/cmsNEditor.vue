@@ -1,3 +1,10 @@
+<!--
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-07-24 08:40:20
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-06 12:02:12
+ -->
 <template>
 	<script :id="id" :name="name" type="text/plain"></script>
 </template>
@@ -175,7 +182,7 @@
 					} else if (action == "uploadscrawl") {
 						return (
 							_this.$store.state.sys.baseUrl +
-							"/api/member//ueditor/scrawlImage?Type=Image&sessionKey=" +
+							"/api/member/ueditor/scrawlImage?Type=Image&sessionKey=" +
 							localStorage.getItem("sessionKey") +
 							"&appId=" +
 							process.env.VUE_APP_appId
@@ -238,7 +245,7 @@
 					let configScript = document.createElement("script");
 					configScript.type = "text/javascript";
 					configScript.src =
-						this.mixedConfig.UEDITOR_HOME_URL + "neditor.config.js";
+						this.mixedConfig.UEDITOR_HOME_URL + "neditor.config.min.js";
 					document
 						.getElementsByTagName("head")[0]
 						.appendChild(configScript);
@@ -263,7 +270,7 @@
 					let coreScript = document.createElement("script");
 					coreScript.type = "text/javascript";
 					coreScript.src =
-						this.mixedConfig.UEDITOR_HOME_URL + "neditor.service.js";
+						this.mixedConfig.UEDITOR_HOME_URL + "neditor.service.min.js";
 					document
 						.getElementsByTagName("head")[0]
 						.appendChild(coreScript);
@@ -295,7 +302,7 @@
 					let coreScript = document.createElement("script");
 					coreScript.type = "text/javascript";
 					coreScript.src =
-						this.mixedConfig.UEDITOR_HOME_URL + "neditor.all.js";
+						this.mixedConfig.UEDITOR_HOME_URL + "neditor.all.min.js";
 					document
 						.getElementsByTagName("head")[0]
 						.appendChild(coreScript);

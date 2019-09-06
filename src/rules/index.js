@@ -1,10 +1,17 @@
-import axios from "axios";
+/**
+ * @description: 表单验证规则
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-04-19 13:09:37
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-06 14:45:36
+ */
+import request from '@/utils/request'
 import api from "@/api/api"
 
 function checkTagName(id) {
     return {
         validator: (rule, value, callback) => {
-            axios.post(api.wordTagCheckName, {
+            request.post(api.wordTagCheckName, {
                 id: id,
                 name: value
             }).then(res => {
@@ -23,33 +30,47 @@ function checkTagName(id) {
     }
 }
 
-function required(message) { //必填
+//必填
+function required(message, trigger) {
     return {
         required: true,
         validator: (rule, value, callback) => {
-            let reg = /^\s*$/g;
+            const reg = new RegExp(/^\s*$/g);
             if (reg.test(value)) {
-                callback(new Error('此项必填'));
+                callback(new Error(message || '此项必填'));
             } else {
                 callback();
             }
         },
-        trigger: 'blur',
-        message: '此项必填'
+        trigger: trigger || 'blur',
+        message: message || '此项必填'
     }
 }
 
-function validateName(message) { //用户名唯一
+//非必填
+function notRequired() {
+    return {
+        required: false,
+        validator: (rule, value, callback) => {
+            callback();
+        },
+        trigger: 'blur',
+        message: ''
+    }
+}
+
+//用户名唯一
+function validateName(message) {
     return {
         validator: (rule, value, callback) => {
-            axios.post(api.validateName, {
+            request.post(api.validateName, {
                 username: value
             }).then(res => {
                 if (res.code == '200') {
                     if (res.body.result) {
                         callback()
                     } else {
-                        callback(new Error('用户名已存在'));
+                        callback(new Error(message || '用户名已存在'));
                     }
                 } else {
                     callback(new Error('服务器响应异常'));
@@ -60,10 +81,11 @@ function validateName(message) { //用户名唯一
     }
 }
 
-function channelPath(message, id) { //栏目路径
+//栏目路径
+function channelPath(message, id) {
     return {
         validator: (rule, value, callback) => {
-            axios.post(api.channelCheckPath, {
+            request.post(api.channelCheckPath, {
                 id: id,
                 path: value
             }).then(res => {
@@ -71,7 +93,7 @@ function channelPath(message, id) { //栏目路径
                     if (res.body == 'true') {
                         callback()
                     } else {
-                        callback(new Error('栏目路径已存在'));
+                        callback(new Error(message || '栏目路径已存在'));
                     }
                 } else {
                     callback(new Error('服务器响应异常'));
@@ -82,16 +104,16 @@ function channelPath(message, id) { //栏目路径
     }
 }
 
-function checkModeId(message, id) {
+function checkModeId(message) {
     return {
         validator: (rule, value, callback) => {
             if (value !== '') {
-                axios.post(api.modelCheckId, {
+                request.post(api.modelCheckId, {
                     id: value
                 }).then(res => {
                     if (res.code == '200') {
                         if (res.body.result == false) {
-                            callback(new Error('id已存在'))
+                            callback(new Error(message || 'id已存在'))
                         } else {
                             callback();
                         }
@@ -105,7 +127,8 @@ function checkModeId(message, id) {
     }
 }
 
-function email(message) { //email
+//email
+function email(message) {
     return {
         validator: (rule, value, callback) => {
             if (value === '') {
@@ -113,7 +136,7 @@ function email(message) { //email
             }
             let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
             if (!reg.test(value)) {
-                callback(new Error('请输入正确的邮箱地址'));
+                callback(new Error(message || '请输入正确的邮箱地址'));
             } else {
                 callback();
             }
@@ -122,7 +145,8 @@ function email(message) { //email
     }
 }
 
-function number(message) { //数字
+//数字
+function number(message) {
     return {
         validator: (rule, value, callback) => {
             if (value === '') {
@@ -130,7 +154,7 @@ function number(message) { //数字
             }
             let reg = /^[0-9]+$/;
             if (!reg.test(value)) {
-                callback(new Error('只能输入数字'));
+                callback(new Error(message || '只能输入数字'));
             } else {
                 callback();
             }
@@ -139,18 +163,20 @@ function number(message) { //数字
     }
 }
 
-function space(message) { //不能为空
+//不能为空
+function space(message) {
     return {
         validator: (rule, value, callback) => {
             if (value.trim() === '') {
-                callback(new Error('不能为空'));
+                callback(new Error(message || '不能为空'));
             }
         },
         trigger: 'blur'
     }
 }
 
-function qrcode(message) { //数字且大小在100-300
+//数字且大小在100-300
+function qrcode(message) {
     return {
         validator: (rule, value, callback) => {
             if (value === '') {
@@ -158,7 +184,7 @@ function qrcode(message) { //数字且大小在100-300
             }
             let reg = /^([1-2]\d{2}|300)$/;
             if (!reg.test(value)) {
-                callback(new Error('只能输入数字且大小在100-300之间'));
+                callback(new Error(message || '只能输入数字且大小在100-300之间'));
             } else {
                 callback();
             }
@@ -167,7 +193,8 @@ function qrcode(message) { //数字且大小在100-300
     }
 }
 
-function minNumber(message) { //数字且大小在1-19
+//数字且大小在1-19
+function minNumber(message) {
     return {
         validator: (rule, value, callback) => {
             if (value === '') {
@@ -175,7 +202,7 @@ function minNumber(message) { //数字且大小在1-19
             }
             let reg = /^([1-9]|1\d)$/;
             if (!reg.test(value)) {
-                callback(new Error('只能输入数字且大小在1-19之间'));
+                callback(new Error(message || '只能输入数字且大小在1-19之间'));
             } else {
                 callback();
             }
@@ -184,7 +211,8 @@ function minNumber(message) { //数字且大小在1-19
     }
 }
 
-function level(val) { //级别  小于等于自身
+//级别  小于等于自身
+function level(val) {
     return {
         validator: (rule, value, callback) => {
             if (value > val) {
@@ -197,12 +225,13 @@ function level(val) { //级别  小于等于自身
     }
 }
 
-function double(message) { //浮点型数字
+//浮点型数字
+function double(message) {
     return {
         validator: (rule, value, callback) => {
             let reg = /[0-9]+$/;
             if (!reg.test(value)) {
-                callback(new Error("只能是数字"));
+                callback(new Error(message || "只能是数字"));
             } else {
                 callback();
             }
@@ -211,12 +240,13 @@ function double(message) { //浮点型数字
     }
 }
 
-function numberLim(message) { //数字限制最大长度
+//数字限制最大长度
+function numberLim(message) {
     return {
         validator: (rule, value, callback) => {
             let reg = /^[0-9]{0,5}$/;
             if (!reg.test(value)) {
-                callback(new Error("只能输入正整数,并且长度不能超过5"));
+                callback(new Error(message || "只能输入正整数,并且长度不能超过5"));
             } else {
                 callback();
             }
@@ -225,12 +255,13 @@ function numberLim(message) { //数字限制最大长度
     }
 }
 
-function string(message) { //只能输入英文
+//只能输入英文或数字
+function string(message) {
     return {
         validator: (rule, value, callback) => {
             let reg = /^[a-zA-Z0-9]+$/;
             if (!reg.test(value)) {
-                callback(new Error('只能输入英文或数字'));
+                callback(new Error(message || '只能输入英文或数字'));
             } else {
                 callback();
             }
@@ -239,12 +270,13 @@ function string(message) { //只能输入英文
     }
 }
 
-function NumAndStr(message) { //只能小写字母或者数字
+//只能小写字母或者数字
+function NumAndStr(message) {
     return {
         validator: (rule, value, callback) => {
             let reg = /^[a-z0-9]+$/;
             if (!reg.test(value)) {
-                callback(new Error('只能是小写字母和数字'));
+                callback(new Error(message || '只能是小写字母和数字'));
             } else {
                 callback();
             }
@@ -254,7 +286,23 @@ function NumAndStr(message) { //只能小写字母或者数字
 
 }
 
-function mobile(message) { //移动手机号
+// 6位手机验证码
+function verificationCode() {
+    return {
+        validator: (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error("验证码不能为空"));
+            } else if (!/\d{6}$/.test(value)) {
+                return callback(new Error("请输入6位数字验证码"));
+            } else {
+                callback();
+            }
+        }
+    }
+}
+
+//移动手机号
+function mobile(message) {
     return {
         validator: (rule, value, callback) => {
             if (value === '') {
@@ -262,7 +310,7 @@ function mobile(message) { //移动手机号
             } else {
                 let reg = /^1\d{10}$/;
                 if (!reg.test(value)) {
-                    callback(new Error('请输入正确的手机号'));
+                    callback(new Error(message || '请输入正确的手机号'));
                 } else {
                     callback();
                 }
@@ -272,7 +320,8 @@ function mobile(message) { //移动手机号
     }
 }
 
-function tel(message) { //固定电话
+//固定电话
+function tel(message) {
     return {
         validator: (rule, value, callback) => {
             if (value === '') {
@@ -280,7 +329,7 @@ function tel(message) { //固定电话
             } else {
                 let reg = /^0\d{2,3}-?\d{7,8}$/;
                 if (!reg.test(value)) {
-                    callback(new Error('请输入正确的固定电话'));
+                    callback(new Error(message || '请输入正确的固定电话'));
                 } else {
                     callback();
                 }
@@ -298,7 +347,7 @@ function checkChinese(message) {
             var flag = true;
             for (var i = 0; i < value.length; i++) {
                 if (value.charCodeAt(i) > 255) {
-                    callback(new Error('不能含有汉字'));
+                    callback(new Error(message || '不能含有汉字'));
                     flag = false;
                     break;
                 }
@@ -315,10 +364,9 @@ function checkChinese(message) {
 function isURL(message) {
     return {
         validator: (rule, value, callback) => {
-            var strRegex = "^(http:\/\/|https:\/\/).*$";
-            var re = new RegExp(strRegex);
-            if (!re.test(value)) {
-                callback(new Error('URL格式不正确!'));
+            const reg = new RegExp("^(http://|https://).*$");
+            if (!reg.test(value)) {
+                callback(new Error(message || 'URL格式不正确!'));
             } else {
                 callback();
             }
@@ -329,12 +377,14 @@ function isURL(message) {
 
 export default {
     required,
+    notRequired,
     email,
     number,
     space,
     qrcode,
     validateName,
     NumAndStr,
+    verificationCode,
     mobile,
     tel,
     string,

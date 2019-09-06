@@ -1,3 +1,10 @@
+<!--
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-07-24 08:40:20
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-07-24 08:40:20
+ -->
 <template>
 	<div class="content-main">
 		<el-scrollbar wrap-class="scrollbar-wrapper">
@@ -368,21 +375,9 @@
 <script>
 	import formMixins from "@/mixins/form";
 	import va from "@/rules";
-	import cmsUpload from "@/components/pagecomponents/cmsUpload.vue"; //cms上传
-	import cmsMultipleUpload from "@/components/pagecomponents/cmsMultipleUpload.vue";
-	import cmsAttachUpload from "@/components/pagecomponents/cmsAttachUpload.vue";
-	import cmsPictrues from "@/components/pagecomponents/cmsPictrues.vue";
-	import cmsNEditor from '@/components/pagecomponents/cmsNEditor.vue'
-	import cmsExportUpload from '@/components/pagecomponents/cmsExportUpload'
 	export default {
 		mixins: [formMixins],
 		components: {
-			"cms-upload": cmsUpload,
-			"cms-multiple-upload": cmsMultipleUpload,
-			"cms-attach-upload": cmsAttachUpload,
-			"cms-pictrues": cmsPictrues,
-			"cms-neditor": cmsNEditor,
-			"cms-export-upload": cmsExportUpload
 		},
 		data() {
 			let self = this;
