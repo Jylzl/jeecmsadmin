@@ -1,8 +1,17 @@
+<!--
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-09-05 15:53:28
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-07 18:27:45
+ -->
 <template>
 	<el-container>
 		<el-aside width="280px">
 			<div class="left-top">
-				<el-button type="text"><i class="el-icon-refresh"></i>&nbsp;&nbsp;刷新</el-button>
+				<el-button type="text">
+					<i class="el-icon-refresh"></i>&nbsp;&nbsp;刷新
+				</el-button>
 				<el-button type="text">编辑</el-button>
 			</div>
 			<div class="left-center">
@@ -13,7 +22,7 @@
 							@check-change="handleCheckChange(node, data)">
 							<div class="aligin-center">
 								<svg class="icon svg-icon" aria-hidden="true">
-									<use :xlink:href="filterType(data.icon)"></use>
+									<use :xlink:href="filterType(data.icon)" />
 								</svg>
 								<el-input v-model="node.label" placeholder="请输入内容" size="mini" class="change-filename"
 									v-if="false"></el-input>
@@ -21,7 +30,7 @@
 							</div>
 							<div>
 								<!-- <el-button type="text" size="mini" @click="() => append(data)">添加</el-button>
-                                <el-button type="text" size="mini" @click="() => remove(node, data)">删除</el-button> -->
+								<el-button type="text" size="mini" @click="() => remove(node, data)">删除</el-button>-->
 							</div>
 						</div>
 					</el-tree>
@@ -29,47 +38,19 @@
 			</div>
 		</el-aside>
 		<el-main>
-			<div class="right-top">
-				<div class="right-top-left">
-					<el-radio-group v-model="radio" size="mini" @change="changeRadio">
-						<el-radio-button label="只读"></el-radio-button>
-						<el-radio-button label="可写"></el-radio-button>
-					</el-radio-group>
-					<el-select v-model="theme" size="mini" placeholder="主题" @change="themeChange" style="width:98px;">
-						<el-option v-for="item in thems" :key="item.value" :label="item.label" :value="item.value">
-						</el-option>
-					</el-select>
-					<el-select v-model="fontSize" size="mini" placeholder="字号" style="width:72px;">
-						<el-option v-for="item in fontSizes" :key="item.value" :label="item.label" :value="item.value">
-						</el-option>
-					</el-select>
-					<el-select v-model="language" size="mini" placeholder="语言" style="width:120px;">
-						<el-option v-for="item in languages" :key="item.value" :label="item.label" :value="item.value">
-						</el-option>
-					</el-select>
-				</div>
-				<div class="right-top-right">
-					<el-button type="primary" size="mini" icon="el-icon-refresh-right" @click="saveMonacoEditor" :disabled="saveBtn">重置</el-button>
-					<el-button type="primary" size="mini" icon="el-icon-receiving" @click="saveMonacoEditor" :disabled="saveBtn">保存</el-button>
-				</div>
-			</div>
-			<div class="right-table" v-loading="monacoeditoLoading" element-loading-text="保存中...">
-				<MonacoEditor :ref="monacoeditorId" :id="monacoeditorId" :init="monacoeditorInit" :language="language"
-					:readOnly="readOnly" :fontSize="fontSize" :theme="theme" v-model="monacoeditorContent"
-					@onMounted="onMounted" @onCodeChange="onCodeChange"></MonacoEditor>
-			</div>
+			<MonacoEditor :language="language" v-model="monacoeditorContent" @save="save" @reset="reset"></MonacoEditor>
 		</el-main>
 	</el-container>
 </template>
 <script>
-	import MonacoEditor from '@/components/monacoeditor/MonacoEditor.vue'
+	import MonacoEditor from "@/components/monacoeditor/MonacoEditor.vue";
 	import {
 		folder
-	} from '@/assets/iconfont/iconfont_folder.js'
+	} from "@/assets/iconfont/iconfont_folder.js";
 	import {
 		fileType
-	} from '@/assets/iconfont/iconfont_file_type.js'
-	const fileTypeJson = require('@/config/fileType.json')
+	} from "@/assets/iconfont/iconfont_file_type.js";
+	const fileTypeJson = require("@/config/fileType.json");
 	let id = 1000;
 	export default {
 		components: {
@@ -77,247 +58,194 @@
 		},
 		data() {
 			const data = [{
-				id: 1,
-				label: 'images',
-				icon: 'images',
-				children: [{
-					id: 11,
-					label: 'img_bg.png',
-					icon: 'img_bg.png'
-				}, {
-					id: 12,
-					label: 'img_header.png',
-					icon: 'img_header.png'
-				}]
-			}, {
-				id: 2,
-				label: 'img',
-				icon: 'img',
-				children: [{
-					id: 21,
-					label: 'img_bg.png',
-					icon: 'img_bg.png'
-				}, {
-					id: 22,
-					label: 'img_bg.jpg',
-					icon: 'img_bg.jpg'
-				}, {
-					id: 23,
-					label: 'img_bg.gif',
-					icon: 'img_bg.gif'
-				}]
-			}, {
-				id: 3,
-				label: 'css',
-				icon: 'css',
-				children: [{
-					id: 31,
-					label: 'main.css',
-					icon: 'main.css'
-				}, {
-					id: 32,
-					label: 'index.css',
-					icon: 'index.css'
-				}]
-			}, {
-				id: 4,
-				label: 'js',
-				icon: 'js',
-				children: [{
-					id: 41,
-					label: 'index.js',
-					icon: 'index.js'
-				}, {
-					id: 42,
-					label: 'index.js',
-					icon: 'index.js'
-				}]
-			}, {
-				id: 5,
-				label: 'html',
-				icon: 'html',
-				children: [{
-					id: 51,
-					label: 'index.html',
-					icon: 'index.html'
-				}, {
-					id: 52,
-					label: 'index.htm',
-					icon: 'index.htm'
-				}]
-			}, {
-				id: 6,
-				label: 'word',
-				icon: 'word',
-				children: [{
-					id: 61,
-					label: 'index',
-					icon: 'index',
+					id: 1,
+					label: "images",
+					icon: "images",
 					children: [{
-						id: 611,
-						label: 'index.doc',
-						icon: 'index.doc'
-					}, {
-						id: 612,
-						label: 'index.docx',
-						icon: 'index.docx'
-					}]
-				}, {
-					id: 62,
-					label: 'index.docx',
-					icon: 'index.docx'
-				}]
-			}, {
-				id: 7,
-				label: 'docs',
-				icon: 'docs',
-				children: [{
-					id: 71,
-					label: 'index.doc',
-					icon: 'index.doc'
-				}, {
-					id: 72,
-					label: 'index.docx',
-					icon: 'index.docx'
-				}, {
-					id: 73,
-					label: 'index.pptx',
-					icon: 'index.pptx'
-				}, {
-					id: 74,
-					label: 'index.xls',
-					icon: 'index.xls'
-				}]
-			}];
-			return {
-				monacoeditoLoading: false,
-				monacoeditorId: "monacoeditorcontainer",
-				monacoeditorContent: "function hello() {\n\talert('Hello world!');\n}",
-				language: "javascript",
-				readOnly: true,
-				fontSize: 14,
-				theme: "vs",
-				monacoeditorInit: {
-					automaticLayout: true
+							id: 11,
+							label: "img_bg.png",
+							icon: "img_bg.png"
+						},
+						{
+							id: 12,
+							label: "img_header.png",
+							icon: "img_header.png"
+						}
+					]
 				},
-				data4: JSON.parse(JSON.stringify(data)),
+				{
+					id: 2,
+					label: "img",
+					icon: "img",
+					children: [{
+							id: 21,
+							label: "img_bg.png",
+							icon: "img_bg.png"
+						},
+						{
+							id: 22,
+							label: "img_bg.jpg",
+							icon: "img_bg.jpg"
+						},
+						{
+							id: 23,
+							label: "img_bg.gif",
+							icon: "img_bg.gif"
+						}
+					]
+				},
+				{
+					id: 3,
+					label: "css",
+					icon: "css",
+					children: [{
+							id: 31,
+							label: "main.css",
+							icon: "main.css"
+						},
+						{
+							id: 32,
+							label: "index.css",
+							icon: "index.css"
+						}
+					]
+				},
+				{
+					id: 4,
+					label: "js",
+					icon: "js",
+					children: [{
+							id: 41,
+							label: "index.js",
+							icon: "index.js"
+						},
+						{
+							id: 42,
+							label: "index.js",
+							icon: "index.js"
+						}
+					]
+				},
+				{
+					id: 5,
+					label: "html",
+					icon: "html",
+					children: [{
+							id: 51,
+							label: "index.html",
+							icon: "index.html"
+						},
+						{
+							id: 52,
+							label: "index.htm",
+							icon: "index.htm"
+						}
+					]
+				},
+				{
+					id: 6,
+					label: "word",
+					icon: "word",
+					children: [{
+							id: 61,
+							label: "index",
+							icon: "index",
+							children: [{
+									id: 611,
+									label: "index.doc",
+									icon: "index.doc"
+								},
+								{
+									id: 612,
+									label: "index.docx",
+									icon: "index.docx"
+								}
+							]
+						},
+						{
+							id: 62,
+							label: "index.docx",
+							icon: "index.docx"
+						}
+					]
+				},
+				{
+					id: 7,
+					label: "docs",
+					icon: "docs",
+					children: [{
+							id: 71,
+							label: "index.doc",
+							icon: "index.doc"
+						},
+						{
+							id: 72,
+							label: "index.docx",
+							icon: "index.docx"
+						},
+						{
+							id: 73,
+							label: "index.pptx",
+							icon: "index.pptx"
+						},
+						{
+							id: 74,
+							label: "index.xls",
+							icon: "index.xls"
+						}
+					]
+				}
+			];
+			return {
+				monacoeditorContent: "<h1>大标题</h1>",
+				language: "html",
 				data5: JSON.parse(JSON.stringify(data)),
-				multipleSelection: [],
 				defaultProps: {
 					children: "children",
 					label: "label"
 				},
-				thems: [{
-						value: "vs",
-						label: "默认主题"
-					},
-					{
-						value: "vs-dark",
-						label: "深色主题"
-					},
-					{
-						value: "hc-black",
-						label: "高亮主题"
-					}
-				],
-				fontSizes: [{
-						value: 12,
-						label: "12号"
-					}, {
-						value: 14,
-						label: "14号"
-					}, {
-						value: 16,
-						label: "16号"
-					},
-					{
-						value: 18,
-						label: "18号"
-					},
-					{
-						value: 20,
-						label: "20号"
-					}
-				],
-				languages: [{
-					value: "html",
-					label: "html"
-				}, {
-					value: "javascript",
-					label: "javascript"
-				}, {
-					value: "typescript",
-					label: "typescript"
-				}, {
-					value: "css",
-					label: "css"
-				}, {
-					value: "scss",
-					label: "scss"
-				}, {
-					value: "less",
-					label: "less"
-				}, {
-					value: "json",
-					label: "json"
-				}, {
-					value: "xml",
-					label: "xml"
-				}, {
-					value: "java",
-					label: "java"
-				}, {
-					value: "sql",
-					label: "sql"
-				}, {
-					value: "python",
-					label: "python"
-				}, {
-					value: "shell",
-					label: "shell"
-				}, {
-					value: "markdown",
-					label: "markdown"
-				}],
-				value: "",
-				input: "",
-				input5: "",
-				select: "",
-				radio: "只读",
-				saveBtn: true
+				input: ""
 			};
 		},
-		mounted() {
-			let _this = this;
-			document.getElementById(_this.monacoeditorId).addEventListener('keydown', function (e) {
-				if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
-					e.preventDefault();
-					if (_this.radio != "只读") {
-						_this.saveMonacoEditor();
-					}
-				}
-			});
-		},
+		watch: {},
+		mounted() {},
 		methods: {
-			onMounted(edit) {
-				this.jsEditor = edit;
+			//编辑器数据保存
+			save(data,cab) {
+				console.log(this.monacoeditorContent)
+				setTimeout(() => {
+					cab({
+						code:200,
+						data:data
+					})
+				}, 2000);
 			},
-			onCodeChange(value, event) {
-				this.monacoeditorContent = value;
+			//编辑器数据重置
+			reset(data, cab) {
+				console.log(this.monacoeditorContent)
+				setTimeout(() => {
+					cab({
+						code:201,
+						data:data
+					})
+				}, 2000);
 			},
 			//根据文件名，文件夹名生成svg图标名称
 			filterType(str) {
 				var idOpen = str.includes("open") ? true : false;
 				var icon, str1, key, keys, valueArr;
-				if (str.indexOf(".") == -1) { //不存在点则为文件夹名folderType
-					if (/.*[\u4e00-\u9fa5]+.*$/.test(str)) { //如果存在中文直接返回默认文件夹图标
-						return "#icon-folder-close"
+				if (str.indexOf(".") == -1) {
+					//不存在点则为文件夹名folderType
+					if (/.*[\u4e00-\u9fa5]+.*$/.test(str)) {
+						//如果存在中文直接返回默认文件夹图标
+						return "#icon-folder-close";
 					}
 					for (let i = 0; i < fileTypeJson.folderType.length; i++) {
 						for (let j in fileTypeJson.folderType[i]) {
 							key = j;
 							valueArr = fileTypeJson.folderType[i][j];
-							str1 = valueArr.filter((value) => { //过滤数组元素
+							str1 = valueArr.filter(value => {
+								//过滤数组元素
 								return value.includes(str.replace("-open", "")); //如果包含字符返回true
 							})[0];
 							if (!str1) {
@@ -331,23 +259,28 @@
 							break;
 						}
 					}
-					icon = folder.filter((value) => { //过滤数组元素
+					icon = folder.filter(value => {
+						//过滤数组元素
 						return value.includes(key); //如果包含字符返回true
 					})[0];
-					icon = icon ? icon : 'icon-folder-close';
+					icon = icon ? icon : "icon-folder-close";
 				} else {
-					if (/.*[\u4e00-\u9fa5]+.*$/.test(str)) { //如果存在中文直接返回默认文件图标
-						return "#icon-file_type_new"
+					if (/.*[\u4e00-\u9fa5]+.*$/.test(str)) {
+						//如果存在中文直接返回默认文件图标
+						return "#icon-file_type_new";
 					}
 					for (let i = 0; i < fileTypeJson.fileType.length; i++) {
 						for (let j in fileTypeJson.fileType[i]) {
 							key = j;
 							valueArr = fileTypeJson.fileType[i][j];
-							str1 = valueArr.filter((value) => { //过滤数组元素
-								return value.includes(str.split('.')[str.split('.').length - 1]); //如果包含字符返回true
+							str1 = valueArr.filter(value => {
+								//过滤数组元素
+								return value.includes(
+									str.split(".")[str.split(".").length - 1]
+								); //如果包含字符返回true
 							})[0];
 							if (!str1) {
-								key = str.split('.')[str.split('.').length - 1];
+								key = str.split(".")[str.split(".").length - 1];
 							} else {
 								keys = true;
 								break;
@@ -357,54 +290,35 @@
 							break;
 						}
 					}
-					icon = fileType.filter((value) => { //过滤数组元素
+					icon = fileType.filter(value => {
+						//过滤数组元素
 						return value.includes(key); //如果包含字符返回true
 						// return value == key; //如果包含字符返回true
 					})[0];
-					icon = icon ? icon : 'icon-file_type_new';
+					icon = icon ? icon : "icon-file_type_new";
 				}
 				if (idOpen) {
-					return '#' + icon + "-open";
+					return "#" + icon + "-open";
 				} else {
-					return '#' + icon;
+					return "#" + icon;
 				}
 			},
 			contextmenu(event, object, value, element) {
-				alert('右键')
-				console.log(event)
-				console.log(object)
-				console.log(value)
-				console.log(element)
+				alert("右键");
+				console.log(event);
+				console.log(object);
+				console.log(value);
+				console.log(element);
 			},
 			handleNodeClick(data) {
 				if (data.icon.indexOf(".") == -1) {
 					if (data.icon.includes("open")) {
-						data.icon = data.icon.replace("-open", "")
+						data.icon = data.icon.replace("-open", "");
 					} else {
-						data.icon = data.icon + "-open"
+						data.icon = data.icon + "-open";
 					}
 				} else {
 					return;
-				}
-			},
-			themeChange() {
-				this.monacoeditorInit
-			},
-			//保存代碼
-			saveMonacoEditor() {
-				let _this = this;
-				_this.monacoeditoLoading = true;
-				setTimeout(() => {
-					_this.monacoeditoLoading = false;
-				}, 2000);
-			},
-			changeRadio() {
-				if (this.radio == "可写") {
-					this.saveBtn = false;
-					this.readOnly = false;
-				} else {
-					this.saveBtn = true;
-					this.readOnly = true;
 				}
 			}
 		}
