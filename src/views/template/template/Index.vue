@@ -7,7 +7,7 @@
  -->
 <template>
 	<el-container>
-		<el-aside width="280px">
+		<el-aside width="260px">
 			<div class="left-top">
 				<el-button type="text">
 					<i class="el-icon-refresh"></i>&nbsp;&nbsp;刷新
