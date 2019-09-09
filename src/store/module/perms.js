@@ -18,6 +18,9 @@ import {
  * 递归处理角色权限
  */
 function getansycRoutes(tmpRoutes, perms) {
+    if (!perms) {
+        return []
+    }
     let aa = perms.split(',');
     const result = tmpRoutes.filter(route => {
         if (aa.indexOf(route.path) != -1) {
