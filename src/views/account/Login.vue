@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-24 08:40:20
  * @LastAuthor: lizlong
- * @lastTime: 2019-09-06 16:13:40
+ * @lastTime: 2019-09-07 21:28:28
  -->
 <template>
 	<div class="land-box">
@@ -90,9 +90,9 @@
 					</el-tabs>
 				</div>
 				<div class="land-form-btn">
-					<div id="your-dom-id" class="nc-container" v-if="aliyun.show"></div>
+					<div id="your-dom-id" class="nc-container" v-show="aliyun.show"></div>
 					<el-button type="primary" @click="submitForm(submitFormName)" style="width:100%;"
-						:disabled="landLoading.disabled" :icon="landLoading.icon" v-else>
+						:disabled="landLoading.disabled" :icon="landLoading.icon" v-show="!aliyun.show">
 						{{landLoading.content}}</el-button>
 				</div>
 				<div class="three-land">
@@ -117,8 +117,8 @@
 			//引入自定义验证规则
 			var phone = va.mobile;
 			var verificationCode = va.verificationCode;
-			let r_user = va.required('用户名不能为空', 'change');
-			let r_pswd = va.required('密码不能为空');
+			let r_user = va.required("用户名不能为空", "change");
+			let r_pswd = va.required("密码不能为空");
 			let r_phone = va.mobile();
 			let r_verificationCode = va.verificationCode();
 			return {
@@ -127,7 +127,7 @@
 					open: true, //打开阿里验证
 					show: false, //状态显示
 					maxTimes: 5, //最大错误次数
-					times: 0, //当前错误次数
+					times: 0 //当前错误次数
 				},
 				icon: "icon iconfont icon-icon_yulan",
 				submitFormName: "landForm_password",
@@ -143,7 +143,7 @@
 					// 自定义手机号规则
 					phone: [r_phone],
 					// 自定义验证码
-					verificationCode: [r_verificationCode],
+					verificationCode: [r_verificationCode]
 				},
 				//密码登陆
 				landForm_password: {
@@ -180,15 +180,16 @@
 			};
 		},
 		created() {
-
+			this.aliyun.times = Cookies.get("landingTimes") ?
+				Cookies.get("landingTimes") :
+				0;
 		},
 		mounted() {
 			//cookies里面登陆次数超过次数显示人机验证
-			this.aliyun.times = Cookies.get("landingTimes");
-			if (this.aliyun.times >= this.aliyun.maxTimes) {
+			if (this.aliyun.times >= this.aliyun.maxTimes - 1 && this.aliyun.open) {
 				this.aliyun.show = true;
 				// 阿里云人机验证
-				this.aliyun();
+				this.aliyunFun();
 			} else {
 				this.aliyun.show = false;
 			}
@@ -344,7 +345,7 @@
 			landFormPassword() {},
 			landFormPhone() {},
 			//阿里人机验证
-			aliyun() {
+			aliyunFun() {
 				var _this = this;
 				var nc_token = [
 					"CF_APP_1",
@@ -485,10 +486,13 @@
 				);
 				this.aliyun.times++;
 				// 登录失败五次启用阿里云人机验证,且人机验证打开
-				if (this.aliyun.times >= this.aliyun.maxTimes && this.aliyun.open) {
+				if (
+					this.aliyun.times >= this.aliyun.maxTimes - 1 &&
+					this.aliyun.open
+				) {
 					setTimeout(() => {
 						this.aliyun.show = true;
-						this.aliyun();
+						this.aliyunFun();
 					}, 1200);
 				} else {
 					this.aliyun.show = false;
