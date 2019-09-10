@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-04-19 13:09:37
  * @LastAuthor: lizlong
- * @lastTime: 2019-09-05 16:25:40
+ * @lastTime: 2019-09-10 21:06:02
  -->
 <template>
 	<div class="cms-inline-input">
@@ -16,7 +16,7 @@
 export default {
 	name: "cms-input",
 	props: {
-		value: ,
+		value: "",
 		label: {
 			type: String,
 			default: "label"

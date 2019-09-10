@@ -989,14 +989,6 @@ const ansycRoutes = [{
 				require(['@/views/about/about.vue'], resolve)
 			}
 		}]
-	},
-	{
-		meta: {
-			title: '404',
-			hidden: true
-		},
-		path: '*',
-		redirect: '/404'
 	}
 ];
 

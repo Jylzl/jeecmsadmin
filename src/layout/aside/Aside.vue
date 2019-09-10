@@ -12,30 +12,30 @@
 			<template v-for="item in $store.state.perms.routers">
 				<template v-if="(item.meta) && !(item.meta.hidden)">
 					<template v-if="item.meta && item.meta.leaf">
-						<el-menu-item :index="item.redirect || item.path" :key="item.path">
+						<el-menu-item :route="{name:item.path}" :index="item.name" :key="item.name">
 							<i :class="item.meta && item.meta.iconCls" class="icon iconfont el-submenu-iconfont"></i>
 							<span class="collapse-font "
 								slot="title">{{generateTitle('submenu',item.meta.title)}}</span>
 						</el-menu-item>
 					</template>
-					<el-submenu v-else :index="item.redirect || item.path" :key="item.path">
+					<el-submenu v-else :route="{name:item.path}" :index="item.name" :key="item.name">
 						<template slot="title">
 							<i :class="item.meta && item.meta.iconCls" class="icon iconfont el-submenu-iconfont"></i>
 							<span class="collapse-font" slot="title">{{generateTitle('submenu',item.meta.title)}}</span>
 						</template>
 						<template v-for="child in item.children">
-							<el-menu-item v-if="child.meta && child.meta.isParent" :index="child.redirect || child.path"
-								:key="child.path" class="parent-padding">
+							<el-menu-item v-if="child.meta && child.meta.isParent" :route="{name:child.path}" :index="child.name"
+								:key="child.name" class="parent-padding">
 								{{child.meta.title}}
 							</el-menu-item>
-							<el-submenu v-else :index="child.redirect || child.path" class="child-padding"
-								:key="child.path">
+							<el-submenu v-else :route="{name:child.path}" class="child-padding" :index="child.name"
+								:key="child.name">
 								<template slot="title">
 									<span class="collapse-font">{{child.meta.title}}</span>
 								</template>
 								<template v-for="child2 in child.children">
 									<template v-if="!(child2.meta) || (child2.meta && !(child2.meta.hidden))">
-										<el-menu-item :index="child2.redirect ||  child2.path" :key="child2.path">
+										<el-menu-item :route="{name:child2.path}" :index="child2.name" :key="child2.name">
 											{{child2.meta.title}}</el-menu-item>
 									</template>
 								</template>
