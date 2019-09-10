@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-03-26 20:07:23
  * @LastAuthor: lizlong
- * @lastTime: 2019-09-02 21:33:28
+ * @lastTime: 2019-09-10 10:57:52
  -->
 <template>
 	<div class="topic h100">
@@ -104,19 +104,11 @@
 <script>
 import listMixins from "@/mixins/list";
 import Sortable from "sortablejs";
-import cmsTree from "@/components/cmscomponents/cmsTree.vue";
 export default {
 	mixins: [listMixins],
-	components: {
-		cmsTree: cmsTree
-	},
+	components: {},
 	data() {
 		return {
-			params: {
-				//只需要业务参数
-				pageNo: "",
-				pageSize: ""
-			},
 			queryStatus: [
 				{
 					label: "全部",
@@ -289,7 +281,7 @@ export default {
 			}
 			params.priorities = params.priorities.join(",");
 			this.$confirm("是否保存?", "提示", { type: "warning" })
-				.then(mes => {
+				.then(() => {
 					this.$axios.post(url, params).then(res => {
 						if (res.code == "200") {
 							this.successMessage("操作成功");
@@ -297,7 +289,9 @@ export default {
 						}
 					});
 				})
-				.catch(error => {});
+				.catch(err => {
+					console.log(err)
+				});
 		},
 		handleClose(done) {
 			done();
@@ -336,6 +330,7 @@ export default {
 				})
 				.catch(err => {
 					this.loading = false;
+					console.log(err)
 				});
 		},
 		//专题弹窗触发
@@ -375,8 +370,9 @@ export default {
 						this.loading = false;
 					}
 				})
-				.catch(error => {
+				.catch(err => {
 					this.loading = false;
+					console.log(err)
 				});
 		},
 		filterHandler(value, row, column) {
@@ -468,7 +464,9 @@ export default {
 						}
 						return resolve(data);
 					})
-					.catch(error => {});
+					.catch(err => {
+						console.log(err)
+					});
 			}
 		},
 		//分页一页数量改变

@@ -18,3 +18,12 @@ export function loginOut(data) {
         data
     })
 }
+
+// 获取路由权限
+export function getPerms(data) {
+    return request({
+        url: api.getPerms,
+        method: 'post',
+        data
+    })
+}

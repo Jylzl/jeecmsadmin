@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-24 08:40:20
  * @LastAuthor: lizlong
- * @lastTime: 2019-09-07 21:28:28
+ * @lastTime: 2019-09-10 11:12:44
  -->
 <template>
 	<div class="land-box">
@@ -459,17 +459,19 @@
 								type: "success",
 								showClose: true
 							});
-							//重置登录样式
+							// 重置登录样式
 							this.restLand();
+							// 登录成功跳转主页
 							this.$router.push({
-								path: "/work" //跳转的路径
+								name: "home"
 							});
 						} else {
 							this.landFail();
 						}
 					})
-					.catch(error => {
+					.catch(err => {
 						this.landFail();
+						console.log(err)
 					});
 			},
 			//登陆失败

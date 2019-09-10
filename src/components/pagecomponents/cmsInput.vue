@@ -16,7 +16,7 @@
 export default {
 	name: "cms-input",
 	props: {
-		value: "",
+		value: ,
 		label: {
 			type: String,
 			default: "label"

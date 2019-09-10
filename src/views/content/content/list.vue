@@ -1,3 +1,10 @@
+<!--
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-09-05 15:53:28
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-10 11:11:00
+ -->
 <template>
 	<el-container>
 		<el-aside width="200px">
@@ -517,6 +524,7 @@ export default {
 				})
 				.catch(err => {
 					this.loading = false;
+					console.log(err)
 				});
 		},
 		//专题弹窗触发
@@ -556,8 +564,9 @@ export default {
 						this.loading = false;
 					}
 				})
-				.catch(error => {
+				.catch(err => {
 					this.loading = false;
+					console.log(err)
 				});
 		},
 		filterHandler(value, row, column) {
@@ -649,7 +658,9 @@ export default {
 						}
 						return resolve(data);
 					})
-					.catch(error => {});
+					.catch(err => {
+						console.log(err)
+					});
 			}
 		},
 		//分页一页数量改变

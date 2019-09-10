@@ -1,3 +1,10 @@
+<!--
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-04-28 08:35:16
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-10 11:11:21
+ -->
 <template>
 	<div class="content-main">
 		<el-scrollbar wrap-class="scrollbar-wrapper">
@@ -572,6 +579,7 @@
 					})
 					.catch(err => {
 						this.loading = false;
+						console.log(err)
 					});
 			},
 			getDefaultInfo() {
@@ -759,8 +767,9 @@
 								}
 								this.loading = false;
 							})
-							.catch(error => {
+							.catch(err => {
 								this.loading = false;
+								console.log(err)
 							});
 					} else {
 						return false;

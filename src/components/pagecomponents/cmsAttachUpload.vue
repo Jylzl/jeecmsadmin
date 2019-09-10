@@ -28,7 +28,7 @@
 	export default {
 		name: "cms-file-upload",
 		props: {
-			src: "",
+			src: ,
 			uploadName: {
 				type: String,
 				default: "上传"

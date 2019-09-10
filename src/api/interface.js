@@ -1,32 +1,43 @@
-/*界面管理接口*/
+/**
+ * @description: 界面管理接口
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-04-28 08:35:16
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-10 14:08:48
+ */
+
 import request from '@/utils/request.js'
+import api from '@/api/api';
 
 export function getResourceTree(params) {
 	return request({
-		url: '/api/admin/resource/tree',
+		url: api.getResourceTree,
 		method: 'post',
 		data: params
 	})
 }
+
 /*资源信息获取*/
 export function getResourceList(params) {
 	return request({
-		url: '/api/admin/resource/list',
+		url: api.getResourceList,
 		method: 'post',
 		data: params
 	})
 }
+
 export function getTemplateList(params) {
 	return request({
-		url: '/api/admin/template/list',
+		url: api.getTemplateList,
 		method: 'post',
 		data: params
 	})
 }
+
 /*资源详细*/
 export function getResourceInfo(params) {
 	return request({
-		url: '/api/admin/resource/get',
+		url: api.getResourceInfo,
 		method: 'post',
 		data: params
 	})
@@ -34,17 +45,16 @@ export function getResourceInfo(params) {
 
 export function getTemplateInfo(params) {
 	return request({
-		url: '/api/admin/template/get',
+		url: api.getTemplateInfo,
 		method: 'post',
 		data: params
 	})
 }
 
-
 /*批量删除资源*/
 export function deleteResourceList(params) {
 	return request({
-		url: '/api/admin/resource/delete',
+		url: api.deleteResourceList,
 		method: 'post',
 		signValidate: true,
 		data: params
@@ -53,19 +63,17 @@ export function deleteResourceList(params) {
 
 export function deleteTemplateList(params) {
 	return request({
-		url: '/api/admin/template/delete',
+		url: api.deleteTemplateList,
 		method: 'post',
 		signValidate: true,
 		data: params
 	})
 }
 
-
-
 /*新建文件夹*/
 export function creatResourceFile(params) {
 	return request({
-		url: 'api/admin/resource/dir_save',
+		url: api.creatResourceFile,
 		method: 'post',
 		signValidate: true,
 		data: params
@@ -74,21 +82,17 @@ export function creatResourceFile(params) {
 
 export function creatTemplateFile(params) {
 	return request({
-		url: 'api/admin/template/dir_save',
+		url: api.creatTemplateFile,
 		method: 'post',
 		signValidate: true,
 		data: params
 	})
 }
 
-
-
-
-
 /*重命名*/
 export function reName(params) {
 	return request({
-		url: '/api/admin/resource/rename',
+		url: api.reName,
 		method: 'post',
 		signValidate: true,
 		data: params
@@ -97,19 +101,17 @@ export function reName(params) {
 
 export function templateReName(params) {
 	return request({
-		url: '/api/admin/template/rename',
+		url: api.templateReName,
 		method: 'post',
 		signValidate: true,
 		data: params
 	})
 }
 
-
-
 /* 修改模版*/
 export function updateResourceInfo(params) {
 	return request({
-		url: '/api/admin/template/update',
+		url: api.updateResourceInfo,
 		method: 'post',
 		signValidate: true,
 		data: params
@@ -119,28 +121,25 @@ export function updateResourceInfo(params) {
 /* 修改模版*/
 export function addResourceInfo(params) {
 	return request({
-		url: '/api/admin/resource/save',
+		url: api.addResourceInfo,
 		method: 'post',
 		signValidate: true,
 		data: params
 	})
 }
+
 export function addTemplateInfo(params) {
 	return request({
-		url: '/api/admin/template/save',
+		url: api.addTemplateInfo,
 		method: 'post',
 		signValidate: true,
 		data: params
 	})
 }
-
-
-
-
 
 export function getTemplateTree(params) {
 	return request({
-		url: '/api/admin/template/tree',
+		url: api.getTemplateTree,
 		method: 'post',
 		data: params
 	})
@@ -149,7 +148,7 @@ export function getTemplateTree(params) {
 /**获取方案**/
 export function getSolutions(params) {
 	return request({
-		url: '/api/admin/template/getSolutions',
+		url: api.getSolutions,
 		method: 'post',
 		data: params
 	})
@@ -157,7 +156,7 @@ export function getSolutions(params) {
 
 export function setSolutions(params) {
 	return request({
-		url: '/api/admin/template/solutionupdate',
+		url: api.setSolutions,
 		method: 'post',
 		signValidate: true,
 		data: params

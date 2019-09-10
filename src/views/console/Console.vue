@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-09-05 15:53:28
  * @LastAuthor: lizlong
- * @lastTime: 2019-09-05 16:22:11
+ * @lastTime: 2019-09-10 11:24:58
  -->
 <template>
 	<el-container>
@@ -578,6 +578,7 @@
 						})
 						.catch(err => {
 							this.loading = false;
+							console.log(err)
 						});
 				} else if (type === 'keyword') {
 					this.params.start_date = moment().day(0).format('YYYY/MM/DD');
@@ -648,88 +649,9 @@
 		margin-bottom: 20px;
 	}
 
-	.bg-box {
-		background: #fff;
-		height: 112px;
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: flex;
-		overflow: hidden;
-	}
-
-	.bg-box .bg-green {
-		background: #17d57e;
-	}
-
-	.bg-box .bg-yellow {
-		background: #fec92b;
-	}
-
-	.bg-box .bg-blue {
-		background: #2da3fb;
-	}
-
-	.bg-box .bg-purple {
-		background: #c172d8;
-	}
-
-	.bg-icon {
-		box-sizing: border-box;
-		text-align: center;
-		padding-top: 22px;
-		width: 32%;
-		height: 100%;
-	}
-
-	.bg-icon .icon-title {
-		color: #fff;
-		font-size: 14px;
-		text-align: center;
-		margin-top: 10px;
-	}
-
-	.bg-info {
-		box-sizing: border-box;
-		width: 68%;
-		padding: 24px;
-		text-align: left;
-	}
-
-	.today-count {
-		color: #5a5e66;
-		font-size: 18px;
-	}
-
-	.all-count {
-		font-size: 14px;
-		color: #999;
-		margin-top: 20px;
-	}
-
-	.today-count .todat-title {
-		margin-right: 10px;
-	}
-
-	.today-count .count-num {
-		font-family: Arial, Helvetica, sans-serif;
-		font-size: 18px;
-		margin-right: 4px;
-		color: #353535;
-	}
-
-	.today-count .up-num {
-		font-size: 14px;
-		color: #ff724c;
-	}
-
 	.m-t-20 {
 		margin-top: 20px;
 	}
-
-	.m-b-20 {
-		margin-bottom: 20px;
-	}
-
 
 	.el-timeline-item {
 		padding-bottom: 17px;

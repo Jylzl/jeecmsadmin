@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-10 08:35:23
  * @LastAuthor: lizlong
- * @lastTime: 2019-08-30 17:20:46
+ * @lastTime: 2019-09-10 10:49:19
  -->
 <template>
 	<div class="header">
@@ -133,7 +133,7 @@ export default {
 			})
 				.then(() => {
 					this.$router.push({
-						path: "/lock", //跳转的路径
+						name: "lock", //跳转的路径
 						query: {
 							user: this.userName
 						}
@@ -157,7 +157,9 @@ export default {
 					this.$store.dispatch("loginOut").then(res => {
 						if (res.code == this.$code.success) {
 							this.successMessage("退出成功");
-							this.$router.push("/login");
+							this.$router.push({
+								name: "login"
+							});
 						} else {
 							this.errorMessage("退出失败");
 						}

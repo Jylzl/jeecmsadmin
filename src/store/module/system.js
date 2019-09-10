@@ -1,3 +1,10 @@
+/**
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-09-05 15:53:28
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-05 15:53:28
+ */
 import {
 	setBaseUrl
 } from '@/config/config.js'
@@ -10,7 +17,6 @@ const systemConfig = {
 		resourceUpLoad: setBaseUrl() + '/api/admin/resource/upload',
 		templateUpLoad: setBaseUrl() + '/api/admin/template/upload',
 		importTpl: setBaseUrl() + '/api/admin/template/importTpl',
-
 	},
 	mutations: {
 		CHANGE_SET: (state, value) => {

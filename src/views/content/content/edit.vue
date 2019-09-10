@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-24 08:40:20
  * @LastAuthor: lizlong
- * @lastTime: 2019-09-06 14:06:54
+ * @lastTime: 2019-09-10 11:02:15
  -->
 <template>
 	<div class="content-main">
@@ -614,6 +614,7 @@
 					})
 					.catch(err => {
 						this.loading = false;
+						console.log(err)
 					});
 			},
 			getDefaultInfo(id) {
@@ -741,6 +742,7 @@
 					)
 					.catch(err => {
 						this.loading = false;
+						console.log(err)
 					});
 			},
 			getEditorContent() {
@@ -826,8 +828,9 @@
 								}
 								this.loading = false;
 							})
-							.catch(error => {
+							.catch(err => {
 								this.loading = false;
+								console.log(err)
 							});
 					} else {
 						return false;

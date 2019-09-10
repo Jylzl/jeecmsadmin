@@ -1,26 +1,23 @@
-import request from '@/utils/request'
-import api from '@/api/api';
+/**
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-09-10 08:36:23
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-10 10:35:50
+ */
 import {
     routes,
     ansycRoutes
 } from '@/router/routes'
 import {
-    loginOut
+    loginOut,
+    getPerms
 } from "@/api/land.js";
-/*
- * 
- * @param {异步路由表} ansycRoutes 
- * @param {数据库权限拉取} perms 
- */
-
 
 /**
  * 递归处理角色权限
  */
 function getansycRoutes(tmpRoutes, perms) {
-    if (!perms) {
-        return []
-    }
     let aa = perms.split(',');
     const result = tmpRoutes.filter(route => {
         if (aa.indexOf(route.path) != -1) {
@@ -70,7 +67,6 @@ const perm = {
             } else {
                 localStorage.setItem('_site_id_param', state._site_id_param);
             }
-
         },
         CLEAR_ROUTERS: (state) => {
             state.routers = routes;
@@ -80,37 +76,34 @@ const perm = {
             state._site_id_param = null;
             localStorage.setItem('sessionKey', '');
             localStorage.setItem('userName', '');
-            // window.location.reload(); //此处退出vuex状态不刷新，目前发现重载页面可以处理。。
         }
     },
     actions: {
         setRouters({
             commit
         }) {
-            return new Promise((resolve, reject) => { //动态加载路由权限
-                request({
-                        url: api.getPerms,
-                        method: 'post'
-                    })
-                    .then(res => {
-                        let asRouters;
-                        if (res.body.perms == '*') {
-                            asRouters = ansycRoutes;
-                        } else {
-                            asRouters = getansycRoutes(ansycRoutes, res.body.perms); //递归过滤
-                        }
-                        commit('SET_ROUTERS', {
-                            asRouters: asRouters,
-                            permsList: res.body.perms,
-                            _site_id_param: res.body.sites,
-                            siteId: res.body.siteId,
-                            isMasterSite: res.body.isMasterSite,
-                            baseUrl: res.body.url
-                        });
-                        resolve(res);
-                    }).catch(error => {
-                        reject(error);
-                    })
+            return new Promise((resolve, reject) => {
+                //动态加载路由权限
+                getPerms().then(res => {
+                    let asRouters = [];
+                    if (res.body.perms == '*') {
+                        asRouters = ansycRoutes;
+                    } else {
+                        //递归过滤
+                        asRouters = getansycRoutes(ansycRoutes, res.body.perms);
+                    }
+                    commit('SET_ROUTERS', {
+                        asRouters: asRouters,
+                        permsList: res.body.perms,
+                        _site_id_param: res.body.sites,
+                        siteId: res.body.siteId,
+                        isMasterSite: res.body.isMasterSite,
+                        baseUrl: res.body.url
+                    });
+                    resolve(res);
+                }).catch(error => {
+                    reject(error);
+                })
             })
         },
         loginOut({

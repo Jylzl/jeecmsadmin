@@ -1,3 +1,10 @@
+<!--
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-09-05 15:53:28
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-10 10:58:18
+ -->
 <template>
 	<div class="topic">
 		<section class="topic-body" v-loading="loading">
@@ -125,7 +132,6 @@
 	</div>
 </template>
 <script>
-import axios from "axios";
 import va from "@/rules";
 import formMixns from "@/mixins/form";
 
@@ -190,8 +196,9 @@ export default {
 						this.$refs["form"].resetFields();
 					})
 				)
-				.catch(error => {
+				.catch(err => {
 					this.loading = false;
+					console.log(err)
 				});
 		},
 		getChannels() {

@@ -1,9 +1,9 @@
 /**
- * @description: Description
+ * @description: 请求拦截
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-09-06 11:03:56
  * @LastAuthor: lizlong
- * @lastTime: 2019-09-06 17:43:54
+ * @lastTime: 2019-09-10 14:11:30
  */
 import axios from 'axios'
 import qs from 'qs'
@@ -27,11 +27,11 @@ function showMessage(value) {
 	});
 }
 
-// create an axios instance
+// 创建axios实例
 const service = axios.create({
 	withCredentials: false,
 	baseURL: process.env.VUE_APP_SERVER_API, // api 的 base_url
-	timeout: 5000 // request timeout
+	timeout: 15000 // 请求超时时间
 })
 service.__proto__ = axios
 
@@ -86,7 +86,9 @@ service.interceptors.response.use(
 					localStorage.setItem('sessionKey', '');
 					localStorage.setItem('userName', '');
 				}
-				router.push('/login');
+				router.push({
+					name: "login"
+				});
 				break;
 			default:
 				showMessage(res.code + ":" + res.message);

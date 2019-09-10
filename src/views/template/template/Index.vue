@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-09-05 15:53:28
  * @LastAuthor: lizlong
- * @lastTime: 2019-09-07 18:27:45
+ * @lastTime: 2019-09-10 10:52:09
  -->
 <template>
 	<el-container>
@@ -51,7 +51,6 @@
 		fileType
 	} from "@/assets/iconfont/iconfont_file_type.js";
 	const fileTypeJson = require("@/config/fileType.json");
-	let id = 1000;
 	export default {
 		components: {
 			MonacoEditor

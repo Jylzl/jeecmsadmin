@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-24 08:40:20
  * @LastAuthor: lizlong
- * @lastTime: 2019-07-24 08:40:20
+ * @lastTime: 2019-09-10 11:03:45
  -->
 <template>
 	<div class="content-main">
@@ -380,7 +380,6 @@
 		components: {
 		},
 		data() {
-			let self = this;
 			let required = va.required("此项必填");
 			let number = va.number("只能输入数字");
 			let string = va.string("只能输入英文字母");
@@ -582,6 +581,7 @@
 					})
 					.catch(err => {
 						this.loading = false;
+						console.log(err)
 					});
 			},
 			getDefaultInfo() {
@@ -642,6 +642,7 @@
 					)
 					.catch(err => {
 						this.loading = false;
+						console.log(err)
 					});
 			},
 			getEditorContent() {
@@ -751,8 +752,9 @@
 								}
 								this.loading = false;
 							})
-							.catch(error => {
+							.catch(err => {
 								this.loading = false;
+								console.log(err)
 							});
 					} else {
 						return false;

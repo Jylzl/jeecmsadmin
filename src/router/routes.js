@@ -1,46 +1,39 @@
+/**
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-09-05 15:53:28
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-10 15:52:27
+ */
 import Vue from 'vue'
 import Router from 'vue-router'
 
 import login from '@/views/account/Login.vue'
 import lock from '@/views/account/Lock.vue'
-import layout from '@/layout/Layout.vue'
-import work from '@/views/console/Console.vue'
 
-import error401 from '@/views/errorpage/401.vue'
-import error404 from '@/views/errorpage/404.vue'
+import layout from '@/layout/Layout.vue'
 import childView from '@/components/childView/Index.vue'
-// const resourceTree = resolve => {
-// 	require(['@/views/interface/resource/tree.vue'], resolve)
-// }; //
-// const resourceList = resolve => {
-// 	require(['@/views/interface/resource/list.vue'], resolve)
-// }; //
-// const resourceEdit = resolve => {
-// 	require(['@/views/interface/resource/edit.vue'], resolve)
-// }; //
-// const resourceReName = resolve => {
-// 	require(['@/views/interface/resource/rename.vue'], resolve)
-// }; //
-// const templateTree = resolve => {
-// 	require(['@/views/interface/template/tree.vue'], resolve)
-// }; //
-// const templateList = resolve => {
-// 	require(['@/views/interface/template/list.vue'], resolve)
-// }; //
-// const templateEdit = resolve => {
-// 	require(['@/views/interface/template/edit.vue'], resolve)
-// }; //
-// const templateReName = resolve => {
-// 	require(['@/views/interface/template/rename.vue'], resolve)
-// }; //
-// const templateSetting = resolve => {
-// 	require(['@/views/interface/template/setting.vue'], resolve)
-// }; //
-// function $importViews(componentName) { //异步加载组件
-// 	return resolve => {
-// 		require(['@/views/' + componentName + '.vue'], resolve)
-// 	}
-// }
+
+//错误页面
+const error401 = r => require.ensure([], () => r(require('@/views/errorpage/401.vue')), 'work') // 错误-401
+const error404 = r => require.ensure([], () => r(require('@/views/errorpage/404.vue')), 'work') // 错误-404
+
+//工作台
+const work = r => require.ensure([], () => r(require('@/views/console/Console.vue')), 'work') // 工作台
+
+// 内容专题
+const contentList = r => require.ensure([], () => r(require('@/views/content/content/list.vue')), 'contentList') // 内容-列表
+const contentAdd = r => require.ensure([], () => r(require('@/views/content/content/add.vue')), 'contentAdd') // 内容-新增
+const contentEdit = r => require.ensure([], () => r(require('@/views/content/content/edit.vue')), 'contentEdit') // 内容-修改
+const topicList = r => require.ensure([], () => r(require('@/views/content/topic/list.vue')), 'topicList') // 专题-列表
+const topicAdd = r => require.ensure([], () => r(require('@/views/content/topic/add.vue')), 'topicAdd') // 专题-新增
+const topicEdit = r => require.ensure([], () => r(require('@/views/content/topic/edit.vue')), 'topicEdit') // 专题-修改
+
+// 栏目管理
+const channelList = r => require.ensure([], () => r(require('@/views/channel/list.vue')), 'channelList') // 栏目-列表
+const channelAdd = r => require.ensure([], () => r(require('@/views/channel/add.vue')), 'channelList') // 栏目-新增
+const channelEdit = r => require.ensure([], () => r(require('@/views/channel/edit.vue')), 'channelList') // 栏目-修改
+const channelCopy = r => require.ensure([], () => r(require('@/views/channel/copy.vue')), 'channelList') // 栏目-复制
 
 
 Vue.use(Router)
@@ -82,17 +75,19 @@ const routes = [{
 		name: 'error404',
 		path: '/404',
 		component: error404
-	},
-	{
+	}
+];
+const ansycRoutes = [{
 		meta: {
 			title: '工作台',
-			role: 'work',
 			iconCls: 'icon-shebeizhuangtai',
 			leaf: true,
 		},
-		name: 'index',
+		name: 'home',
 		path: '/',
-		redirect: '/work',
+		redirect: {
+			name: 'work'
+		},
 		component: layout,
 		children: [{
 			meta: {
@@ -102,108 +97,98 @@ const routes = [{
 			path: '/work',
 			component: work,
 		}]
-	}
-];
-const ansycRoutes = [{
+	}, {
 		meta: {
 			title: '内容发布',
-			iconCls: 'icon-ceshishenqing',
-			isLink: true
+			iconCls: 'icon-ceshishenqing'
 		},
 		name: 'cms',
 		path: '/cms',
 		component: layout,
-		redirect: '/content/list',
+		redirect: {
+			name: 'contentList'
+		},
 		children: [{
 			meta: {
-				title: '内容管理',
-				isParent: true,
+				title: '内容管理'
 			},
-			path: '/content',
+			path: 'content',
 			name: 'content',
-			redirect: '/content/list',
+			redirect: {
+				name: 'contentList'
+			},
 			component: childView,
 			children: [{
 				meta: {
 					title: '内容列表'
 				},
 				name: 'contentList',
-				path: '/content/list',
-				component: resolve => {
-					require(['@/views/content/content/list.vue'], resolve)
-				}
+				path: 'list',
+				component: contentList
 			}, {
 				meta: {
 					title: '内容添加'
 				},
 				name: 'contentAdd',
-				path: '/content/add',
-				component: resolve => {
-					require(['@/views/content/content/add.vue'], resolve)
-				}
+				path: 'add',
+				component: contentAdd
 			}, {
 				meta: {
 					title: '内容修改'
 				},
 				name: 'contentEdit',
-				path: '/content/edit',
-				component: resolve => {
-					require(['@/views/content/content/edit.vue'], resolve)
-				}
+				path: 'edit',
+				component: contentEdit
 			}]
 		}, {
 			meta: {
-				title: '专题管理',
-				isParent: true
+				title: '专题管理'
 			},
 			name: 'topic',
 			path: '/topic',
-			redirect: '/topic/list',
+			redirect: {
+				name: 'topicList'
+			},
 			component: childView,
 			children: [{
 					meta: {
 						title: '专题列表'
 					},
 					name: 'topicList',
-					path: '/topic/list',
-					component: resolve => {
-						require(['@/views/content/topic/list.vue'], resolve)
-					}
+					path: 'list',
+					component: topicList
 				},
 				{
 					meta: {
 						title: '专题添加'
 					},
 					name: 'topicAdd',
-					path: '/topic/add',
-					component: resolve => {
-						require(['@/views/content/topic/add.vue'], resolve)
-					}
+					path: 'add',
+					component: topicAdd
 				},
 				{
 					meta: {
 						title: '专题修改'
 					},
 					name: 'topicEdit',
-					path: '/topic/edit',
-					component: resolve => {
-						require(['@/views/content/topic/edit.vue'], resolve)
-					}
+					path: 'edit',
+					component: topicEdit
 				}
 			]
 
 		}]
-	}, //栏目管理
+	},
 	{
 		meta: {
 			title: '栏目管理',
-			isParent: true,
 			iconCls: 'icon-liebiao',
 			leaf: true,
 		},
 		name: 'channel',
 		path: '/channel',
-		redirect: '/channel/list',
+		redirect: {
+			name: 'channelList'
+		},
 		component: layout,
 		children: [{
 			meta: {
@@ -211,65 +196,61 @@ const ansycRoutes = [{
 				hidden: true
 			},
 			name: 'channelList',
-			path: '/channel/list',
-			component: resolve => {
-				require(['@/views/channel/list.vue'], resolve)
-			}
+			path: 'list',
+			component: channelList
 		}, {
 			meta: {
 				title: '栏目添加',
 				hidden: true
 			},
 			name: 'channelAdd',
-			path: '/channel/add',
-			component: resolve => {
-				require(['@/views/channel/add.vue'], resolve)
-			}
+			path: 'add',
+			component: channelAdd
 		}, {
 			meta: {
 				title: '栏目修改',
 				hidden: true
 			},
 			name: 'channelEdit',
-			path: '/channel/edit',
-			component: resolve => {
-				require(['@/views/channel/edit.vue'], resolve)
-			}
+			path: 'edit',
+			component: channelEdit
 		}, {
 			meta: {
 				title: '栏目复制',
 				hidden: true
 			},
 			name: 'channelCopy',
-			path: '/channel/copy',
-			component: resolve => {
-				require(['@/views/channel/copy.vue'], resolve)
-			}
+			path: 'copy',
+			component: channelCopy
 		}]
 	},
 	{
 		meta: {
 			title: '数据中心',
-			iconCls: 'icon-shujukanban',
-			isLink: true
+			iconCls: 'icon-shujukanban'
 		},
-		name: 'dataCenter',
-		path: "/datacenter",
+		name: 'record',
+		path: "/record",
+		redirect: {
+			name: 'trafficTrend'
+		},
 		component: layout,
 		children: [{
 				meta: {
 					title: '流量统计'
 				},
 				name: 'traffic',
-				path: '/traffic',
-				redirect: '/traffic/trend',
+				path: 'traffic',
+				redirect: {
+					name: 'trafficTrend'
+				},
 				component: childView,
 				children: [{
 					meta: {
 						title: '趋势分析'
 					},
 					name: 'trafficTrend',
-					path: '/traffic/trend',
+					path: 'trend',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -278,7 +259,7 @@ const ansycRoutes = [{
 						title: '栏目访问量排行'
 					},
 					name: 'trafficChannel',
-					path: '/traffic/channel',
+					path: 'channel',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -288,16 +269,18 @@ const ansycRoutes = [{
 				meta: {
 					title: '来源分析'
 				},
-				path: '/source',
+				path: 'source',
 				name: 'source',
-				redirect: '/source/class',
+				redirect: {
+					name: 'sourceClass'
+				},
 				component: childView,
 				children: [{
 						meta: {
 							title: '来源分类'
 						},
 						name: 'sourceClass',
-						path: '/source/class',
+						path: 'class',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -307,7 +290,7 @@ const ansycRoutes = [{
 							title: '搜索引擎'
 						},
 						name: 'sourceEngin',
-						path: '/source/engin',
+						path: 'engin',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -317,7 +300,7 @@ const ansycRoutes = [{
 							title: '来访域名'
 						},
 						name: 'sourceDomain',
-						path: '/source/domain',
+						path: 'domain',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -327,7 +310,7 @@ const ansycRoutes = [{
 							title: '来访地区'
 						},
 						name: 'sourceCity',
-						path: '/source/city',
+						path: 'city',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -337,7 +320,7 @@ const ansycRoutes = [{
 							title: '搜索词'
 						},
 						name: 'sourceKeywords',
-						path: '/source/keywords',
+						path: 'keywords',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -349,15 +332,17 @@ const ansycRoutes = [{
 					title: '受访分析'
 				},
 				name: 'interviewed',
-				path: '/interviewed',
-				redirect: '/interviewed/surveyed',
+				path: 'interviewed',
+				redirect: {
+					name: 'interviewedSurveyed'
+				},
 				component: childView,
 				children: [{
 						meta: {
 							title: '受访页面'
 						},
 						name: 'interviewedSurveyed',
-						path: '/interviewed/surveyed',
+						path: 'surveyed',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -367,7 +352,7 @@ const ansycRoutes = [{
 							title: '入口页面'
 						},
 						name: 'interviewedIndex',
-						path: '/interviewed/index',
+						path: 'index',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -379,15 +364,17 @@ const ansycRoutes = [{
 					title: '网站概况'
 				},
 				name: 'siteProfile',
-				path: '/siteprofile',
-				redirect: '/siteprofile/contentnum',
+				path: 'siteprofile',
+				redirect: {
+					name: 'contentnum'
+				},
 				component: childView,
 				children: [{
 						meta: {
 							title: '内容发布数'
 						},
-						name: 'siteprofileContentnum',
-						path: '/siteprofile/contentnum',
+						name: 'contentNum',
+						path: 'contentnum',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -396,8 +383,8 @@ const ansycRoutes = [{
 						meta: {
 							title: '工作量'
 						},
-						name: 'siteProfileWorknum',
-						path: '/siteprofile/worknum',
+						name: 'workNum',
+						path: 'worknum',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -406,8 +393,8 @@ const ansycRoutes = [{
 						meta: {
 							title: '评论数'
 						},
-						name: 'siteProfileCommentnum',
-						path: '/siteprofile/commentnum',
+						name: 'commentNum',
+						path: 'commentnum',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -416,8 +403,8 @@ const ansycRoutes = [{
 						meta: {
 							title: '留言数'
 						},
-						name: 'siteProfileLeavenum',
-						path: '/siteprofile/leavenum',
+						name: 'leaveNum',
+						path: 'leavenum',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -426,8 +413,8 @@ const ansycRoutes = [{
 						meta: {
 							title: '会员注册数'
 						},
-						name: 'siteProfileUsernum',
-						path: '/siteprofile/usernum',
+						name: 'memberNum',
+						path: 'member',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -436,11 +423,10 @@ const ansycRoutes = [{
 			},
 			{
 				meta: {
-					title: '忠诚度',
-					isParent: true,
+					title: '忠诚度'
 				},
 				name: 'loyalty',
-				path: '/loyalty',
+				path: 'loyalty',
 				component: resolve => {
 					require(['@/views/errorpage/405.vue'], resolve)
 				}
@@ -450,27 +436,27 @@ const ansycRoutes = [{
 	{
 		meta: {
 			title: '用户管理',
-			iconCls: 'icon-icon_zhanghao',
-			isLink: true
+			iconCls: 'icon-icon_zhanghao'
 		},
 		name: 'user',
 		path: '/user',
 		component: layout,
 		children: [{
 				meta: {
-					title: '会员管理',
-					isParent: true
+					title: '会员管理'
 				},
 				name: 'member',
 				path: '/member',
-				redirect: '/member/list',
+				redirect: {
+					name: 'memberList'
+				},
 				component: childView,
 				children: [{
 						meta: {
 							title: '会员列表'
 						},
 						name: 'memberList',
-						path: '/member/list',
+						path: 'list',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -481,7 +467,7 @@ const ansycRoutes = [{
 							hidden: true,
 						},
 						name: 'memberAdd',
-						path: '/member/add',
+						path: 'add',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -492,7 +478,7 @@ const ansycRoutes = [{
 							hidden: true,
 						},
 						name: 'memberEdit',
-						path: '/member/edit',
+						path: 'edit',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -500,19 +486,20 @@ const ansycRoutes = [{
 				]
 			}, {
 				meta: {
-					title: '会员组管理',
-					isParent: true
+					title: '会员组管理'
 				},
 				name: 'group',
-				path: '/group',
-				redirect: '/group/list',
+				path: 'group',
+				redirect: {
+					name: 'groupList'
+				},
 				component: childView,
 				children: [{
 					meta: {
 						title: '会员组列表'
 					},
 					name: 'groupList',
-					path: '/group/list',
+					path: 'list',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -521,7 +508,7 @@ const ansycRoutes = [{
 						title: '会员组添加'
 					},
 					name: 'groupAdd',
-					path: '/group/add',
+					path: 'add',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -530,26 +517,27 @@ const ansycRoutes = [{
 						title: '会员组修改'
 					},
 					name: 'groupEdit',
-					path: '/group/edit',
+					path: 'edit',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			}, {
 				meta: {
-					title: '角色管理',
-					isParent: true
+					title: '角色管理'
 				},
 				name: 'role',
-				path: '/role',
-				redirect: '/role/list',
+				path: 'role',
+				redirect: {
+					name: 'roleLst'
+				},
 				component: childView,
 				children: [{
 						meta: {
 							title: '角色列表'
 						},
 						name: 'roleLst',
-						path: '/role/list',
+						path: 'list',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -560,7 +548,7 @@ const ansycRoutes = [{
 							hidden: true
 						},
 						name: 'roleAdd',
-						path: '/role/add',
+						path: 'add',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -571,7 +559,7 @@ const ansycRoutes = [{
 							hidden: true
 						},
 						name: 'roleEdit',
-						path: '/role/edit',
+						path: 'edit',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -579,38 +567,40 @@ const ansycRoutes = [{
 				]
 			}, {
 				meta: {
-					title: '账户绑定',
-					isParent: true
+					title: '账户绑定'
 				},
 				name: 'account',
-				path: '/account',
-				redirect: '/account/list',
+				path: 'account',
+				redirect: {
+					name: 'accountList'
+				},
 				component: childView,
 				children: [{
 					meta: {
 						title: '账户列表'
 					},
 					name: 'accountList',
-					path: '/account/list',
+					path: 'list',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			}, {
 				meta: {
-					title: '全站管理员',
-					isParent: true,
+					title: '全站管理员'
 				},
 				name: 'adminGlobal',
-				path: '/adminglobal',
-				redirect: '/adminglobal/list',
+				path: 'adminglobal',
+				redirect: {
+					name: 'adminGlobalList'
+				},
 				component: childView,
 				children: [{
 					meta: {
 						title: '全站管理员列表'
 					},
 					name: 'adminGlobalList',
-					path: '/adminglobal/list',
+					path: 'list',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -620,7 +610,7 @@ const ansycRoutes = [{
 						hidden: true
 					},
 					name: 'adminGlobalAdd',
-					path: '/adminglobal/add',
+					path: 'add',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -630,26 +620,27 @@ const ansycRoutes = [{
 						hidden: true
 					},
 					name: 'adminGlobalEdit',
-					path: '/adminGlobal/edit',
+					path: 'edit',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			}, {
 				meta: {
-					title: '本站管理员',
-					isParent: true
+					title: '本站管理员'
 				},
 				name: 'adminLocal',
-				path: '/adminlocal',
-				redirect: '/adminlocal/list',
+				path: 'adminlocal',
+				redirect: {
+					name: 'adminLocalList'
+				},
 				component: childView,
 				children: [{
 					meta: {
 						title: '本站管理员列表'
 					},
 					name: 'adminLocalList',
-					path: '/adminlocal/list',
+					path: 'list',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -658,7 +649,7 @@ const ansycRoutes = [{
 						title: '本站管理员添加'
 					},
 					name: 'adminLocalAdd',
-					path: '/adminGlocal/add',
+					path: 'add',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -667,7 +658,7 @@ const ansycRoutes = [{
 						title: '本站管理员修改'
 					},
 					name: 'adminLocalEdit',
-					path: '/adminGlocal/edit',
+					path: 'edit',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -675,19 +666,20 @@ const ansycRoutes = [{
 			},
 			{
 				meta: {
-					title: '部门管理',
-					isParent: true
+					title: '部门管理'
 				},
 				name: 'department',
-				path: '/department',
-				redirect: '/department/list',
+				path: 'department',
+				redirect: {
+					name: 'departmentList'
+				},
 				component: childView,
 				children: [{
 					meta: {
 						title: '部门列表'
 					},
 					name: 'departmentList',
-					path: '/department/list',
+					path: 'list',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -696,7 +688,7 @@ const ansycRoutes = [{
 						title: '部门添加'
 					},
 					name: 'departmentAdd',
-					path: '/department/add',
+					path: 'add',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -705,7 +697,7 @@ const ansycRoutes = [{
 						title: '部门修改'
 					},
 					name: 'departmentEdit',
-					path: '/department/edit',
+					path: 'edit',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -714,26 +706,27 @@ const ansycRoutes = [{
 						title: '部门成员列表'
 					},
 					name: 'departmentMemberList',
-					path: '/department/memberlist',
+					path: 'memberlist',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			}, {
 				meta: {
-					title: '站内信管理',
-					isParent: true
+					title: '站内信管理'
 				},
 				name: 'message',
-				path: '/message',
-				redirect: '/message/list',
+				path: 'message',
+				redirect: {
+					name: 'messageList'
+				},
 				component: childView,
 				children: [{
 					meta: {
 						title: '站内信列表'
 					},
 					name: 'messageList',
-					path: '/message/list',
+					path: 'list',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -742,7 +735,7 @@ const ansycRoutes = [{
 						title: '发送站内信'
 					},
 					name: 'messageSend',
-					path: '/message/send',
+					path: 'send',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -751,7 +744,7 @@ const ansycRoutes = [{
 						title: '站内信查看'
 					},
 					name: 'messageView',
-					path: '/message/view',
+					path: 'view',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -760,7 +753,7 @@ const ansycRoutes = [{
 						title: '站内信回复'
 					},
 					name: 'messageReply',
-					path: '/message/reply',
+					path: 'reply',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -769,26 +762,27 @@ const ansycRoutes = [{
 						title: '站内信转发'
 					},
 					name: 'messageForward',
-					path: '/message/forward',
+					path: 'forward',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
 				}]
 			}, {
 				meta: {
-					title: '操作日志',
-					isParent: true
+					title: '操作日志'
 				},
 				name: 'oplog',
-				path: '/oplog',
-				redirect: '/oplog/list',
+				path: 'oplog',
+				redirect: {
+					name: 'oplogList'
+				},
 				component: childView,
 				children: [{
 					meta: {
 						title: '操作日志列表'
 					},
 					name: 'oplogList',
-					path: '/oplog/list',
+					path: 'list',
 					component: resolve => {
 						require(['@/views/errorpage/405.vue'], resolve)
 					}
@@ -803,15 +797,20 @@ const ansycRoutes = [{
 		},
 		name: 'interface',
 		path: '/interface',
+		redirect: {
+			name: 'templateList'
+		},
 		component: layout,
 		children: [{
 				meta: {
 					title: '模板管理',
-					isParent: true
+					leaf: true,
 				},
 				name: 'template',
-				path: '/template',
-				redirect: '/template/list',
+				path: 'template',
+				redirect: {
+					name: 'templateList'
+				},
 				component: childView,
 				children: [{
 						meta: {
@@ -819,7 +818,7 @@ const ansycRoutes = [{
 							hidden: true,
 						},
 						name: 'templateList',
-						path: '/template/list',
+						path: 'list',
 						component: resolve => {
 							require(['@/views/template/template/Index.vue'], resolve)
 						}
@@ -830,7 +829,7 @@ const ansycRoutes = [{
 							hidden: true,
 						},
 						name: 'templateAdd',
-						path: '/template/add',
+						path: 'add',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -841,7 +840,7 @@ const ansycRoutes = [{
 							hidden: true,
 						},
 						name: 'templateEdit',
-						path: '/template/edit',
+						path: 'edit',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -852,7 +851,7 @@ const ansycRoutes = [{
 							hidden: true,
 						},
 						name: 'templateRename',
-						path: '/template/rename',
+						path: 'rename',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -862,7 +861,7 @@ const ansycRoutes = [{
 							hidden: true,
 						},
 						name: 'templateSetting',
-						path: '/template/setting',
+						path: 'setting',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -876,7 +875,9 @@ const ansycRoutes = [{
 				},
 				name: 'resource',
 				path: '/resource',
-				redirect: '/resource/list',
+				redirect: {
+					name: 'resourceList'
+				},
 				component: childView,
 				children: [{
 						meta: {
@@ -884,7 +885,7 @@ const ansycRoutes = [{
 							hidden: true,
 						},
 						name: 'resourceList',
-						path: '/resource/list',
+						path: 'list',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -892,11 +893,10 @@ const ansycRoutes = [{
 					{
 						meta: {
 							title: '资源添加',
-							role: 'resourceadd',
 							hidden: true
 						},
 						name: 'resourceAdd',
-						path: '/resource/add',
+						path: 'add',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -907,7 +907,7 @@ const ansycRoutes = [{
 							hidden: true
 						},
 						name: 'resourceEdit',
-						path: '/resource/edit',
+						path: 'edit',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -918,7 +918,7 @@ const ansycRoutes = [{
 							hidden: true
 						},
 						name: 'resourceRename',
-						path: '/resource/rename',
+						path: 'rename',
 						component: resolve => {
 							require(['@/views/errorpage/405.vue'], resolve)
 						}
@@ -930,41 +930,40 @@ const ansycRoutes = [{
 	{
 		meta: {
 			title: '网站监测',
-			iconCls: 'icon-gongyezujian-yibiaopan',
-			isLink: true
+			iconCls: 'icon-gongyezujian-yibiaopan'
 		},
-		path: '/webmonitoring',
-		name: 'webmonitoring',
+		path: '/monitor',
+		name: 'monitor',
+		redirect: {
+			name: 'webset'
+		},
 		component: layout,
 		children: [{
 			meta: {
-				title: '百度统计',
-				isParent: true
+				title: '可访问性'
 			},
-			path: '/baidu',
-			name: 'baidu',
-			component: resolve => {
-				require(['@/views/baidu/baidu.vue'], resolve)
-			}
-		}, {
-			meta: {
-				title: '可访问性',
-				isParent: true
-			},
-			path: '/webset',
-			name: 'webset',
+			path: 'ping',
+			name: 'ping',
 			component: resolve => {
 				require(['@/views/content/content/list.vue'], resolve)
 			}
 		}, {
 			meta: {
-				title: '告警通知',
-				isParent: true
+				title: '告警通知'
 			},
-			path: '/warning',
+			path: 'warning',
 			name: 'warning',
 			component: resolve => {
 				require(['@/views/content/topic/list.vue'], resolve)
+			}
+		}, {
+			meta: {
+				title: '百度统计'
+			},
+			path: 'baidu',
+			name: 'baidu',
+			component: resolve => {
+				require(['@/views/monitor/baidu/baidu.vue'], resolve)
 			}
 		}]
 	},
@@ -972,14 +971,24 @@ const ansycRoutes = [{
 		meta: {
 			title: '关于',
 			iconCls: 'icon-kefu',
-			isParent: true,
-			leaf: true,
+			leaf: true
 		},
-		path: '/about',
 		name: 'about',
-		component: resolve => {
-			require(['@/views/about/about.vue'], resolve)
-		}
+		path: '/about',
+		redirect: {
+			name: 'aboutUs'
+		},
+		component: layout,
+		children: [{
+			meta: {
+				title: '我们'
+			},
+			name: 'aboutUs',
+			path: 'us',
+			component: resolve => {
+				require(['@/views/about/about.vue'], resolve)
+			}
+		}]
 	},
 	{
 		meta: {
