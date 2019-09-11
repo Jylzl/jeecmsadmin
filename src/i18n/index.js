@@ -1,3 +1,10 @@
+/**
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-03-29 08:38:03
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-03-29 08:38:03
+ */
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 // import ElementLocale from 'element-ui/lib/locale'
@@ -5,6 +12,8 @@ import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 import cmsEnLocale from './lang/en'
 import cmsZhLocale from './lang/zh_CN'
+import routerCN from './lang/router/zh_CN'
+import routerEN from './lang/router/en'
 import operateCN from './lang/operate/zh_CN'
 import operateEN from './lang/operate/en'
 import configCN from './lang/config/zh_CN'
@@ -22,6 +31,7 @@ const messages = {
     en: {
         ...cmsEnLocale,
         ...enLocale,
+        ...routerEN,
         ...operateEN,
         ...configEN,
         ...contentEN,
@@ -32,6 +42,7 @@ const messages = {
     zh: {
         ...cmsZhLocale,
         ...zhLocale,
+        ...routerCN,
         ...operateCN,
         ...configCN,
         ...contentCN,
