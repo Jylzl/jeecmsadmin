@@ -100,7 +100,7 @@ const ansycRoutes = [{
 	}, {
 		meta: {
 			title: '内容发布',
-			iconCls: 'icon-ceshishenqing'
+			iconCls: 'icon-bianji'
 		},
 		name: 'cms',
 		path: '/cms',
@@ -110,9 +110,10 @@ const ansycRoutes = [{
 		},
 		children: [{
 			meta: {
-				title: '内容管理'
+				title: '内容管理',
+				leaf: true
 			},
-			path: 'content',
+			path: '/content',
 			name: 'content',
 			redirect: {
 				name: 'contentList'
@@ -123,29 +124,30 @@ const ansycRoutes = [{
 					title: '内容列表'
 				},
 				name: 'contentList',
-				path: 'list',
+				path: '/content/list',
 				component: contentList
 			}, {
 				meta: {
 					title: '内容添加'
 				},
 				name: 'contentAdd',
-				path: 'add',
+				path: '/content/add',
 				component: contentAdd
 			}, {
 				meta: {
 					title: '内容修改'
 				},
 				name: 'contentEdit',
-				path: 'edit',
+				path: '/content/edit',
 				component: contentEdit
 			}]
 		}, {
 			meta: {
-				title: '专题管理'
+				title: '专题管理',
+				leaf: true
 			},
-			name: 'topic',
-			path: '/topic',
+			name: '/topic',
+			path: 'topic',
 			redirect: {
 				name: 'topicList'
 			},
@@ -155,7 +157,7 @@ const ansycRoutes = [{
 						title: '专题列表'
 					},
 					name: 'topicList',
-					path: 'list',
+					path: '/topic/list',
 					component: topicList
 				},
 				{
@@ -163,7 +165,7 @@ const ansycRoutes = [{
 						title: '专题添加'
 					},
 					name: 'topicAdd',
-					path: 'add',
+					path: '/topic/add',
 					component: topicAdd
 				},
 				{
@@ -171,7 +173,7 @@ const ansycRoutes = [{
 						title: '专题修改'
 					},
 					name: 'topicEdit',
-					path: 'edit',
+					path: '/topic/edit',
 					component: topicEdit
 				}
 			]
@@ -196,7 +198,7 @@ const ansycRoutes = [{
 				hidden: true
 			},
 			name: 'channelList',
-			path: 'list',
+			path: '/channel/list',
 			component: channelList
 		}, {
 			meta: {
@@ -204,7 +206,7 @@ const ansycRoutes = [{
 				hidden: true
 			},
 			name: 'channelAdd',
-			path: 'add',
+			path: '/channel/add',
 			component: channelAdd
 		}, {
 			meta: {
@@ -212,7 +214,7 @@ const ansycRoutes = [{
 				hidden: true
 			},
 			name: 'channelEdit',
-			path: 'edit',
+			path: '/channel/edit',
 			component: channelEdit
 		}, {
 			meta: {
@@ -220,14 +222,14 @@ const ansycRoutes = [{
 				hidden: true
 			},
 			name: 'channelCopy',
-			path: 'copy',
+			path: '/channel/copy',
 			component: channelCopy
 		}]
 	},
 	{
 		meta: {
 			title: '数据中心',
-			iconCls: 'icon-shujukanban'
+			iconCls: 'icon-tubiao-zhexiantu'
 		},
 		name: 'record',
 		path: "/record",
@@ -240,7 +242,7 @@ const ansycRoutes = [{
 					title: '流量统计'
 				},
 				name: 'traffic',
-				path: 'traffic',
+				path: '/traffic',
 				redirect: {
 					name: 'trafficTrend'
 				},
@@ -804,7 +806,7 @@ const ansycRoutes = [{
 		children: [{
 				meta: {
 					title: '模板管理',
-					leaf: true,
+					leaf: true
 				},
 				name: 'template',
 				path: 'template',
@@ -871,7 +873,7 @@ const ansycRoutes = [{
 			{
 				meta: {
 					title: '资源管理',
-					isParent: true
+					leaf: true
 				},
 				name: 'resource',
 				path: '/resource',

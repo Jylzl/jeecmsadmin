@@ -1,6 +1,4 @@
 <template>
-	<!-- <a href="javascript:void(0)" class="cms-table-button iconfont" :class="type" :title="title">
-	</a> -->
 	<el-button :type="inf.type" :icon="inf.icon" :title="inf.title" size="mini" circle></el-button>
 </template>
 
@@ -80,6 +78,10 @@ export default {
 				title = "代码调用";
 				type = "info";
 				icon = "el-icon-paperclip";
+			} else if (this.type == "more") {
+				title = "更多操作";
+				type = "warning";
+				icon = "el-icon-more";
 			}
 			return {
 				title: title,

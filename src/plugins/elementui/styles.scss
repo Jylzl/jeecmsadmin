@@ -50,3 +50,8 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .scrollbar-wrapper {
     overflow-x: hidden !important;
 }
+
+.el-menu--popup,
+.el-submenu .el-menu-item {
+    min-width: 140px;
+}

@@ -10,32 +10,32 @@
 		<el-menu :collapse-transition="false" :default-active="activeIndex" class="h100" @open="handleOpen"
 			@close="handleClose" :router="true" :collapse="isCollapse" :unique-opened="true">
 			<template v-for="item in $store.state.perms.routers">
-				<template v-if="(item.meta) && !(item.meta.hidden)">
-					<template v-if="item.meta && item.meta.leaf">
-						<el-menu-item :route="{name:item.path}" :index="item.name" :key="item.name">
-							<i :class="item.meta && item.meta.iconCls" class="icon iconfont el-submenu-iconfont"></i>
+				<template v-if="!(item.meta.hidden)">
+					<template v-if="item.meta.leaf">
+						<el-menu-item :route="item" :index="item.name" :key="item.name">
+							<i :class="item.meta.iconCls" class="icon iconfont el-submenu-iconfont"></i>
 							<span class="collapse-font "
 								slot="title">{{generateTitle('submenu',item.meta.title)}}</span>
 						</el-menu-item>
 					</template>
-					<el-submenu v-else :route="{name:item.path}" :index="item.name" :key="item.name">
+					<el-submenu v-else :route="item" :index="item.name" :key="item.name">
 						<template slot="title">
-							<i :class="item.meta && item.meta.iconCls" class="icon iconfont el-submenu-iconfont"></i>
+							<i :class="item.meta.iconCls" class="icon iconfont el-submenu-iconfont"></i>
 							<span class="collapse-font" slot="title">{{generateTitle('submenu',item.meta.title)}}</span>
 						</template>
 						<template v-for="child in item.children">
-							<el-menu-item v-if="child.meta && child.meta.isParent" :route="{name:child.path}" :index="child.name"
-								:key="child.name" class="parent-padding">
+							<el-menu-item v-if="child.meta.leaf" :route="child" :index="child.name" :key="child.name"
+								class="parent-padding">
 								{{child.meta.title}}
 							</el-menu-item>
-							<el-submenu v-else :route="{name:child.path}" class="child-padding" :index="child.name"
+							<el-submenu v-else :route="child" class="child-padding" :index="child.name"
 								:key="child.name">
 								<template slot="title">
 									<span class="collapse-font">{{child.meta.title}}</span>
 								</template>
 								<template v-for="child2 in child.children">
-									<template v-if="!(child2.meta) || (child2.meta && !(child2.meta.hidden))">
-										<el-menu-item :route="{name:child2.path}" :index="child2.name" :key="child2.name">
+									<template v-if="!(child2.meta.hidden)">
+										<el-menu-item :route="child2" :index="child2.name" :key="child2.name">
 											{{child2.meta.title}}</el-menu-item>
 									</template>
 								</template>
@@ -54,14 +54,11 @@
 	export default {
 		name: "Aside",
 		data() {
-			return {
-				logoUrl: require('@/assets/img/logo.png'),
-				input10: ""
-			};
+			return {};
 		},
 		computed: {
 			activeIndex() {
-				return this.$route.path;
+				return this.$route.name;
 			},
 			isCollapse() {
 				return this.$store.getters.getCollapse;
