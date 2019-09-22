@@ -1,3 +1,10 @@
+<!--
+ * @description: 面包屑
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2019-02-18 19:16:03
+ * @LastAuthor: lizlong
+ * @lastTime: 2019-09-21 20:51:14
+ -->
 <template>
 	<div class="p-breadcrumb">
 		<div class="breadcrumb-left">

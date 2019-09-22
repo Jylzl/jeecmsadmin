@@ -81,7 +81,7 @@ const ansycRoutes = [{
 		meta: {
 			title: '工作台',
 			iconCls: 'icon-shebeizhuangtai',
-			leaf: true,
+			leaf: true
 		},
 		name: 'home',
 		path: '/',
@@ -942,7 +942,8 @@ const ansycRoutes = [{
 		component: layout,
 		children: [{
 			meta: {
-				title: '可访问性'
+				title: '可访问性',
+				leaf: true
 			},
 			path: 'ping',
 			name: 'ping',
@@ -951,7 +952,8 @@ const ansycRoutes = [{
 			}
 		}, {
 			meta: {
-				title: '告警通知'
+				title: '告警通知',
+				leaf: true
 			},
 			path: 'warning',
 			name: 'warning',
@@ -960,7 +962,8 @@ const ansycRoutes = [{
 			}
 		}, {
 			meta: {
-				title: '百度统计'
+				title: '百度统计',
+				leaf: true
 			},
 			path: 'baidu',
 			name: 'baidu',
